@@ -1,0 +1,760 @@
+/* ===================
+   VARIABLES DE COLOR
+======================= */
+:root {
+    --vino: #7B1C4E;
+    --blanco: #ffffff;
+    --gris-claro: #f5f5f5;
+    --gris-texto: #666666;
+    --sombra: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===================
+   BASE GENERAL
+======================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gris-claro);
+    color: #333;
+}
+
+/* ===================
+   NAVBAR (igual al dashboard)
+======================= */
+.navbar {
+    background-color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+    height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sombra);
+}
+
+.navbar-logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--vino);
+    letter-spacing: -0.5px;
+}
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 35px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+    color: var(--vino);
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-login, .btn-registro {
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-login {
+    background: transparent;
+    color: var(--vino);
+    border: 1px solid var(--vino);
+}
+
+.btn-login:hover {
+    background: var(--vino);
+    color: var(--blanco);
+}
+
+.btn-registro {
+    background: var(--vino);
+    color: var(--blanco);
+}
+
+.btn-registro:hover {
+    opacity: 0.85;
+}
+
+/* ===================
+   HERO SECTION
+======================= */
+/* ===================
+   HERO CON IMAGEN DE FONDO
+======================= */
+.hero {
+    position: relative;
+    background-image: url('../../frontend/imagenes/Avion_Lindo.png');
+    background-size: cover;
+    background-position: 70% center; /* Mueve la imagen a la derecha (70% significa más a la derecha) */
+    background-repeat: no-repeat;
+    padding: 170px 80px;
+    text-align: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinea el contenido a la izquierda */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 550px;
+    text-align: left;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: white;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 20px;
+        min-height: 400px;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+}
+
+/* ===================
+   BUSCADOR DE VUELOS
+======================= */
+.buscador-vuelos {
+    max-width: 1200px;
+    margin: -50px auto 50px;
+    background-color: var(--blanco);
+    border-radius: 24px;
+    box-shadow: var(--sombra);
+    padding: 30px 35px;
+    position: relative;
+    z-index: 10;
+}
+
+.tabs-vuelos {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--gris-claro);
+    padding-bottom: 15px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 8px 24px;
+    cursor: pointer;
+    color: var(--gris-texto);
+    border-radius: 30px;
+}
+
+.tab-btn:hover {
+    color: var(--vino);
+}
+
+.tab-btn.active {
+    color: var(--vino);
+    background-color: #fae6f0;
+}
+
+.servicios-rapidos {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.servicio-btn {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gris-texto);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.2s;
+}
+
+.servicio-btn:hover {
+    background-color: #fae6f0;
+    color: var(--vino);
+}
+
+.form-vuelos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.campo {
+    flex: 1;
+    min-width: 140px;
+}
+
+.campo label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    margin-bottom: 6px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-family: inherit;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: var(--vino);
+}
+
+.btn-buscar {
+    background-color: var(--vino);
+    color: var(--blanco);
+    border: none;
+    padding: 12px 32px;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-buscar:hover {
+    opacity: 0.85;
+}
+
+/* ===================
+   ACERCAMOS DESTINOS
+======================= */
+.acercamos {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.acercamos-texto {
+    flex: 1;
+}
+
+.acercamos-texto h2 {
+    font-size: 2rem;
+    color: var(--vino);
+    margin-bottom: 20px;
+}
+
+.acercamos-texto p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--gris-texto);
+    margin-bottom: 28px;
+}
+
+.btn-acercamos {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 12px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.btn-acercamos:hover {
+    opacity: 0.85;
+}
+
+.acercamos-imagen {
+    flex: 1;
+    background-color: #fae6f0;
+    border-radius: 24px;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+/* ===================
+   MODALES (Login/Registro)
+======================= */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-contenido {
+    background-color: var(--blanco);
+    padding: 35px 40px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--gris-texto);
+}
+
+.cerrar-modal:hover {
+    color: var(--vino);
+}
+
+.modal-contenido h2 {
+    color: var(--vino);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-modal input {
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+}
+
+.form-modal input:focus {
+    outline: none;
+    border-color: var(--vino);
+}
+
+.btn-modal {
+    background-color: var(--vino);
+    color: var(--blanco);
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-modal:hover {
+    opacity: 0.85;
+}
+
+.texto-modal {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+}
+
+.texto-modal a {
+    color: var(--vino);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.texto-modal a:hover {
+    text-decoration: underline;
+}
+
+/* ===================
+   DESTINOS
+======================= */
+.destinos-populares {
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 0 30px;
+}
+
+.destinos-populares h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--vino);
+    margin-bottom: 45px;
+}
+
+.destinos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.destino-card {
+    background-color: var(--blanco);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.destino-card:hover {
+    transform: translateY(-5px);
+}
+
+.destino-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.destino-info {
+    padding: 18px 15px;
+    text-align: center;
+}
+
+.destino-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.destino-info p {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+    margin-bottom: 10px;
+}
+
+.destino-precio {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+/* ===================
+   OFERTAS
+======================= */
+.ofertas {
+    background-color: #fae6f0;
+    padding: 60px 30px;
+    margin: 60px 0;
+}
+
+.ofertas-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.ofertas-texto h2 {
+    font-size: 2rem;
+    color: var(--vino);
+    margin-bottom: 12px;
+}
+
+.ofertas-texto p {
+    color: var(--gris-texto);
+    margin-bottom: 18px;
+}
+
+.ofertas-texto .precio {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--vino);
+}
+
+.ofertas-texto .precio span {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.btn-oferta {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 12px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 18px;
+}
+
+.btn-oferta:hover {
+    opacity: 0.85;
+}
+
+.ofertas-imagen {
+    background-color: var(--blanco);
+    border-radius: 24px;
+    padding: 35px 45px;
+    text-align: center;
+    font-size: 3rem;
+    color: var(--vino);
+}
+
+/* ===================
+   NEWSLETTER
+======================= */
+.newsletter {
+    max-width: 750px;
+    margin: 70px auto;
+    padding: 45px 40px;
+    text-align: center;
+    background-color: var(--blanco);
+    border-radius: 24px;
+    box-shadow: var(--sombra);
+}
+
+.newsletter h3 {
+    font-size: 1.6rem;
+    color: var(--vino);
+    margin-bottom: 12px;
+}
+
+.newsletter p {
+    color: var(--gris-texto);
+    margin-bottom: 25px;
+}
+
+.form-newsletter {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.form-newsletter input {
+    padding: 14px 22px;
+    border: 1px solid #e0e0e0;
+    border-radius: 50px;
+    width: 300px;
+    font-size: 0.95rem;
+}
+
+.form-newsletter input:focus {
+    outline: none;
+    border-color: var(--vino);
+}
+
+.form-newsletter button {
+    background-color: var(--vino);
+    color: var(--blanco);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-newsletter button:hover {
+    opacity: 0.85;
+}
+
+/* ===================
+   FOOTER (igual al dashboard)
+======================= */
+.footer {
+    background-color: var(--vino);
+    color: var(--blanco);
+    padding: 50px 40px 25px;
+    margin-top: 60px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.footer-columna {
+    flex: 1;
+    min-width: 180px;
+}
+
+.footer-columna p {
+    font-size: 0.9rem;
+    color: #f0c0d8;
+    line-height: 1.6;
+}
+
+.footer-columna h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.footer-columna a {
+    display: block;
+    text-decoration: none;
+    color: #f0c0d8;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.footer-columna a:hover {
+    color: var(--blanco);
+}
+
+.footer-hr {
+    border: none;
+    border-top: 1px solid #a0406e;
+    margin: 35px auto 20px;
+    max-width: 1200px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-size: 0.8rem;
+    color: #f0c0d8;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ===================
+   RESPONSIVE
+======================= */
+@media (max-width: 1024px) {
+    .destinos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        height: auto;
+        gap: 15px;
+    }
+    
+    .navbar-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+    
+    .destinos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .acercamos {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .form-vuelos {
+        flex-direction: column;
+    }
+    
+    .campo {
+        width: 100%;
+    }
+    
+    .btn-buscar {
+        width: 100%;
+    }
+    
+    .ofertas-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-top {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .servicios-rapidos {
+        justify-content: center;
+    }
+}
