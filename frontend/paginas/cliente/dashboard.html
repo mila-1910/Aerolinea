@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cliente Dashboard | ELARIS</title>
     <link rel="stylesheet" href="../../css/cliente.css">
 </head>
+
 <body>
 
     <!-- Navbar para demas apartados de la pagina -->
@@ -24,12 +26,18 @@
             <li><a href="#">Ayuda</a></li>
         </ul>
 
-        <!-- Perfil de usuario -->
+        <!-- Mi perfil -->
         <div class="navbar-perfil">
-            <span>👤 Mi perfil</span>
+            <div class="perfil-trigger">
+                <div class="avatar">M</div>
+                <span>Messi</span>
+            </div>
             <ul class="dropdown">
                 <li><a href="#">Mi cuenta</a></li>
                 <li><a href="mis-reservas.html">Mis reservas</a></li>
+                <li>
+                    <hr>
+                </li>
                 <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
             </ul>
         </div>
@@ -43,6 +51,15 @@
         <div class="saludo">
             <h2>Hola, Messi 👋</h2>
             <p>Bienvenido de nuevo a ELARIS. ¿A dónde volamos hoy?</p>
+        </div>
+
+        <!-- Banner promocional -->
+        <div class="banner-promo">
+            <div class="banner-texto">
+                <h3>✈ Oferta especial de temporada</h3>
+                <p>Vuelos a destinos internacionales con hasta un 30% de descuento. ¡Por tiempo limitado!</p>
+                <a href="buscar-vuelos.html" class="btn-banner">Ver ofertas</a>
+            </div>
         </div>
 
         <!-- Cards -->
@@ -71,6 +88,105 @@
 
         </div>
 
+        <!-- Reservas recientes -->
+        <div class="seccion-reservas">
+
+            <div class="seccion-header">
+                <h3>Reservas recientes</h3>
+                <a href="mis-reservas.html">Ver todas →</a>
+            </div>
+
+            <table class="tabla-reservas">
+                <thead>
+                    <tr>
+                        <th># Reserva</th>
+                        <th>Vuelo</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#RES-001</td>
+                        <td>EL-204</td>
+                        <td>Bogotá (BOG)</td>
+                        <td>Miami (MIA)</td>
+                        <td>15 Abr 2026</td>
+                        <td><span class="estado confirmada">Confirmada</span></td>
+                    </tr>
+                    <tr>
+                        <td>#RES-002</td>
+                        <td>EL-310</td>
+                        <td>Medellín (MDE)</td>
+                        <td>Cancún (CUN)</td>
+                        <td>22 May 2026</td>
+                        <td><span class="estado pendiente">Pendiente</span></td>
+                    </tr>
+                    <tr>
+                        <td>#RES-003</td>
+                        <td>EL-105</td>
+                        <td>Cali (CLO)</td>
+                        <td>Madrid (MAD)</td>
+                        <td>10 Jun 2026</td>
+                        <td><span class="estado cancelada">Cancelada</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Destinos destacados -->
+        <div class="seccion-destinos">
+
+            <div class="seccion-header">
+                <h3>Destinos destacados</h3>
+                <a href="buscar-vuelos.html">Ver todos →</a>
+            </div>
+
+            <div class="destinos-grid">
+
+                <div class="destino-card">
+                    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
+                    <div class="destino-info">
+                        <h4>Nueva York</h4>
+                        <p>Estados Unidos</p>
+                        <span class="destino-precio">Desde $850,000 COP</span>
+                    </div>
+                </div>
+
+                <div class="destino-card">
+                    <img src="../../imagenes/paris.jpg" alt="París">
+                    <div class="destino-info">
+                        <h4>París</h4>
+                        <p>Francia</p>
+                        <span class="destino-precio">Desde $920.000 COP</span>
+                    </div>
+                </div>
+
+                <div class="destino-card">
+                    <img src="../../imagenes/cancun.jpg" alt="Cancún">
+                    <div class="destino-info">
+                        <h4>Cancún</h4>
+                        <p>México</p>
+                        <span class="destino-precio">Desde $420.000 COP</span>
+                    </div>
+                </div>
+
+                <div class="destino-card">
+                    <img src="../../imagenes/madrid.jpg" alt="Madrid">
+                    <div class="destino-info">
+                        <h4>Madrid</h4>
+                        <p>España</p>
+                        <span class="destino-precio">Desde $500.000 COP</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
     </main>
 
     <!-- Footer ELARIS -->
@@ -79,4 +195,5 @@
     </footer>
 
 </body>
+
 </html>
