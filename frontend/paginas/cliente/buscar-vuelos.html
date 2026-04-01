@@ -7,6 +7,7 @@
     <title>Buscar Vuelos | ELARIS</title>
     <link rel="stylesheet" href="../../css/cliente.css">
     <link rel="stylesheet" href="../../css/buscar-vuelos.css">
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 </head>
 
 <body>
@@ -95,7 +96,116 @@
 
         <button class="boton-buscar">Buscar vuelos</button>
 
+    </div>
 
+    <!-- Filtros y resultados -->
+    <div class="buscar-contenido">
+
+        <!-- Filtros izquierda -->
+        <aside class="filtros">
+            <h3>Filtros</h3>
+
+            <div class="filtro-grupo">
+                <h4>Precio</h4>
+                <input type="range" min="0" max="5000" value="5000">
+                <div class="precio-rango">
+                    <span>$0</span>
+                    <span>$5,000.000 COP</span>
+                </div>
+            </div>
+
+            <div class="filtro-grupo">
+                <h4>Escalas</h4>
+                <label><input type="checkbox" checked> Vuelo directo</label>
+                <label><input type="checkbox"checked> Una escala</label>
+                <label><input type="checkbox"> Dos o más</label>
+            </div>
+
+            <div class="filtro-grupo">
+                <h4>Clase de vuelo</h4>
+                <label><input type="checkbox" checked> Económica</label>
+                <label><input type="checkbox"> Ejecutiva</label>
+                <label><input type="checkbox"> Primera clase</label>
+            </div>
+
+            <div class="filtro-grupo">
+                <h4>Tipo de avión</h4>
+                <label><input type="checkbox" checked> Boeing</label>
+                <label><input type="checkbox"> Airbus</label>
+                <label><input type="checkbox"> Regional</label>
+            </div>
+        </aside>
+
+        <!-- Resultados derecha -->
+        <div class="resultados">
+
+            <div class="resultados-header">
+                <p>6 vuelos encontrados</p>
+                <select class="ordenar">
+                    <option>Nuevos destinos</option>
+                    <option>Menor a mayor precio</option>
+                    <option>Mayor a menor precio</option>
+                    <option>Mejor calificados</option>
+                </select>
+            </div>
+
+            <div class="vuelos-grid">
+
+                <div class="vuelo-card">
+                    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
+                    <div class="vuelo-info">
+                        <h4>Bogotá → Nueva York</h4>
+                        <p>✈ Directo · 6h 30min</p>
+                        <p>📅 15 Abr 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$3.290.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vuelo-card">
+                    <img src="../../imagenes/paris.jpg" alt="París">
+                    <div class="vuelo-info">
+                        <h4>Bogotá → París</h4>
+                        <p>✈ Una escala · 12h 45min</p>
+                        <p>📅 22 May 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$4.480.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vuelo-card">
+                    <img src="../../imagenes/cancun.jpg" alt="Cancún">
+                    <div class="vuelo-info">
+                        <h4>Medellín → Cancún</h4>
+                        <p>✈ Directo · 4h 15min</p>
+                        <p>📅 10 Jun 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$2.170.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vuelo-card">
+                    <img src="../../imagenes/madrid.jpg" alt="Madrid">
+                    <div class="vuelo-info">
+                        <h4>Cali → Madrid</h4>
+                        <p>✈ Una escala · 14h 20min</p>
+                        <p>📅 5 Jul 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$3.890.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
