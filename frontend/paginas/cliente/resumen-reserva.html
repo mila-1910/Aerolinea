@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../../css/cliente.css">
     <link rel="stylesheet" href="../../css/resumen-reserva.css">
 </head>
+
 <body>
 
     <!-- NAVBAR -->
@@ -28,66 +30,185 @@
             <ul class="dropdown">
                 <li><a href="#">Mi cuenta</a></li>
                 <li><a href="mis-reservas.html">Mis reservas</a></li>
-                <li><hr></li>
+                <li>
+                    <hr>
+                </li>
                 <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Parte principal -->
+    <!-- HEADER -->
+    <div class="resumen-header">
+        <h1>✈ Resumen de tu reserva</h1>
+        <p>Revisá los detalles antes de confirmar</p>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
     <div class="resumen-contenedor">
 
-        <!-- Título -->
-        <div class="resumen-titulo">
-            <h1>✈ Resumen de tu reserva</h1>
+        <!-- Columna izquierda -->
+        <div class="resumen-columna-izq">
+
+            <!-- Vuelo seleccionado -->
+            <div class="resumen-bloque">
+                <div class="bloque-header">
+                    <h3>Vuelo seleccionado</h3>
+                </div>
+                <div class="bloque-contenido">
+                    <div class="vuelo-ruta">
+                        <span class="vuelo-ciudad">Bogotá</span>
+                        <span class="vuelo-flecha">→</span>
+                        <span class="vuelo-ciudad">Madrid</span>
+                    </div>
+                    <div class="vuelo-detalles">
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Hora salida</span>
+                            <span class="detalle-valor">10:30</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Llegada</span>
+                            <span class="detalle-valor">8:45 am (+1 día)</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Duración</span>
+                            <span class="detalle-valor">12h</span>
+                        </div>
+                    </div>
+                    <div class="vuelo-detalles">
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Vuelo</span>
+                            <span class="detalle-valor">EL 123</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Fecha</span>
+                            <span class="detalle-valor">15 MAY 2026</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Escala</span>
+                            <span class="detalle-valor">1 (Miami)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarifa elegida -->
+            <div class="resumen-bloque">
+                <div class="bloque-header">
+                    <h3>Tarifa elegida</h3>
+                </div>
+                <div class="bloque-contenido">
+                    <h4 class="tarifa-clase">EJECUTIVA</h4>
+                    <ul class="tarifa-beneficios">
+                        <li>✔ 2 maletas (23kg c/u)</li>
+                        <li>✔ Acceso a sala VIP</li>
+                        <li>✔ Selección de asiento preferencial</li>
+                    </ul>
+                    <div class="tarifa-footer">
+                        <a href="#" class="btn-cambiar-tarifa">Cambiar tarifa</a>
+                        <span class="tarifa-precio">$890.000 COP</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Vuelo seleccionado -->
-        <div class="resumen-bloque">
-            <div class="bloque-header">
-                <h3>Vuelo seleccionado</h3>
+        <!-- Columna derecha -->
+        <div class="resumen-columna-der">
+
+            <!-- Datos del pasajero -->
+            <div class="resumen-bloque">
+                <div class="bloque-header">
+                    <h3>Datos del pasajero</h3>
+                </div>
+                <div class="bloque-contenido">
+                    <div class="pasajero-datos">
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Nombre</span>
+                            <span class="detalle-valor">María González</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Documento</span>
+                            <span class="detalle-valor">123456789</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Nacionalidad</span>
+                            <span class="detalle-valor">Colombiana</span>
+                        </div>
+                        <div class="vuelo-detalle-item">
+                            <span class="detalle-label">Fecha Nacimiento</span>
+                            <span class="detalle-valor">15/05/1990</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            
-            <div class="bloque-contenido">
-                <div class="vuelo-ruta">
-                    <span class="vuelo-ciudad">Bogotá</span>
-                    <span class="vuelo-flecha">→</span>
-                    <span class="vuelo-ciudad">Madrid</span>
+            <!-- Resumen de pago -->
+            <div class="resumen-bloque">
+                <div class="bloque-header">
+                    <h3>Resumen de pago</h3>
                 </div>
-                <div class="vuelo-detalles">
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Hora</span>
-                        <span class="detalle-valor">10:30</span>
+                <div class="bloque-contenido">
+                    <div class="pago-linea">
+                        <span>Vuelo</span>
+                        <span>$3.290.000 COP</span>
                     </div>
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Llegada</span>
-                        <span class="detalle-valor">8:45 am (+1 día)</span>
+                    <div class="pago-linea">
+                        <span>Tarifa ejecutiva</span>
+                        <span>$890.000 COP</span>
                     </div>
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Duración</span>
-                        <span class="detalle-valor">12h</span>
+                    <div class="pago-linea">
+                        <span>Descuento 20%</span>
+                        <span class="descuento">-$658.000 COP</span>
                     </div>
-                </div>
-                <div class="vuelo-detalles">
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Vuelo</span>
-                        <span class="detalle-valor">EL 123</span>
-                    </div>
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Fecha</span>
-                        <span class="detalle-valor">15 MAY 2026</span>
-                    </div>
-                    <div class="vuelo-detalle-item">
-                        <span class="detalle-label">Escala</span>
-                        <span class="detalle-valor">1 (Miami)</span>
+                    <hr class="pago-hr">
+                    <div class="pago-total">
+                        <span>Total</span>
+                        <span>$3.522.000 COP</span>
                     </div>
                 </div>
-            
             </div>
+
+            <!-- Botones -->
+            <div class="resumen-botones">
+                <a href="mis-reservas.html" class="btn-confirmar">Confirmar Reserva</a>
+                <a href="mis-reservas.html" class="btn-guardar">Guardar para después</a>
+            </div>
+
         </div>
 
     </div>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Bogotá, Colombia</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-hr">
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+    </footer>
+
 </body>
+
 </html>

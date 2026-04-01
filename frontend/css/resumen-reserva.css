@@ -1,23 +1,49 @@
 /* ===========================
-   PARTE PRINCIPAL
+   HEADER
 =========================== */
-.resumen-contenedor {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 0 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.resumen-header {
+    background-color: var(--vino);
+    padding: 40px;
+    text-align: center;
+}
+
+.resumen-header h1 {
+    color: var(--blanco);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.resumen-header p {
+    color: #f0c0d8;
+    font-size: 1rem;
 }
 
 /* ===========================
-   TÍTULO
+   CONTENEDOR PRINCIPAL
 =========================== */
-.resumen-titulo h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 8px;
+.resumen-contenedor {
+    display: flex;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 40px;
+    align-items: flex-start;
+    margin-bottom: 60px;
+}
+
+.resumen-columna-izq {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resumen-columna-der {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* ===========================
@@ -50,6 +76,9 @@
     gap: 16px;
 }
 
+/* ===========================
+   VUELO
+=========================== */
 .vuelo-ruta {
     display: flex;
     align-items: center;
@@ -57,14 +86,14 @@
 }
 
 .vuelo-ciudad {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
     color: #333;
 }
 
 .vuelo-flecha {
     color: var(--vino);
-    font-size: 1.2rem;
+    font-size: 1.3rem;
 }
 
 .vuelo-detalles {
@@ -82,10 +111,137 @@
     font-size: 0.78rem;
     color: var(--gris-texto);
     font-weight: 600;
+    text-transform: uppercase;
 }
 
 .detalle-valor {
     font-size: 0.9rem;
     color: #333;
     font-weight: 500;
+}
+
+/* ===========================
+   TARIFA
+=========================== */
+.tarifa-clase {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.tarifa-beneficios {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tarifa-beneficios li {
+    font-size: 0.9rem;
+    color: var(--gris-texto);
+}
+
+.tarifa-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btn-cambiar-tarifa {
+    color: var(--vino);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-cambiar-tarifa:hover {
+    opacity: 0.75;
+}
+
+.tarifa-precio {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+/* ===========================
+   DATOS PASAJERO
+=========================== */
+.pasajero-datos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+/* ===========================
+   RESUMEN DE PAGO
+=========================== */
+.pago-linea {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.descuento {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.pago-hr {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+}
+
+.pago-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+/* ===========================
+   BOTONES FINALES
+=========================== */
+.resumen-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-confirmar {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+
+.btn-confirmar:hover {
+    opacity: 0.85;
+}
+
+.btn-guardar {
+    background-color: transparent;
+    color: var(--vino);
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: 2px solid var(--vino);
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.btn-guardar:hover {
+    background-color: var(--vino);
+    color: var(--blanco);
 }
