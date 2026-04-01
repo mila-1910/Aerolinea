@@ -294,9 +294,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* ==================================
-   BLOQUE PROMOCIONAL (Promo)
-   ================================== */
+/* BLOQUE PROMOCIONAL */
 .promo {
     display: flex;
     justify-content: center;
