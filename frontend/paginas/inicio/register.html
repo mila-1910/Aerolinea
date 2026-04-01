@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Título que aparece en la pestaña arriba en el navegador -->
     <title>Registro | ELARIS</title>
-    <!-- CSS para darle los mismos estilos que al login -->
+    
+    <!-- Ícono de la pestaña (favicon) -->
+
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
     <link rel="stylesheet" href="../../css/Inicio/auth.css">
 </head>
 
 <body>
-
-    <!-- navbar de inicio -->
 
     <header class="navbar-auth">
         <a href="../index.html" class="navbar-auth__logo">
@@ -31,62 +31,88 @@
         </div>
     </header>
 
-    <!-- main sirve como contenedor general que abarca las dos mitades de la pantalla -->
     <main class="auth">
 
-        <!-- Mitad de la pantalla visual (foto y mensaje inspiracional) -->
-        <section class="auth__hero">
+        <!-- Columna izquierda: imagen de fondo con texto -->
+
+        <section class="auth__hero auth__hero--register">
             <div class="brand">
-                <!-- Este enlace te lleva a la página principal de inicio al dar clic al logo/nombre -->
-                <a href="../index.html">ELARIS</a>
+                <a href="../index.html"></a>
             </div>
 
             <div class="hero-content">
-                <h1>Eleva tu experiencia.</h1>
-                <p>Crea tu cuenta para comenzar tu viaje con nosotros.</p>
+                <h1>Eleva tu perspectiva.</h1>
+                <p>Únete y descubre destinos diseñados para el viajero moderno.</p>
             </div>
         </section>
 
-        <!-- Mitad de la pantalla con el formulario donde el usuario escribe sus datos -->
-        <section class="auth__form-section">
+        <!-- Columna derecha: formulario de registro -->
+
+        <section class="auth__form-section auth__form-section--register">
             <div class="auth-box">
-                <h2>Crea tu cuenta</h2>
-                <p>Completa tus datos para registrarte.</p>
 
-                <form action="#" method="post">
-                    <label for="nombre">Nombre completo</label>
-                    <!-- type="text" es para escribir texto normal (letras y números) -->
-                    <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                <div class="auth-header">
+                    <h2>Crea tu cuenta</h2>
+                    <p>Comienza tu viaje con nosotros hoy mismo.</p>
+                </div>
 
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+                <form class="auth-form" action="#" method="post">
 
-                    <label for="password">Contraseña</label>
-                    <!-- type="password" oculta el texto con puntos por seguridad -->
-                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <!-- Nombre completo -->
 
-                    <!-- Se le pide contraseña dos veces para confirmar que no se equivocó al teclear -->
-                    <label for="confirmar">Confirmar contraseña</label>
-                    <input type="password" id="confirmar" name="confirmar" placeholder="••••••••" required>
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                    </div>
 
-                    <!-- Al poner el <input> dentro del <label>, si das clic a las letras, también se marca la palomita -->
-                    <label>
-                        <!-- type="checkbox" crea el clásico cuadrito para palomear -->
+                    <!-- Correo -->
+                    
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+                    </div>
+
+                    <!-- Contraseña y confirmar en fila -->
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+
+                            <label for="password">Contraseña</label>
+
+                            <!-- type="password" oculta lo que escribes con puntos -->
+
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmar">Confirmar Contraseña</label>
+                            <input type="password" id="confirmar" name="confirmar" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox de términos -->
+
+                    <div class="form-check">
+
+                        <!-- type="checkbox" crea la casillatilde para aceptar -->
                         <input type="checkbox" id="terminos" name="terminos" required>
-                        <label for="terminos">Acepto los términos y condiciones</label>
+                        <label for="terminos">Acepto los <a href="#" class="terms-link">términos y
+                                condiciones</a>.</label>
+                    </div>
 
-                    </label>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Crear cuenta →</button>
+                    </div>
 
-                    <button type="submit">Crear cuenta</button>
                 </form>
 
-                <!-- Si ya se había registrado, aquí tiene un puente directo hacia login.html -->
-                <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+                <div class="auth-footer">
+                    <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+                </div>
+
             </div>
         </section>
+
     </main>
-
-
 
 </body>
 

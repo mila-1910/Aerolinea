@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,65 +8,62 @@
     <link rel="stylesheet" href="../../css/buscar-vuelos.css">
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 </head>
-
 <body>
-
+    
     <!-- Navbar definido -->
-    <nav class="navbar">
+<nav class="navbar">
 
-        <a class="navbar-logo" href="dashboard.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
-        </a>
+    <a class="navbar-logo" href="dashboard.html">
+        <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+    </a>
 
-        <ul class="navbar-links">
-            <li><a href="dashboard.html">Inicio</a></li>
-            <li><a href="buscar-vuelos.html">Destinos</a></li>
-            <li><a href="#">Información</a></li>
-            <li><a href="#">Ayuda</a></li>
+    <ul class="navbar-links">
+        <li><a href="dashboard.html">Inicio</a></li>
+        <li><a href="buscar-vuelos.html">Destinos</a></li>
+        <li><a href="#">Información</a></li>
+        <li><a href="#">Ayuda</a></li>
+    </ul>
+
+    <div class="navbar-perfil">
+        <div class="perfil-trigger">
+            <div class="avatar">M</div>
+            <span>Messi</span>
+        </div>
+        
+        <ul class="dropdown">
+            <li><a href="#">Mi cuenta</a></li>
+            <li><a href="mis-reservas.html">Mis reservas</a></li>
+            <li><hr></li>
+            <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
         </ul>
-
-        <div class="navbar-perfil">
-            <div class="perfil-trigger">
-                <div class="avatar">M</div>
-                <span>Messi</span>
-            </div>
-
-            <ul class="dropdown">
-                <li><a href="#">Mi cuenta</a></li>
-                <li><a href="mis-reservas.html">Mis reservas</a></li>
-                <li>
-                    <hr>
-                </li>
-                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
-            </ul>
-
-        </div>
-
-    </nav>
-
-    <!-- Este es el formulario de la busquedad de vuelos de usuario -->
-
-    <div class="buscador-header">
-
-        <h2>¿Cual sera tu proximo destino?</h2>
-        <p>Encuentra el vuelo perfecto para tu proximo viaje!! </p>
-
-        <!-- Tipo de viaja -->
-
-        <div class="tipo-viaje">
-            <input type="radio" name="tipo" id="ida-vuelta" checked>
-            <label for="ida-vuelta">Ida y vuelta</label>
-
-            <input type="radio" name="tipo" id="solo-ida">
-            <label for="solo-ida">Solo ida</label>
-        </div>
-
 
     </div>
 
-    <!-- Campos -->
+</nav>
 
-    <div class="buscador-campos">
+<!-- Este es el formulario de la busquedad de vuelos de usuario -->
+
+<div class="buscador-header">
+
+    <h2>¿Cual sera tu proximo destino?</h2>
+    <p>Encuentra el vuelo perfecto para tu proximo viaje!! </p>
+
+<!-- Tipo de viaja -->
+
+<div class="tipo-viaje">
+    <input type="radio" name="tipo" id="ida-vuelta" checked>
+    <label for="ida-vuelta">Ida y vuelta</label>
+
+    <input type="radio" name="tipo" id="solo-ida">
+    <label for="solo-ida">Solo ida</label>
+</div>
+    
+
+</div>
+
+<!-- Campos -->
+
+<div class="buscador-campos">
 
         <div class="campo-grupo">
             <label>Origen</label>
@@ -207,7 +203,7 @@
 
         </div>
 
-    </div>
+</div>
 
 </body>
 
