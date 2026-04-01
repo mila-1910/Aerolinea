@@ -153,31 +153,7 @@
 
     </footer>
 
-    <!-- Lógica del Navbar Inteligente (Aparece al hacer scroll hacia arriba) -->
-    <script>
-        const header = document.querySelector('.header');
-        let lastScrollY = window.scrollY;
 
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            // Si estamos muy cerca del tope (Hero), mantenerlo transparente nativo
-            if (currentScrollY <= 120) {
-                header.classList.remove('is-sticky', 'is-hidden');
-            } else if (currentScrollY < lastScrollY) {
-                // Scrolleando hacia arriba
-                header.classList.remove('is-hidden');
-                header.classList.add('is-sticky');
-            } else if (currentScrollY > lastScrollY) {
-                // Scrolleando hacia abajo
-                if (header.classList.contains('is-sticky')) {
-                    header.classList.remove('is-sticky');
-                    header.classList.add('is-hidden');
-                }
-            }
-            lastScrollY = currentScrollY;
-        });
-    </script>
 </body>
 
 </html>
