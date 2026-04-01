@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - ELARIS</title>
+    <link rel="stylesheet" href="../../css/admin.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="logo">
+        </div>
+
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="vuelos.html">Vuelos</a></li>
+            <li><a href="ubicaciones.html">Ubicaciones</a></li>
+            <li><a href="paquetes.html">Paquetes</a></li>
+        </ul>
+
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <div class="avatar">K</div>
+                <span>Kamila</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <div class="contenido">
+
+        <!-- SALUDO -->
+        <div class="saludo">
+            <h2>Panel Administrador</h2>
+            <p>Gestiona todo el sistema desde aquí ✈️</p>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards-container">
+
+            <div class="card">
+                <div class="card-icono">✈️</div>
+                <h3>Vuelos activos</h3>
+                <p>12 vuelos disponibles</p>
+                <a href="#" class="btn-card">Gestionar</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icono">🌍</div>
+                <h3>Ubicaciones</h3>
+                <p>Países y ciudades</p>
+                <a href="#" class="btn-card">Gestionar</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icono">🧳</div>
+                <h3>Paquetes</h3>
+                <p>Paquetes turísticos</p>
+                <a href="#" class="btn-card">Gestionar</a>
+            </div>
+
+        </div>
+
+        <!-- TABLA -->
+        <div class="seccion-reservas">
+            <h3>Actividad reciente</h3>
+
+            <table class="tabla-reservas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Acción</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>#001</td>
+                        <td>Vuelo creado</td>
+                        <td>01/04/2026</td>
+                        <td><span class="estado confirmada">Completado</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#002</td>
+                        <td>Paquete actualizado</td>
+                        <td>02/04/2026</td>
+                        <td><span class="estado pendiente">Pendiente</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>#003</td>
+                        <td>Ciudad agregada</td>
+                        <td>03/04/2026</td>
+                        <td><span class="estado confirmada">Completado</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>
