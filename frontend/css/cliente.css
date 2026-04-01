@@ -470,22 +470,22 @@ body {
    BUSCADOR DE VUELOS
 =========================== */
 
-.buscador-header{
+.buscador-header {
     background-color: var(--vino);
     padding: 50px 40px;
     text-align: center;
 
 }
 
-.buscador-header h2{
+.buscador-header h2 {
     color: var(--blanco);
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 8px;
-    
+
 }
 
-.buscador-header p{
+.buscador-header p {
     color: #f0c0d8;
     font-size: 1rem;
     margin-bottom: 24px;
@@ -498,7 +498,7 @@ body {
     align-items: center;
     gap: 8px;
     margin-bottom: 20px;
-    background-color: rgba(255,255,255,0.15);
+    background-color: rgba(255, 255, 255, 0.15);
     padding: 6px;
     border-radius: 30px;
     width: fit-content;
@@ -520,7 +520,7 @@ body {
     transition: all 0.2s;
 }
 
-.tipo-viaje input[type="radio"]:checked + label {
+.tipo-viaje input[type="radio"]:checked+label {
     background-color: var(--blanco);
     color: var(--vino);
 }
@@ -534,7 +534,7 @@ body {
     gap: 16px;
     max-width: 1100px;
     margin: 0 auto;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     position: relative;
     top: 20px;
 }
@@ -560,7 +560,7 @@ body {
     border-radius: 8px;
     font-size: 0.9rem;
     outline: none;
-    
+
 }
 
 .campo-grupo input:focus {
@@ -583,8 +583,3 @@ body {
 .boton-buscar:hover {
     opacity: 0.85;
 }
-
-
-
-
-

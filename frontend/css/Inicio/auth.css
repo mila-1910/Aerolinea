@@ -378,3 +378,91 @@ body {
 .auth-footer a:hover {
     text-decoration-color: var(--vino);
 }
+
+
+/* ================================
+   ESTILOS ESPECÍFICOS DEL REGISTRO
+================================ */
+
+/* La imagen de fondo del register es diferente a la del login */
+.auth__hero--register {
+    background-image: url("../../imagenes/Inicio/Ventana_Register3.jpg");
+    background-size: cover;
+    background-position: center;
+    /* El fondo negro ya forma parte de la foto, no hace falta background-color */
+}
+
+/*
+   El formulario de registro tiene más campos que el login.
+   Reducimos el padding y los espacios internos para que todo quepa sin scroll.
+*/
+.auth__form-section--register {
+    padding: 32px 40px;
+}
+
+.auth__form-section--register .auth-header {
+    margin-bottom: 20px;
+}
+
+.auth__form-section--register .auth-form {
+    gap: 16px;
+}
+
+.auth__form-section--register .form-actions {
+    margin-top: 4px;
+}
+
+.auth__form-section--register .auth-footer {
+    margin-top: 20px;
+}
+
+/* Fila con dos campos lado a lado (contraseña y confirmar) */
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+/* Cada columna dentro de la fila ocupa la mitad */
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Fila del checkbox con su label */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-check input[type="checkbox"] {
+    /* Le damos un tamaño fijo y lo dejamos sin los estilos del form-group input general */
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    accent-color: var(--vino);
+    /* Colorea el checkbox con el color corporativo en navegadores modernos */
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
+.form-check label {
+    font-size: 0.875rem;
+    color: var(--gris-texto);
+    cursor: pointer;
+}
+
+/* Enlace dentro del checkbox para los términos */
+.terms-link {
+    color: var(--vino);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(123, 28, 78, 0.3);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+}
+
+.terms-link:hover {
+    text-decoration-color: var(--vino);
+}

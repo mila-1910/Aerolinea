@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- El título de la pestaña del navegador -->
     <title>Login | ELARIS</title>
+    <!-- Ícono de la pestaña (favicon) -->
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
     <!-- Enlace a tu archivo CSS externo para los estilos visuales -->
     <link rel="stylesheet" href="../../css/Inicio/auth.css">
 </head>
@@ -26,8 +28,10 @@
         </nav>
 
         <div class="navbar-auth__actions">
-            <a href="login.html" class="btn-nav btn-nav--ghost">Iniciar sesión</a>
-            <a href="register.html" class="btn-nav btn-nav--solid">Registrarse</a>
+            <!-- Como estamos en Login, Iniciar sesión es Sólido (activo) -->
+            <a href="login.html" class="btn-nav btn-nav--solid">Iniciar sesión</a>
+            <!-- Y Registrarse pasa a Fantasma (inactivo) -->
+            <a href="register.html" class="btn-nav btn-nav--ghost">Registrarse</a>
         </div>
     </header>
 
@@ -40,7 +44,7 @@
         <!-- <section> divide la página. Esta sección es para la imagen de fondo y el mensaje motivacional ("hero") -->
         <section class="auth__hero">
             <div class="brand">
-                <a href="../index.html">ELARIS</a>
+                <a href="../index.html"></a>
             </div>
 
             <div class="hero-content">
