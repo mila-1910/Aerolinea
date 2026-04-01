@@ -89,3 +89,75 @@
     font-weight: 700;
     color: var(--vino);
 }
+
+/* ===========================
+   PAQUETES TURÍSTICOS
+=========================== */
+.detalle-paquetes {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.detalle-paquetes h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--vino);
+    margin-bottom: 6px;
+}
+
+.paquetes-subtitulo {
+    font-size: 0.9rem;
+    color: var(--gris-texto);
+    margin-bottom: 24px;
+}
+
+.paquetes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.paquete-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: box-shadow 0.2s;
+}
+
+.paquete-card:hover {
+    box-shadow: var(--sombra);
+}
+
+.paquete-icono {
+    font-size: 2rem;
+}
+
+.paquete-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.paquete-info h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.paquete-info p {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+    line-height: 1.5;
+}
+
+.paquete-precio {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--vino);
+}
