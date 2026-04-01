@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #0b2341;
+    --color-bg: #f4f6f8;
+    --color-white: #ffffff;
+    --color-text: #1c1c1c;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.auth {
+    display: flex;
+    min-height: 100vh;
+}
+
+.auth__hero,
+.auth__form-section {
+    width: 50%;
+}

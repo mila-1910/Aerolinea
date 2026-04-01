@@ -12,6 +12,27 @@
 
 <body>
 
+    <!-- navbar de inicio -->
+
+    <header class="navbar-auth">
+        <a href="../index.html" class="navbar-auth__logo">ELARIS</a>
+
+        <nav class="navbar-auth__nav">
+            <a href="../index.html">Inicio</a>
+            <a href="#">Destinos</a>
+            <a href="#">Ayuda</a>
+        </nav>
+
+        <div class="navbar-auth__actions">
+            <a href="login.html" class="btn-nav btn-nav--ghost">Iniciar sesión</a>
+            <a href="register.html" class="btn-nav btn-nav--solid">Registrarse</a>
+        </div>
+    </header>
+
+
+
+
+
     <!-- La etiqueta <main> indica el contenido principal de esta página, el contenedor general -->
     <main class="auth">
         <!-- <section> divide la página. Esta sección es para la imagen de fondo y el mensaje motivacional ("hero") -->
@@ -59,8 +80,27 @@
     </main>
 
     <!-- <footer> es el espacio para el pie de página, típico para el copyright -->
-    <footer class="auth-footer">
-        <p>© 2026 ELARIS. Todos los derechos reservados.</p>
+
+    <footer class="footer-auth">
+        <div class="footer-auth__top">
+            <div class="footer-auth__brand">
+                <h4>ELARIS</h4>
+                <p>Experiencias de vuelo con una identidad elegante, sobria y consistente.</p>
+            </div>
+
+            <div class="footer-auth__links">
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Cookies</a>
+                <a href="#">Accesibilidad</a>
+            </div>
+        </div>
+
+        <hr class="footer-auth__line">
+
+        <div class="footer-auth__bottom">
+            <p>© 2026 ELARIS. Todos los derechos reservados.</p>
+        </div>
     </footer>
 
 </body>
