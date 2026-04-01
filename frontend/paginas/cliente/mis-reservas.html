@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas | ELARIS</title>
+    <link rel="stylesheet" href="../../css/cliente.css">
+    <link rel="stylesheet" href="../../css/mis-reservas.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="dashboard.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Inicio</a></li>
+            <li><a href="buscar-vuelos.html">Destinos</a></li>
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Ayuda</a></li>
+        </ul>
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <div class="avatar">M</div>
+                <span>Messi</span>
+            </div>
+            <ul class="dropdown">
+                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="mis-reservas.html">Mis reservas</a></li>
+                <li><hr></li>
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Listo de reservas de clientes -->
+    <div class="reservas-header">
+        <div class="reservas-header-contenido">
+            <h1>Mis Reservas</h1>
+            <p>Consultá el estado de todos tus vuelos</p>
+        </div>
+    </div>
+
+    <!-- Contenido -->
+    <div class="reservas-contenido">
+
+        <!-- Tabs de reservas -->
+        <div class="reservas-tabs">
+            <button class="tab-reserva activo">Todas</button>
+            <button class="tab-reserva">Pendientes</button>
+            <button class="tab-reserva">Confirmadas</button>
+            <button class="tab-reserva">Canceladas</button>
+        </div>
+        <!-- Tabla de reservas -->
+        <div class="tabla-contenedor">
+            <table class="tabla-mis-reservas">
+                <thead>
+                    <tr>
+                        <th># Reserva</th>
+                        <th>Vuelo</th>
+                        <th>Origen → Destino</th>
+                        <th>Fecha</th>
+                        <th>Clase</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#RES-001</td>
+                        <td>EL-204</td>
+                        <td>Bogotá → Nueva York</td>
+                        <td>15 Abr 2026</td>
+                        <td>Económica</td>
+                        <td><span class="estado confirmada">Confirmada</span></td>
+                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>#RES-002</td>
+                        <td>EL-310</td>
+                        <td>Medellín → Cancún</td>
+                        <td>22 May 2026</td>
+                        <td>Ejecutiva</td>
+                        <td><span class="estado pendiente">Pendiente</span></td>
+                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>#RES-003</td>
+                        <td>EL-105</td>
+                        <td>Cali → Madrid</td>
+                        <td>10 Jun 2026</td>
+                        <td>Primera clase</td>
+                        <td><span class="estado cancelada">Cancelada</span></td>
+                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
+                    </tr>
+                    <tr>
+                        <td>#RES-004</td>
+                        <td>EL-422</td>
+                        <td>Bogotá → París</td>
+                        <td>5 Jul 2026</td>
+                        <td>Económica</td>
+                        <td><span class="estado confirmada">Confirmada</span></td>
+                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
