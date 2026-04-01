@@ -161,3 +161,44 @@
     font-weight: 700;
     color: var(--vino);
 }
+
+/* ===========================
+   BOTÓN DE RESERVAR
+=========================== */
+.detalle-reservar {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    padding: 24px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.reservar-resumen p {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+    margin-bottom: 4px;
+}
+
+.reservar-resumen span {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+.btn-reservar {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: opacity 0.2s;
+}
+
+.btn-reservar:hover {
+    opacity: 0.85;
+}
