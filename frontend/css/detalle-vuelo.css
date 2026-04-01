@@ -104,3 +104,125 @@
 .btn-reservar-vuelo:hover {
     opacity: 0.85;
 }
+
+/* ===========================
+   DESCRIPCIÓN DEL VUELO
+=========================== */
+.detalle-descripcion-contenedor {
+    max-width: 1100px;
+    margin: 0 auto 30px auto;
+    padding: 0 40px;
+}
+
+.descripcion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blanco);
+    border-radius: 12px;
+    padding: 16px 24px;
+    box-shadow: var(--sombra);
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.descripcion-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.descripcion-header span {
+    color: var(--vino);
+    font-size: 0.9rem;
+}
+
+.descripcion-texto {
+    background-color: var(--blanco);
+    border-radius: 0 0 12px 12px;
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    color: var(--gris-texto);
+    line-height: 1.7;
+    box-shadow: var(--sombra);
+}
+
+/* ===========================
+   COMENTARIOS
+=========================== */
+.detalle-comentarios-contenedor {
+    max-width: 1100px;
+    margin: 0 auto 30px auto;
+    padding: 0 40px;
+}
+
+.detalle-comentarios-contenedor h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.comentarios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.comentario-card {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.estrellas {
+    font-size: 0.9rem;
+}
+
+.comentario-card h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.comentario-card p {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+}
+
+.comentario-autor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.autor-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--vino);
+    color: var(--blanco);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.autor-nombre {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.autor-rol {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+}
