@@ -1,0 +1,380 @@
+/* auth.css - Estilos para las páginas de login y registro */
+
+/* Reset: los navegadores aplican márgenes y paddings por defecto, esto los limpia */
+* {
+    margin: 0;
+    padding: 0;
+    /* border-box hace que padding y border formen parte del width/height del elemento */
+    box-sizing: border-box;
+}
+
+/* Variables de color del proyecto. Se usan con var(--nombre) en todo el archivo */
+:root {
+    --vino: #7B1C4E;
+    --blanco: #ffffff;
+    --gris-claro: #f5f5f5;
+    --gris-texto: #666666;
+    --texto: #333333;
+    --borde: #e6d9e1;
+    --sombra: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: var(--gris-claro);
+    color: var(--texto);
+}
+
+
+/* ================================
+   NAVBAR
+================================ */
+
+/* sticky + top: 0 hace que el menú se quede fijo al hacer scroll */
+.navbar-auth {
+    background-color: var(--vino);
+    height: 80px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-auth__logo {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-auth__logo img {
+    height: 70px;
+}
+
+/* Los enlaces del menú: Inicio, Destinos, Ayuda */
+.navbar-auth__nav {
+    display: flex;
+    gap: 28px;
+}
+
+.navbar-auth__nav a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.navbar-auth__nav a:hover {
+    opacity: 0.75;
+}
+
+/* Los dos botones de la derecha: "Iniciar sesión" y "Registrarse" */
+.navbar-auth__actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Estilos base compartidos entre ambos botones */
+.btn-nav {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+/* Ghost: solo tiene borde, fondo transparente */
+.btn-nav--ghost {
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Solid: fondo blanco con texto vino */
+.btn-nav--solid {
+    background-color: var(--blanco);
+    color: var(--vino);
+}
+
+.btn-nav:hover {
+    opacity: 0.85;
+}
+
+
+/* ================================
+   LAYOUT PRINCIPAL (pantalla dividida 50/50)
+================================ */
+
+/*
+   calc() permite hacer operaciones matemáticas dentro de CSS.
+   100vh es la altura total de la ventana del navegador.
+   Le restamos 80px que ocupa el navbar para que no haya scroll.
+*/
+.auth {
+    display: flex;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
+/* Las dos columnas: foto a la izquierda, formulario a la derecha */
+.auth__hero,
+.auth__form-section {
+    width: 50%;
+    height: 100%;
+    /* Si el contenido no cabe, permite scroll solo dentro de esa columna */
+    overflow-y: auto;
+}
+
+
+/* ================================
+   COLUMNA IZQUIERDA - imagen de fondo
+================================ */
+
+.auth__hero {
+    position: relative;
+    background-image: url("../../imagenes/Inicio/Avion_Login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--blanco);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    /* space-between empuja el logo al tope y el texto inspiracional al fondo */
+    justify-content: space-between;
+}
+
+/*
+   ::before crea un elemento "fantasma" encima de la imagen.
+   Se usa para oscurecer la foto y que el texto blanco sea legible.
+   inset: 0 hace que cubra toda la sección.
+*/
+.auth__hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/*
+   z-index controla qué tan "encima" está un elemento.
+   El ::before tiene z-index 0 por defecto, así que ponemos z-index: 1
+   aquí para que el texto aparezca por encima del filtro oscuro.
+*/
+.brand,
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 420px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    line-height: 0.95;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Nombre de la marca sobre la imagen (esquina superior izquierda) */
+.brand a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* ================================
+   COLUMNA DERECHA - formulario
+================================ */
+
+.auth__form-section {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+}
+
+/* Caja que contiene el formulario con un ancho máximo para que no se estire en pantallas grandes */
+.auth-box {
+    width: 100%;
+    max-width: 460px;
+}
+
+
+/* ================================
+   ENCABEZADO DEL FORMULARIO
+================================ */
+
+.auth-header {
+    margin-bottom: 40px;
+}
+
+.auth-header h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--vino);
+    margin-bottom: 8px;
+    /* letter-spacing negativo junta las letras, da un look más moderno */
+    letter-spacing: -0.025em;
+}
+
+.auth-header p {
+    color: var(--gris-texto);
+    font-size: 1rem;
+}
+
+
+/* ================================
+   CAMPOS DEL FORMULARIO
+================================ */
+
+/* El form en sí: apila los campos verticalmente con separación entre ellos */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Cada campo (label + input) va dentro de un .form-group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Fila con label a la izquierda y el link "¿Olvidaste tu contraseña?" a la derecha */
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gris-texto);
+}
+
+.forgot-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--vino);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.forgot-link:hover {
+    opacity: 0.8;
+}
+
+/*
+   Diseño minimalista para los inputs:
+   - Sin borde completo, solo una línea inferior
+   - Sin fondo, hereda el del contenedor
+   - Sin outline (el borde azul que ponen los navegadores al hacer clic)
+*/
+.form-group input {
+    width: 100%;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--borde);
+    font-size: 1rem;
+    color: var(--texto);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #a3a3a3;
+}
+
+/* Cuando el usuario hace clic en el input, la línea inferior cambia a vino */
+.form-group input:focus {
+    border-bottom-color: var(--vino);
+}
+
+
+/* ================================
+   BOTÓN PRINCIPAL
+================================ */
+
+.form-actions {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    /* linear-gradient genera un degradado entre dos colores */
+    background: linear-gradient(135deg, var(--vino) 0%, #4a102f 100%);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(123, 28, 78, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Al pasar el mouse, el botón sube un poco y la sombra se intensifica */
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(123, 28, 78, 0.3);
+}
+
+/* Al hacer clic, scale(0.98) lo encoge ligeramente como si lo presionaras */
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+
+/* ================================
+   ENLACE AL FINAL (¿Ya tienes cuenta?)
+================================ */
+
+.auth-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gris-texto);
+}
+
+.auth-footer a {
+    color: var(--vino);
+    font-weight: 700;
+    text-decoration: underline;
+    /* text-decoration-color controla solo el color de la línea subrayada */
+    text-decoration-color: rgba(123, 28, 78, 0.3);
+    /* text-underline-offset baja la línea para que no toque las letras */
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s;
+}
+
+.auth-footer a:hover {
+    text-decoration-color: var(--vino);
+}

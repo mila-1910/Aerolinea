@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Ubicaciones</title>
+
+    <link rel="stylesheet" href="../../css/admin.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR (pega el mismo del dashboard) -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="logo">
+        </div>
+
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="vuelos.html">Vuelos</a></li>
+            <li><a href="ubicaciones.html">Ubicaciones</a></li>
+            <li><a href="paquetes.html">Paquetes</a></li>
+        </ul>
+
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <div class="avatar">K</div>
+                <span>Kamila</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="contenido">
+
+        <!-- ENCABEZADO -->
+        <div class="saludo">
+            <h2>Gestión de Ubicaciones 🌍</h2>
+            <p>Administra países y ciudades disponibles</p>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <input type="text" placeholder="Buscar ciudad o país...">
+
+            <select>
+                <option>Todos</option>
+                <option>País</option>
+                <option>Ciudad</option>
+            </select>
+
+            <a href="#" class="btn-card">+ Agregar ubicación</a>
+        </div>
+
+        <!-- TABLA -->
+        <table class="tabla-reservas">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>País</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>1</td>
+                    <td>Medellín</td>
+                    <td>Ciudad</td>
+                    <td>Colombia</td>
+                    <td class="estado confirmada">Activa</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>Cartagena</td>
+                    <td>Ciudad</td>
+                    <td>Colombia</td>
+                    <td class="estado confirmada">Activa</td>
+                </tr>
+
+                <tr>
+                    <td>3</td>
+                    <td>Colombia</td>
+                    <td>País</td>
+                    <td>-</td>
+                    <td class="estado pendiente">Principal</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+</html>

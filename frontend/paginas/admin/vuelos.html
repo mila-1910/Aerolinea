@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Vuelos</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/admin.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="logo">
+        </div>
+
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="vuelos.html">Vuelos</a></li>
+            <li><a href="ubicaciones.html">Ubicaciones</a></li>
+            <li><a href="paquetes.html">Paquetes</a></li>
+        </ul>
+
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <div class="avatar">K</div>
+                <span>Kamila</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO -->
+    <div class="contenido">
+
+        <!-- ENCABEZADO -->
+        <div class="saludo">
+            <h2>Gestión de Vuelos ✈️</h2>
+            <p>Aquí puedes administrar todos los vuelos de la aerolínea</p>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <input type="text" placeholder="Buscar vuelo...">
+            <select>
+                <option>Todos</option>
+                <option>Activos</option>
+                <option>Pendientes</option>
+            </select>
+
+            <a href="#" class="btn-card">+ Crear vuelo</a>
+        </div>
+
+        <!-- TABLA -->
+        <table class="tabla-reservas">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Bogotá</td>
+                    <td>Medellín</td>
+                    <td>10/06/2026</td>
+                    <td class="estado confirmada">Activo</td>
+                </tr>
+
+                <tr>
+                    <td>2</td>
+                    <td>Cali</td>
+                    <td>Cartagena</td>
+                    <td>12/06/2026</td>
+                    <td class="estado pendiente">Pendiente</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+</html>

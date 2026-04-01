@@ -1,0 +1,465 @@
+/* ============================================
+   ESTILOS ESPECÍFICOS DEL MÓDULO AGENTE
+   ============================================
+   Este archivo se llama DESPUÉS del estilo-global.css
+   Solo contiene estilos que NO están en el CSS general
+*/
+
+/* ============================================
+   CONTENEDOR PRINCIPAL DE LAS PÁGINAS DE AGENTE
+   ============================================ */
+/* Esta clase envuelve todo el contenido de las páginas del agente */
+.contenido-agente {
+    max-width: 1400px;        /* Ancho máximo para que no se estire demasiado */
+    margin: 0 auto;           /* Centra el contenido horizontalmente */
+    padding: 30px 20px;       /* Espaciado interno arriba/abajo y laterales */
+}
+
+/* ============================================
+   TARJETAS DE KPIs (Métricas)
+   ============================================ */
+/* Estas tarjetas muestran números importantes como reservas pendientes */
+.cards-container {
+    display: flex;            /* Pone las tarjetas una al lado de la otra */
+    gap: 24px;                /* Espacio entre tarjetas */
+    margin-bottom: 40px;      /* Espacio debajo de las tarjetas */
+}
+
+/* Cada tarjeta individual */
+.card {
+    background-color: white;  /* Fondo blanco */
+    border-radius: 12px;      /* Esquinas redondeadas */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave */
+    padding: 30px 20px;       /* Espaciado interno */
+    flex: 1;                  /* Todas las tarjetas ocupan el mismo ancho */
+    text-align: center;       /* Texto centrado */
+}
+
+/* Número grande dentro de la tarjeta (ej: 5 reservas) */
+.card .numero {
+    font-size: 2.5rem;        /* Número grande */
+    font-weight: 700;         /* Negrita */
+    color: var(--vino);       /* Color vino que definieron en el CSS global */
+}
+
+/* ============================================
+   BOTONES DE ACCIÓN
+   ============================================ */
+/* Botón que se usa dentro de tablas o tarjetas */
+.btn-accion {
+    background-color: var(--vino);  /* Fondo color vino */
+    color: white;                   /* Texto blanco */
+    border: none;                   /* Sin borde */
+    padding: 6px 14px;              /* Espaciado interno */
+    border-radius: 6px;             /* Esquinas redondeadas */
+    cursor: pointer;                /* Cambia el cursor a manita */
+    font-size: 0.8rem;              /* Tamaño de letra pequeño */
+    font-weight: 600;               /* Negrita */
+    text-decoration: none;          /* Sin subrayado */
+    display: inline-block;          /* Se comporta como bloque en línea */
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+.btn-accion:hover {
+    opacity: 0.85;                  /* Se vuelve un poco transparente */
+}
+
+/* ============================================
+   TABLA DE RESERVAS (para página de reservas)
+   ============================================ */
+.tabla-reservas-agente {
+    width: 100%;                    /* Ocupa todo el ancho disponible */
+    border-collapse: collapse;      /* Junta los bordes de las celdas */
+    background-color: white;        /* Fondo blanco */
+    border-radius: 12px;            /* Esquinas redondeadas */
+    overflow: hidden;               /* Esconde lo que se salga */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Sombra suave */
+    margin-top: 20px;               /* Espacio arriba */
+}
+
+/* Encabezado de la tabla */
+.tabla-reservas-agente thead {
+    background-color: var(--vino);  /* Fondo color vino */
+    color: white;                   /* Texto blanco */
+}
+
+/* Celdas de la tabla */
+.tabla-reservas-agente th,
+.tabla-reservas-agente td {
+    padding: 14px 16px;             /* Espaciado interno */
+    text-align: left;               /* Texto alineado a la izquierda */
+    font-size: 0.9rem;              /* Tamaño de letra */
+}
+
+/* Filas de la tabla */
+.tabla-reservas-agente tbody tr {
+    border-bottom: 1px solid #f0f0f0; /* Línea separadora entre filas */
+}
+
+/* Efecto al pasar mouse sobre una fila */
+.tabla-reservas-agente tbody tr:hover {
+    background-color: #fdf0f6;      /* Fondo rosado muy clarito */
+}
+
+/* ============================================
+   ESTADOS DE RESERVA (colores según estado)
+   ============================================ */
+.estado {
+    display: inline-block;          /* Se comporta como bloque en línea */
+    padding: 4px 12px;              /* Espaciado interno */
+    border-radius: 20px;            /* Esquinas redondeadas */
+    font-size: 0.8rem;              /* Tamaño de letra */
+    font-weight: 600;               /* Negrita */
+}
+
+/* Estado CONFIRMADA - color verde */
+.estado.confirmada {
+    background-color: #d4edda;      /* Fondo verde claro */
+    color: #155724;                 /* Texto verde oscuro */
+}
+
+/* Estado PENDIENTE - color amarillo */
+.estado.pendiente {
+    background-color: #fff3cd;      /* Fondo amarillo claro */
+    color: #856404;                 /* Texto amarillo oscuro */
+}
+
+/* Estado CANCELADA - color rojo */
+.estado.cancelada {
+    background-color: #f8d7da;      /* Fondo rojo claro */
+    color: #721c24;                 /* Texto rojo oscuro */
+}
+
+/* ============================================
+   ACCESOS RÁPIDOS (tarjetas con botones)
+   ============================================ */
+.accesos-rapidos {
+    display: grid;                  /* Usamos grid para organizar */
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
+    gap: 20px;                      /* Espacio entre tarjetas */
+    margin-bottom: 40px;            /* Espacio debajo */
+}
+
+/* Cada tarjeta de acceso rápido */
+.card-acceso {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;          /* Quita subrayado del enlace */
+    color: #333;                    /* Color de texto */
+    transition: transform 0.2s;     /* Animación suave al hacer hover */
+    display: block;                 /* El enlace ocupa todo el bloque */
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.card-acceso:hover {
+    transform: translateY(-4px);    /* Se levanta un poco */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra más pronunciada */
+}
+
+/* Icono dentro de la tarjeta */
+.card-acceso .icono {
+    font-size: 2rem;                /* Icono grande */
+    margin-bottom: 12px;            /* Espacio debajo del icono */
+}
+
+/* Título de la tarjeta */
+.card-acceso h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+/* Descripción de la tarjeta */
+.card-acceso p {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+}
+
+/* ============================================
+   🆕 ESTILOS PARA LA BARRA DE BÚSQUEDA (reservas.html)
+   ============================================ */
+/* Estos estilos crean la barra con filtros para buscar reservas */
+
+/* Contenedor principal de la barra de búsqueda */
+.barra-busqueda {
+    background-color: var(--blanco);     /* Fondo blanco */
+    border-radius: 12px;                 /* Esquinas redondeadas */
+    padding: 20px;                       /* Espacio interno */
+    box-shadow: var(--sombra);           /* Sombra suave */
+    margin-bottom: 30px;                 /* Separación con la tabla */
+    display: flex;                       /* Pone los elementos en fila */
+    gap: 15px;                           /* Espacio entre elementos */
+    flex-wrap: wrap;                     /* Si no caben, se van abajo */
+    align-items: flex-end;               /* Alinea al fondo */
+}
+
+/* Cada campo del filtro (cliente, vuelo, fecha, estado) */
+.campo-filtro {
+    flex: 1;                             /* Ocupa el espacio disponible */
+    min-width: 150px;                    /* Ancho mínimo */
+}
+
+/* Etiqueta de cada campo (ej: "Buscar por cliente") */
+.campo-filtro label {
+    display: block;                      /* Ocupa toda la línea */
+    font-size: 0.8rem;                  /* Letra pequeña */
+    font-weight: 600;                   /* Negrita */
+    margin-bottom: 5px;                 /* Separación con el input */
+    color: #555;                        /* Color gris oscuro */
+}
+
+/* Inputs y selects de los filtros */
+.campo-filtro input,
+.campo-filtro select {
+    width: 100%;                        /* Ocupa todo el ancho */
+    padding: 10px 12px;                 /* Espacio interno */
+    border: 1px solid #ddd;             /* Borde gris claro */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-size: 0.9rem;                  /* Tamaño de letra */
+}
+
+/* Cuando el input está enfocado (haciendo clic) */
+.campo-filtro input:focus,
+.campo-filtro select:focus {
+    outline: none;                      /* Quita el borde azul por defecto */
+    border-color: var(--vino);          /* Borde color vino */
+}
+
+/* Botón de BUSCAR */
+.btn-buscar {
+    background-color: var(--vino);      /* Fondo color vino */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 10px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+}
+
+/* Botón de LIMPIAR */
+.btn-limpiar {
+    background-color: #6c757d;          /* Fondo gris */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 10px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+}
+
+/* Efecto hover (mouse encima) para los botones */
+.btn-buscar:hover,
+.btn-limpiar:hover {
+    opacity: 0.85;                      /* Se vuelve un poco transparente */
+}
+
+/* Contador de registros (ej: "Mostrando 8 reservas") */
+.total-registros {
+    margin-top: 15px;                   /* Separación arriba */
+    font-size: 0.85rem;                 /* Letra pequeña */
+    color: var(--gris-texto);           /* Color gris */
+}
+
+/* ============================================
+   🆕 ESTILOS PARA DETALLE DE RESERVA (detalle-reserva.html)
+   ============================================ */
+
+/* Grid de dos columnas (para poner info pasajero y vuelo lado a lado) */
+.grid-detalle {
+    display: grid;                      /* Usamos grid */
+    grid-template-columns: 1fr 1fr;     /* Dos columnas iguales */
+    gap: 30px;                          /* Espacio entre columnas */
+    margin-bottom: 40px;                /* Separación con lo que sigue */
+}
+
+/* Tarjetas blancas que contienen la información */
+.tarjeta-info {
+    background-color: var(--blanco);    /* Fondo blanco */
+    border-radius: 12px;                /* Esquinas redondeadas */
+    box-shadow: var(--sombra);          /* Sombra suave */
+    padding: 24px;                      /* Espacio interno */
+}
+
+/* Título de cada tarjeta (ej: "👤 Pasajero") */
+.tarjeta-info h3 {
+    color: var(--vino);                 /* Color vino */
+    margin-bottom: 20px;                /* Separación abajo */
+    padding-bottom: 8px;                /* Espacio interno abajo */
+    border-bottom: 2px solid var(--vino); /* Línea decorativa abajo */
+    font-size: 1.2rem;                  /* Tamaño de letra */
+}
+
+/* Cada línea de dato (ej: "Nombre completo: María González") */
+.dato-linea {
+    display: flex;                      /* Pone label y valor en fila */
+    justify-content: space-between;     /* Uno a la izquierda, otro a la derecha */
+    padding: 10px 0;                   /* Espacio arriba y abajo */
+    border-bottom: 1px solid #eee;      /* Línea separadora gris clara */
+}
+
+/* Etiqueta del dato (ej: "Nombre completo:") */
+.dato-linea .label {
+    font-weight: 600;                   /* Negrita */
+    color: #555;                        /* Color gris oscuro */
+}
+
+/* Valor del dato (ej: "María González") */
+.dato-linea .valor {
+    color: #333;                        /* Color gris más oscuro */
+}
+
+/* Estado del pago (etiqueta con color) */
+.estado-pago {
+    display: inline-block;              /* Se comporta como bloque en línea */
+    padding: 4px 12px;                  /* Espacio interno */
+    border-radius: 20px;                /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    font-size: 0.85rem;                /* Tamaño de letra */
+}
+
+/* Estado PENDIENTE del pago (amarillo) */
+.estado-pago.pendiente {
+    background-color: #fff3cd;          /* Fondo amarillo claro */
+    color: #856404;                     /* Texto amarillo oscuro */
+}
+
+/* Estado CONFIRMADO del pago (verde) - se usa cuando se confirma el pago */
+.estado-pago.confirmado {
+    background-color: #d4edda;          /* Fondo verde claro */
+    color: #155724;                     /* Texto verde oscuro */
+}
+
+/* Campo para asignar asiento */
+.campo-asiento {
+    margin: 20px 0;                     /* Separación arriba y abajo */
+}
+
+/* Etiqueta del campo asiento */
+.campo-asiento label {
+    display: block;                     /* Ocupa toda la línea */
+    font-weight: 600;                   /* Negrita */
+    margin-bottom: 8px;                 /* Separación abajo */
+    color: #555;                        /* Color gris */
+}
+
+/* Input para escribir el número de asiento */
+.campo-asiento input {
+    width: 100%;                        /* Ocupa todo el ancho */
+    padding: 12px;                      /* Espacio interno */
+    border: 1px solid #ddd;             /* Borde gris */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-size: 1rem;                   /* Tamaño de letra */
+}
+
+/* Campo de observación opcional */
+.observacion {
+    margin: 20px 0;                     /* Separación arriba y abajo */
+}
+
+/* Etiqueta del campo observación */
+.observacion label {
+    display: block;                     /* Ocupa toda la línea */
+    font-weight: 600;                   /* Negrita */
+    margin-bottom: 8px;                 /* Separación abajo */
+    color: #555;                        /* Color gris */
+}
+
+/* Textarea para escribir observaciones */
+.observacion textarea {
+    width: 100%;                        /* Ocupa todo el ancho */
+    padding: 12px;                      /* Espacio interno */
+    border: 1px solid #ddd;             /* Borde gris */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-size: 0.9rem;                 /* Tamaño de letra */
+    resize: vertical;                   /* Permite redimensionar solo verticalmente */
+    font-family: inherit;               /* Usa la misma fuente que el resto */
+}
+
+/* Grupo de botones de acción (confirmar, asignar, cancelar) */
+.grupo-botones {
+    display: flex;                      /* Pone los botones en fila */
+    gap: 15px;                          /* Espacio entre botones */
+    margin-top: 30px;                   /* Separación arriba */
+    flex-wrap: wrap;                    /* Si no caben, se van abajo */
+}
+
+/* Botón CONFIRMAR PAGO (verde) */
+.btn-confirmar {
+    background-color: #28a745;          /* Fondo verde */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 12px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+    flex: 1;                            /* Ocupa el espacio disponible */
+}
+
+/* Botón ASIGNAR ASIENTO (color vino) */
+.btn-asignar {
+    background-color: var(--vino);      /* Fondo color vino */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 12px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+    flex: 1;                            /* Ocupa el espacio disponible */
+}
+
+/* Botón CANCELAR RESERVA (rojo) */
+.btn-cancelar {
+    background-color: #dc3545;          /* Fondo rojo */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 12px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+    flex: 1;                            /* Ocupa el espacio disponible */
+}
+
+/* Botón RECHAZAR PAGO (gris) */
+.btn-rechazar {
+    background-color: #6c757d;          /* Fondo gris */
+    color: white;                       /* Texto blanco */
+    border: none;                       /* Sin borde */
+    padding: 12px 24px;                 /* Espacio interno */
+    border-radius: 8px;                 /* Esquinas redondeadas */
+    font-weight: 600;                   /* Negrita */
+    cursor: pointer;                    /* Cursor de mano */
+    flex: 1;                            /* Ocupa el espacio disponible */
+}
+
+/* Efecto hover para todos los botones */
+.btn-confirmar:hover,
+.btn-asignar:hover,
+.btn-cancelar:hover,
+.btn-rechazar:hover {
+    opacity: 0.85;                      /* Se vuelve un poco transparente */
+}
+
+/* Tabla del historial de estados */
+.historial-tabla {
+    width: 100%;                        /* Ocupa todo el ancho */
+    border-collapse: collapse;          /* Junta los bordes */
+    margin-top: 15px;                   /* Separación arriba */
+}
+
+/* Celdas del encabezado y datos del historial */
+.historial-tabla th,
+.historial-tabla td {
+    padding: 10px;                      /* Espacio interno */
+    text-align: left;                   /* Texto alineado a la izquierda */
+    border-bottom: 1px solid #eee;      /* Línea separadora abajo */
+    font-size: 0.85rem;                /* Tamaño de letra pequeño */
+}
+
+/* Encabezado de la tabla de historial */
+.historial-tabla th {
+    background-color: var(--gris-claro); /* Fondo gris claro */
+    color: #333;                        /* Texto gris oscuro */
+    font-weight: 600;                   /* Negrita */
+}
