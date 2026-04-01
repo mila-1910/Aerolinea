@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,62 +9,65 @@
     <link rel="stylesheet" href="../../css/buscar-vuelos.css">
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 </head>
+
 <body>
-    
+
     <!-- Navbar definido -->
-<nav class="navbar">
+    <nav class="navbar">
 
-    <a class="navbar-logo" href="dashboard.html">
-        <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
-    </a>
+        <a class="navbar-logo" href="dashboard.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
 
-    <ul class="navbar-links">
-        <li><a href="dashboard.html">Inicio</a></li>
-        <li><a href="buscar-vuelos.html">Destinos</a></li>
-        <li><a href="#">Información</a></li>
-        <li><a href="#">Ayuda</a></li>
-    </ul>
-
-    <div class="navbar-perfil">
-        <div class="perfil-trigger">
-            <div class="avatar">M</div>
-            <span>Messi</span>
-        </div>
-        
-        <ul class="dropdown">
-            <li><a href="#">Mi cuenta</a></li>
-            <li><a href="mis-reservas.html">Mis reservas</a></li>
-            <li><hr></li>
-            <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+        <ul class="navbar-links">
+            <li><a href="dashboard.html">Inicio</a></li>
+            <li><a href="buscar-vuelos.html">Destinos</a></li>
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Ayuda</a></li>
         </ul>
+
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <div class="avatar">M</div>
+                <span>Messi</span>
+            </div>
+
+            <ul class="dropdown">
+                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="mis-reservas.html">Mis reservas</a></li>
+                <li>
+                    <hr>
+                </li>
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <!-- Este es el formulario de la busquedad de vuelos de usuario -->
+
+    <div class="buscador-header">
+
+        <h2>¿Cual sera tu proximo destino?</h2>
+        <p>Encuentra el vuelo perfecto para tu proximo viaje!! </p>
+
+        <!-- Tipo de viaja -->
+
+        <div class="tipo-viaje">
+            <input type="radio" name="tipo" id="ida-vuelta" checked>
+            <label for="ida-vuelta">Ida y vuelta</label>
+
+            <input type="radio" name="tipo" id="solo-ida">
+            <label for="solo-ida">Solo ida</label>
+        </div>
+
 
     </div>
 
-</nav>
+    <!-- Campos -->
 
-<!-- Este es el formulario de la busquedad de vuelos de usuario -->
-
-<div class="buscador-header">
-
-    <h2>¿Cual sera tu proximo destino?</h2>
-    <p>Encuentra el vuelo perfecto para tu proximo viaje!! </p>
-
-<!-- Tipo de viaja -->
-
-<div class="tipo-viaje">
-    <input type="radio" name="tipo" id="ida-vuelta" checked>
-    <label for="ida-vuelta">Ida y vuelta</label>
-
-    <input type="radio" name="tipo" id="solo-ida">
-    <label for="solo-ida">Solo ida</label>
-</div>
-    
-
-</div>
-
-<!-- Campos -->
-
-<div class="buscador-campos">
+    <div class="buscador-campos">
 
         <div class="campo-grupo">
             <label>Origen</label>
@@ -113,7 +117,7 @@
             <div class="filtro-grupo">
                 <h4>Escalas</h4>
                 <label><input type="checkbox" checked> Vuelo directo</label>
-                <label><input type="checkbox"checked> Una escala</label>
+                <label><input type="checkbox" checked> Una escala</label>
                 <label><input type="checkbox"> Dos o más</label>
             </div>
 
@@ -203,7 +207,37 @@
 
         </div>
 
-</div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Bogotá, Colombia</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-hr">
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+    </footer>
 
 </body>
 
