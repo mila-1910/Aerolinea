@@ -5,16 +5,89 @@
 }
 
 :root {
-    --color-primary: #0b2341;
-    --color-bg: #f4f6f8;
-    --color-white: #ffffff;
-    --color-text: #1c1c1c;
+    --vino: #7B1C4E;
+    --blanco: #ffffff;
+    --gris-claro: #f5f5f5;
+    --gris-texto: #666666;
+    --texto: #333333;
+    --borde: #e6d9e1;
+    --sombra: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    font-family: "Segoe UI", sans-serif;
+    background-color: var(--gris-claro);
+    color: var(--texto);
+}
+
+.navbar-auth {
+    background-color: var(--vino);
+    height: 80px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-auth__logo {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-auth__logo img {
+    height: 70px;
+}
+
+.navbar-auth__nav {
+    display: flex;
+    gap: 28px;
+}
+
+.navbar-auth__nav a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.navbar-auth__nav a:hover {
+    opacity: 0.75;
+}
+
+.navbar-auth__actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-nav {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.btn-nav--ghost {
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.btn-nav--solid {
+    background-color: var(--blanco);
+    color: var(--vino);
+}
+
+.btn-nav:hover {
+    opacity: 0.85;
 }
 
 .auth {
@@ -25,4 +98,199 @@ body {
 .auth__hero,
 .auth__form-section {
     width: 50%;
+}
+
+.auth__hero {
+    position: relative;
+    background-image: url("../../imagenes/Inicio/Avion_Login.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--blanco);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.auth__hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.brand,
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 420px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    line-height: 0.95;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.auth__form-section {
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 460px;
+}
+
+/* ===========================
+   FORM ESTILO MINIMALISTA (Tailwind a Vanilla CSS)
+=========================== */
+.auth-header {
+    margin-bottom: 40px;
+}
+
+.auth-header h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--vino);
+    margin-bottom: 8px;
+    letter-spacing: -0.025em;
+}
+
+.auth-header p {
+    color: var(--gris-texto);
+    font-size: 1rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gris-texto);
+}
+
+.forgot-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--vino);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.forgot-link:hover {
+    opacity: 0.8;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--borde);
+    font-size: 1rem;
+    color: var(--texto);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: #a3a3a3;
+}
+
+.form-group input:focus {
+    border-bottom-color: var(--vino);
+}
+
+.form-actions {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--vino) 0%, #4a102f 100%);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(123, 28, 78, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(123, 28, 78, 0.3);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+
+
+.auth-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gris-texto);
+}
+
+.auth-footer a {
+    color: var(--vino);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(123, 28, 78, 0.3);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s;
+}
+
+.auth-footer a:hover {
+    text-decoration-color: var(--vino);
+}
+
+/* Ajustes a la marca en la imagen (izq) */
+.brand a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }

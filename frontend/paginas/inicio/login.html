@@ -7,7 +7,7 @@
     <!-- El título de la pestaña del navegador -->
     <title>Login | ELARIS</title>
     <!-- Enlace a tu archivo CSS externo para los estilos visuales -->
-    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../../css/Inicio/auth.css">
 </head>
 
 <body>
@@ -15,7 +15,9 @@
     <!-- navbar de inicio -->
 
     <header class="navbar-auth">
-        <a href="../index.html" class="navbar-auth__logo">ELARIS</a>
+        <a href="../index.html" class="navbar-auth__logo">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
 
         <nav class="navbar-auth__nav">
             <a href="../index.html">Inicio</a>
@@ -42,7 +44,7 @@
             </div>
 
             <div class="hero-content">
-                <h1>Tu próximo horizonte te espera.</h1>
+                <h1>Tu próximo horizonte te espera</h1>
                 <p>Experiencias de vuelo diseñadas con precisión para el viajero moderno.</p>
             </div>
         </section>
@@ -50,31 +52,35 @@
         <!-- Esta sección contiene específicamente el recuadro blanco donde va el formulario -->
         <section class="auth__form-section">
             <div class="auth-box">
-                <h2>Bienvenido de nuevo</h2>
-                <p>Ingresa tus credenciales para acceder a tu cuenta.</p>
+                <div class="auth-header">
+                    <h2>Bienvenido de nuevo</h2>
+                    <p>Ingresa tus credenciales para acceder a tu cuenta.</p>
+                </div>
 
                 <!-- <form> envuelve los campos que el usuario va a llenar -->
-                <!-- action="#" significa que por ahora no envía datos a ningún lado real -->
-                <form action="#" method="post">
-                    <!-- <label> es el texto descriptivo del campo ("Correo electrónico") -->
-                    <label for="email">Correo electrónico</label>
-                    <!-- <input> es la caja de texto. type="email" valida automáticamente que sea un correo válido -->
-                    <!-- required significa que el navegador no dejará avanzar si está vacío -->
-                    <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+                <form class="auth-form" action="../cliente/dashboard.html" method="get">
 
-                    <label for="password">Contraseña</label>
-                    <!-- type="password" asegura que lo que escribas se vea como puntitos ocultos -->
-                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+                    </div>
 
-                    <!-- <a> es la etiqueta para enlaces. Aquí iría a la página para recuperar clave -->
-                    <a href="#">Olvidé mi contraseña</a>
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="password">Contraseña</label>
+                            <a href="#" class="forgot-link">Olvidé mi contraseña</a>
+                        </div>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
 
-                    <!-- <button> es el botón. type="submit" significa "Enviar los datos del formulario" -->
-                    <button type="submit">Iniciar sesión</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                    </div>
                 </form>
 
-                <!-- href="register.html" hace que este enlace te lleve físicamente a la página de registro -->
-                <p>¿No tienes una cuenta? <a href="register.html">Regístrate</a></p>
+                <div class="auth-footer">
+                    <p>¿No tienes una cuenta? <a href="register.html">Regístrate</a></p>
+                </div>
             </div>
         </section>
     </main>
