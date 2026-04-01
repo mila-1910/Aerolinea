@@ -1,0 +1,91 @@
+/* ===========================
+   PARTE PRINCIPAL
+=========================== */
+.resumen-contenedor {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ===========================
+   TÍTULO
+=========================== */
+.resumen-titulo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* ===========================
+   BLOQUES
+=========================== */
+.resumen-bloque {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--sombra);
+}
+
+.bloque-header {
+    background-color: var(--vino);
+    padding: 12px 20px;
+}
+
+.bloque-header h3 {
+    color: var(--blanco);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bloque-contenido {
+    background-color: var(--blanco);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.vuelo-ruta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vuelo-ciudad {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.vuelo-flecha {
+    color: var(--vino);
+    font-size: 1.2rem;
+}
+
+.vuelo-detalles {
+    display: flex;
+    gap: 24px;
+}
+
+.vuelo-detalle-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detalle-label {
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+    font-weight: 600;
+}
+
+.detalle-valor {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
