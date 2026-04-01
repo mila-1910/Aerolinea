@@ -32,7 +32,152 @@
         </div>
     </header>
 
+    <main>
+        <!-- Hero Principal-->
+        <section class="hero">
+            <div class="hero_overlay"></div>
 
+            <div class="hero_content">
+                <h1>Vuela hacia lo que importa</h1>
+            </div>
+        </section>
+
+        <!-- Tarjeta de reserva -->
+        <section class="booking">
+            <div class="booking-card">
+                <div class="booking-card__tabs">
+                    <button type="button" class="active">Reservar un vuelo</button>
+                    <button type="button">Paquetes</button>
+                    <button type="button">Gestionar / Facturar</button>
+                    <button type="button">Estado de vuelo</button>
+                </div>
+
+                <div class="booking-card__trip-type">
+                    <label><input type="radio" name="trip" checked> Regreso</label>
+                    <label><input type="radio" name="trip"> Solo ida</label>
+                    <label><input type="radio" name="trip"> Múltiples trayectos</label>
+                </div>
+
+                <form class="booking-card__form">
+                    <div class="booking-card__fields">
+                        <div class="field">
+                            <label for="from">Origen</label>
+                            <input type="text" id="from" placeholder="Ciudad de origen">
+                        </div>
+
+                        <div class="field">
+                            <label for="to">Destino</label>
+                            <input type="text" id="to" placeholder="Ciudad de destino">
+                        </div>
+
+                        <div class="field">
+                            <label for="departure">Fecha de ida</label>
+                            <input type="date" id="departure">
+                        </div>
+
+                        <div class="field">
+                            <label for="return">Fecha de regreso</label>
+                            <input type="date" id="return">
+                        </div>
+
+                        <div class="field">
+                            <label for="passengers">Pasajeros</label>
+                            <input type="number" id="passengers" min="1" max="10" value="1">
+                        </div>
+                    </div>
+
+                    <div class="booking-card__actions">
+                        <button type="submit">Mostrar Vuelos</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </section>
+
+        <!-- Bloque promocional -->
+        <section class="promo">
+            <div class="promo__card">
+                <h2>Acercamos destinos</h2>
+                <p>
+                    Viajar no es solo llegar a un lugar. Es reencontrarte con quienes quieres,
+                    descubrir nuevas experiencias y disfrutar el trayecto con la comodidad que mereces.
+                </p>
+                <a href="#" class="promo__button">Buscar Vuelos</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer ELARIS copiado de cliente -->
+    <footer class="footer">
+
+        <!-- Parte superior del footer -->
+        <div class="footer-top">
+
+            <!-- Logo y descripción -->
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisora -->
+        <hr class="footer-hr">
+
+        <!-- Parte inferior -->
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
+
+    <!-- Lógica del Navbar Inteligente (Aparece al hacer scroll hacia arriba) -->
+    <script>
+        const header = document.querySelector('.header');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            // Si estamos muy cerca del tope (Hero), mantenerlo transparente nativo
+            if (currentScrollY <= 120) {
+                header.classList.remove('is-sticky', 'is-hidden');
+            } else if (currentScrollY < lastScrollY) {
+                // Scrolleando hacia arriba
+                header.classList.remove('is-hidden');
+                header.classList.add('is-sticky');
+            } else if (currentScrollY > lastScrollY) {
+                // Scrolleando hacia abajo
+                if (header.classList.contains('is-sticky')) {
+                    header.classList.remove('is-sticky');
+                    header.classList.add('is-hidden');
+                }
+            }
+            lastScrollY = currentScrollY;
+        });
+    </script>
 </body>
 
 </html>
