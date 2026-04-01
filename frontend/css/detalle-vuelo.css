@@ -274,7 +274,7 @@
     left: 0;
     right: 0;
     padding: 16px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
     color: var(--blanco);
     font-weight: 700;
     font-size: 1rem;
