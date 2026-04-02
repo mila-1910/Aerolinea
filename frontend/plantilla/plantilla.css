@@ -1,0 +1,532 @@
+/* =====================================================
+   SISTEMA DE DISEÑO ELARIS AIRLINES — plantilla.css
+   =====================================================
+
+   CÓMO USAR ESTE ARCHIVO
+   ──────────────────────
+   1. Importa este archivo en el <head> de tu página:
+      <link rel="stylesheet" href="../../plantilla/plantilla.css">
+
+   2. Copia el bloque de HTML que necesites
+      (Navbar público, Navbar cliente o Footer) directamente
+      de plantilla.html a tu página.
+
+   3. Si necesitas estilos específicos de tu página,
+      crea tu propio CSS e impórtalo DESPUÉS de este:
+      <link rel="stylesheet" href="../../css/TuCarpeta/tu-pagina.css">
+
+   RUTA RELATIVA DESDE CUALQUIER CARPETA DE PÁGINAS:
+      paginas/inicio/   → ../../plantilla/plantilla.css
+      paginas/cliente/  → ../../plantilla/plantilla.css
+      paginas/agente/   → ../../plantilla/plantilla.css
+      paginas/admin/    → ../../plantilla/plantilla.css
+
+   ===================================================== */
+
+
+/* =====================================================
+   1. TOKENS DE DISEÑO (Variables globales)
+   — Solo modifica aquí si el equipo decide cambiar
+     los colores o dimensiones del sistema completo —
+   ===================================================== */
+:root {
+    /* Colores principales */
+    --vino:          #7B1C4E;   /* Color ELARIS primario */
+    --vino-oscuro:   #4a102f;   /* Hover / énfasis */
+    --blanco:        #ffffff;
+    --gris-claro:    #f5f5f5;   /* Fondo páginas de cliente */
+    --fondo-inicio:  #f7f9fc;   /* Fondo páginas públicas */
+    --texto:         #333333;
+    --gris-texto:    #666666;
+    --rosa-footer:   #f0c0d8;   /* Texto secundario dentro del footer */
+    --linea-footer:  #a0406e;   /* Separador del footer */
+
+    /* Sombras */
+    --sombra:        0 2px 8px rgba(0, 0, 0, 0.10);
+    --sombra-card:   0 12px 40px rgba(0, 0, 0, 0.10);
+
+    /* Dimensiones */
+    --max-ancho:     1100px;    /* Ancho máximo del contenido centrado */
+    --radio-sm:      8px;
+    --radio-md:      12px;
+    --radio-pill:    30px;
+}
+
+
+/* =====================================================
+   2. RESET Y BASE
+   ===================================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+img { display: block; max-width: 100%; }
+a   { text-decoration: none; color: inherit; }
+
+
+/* =====================================================
+   3A. NAVBAR PÚBLICO
+       (Para: index.html, login.html, register.html)
+
+   Clase:   <header class="navbar-pub">
+   =====================================================
+   ESTRUCTURA HTML — copia y pega esto en tu página:
+
+   <header class="navbar-pub">
+     <a href="../../paginas/inicio/index.html" class="navbar-pub__logo">
+       <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+     </a>
+     <nav class="navbar-pub__nav">
+       <a href="../../paginas/inicio/index.html">Inicio</a>
+       <a href="../../paginas/cliente/buscar-vuelos.html">Destinos</a>
+       <a href="#">Información</a>
+       <a href="#">Ayuda</a>
+     </nav>
+     <div class="navbar-pub__actions">
+       <a href="../../paginas/inicio/login.html"    class="btn-nav btn-nav--ghost">Iniciar sesión</a>
+       <a href="../../paginas/inicio/register.html" class="btn-nav btn-nav--solid">Registrarse</a>
+     </div>
+   </header>
+
+   VARIANTE CON HERO: agrega la clase "navbar-pub--sobre-hero"
+   para que el header sea transparente y flote sobre la imagen.
+   ===================================================== */
+.navbar-pub {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background-color: var(--blanco);
+    border-bottom: 1px solid #ebebeb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Variante: header flotante sobre imagen hero */
+.navbar-pub--sobre-hero {
+    position: absolute;
+    background-color: transparent;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.navbar-pub__logo img { height: 80px; width: auto; }
+
+.navbar-pub__nav {
+    display: flex;
+    gap: 40px;
+}
+
+.navbar-pub__nav a {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--texto);
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+}
+
+.navbar-pub__nav a:hover,
+.navbar-pub__nav a.activo {
+    color: var(--vino);
+    border-bottom-color: var(--vino);
+}
+
+.navbar-pub__actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Botones de navbar público */
+.btn-nav {
+    padding: 10px 24px;
+    border-radius: var(--radio-sm);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.btn-nav--ghost {
+    color: var(--vino);
+    background-color: transparent;
+    border: 1.5px solid var(--vino);
+}
+
+.btn-nav--ghost:hover {
+    background-color: rgba(123, 28, 78, 0.06);
+}
+
+.btn-nav--solid {
+    background: var(--vino);
+    color: var(--blanco);
+    border: 1.5px solid var(--vino);
+}
+
+.btn-nav--solid:hover {
+    background: var(--vino-oscuro);
+    border-color: var(--vino-oscuro);
+    box-shadow: 0 4px 10px rgba(123, 28, 78, 0.2);
+}
+
+
+/* =====================================================
+   3B. NAVBAR CLIENTE (usuario logueado)
+       (Para: dashboard.html, buscar-vuelos.html, etc.)
+
+   Clase: <nav class="navbar">
+   =====================================================
+   ESTRUCTURA HTML — copia y pega esto en tu página:
+
+   <nav class="navbar">
+     <a class="navbar-logo" href="dashboard.html">
+       <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+     </a>
+     <ul class="navbar-links">
+       <li><a href="dashboard.html">Inicio</a></li>
+       <li><a href="buscar-vuelos.html">Destinos</a></li>
+       <li><a href="#">Información</a></li>
+       <li><a href="#">Ayuda</a></li>
+     </ul>
+     <div class="navbar-perfil">
+       <div class="perfil-trigger">
+         <div class="avatar">M</div>
+         <span>Nombre Usuario</span>
+       </div>
+       <ul class="dropdown">
+         <li><a href="#">Mi cuenta</a></li>
+         <li><a href="mis-reservas.html">Mis reservas</a></li>
+         <li><hr></li>
+         <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+       </ul>
+     </div>
+   </nav>
+
+   NOTA: El link activo lleva class="activo" en el <a>.
+   ===================================================== */
+.navbar {
+    background-color: var(--vino);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-logo img { height: 70px; }
+
+.navbar-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.navbar-links a {
+    color: var(--blanco);
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+}
+
+.navbar-links a:hover,
+.navbar-links a.activo {
+    opacity: 0.85;
+    border-bottom-color: rgba(255,255,255,0.6);
+}
+
+/* Avatar y dropdown de perfil */
+.navbar-perfil {
+    position: relative;
+    cursor: pointer;
+    color: var(--blanco);
+    font-weight: 600;
+}
+
+.perfil-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: var(--blanco);
+    color: var(--vino);
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.perfil-trigger span {
+    font-size: 1rem;
+    color: var(--blanco);
+    font-weight: 600;
+}
+
+.navbar-perfil .dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 48px;
+    background-color: var(--blanco);
+    border-radius: var(--radio-sm);
+    box-shadow: var(--sombra);
+    list-style: none;
+    min-width: 160px;
+    z-index: 200;
+}
+
+.navbar-perfil:hover .dropdown { display: block; }
+
+.navbar-perfil .dropdown li a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--texto);
+    font-size: 0.9rem;
+    transition: background 0.15s;
+}
+
+.navbar-perfil .dropdown li a:hover {
+    background-color: var(--gris-claro);
+}
+
+.cerrar-sesion { color: #c0392b !important; }
+
+
+/* =====================================================
+   4. FOOTER COMPARTIDO
+      (Idéntico en TODAS las páginas del sitio)
+   =====================================================
+   ESTRUCTURA HTML — copia y pega esto en tu página:
+
+   <footer class="footer">
+     <div class="footer-top">
+       <div class="footer-columna">
+         <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+         <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+       </div>
+       <div class="footer-columna">
+         <h4>Contacto</h4>
+         <p>📧 contacto@elaris.com</p>
+         <p>📞 +57 300 123 4567</p>
+         <p>📍 Tuluá, Colombia</p>
+       </div>
+       <div class="footer-columna">
+         <h4>Síguenos</h4>
+         <div class="redes">
+           <a href="#">📘 Facebook</a>
+           <a href="#">📸 Instagram</a>
+           <a href="#">🐦 Twitter</a>
+           <a href="#">▶️ YouTube</a>
+         </div>
+       </div>
+     </div>
+     <hr class="footer-hr">
+     <div class="footer-bottom">
+       <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+       <p>Diseñado con ❤️ por el equipo ELARIS</p>
+     </div>
+   </footer>
+   ===================================================== */
+.footer {
+    background-color: var(--vino);
+    color: var(--blanco);
+    padding: 50px 40px 20px 40px;
+    margin-top: 60px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+}
+
+.footer-columna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-columna img {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.footer-columna p {
+    font-size: 0.9rem;
+    color: var(--rosa-footer);
+    line-height: 1.6;
+}
+
+.footer-columna h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 6px;
+}
+
+.redes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.redes a {
+    color: var(--rosa-footer);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.redes a:hover { color: var(--blanco); }
+
+.footer-hr {
+    border: none;
+    border-top: 1px solid var(--linea-footer);
+    margin: 30px auto;
+    max-width: var(--max-ancho);
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+    font-size: 0.85rem;
+    color: var(--rosa-footer);
+}
+
+
+/* =====================================================
+   5. COMPONENTES COMPARTIDOS (úsalos en cualquier página)
+   ===================================================== */
+
+/* Botón primario (formularios / acciones principales) */
+.btn-primario {
+    background-color: var(--vino);
+    color: var(--blanco);
+    border: none;
+    padding: 14px 36px;
+    border-radius: var(--radio-pill);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(123,28,78,0.2);
+}
+
+.btn-primario:hover {
+    background-color: var(--vino-oscuro);
+    transform: translateY(-2px);
+}
+
+/* Tarjeta blanca con sombra */
+.card-elaris {
+    background-color: var(--blanco);
+    border-radius: var(--radio-md);
+    box-shadow: var(--sombra-card);
+    padding: 30px;
+}
+
+/* Sección centrada con max-width */
+.seccion-centrada {
+    max-width: var(--max-ancho);
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+/* Encabezado de sección con link "Ver todos →" */
+.seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.seccion-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+.seccion-header a {
+    color: var(--vino);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+}
+
+.seccion-header a:hover { opacity: 0.75; }
+
+/* Campo de formulario estándar */
+.campo-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.campo-grupo label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+.campo-grupo input,
+.campo-grupo select {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--radio-sm);
+    font-size: 0.9rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+    border-color: var(--vino);
+}
+
+/* Badges de estado de reserva */
+.estado {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado.confirmada  { background-color: #d4edda; color: #155724; }
+.estado.pendiente   { background-color: #fff3cd; color: #856404; }
+.estado.cancelada   { background-color: #f8d7da; color: #721c24; }

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!--
+╔══════════════════════════════════════════════════════════════╗
+║            PLANTILLA BASE — ELARIS AIRLINES v1.0            ║
+╠══════════════════════════════════════════════════════════════╣
+║  INSTRUCCIONES PARA EL EQUIPO                               ║
+║  ───────────────────────────────────────────────────────    ║
+║  1. COPIA este archivo a tu carpeta de página               ║
+║  2. ELIGE qué navbar necesitas (ver Sección A o B abajo)    ║
+║  3. Borra el navbar que NO vayas a usar                     ║
+║  4. Reemplaza el contenido de <main> con el de tu página    ║
+║  5. Ajusta las rutas href= y src= según tu carpeta         ║
+║  6. Agrega tu propio CSS específico DESPUÉS de plantilla    ║
+║                                                             ║
+║  EL FOOTER Y EL <head> SON IGUALES EN TODAS LAS PÁGINAS    ║
+╚══════════════════════════════════════════════════════════════╝
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        ▸ PASO 1: Cambia el título de la pestaña.
+          Formato estándar: "Nombre de la sección | ELARIS"
+    -->
+    <title>[Nombre de la página] | ELARIS</title>
+
+    <!-- Ícono ELARIS de la pestaña del navegador (NO cambiar) -->
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Sistema de diseño compartido → NO MODIFICAR
+         Contiene: colores, navbar, footer, componentes base
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <link rel="stylesheet" href="../../plantilla/plantilla.css">
+
+    <!--
+        ▸ PASO 2: Agrega aquí tu CSS específico de página.
+          Siempre DESPUÉS de plantilla.css para que puedas
+          sobreescribir estilos si es necesario.
+          Ejemplo:
+    -->
+    <!-- <link rel="stylesheet" href="../../css/TuCarpeta/tu-pagina.css"> -->
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     ██  SECCIÓN A — NAVBAR PÚBLICO
+         Para: index.html · login.html · register.html
+         (Páginas sin sesión iniciada)
+
+     VARIANTES:
+       • Normal (fondo blanco sticky):
+           <header class="navbar-pub">
+       • Flotante sobre imagen hero (fondo transparente):
+           <header class="navbar-pub navbar-pub--sobre-hero">
+
+     LINK ACTIVO: agrega class="activo" al <a> de la página
+     actual para que se subraye en vino.
+     ════════════════════════════════════════════════════════════ -->
+
+    <header class="navbar-pub">
+
+        <!-- Logo → siempre lleva al inicio -->
+        <a href="../../paginas/inicio/index.html" class="navbar-pub__logo">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
+
+        <!-- Links de navegación principal -->
+        <nav class="navbar-pub__nav">
+            <!-- Agrega class="activo" al link de la página actual -->
+            <a href="../../paginas/inicio/index.html">Inicio</a>
+            <a href="../../paginas/cliente/buscar-vuelos.html">Destinos</a>
+            <a href="#">Información</a>
+            <a href="#">Ayuda</a>
+        </nav>
+
+        <!-- Botones Login / Register -->
+        <div class="navbar-pub__actions">
+            <a href="../../paginas/inicio/login.html"    class="btn-nav btn-nav--ghost">Iniciar sesión</a>
+            <a href="../../paginas/inicio/register.html" class="btn-nav btn-nav--solid">Registrarse</a>
+        </div>
+
+    </header>
+
+    <!-- ╔══════════════════════════════════════════════════════╗
+         ║    ← BORRA HASTA AQUÍ si usas el Navbar Cliente    ║
+         ╚══════════════════════════════════════════════════════╝ -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     ██  SECCIÓN B — NAVBAR CLIENTE (usuario logueado)
+         Para: dashboard.html · buscar-vuelos.html
+               mis-reservas.html · detalle-vuelo.html
+               resumen-reserva.html · (agente y admin)
+
+     NOTA: Cambia la inicial y el nombre del usuario
+           en <div class="avatar"> y <span>.
+     ════════════════════════════════════════════════════════════ -->
+
+    <!-- BORRA ESTE BLOQUE si estás haciendo una página pública -->
+    <nav class="navbar">
+
+        <!-- Logo → lleva al dashboard del rol correspondiente -->
+        <a class="navbar-logo" href="../../paginas/cliente/dashboard.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
+
+        <!-- Links de menú -->
+        <ul class="navbar-links">
+            <!-- Agrega class="activo" al link de la página actual -->
+            <li><a href="../../paginas/cliente/dashboard.html">Inicio</a></li>
+            <li><a href="../../paginas/cliente/buscar-vuelos.html">Destinos</a></li>
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Ayuda</a></li>
+        </ul>
+
+        <!-- Avatar + Dropdown de perfil -->
+        <div class="navbar-perfil">
+            <div class="perfil-trigger">
+                <!-- Cambia la letra y el nombre del usuario -->
+                <div class="avatar">M</div>
+                <span>Nombre Usuario</span>
+            </div>
+            <ul class="dropdown">
+                <li><a href="#">Mi cuenta</a></li>
+                <li><a href="../../paginas/cliente/mis-reservas.html">Mis reservas</a></li>
+                <li><hr></li>
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+            </ul>
+        </div>
+
+    </nav>
+    <!-- ╔══════════════════════════════════════════════════════╗
+         ║   ← BORRA HASTA AQUÍ si usas el Navbar Público     ║
+         ╚══════════════════════════════════════════════════════╝ -->
+
+
+    <!-- ════════════════════════════════════════════════════════
+         CONTENIDO PRINCIPAL
+         ▸ PASO 3: Reemplaza TODO lo que está dentro de <main>
+           con el contenido real de tu página.
+
+         Clases disponibles que ya tienen estilos en plantilla.css:
+         ─────────────────────────────────────────────────────────
+         .seccion-centrada  → div centrado max-width: 1100px
+         .card-elaris       → tarjeta blanca con sombra
+         .seccion-header    → encabezado de sección con link
+         .campo-grupo       → label + input estándar
+         .btn-primario      → botón vino pill (acción principal)
+         .estado.confirmada / .pendiente / .cancelada
+         ════════════════════════════════════════════════════════ -->
+    <main>
+
+        <div class="seccion-centrada">
+            <h1>Título de la página</h1>
+            <p>Aquí va el contenido específico de tu página.</p>
+
+            <!-- Ejemplo: Tarjeta con formulario -->
+            <div class="card-elaris">
+
+                <div class="seccion-header">
+                    <h3>Subtítulo de sección</h3>
+                    <a href="#">Ver todos →</a>
+                </div>
+
+                <div class="campo-grupo">
+                    <label for="campo1">Nombre del campo</label>
+                    <input type="text" id="campo1" placeholder="Escribe aquí...">
+                </div>
+
+                <button class="btn-primario">Acción principal</button>
+            </div>
+        </div>
+
+    </main>
+
+
+    <!-- ════════════════════════════════════════════════════════
+         FOOTER — IGUAL EN TODAS LAS PÁGINAS (NO MODIFICAR)
+         ════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
+            </div>
+
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <hr class="footer-hr">
+
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
+
+
+    <!-- ▸ PASO 4 (Opcional): Tu JavaScript al final del body -->
+    <!-- <script src="../../js/TuCarpeta/tu-script.js"></script> -->
+
+</body>
+</html>
