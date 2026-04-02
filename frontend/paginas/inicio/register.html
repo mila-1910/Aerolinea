@@ -58,6 +58,31 @@
 
                 <form class="auth-form" action="#" method="post">
 
+                    <!-- Tipo + Número de identificación en fila -->
+                    <div class="form-row">
+
+                        <!-- Desplegable: tipo de documento -->
+                        <div class="form-group form-group--tipo-id">
+                            <label for="tipo-identificacion">Tipo de identificación</label>
+                            <select id="tipo-identificacion" name="tipo_identificacion" required>
+                                <option value="" disabled selected>Selecciona...</option>
+                                <option value="CC">Cédula de ciudadanía</option>
+                                <option value="CE">Cédula de extranjería</option>
+                                <option value="PA">Pasaporte</option>
+                                <option value="TI">Tarjeta de identidad</option>
+                                <option value="NIT">NIT</option>
+                            </select>
+                        </div>
+
+                        <!-- Número de identificación -->
+                        <div class="form-group form-group--num-id">
+                            <label for="numero-identificacion">Número de identificación</label>
+                            <input type="text" id="numero-identificacion" name="numero_identificacion"
+                                placeholder="Ej: 1234567890" required>
+                        </div>
+
+                    </div>
+
                     <!-- Nombre completo -->
 
                     <div class="form-group">
@@ -70,6 +95,23 @@
                     <div class="form-group">
                         <label for="email">Correo electrónico</label>
                         <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+                    </div>
+
+                    <!-- Teléfono y Dirección en fila -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono"
+                                placeholder="Ej: +57 300 123 4567" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" id="direccion" name="direccion"
+                                placeholder="Ej: Calle 10 # 5-20" required>
+                        </div>
+
                     </div>
 
                     <!-- Contraseña y confirmar en fila -->

@@ -466,3 +466,60 @@ body {
 .terms-link:hover {
     text-decoration-color: var(--vino);
 }
+
+/* ================================
+   SELECT (Desplegable tipo de identificación)
+================================ */
+
+/*
+   Igualamos visualmente el <select> con los <input>:
+   mismo estilo de línea inferior, sin borde completo.
+*/
+.form-group select {
+    width: 100%;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--borde);
+    font-size: 1rem;
+    color: var(--texto);
+    font-family: "Segoe UI", sans-serif;
+    outline: none;
+    cursor: pointer;
+    appearance: none;           /* Quitamos la flecha nativa del navegador */
+    -webkit-appearance: none;
+    /* Flecha propia con ícono SVG en base64 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237B1C4E' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 24px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+    border-bottom-color: var(--vino);
+}
+
+/* Opción placeholder gris */
+.form-group select option[value=""] {
+    color: #a3a3a3;
+}
+
+/* Anchos relativos para la fila tipo + número de identificación */
+.form-group--tipo-id  { flex: 1.4; }   /* más ancho porque el texto es largo */
+.form-group--num-id   { flex: 1; }
+
+/* ================================
+   SCROLL EN FORMULARIO DE REGISTRO
+   (permite ver todos los campos sin cortar)
+================================ */
+.auth__form-section--register {
+    align-items: flex-start;    /* alinea al tope para que el scroll funcione */
+    padding: 40px 40px;
+}
+
+.auth__form-section--register .auth-box {
+    max-width: 480px;
+    width: 100%;
+    margin: auto;               /* auto vertical centra si hay espacio */
+}
