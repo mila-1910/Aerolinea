@@ -425,6 +425,21 @@ a   { text-decoration: none; color: inherit; }
     color: var(--rosa-footer);
 }
 
+/* ===========================
+   ÍCONOS DEL FOOTER (Font Awesome)
+=========================== */
+.footer-icono {
+    width: 18px;              /* ancho fijo para alinear iconos de distintos tamaños */
+    text-align: center;
+    margin-right: 8px;
+    color: #c9a76d;           /* dorado ELARIS */
+    font-size: 0.95rem;
+}
+
+.redes .footer-icono {
+    font-size: 1rem;
+}
+
 
 /* =====================================================
    5. COMPONENTES COMPARTIDOS (úsalos en cualquier página)
