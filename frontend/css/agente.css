@@ -262,6 +262,35 @@
     color: var(--gris-texto);           /* Color gris */
 }
 
+/* barra de paginación (botones para cambiar de página) */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-paginacion {
+    background-color: var(--blanco);
+    border: 1px solid var(--vino);
+    color: var(--vino);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-paginacion:hover {
+    background-color: var(--vino);
+    color: white;
+}
+
+.btn-paginacion:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* ============================================
    🆕 ESTILOS PARA DETALLE DE RESERVA (detalle-reserva.html)
    ============================================ */
