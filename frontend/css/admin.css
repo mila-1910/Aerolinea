@@ -11,35 +11,6 @@ body {
 	background: #f4f6f9;
 }
 
-/* NAVBAR */
-.navbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px 25px;
-	background: linear-gradient(90deg, #7B1C4E, #a8326e);
-	color: white;
-}
-
-.navbar-logo img {
-	height: 45px;
-}
-
-.navbar-links {
-	display: flex;
-	list-style: none;
-	gap: 25px;
-}
-
-	.navbar-links a {
-		color: white;
-		text-decoration: none;
-		transition: 0.3s;
-	}
-
-		.navbar-links a:hover {
-			color: gold;
-		}
 
 /* PERFIL */
 .perfil-trigger {
@@ -48,19 +19,13 @@ body {
 	gap: 10px;
 }
 
-.avatar {
-	background: gold;
-	color: black;
-	border-radius: 50%;
-	padding: 10px;
-	font-weight: bold;
-}
+
 
 /* CONTENIDO */
 .contenido {
-	max-width: 1200px; /* limita el ancho */
+	max-width: 1400px; /* limita el ancho */
 	margin: auto; /* centra */
-	padding: 20px; /* menos espacio */
+	padding: 30px; /* menos espacio */
 }
 
 /* SALUDO */
@@ -70,17 +35,20 @@ body {
 
 /* CARDS */
 .cards-container {
-	display: flex;
-	gap: 15px;
-	margin-top: 15px;
-	flex-wrap: wrap; /* evita espacios raros */
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 20px;
+	margin-top: 20px;
+	justify-content: center; /* 👈 ESTO ES LO QUE TE FALTABA */
+	flex-wrap: wrap;
 }
 
 .card {
 	background: white;
 	padding: 25px;
 	border-radius: 15px;
-	width: 250px;
+	max-width: 300px; /* 👈 evita que se estiren demasiado */
+	width: 100%;
 	/* BORDE para que se vea el rectángulo */
 	border: 2px solid #e0e0e0;
 	/* SOMBRA MÁS MARCADA */
@@ -99,6 +67,9 @@ body {
 .card-icono {
 	font-size: 30px;
 	margin-bottom: 10px;
+}
+.card.grande {
+	padding: 35px;
 }
 
 /* BOTÓN */
@@ -131,44 +102,43 @@ body {
 .tabla-reservas {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 10px;
+	margin-top: 20px;
 	background: white;
-	border-radius: 10px;
+	border-radius: 15px;
 	overflow: hidden;
+	box-shadow: 0 6px 15px rgba(0,0,0,0.08);
 }
 
 	.tabla-reservas th {
 		background: #7B1C4E;
 		color: white;
-		padding: 10px;
+		padding: 15px; 
 	}
 
 	.tabla-reservas td {
-		padding: 10px;
-		border-bottom: 1px solid #ddd;
+		padding: 15px; 
+		border-bottom: 1px solid #eee;
 	}
-
-/* ESTADOS */
-.estado.confirmada {
-	color: green;
-	font-weight: bold;
+.estado.Activo {
+	background-color: #d4edda; /* Fondo verde claro */
+	color: #155724; /* Texto verde oscuro */
 }
-
-.estado.pendiente {
-	color: orange;
-	font-weight: bold;
-}
-/* FILTROS */
 .filtros {
 	display: flex;
-	gap: 10px;
-	margin: 15px 0;
+	gap: 15px;
+	margin: 25px 0;
 	flex-wrap: wrap;
+	background: white; /* 🔥 fondo */
+	padding: 20px;
+	border-radius: 15px;
+	box-shadow: 0 6px 15px rgba(0,0,0,0.08);
 }
 
 	.filtros input,
 	.filtros select {
-		padding: 10px;
-		border-radius: 8px;
-		border: 1px solid #ccc;
+		padding: 12px;
+		border-radius: 10px;
+		border: 1px solid #ddd;
+		flex: 1;
+		min-width: 180px;
 	}
