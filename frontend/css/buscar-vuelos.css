@@ -287,3 +287,19 @@
 .btn-detalle:hover {
     opacity: 0.85;
 }
+
+/* ===========================
+   ÍCONOS DEL FOOTER (Font Awesome)
+=========================== */
+.footer-icono {
+    width: 18px;              /* ancho fijo para alinear iconos de distintos tamaños */
+    text-align: center;
+    margin-right: 8px;
+    color: #c9a76d;           /* dorado ELARIS — contrasta bien sobre el fondo vino */
+    font-size: 0.95rem;
+}
+
+/* Íconos de redes sociales: un poco más grandes */
+.redes .footer-icono {
+    font-size: 1rem;
+}
