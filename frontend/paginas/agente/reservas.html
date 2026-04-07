@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestionar Reservas | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-    <!-- CSS GLOBAL (cliente.css) -->
+    <!-- CSS GLOBAL -->
     <link rel="stylesheet" href="../../css/cliente.css">
 
     <!-- CSS ESPECÍFICO DEL AGENTE -->
@@ -15,233 +16,298 @@
 
 <body>
 
-    <!-- ========== NAVBAR (ESTRUCTURA PERMANENTE) ========== -->
-    <nav class="navbar">
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar-agente">
         <div class="navbar-logo">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
         </div>
 
-        <ul class="navbar-links">
-            <li><a href="dashboardeagente.html">Inicio</a></li>
-            <li><a href="reservas.html" style="opacity: 0.75;">Gestionar Reservas</a></li>
-        </ul>
+        <div class="navbar-centro">
+            <span class="panel-texto">Gestión de Reservas</span>
+            <span class="badge-agente">AGENTE</span>
+        </div>
 
-        <div class="navbar-perfil">
-            <div class="perfil-trigger">
-                <div class="avatar">JF</div>
-                <span>Juan Fernando</span>
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono">🔔</span>
+                <span class="badge">3</span>
             </div>
-            <ul class="dropdown">
-                <li><a href="#">Mi Perfil</a></li>
-                <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
-            </ul>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">JF</div>
+                    <span>Juan Fernando</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- ========== CONTENIDO PRINCIPAL ========== -->
-    <div class="contenido-agente">
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
 
-        <!-- TÍTULO (ESTRUCTURA PERMANENTE) -->
-        <div class="saludo">
-            <h2>📋 Gestión de Reservas</h2>
-            <p>Administra todas las reservas de los clientes | Confirma pagos, asigna asientos y cambia estados</p>
-        </div>
-
-        <!-- ========== BARRA DE BÚSQUEDA (ESTRUCTURA PERMANENTE) ========== -->
-        <!-- ✅ Esta estructura NO se modifica, solo se conecta con JavaScript después -->
-        <div class="barra-busqueda">
-            <div class="campo-filtro">
-                <label>🔍 Buscar por cliente</label>
-                <input type="text" id="buscarCliente" placeholder="Nombre o documento...">
-            </div>
-            <div class="campo-filtro">
-                <label>✈️ Vuelo</label>
-                <input type="text" id="buscarVuelo" placeholder="Código de vuelo...">
-            </div>
-            <div class="campo-filtro">
-                <label>📅 Fecha</label>
-                <input type="date" id="buscarFecha">
-            </div>
-            <div class="campo-filtro">
-                <label>🏷️ Estado</label>
-                <select id="buscarEstado">
-                    <option value="">Todos</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="confirmada">Confirmada</option>
-                    <option value="cancelada">Cancelada</option>
-                </select>
-            </div>
-            <div>
-                <button class="btn-buscar" id="btnBuscar">Buscar</button>
-                <button class="btn-limpiar" id="btnLimpiar">Limpiar</button>
-            </div>
-        </div>
-
-        <!-- ========== TABLA DE RESERVAS ========== -->
-        <div class="seccion-reservas">
-            <div class="seccion-header">
-                <h3>📋 Todas las reservas</h3>
-                <span class="total-registros" id="totalRegistros">Mostrando 8 reservas</span>
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item">
+                    <span class="menu-icono">📊</span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item active">
+                    <span class="menu-icono">📋</span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="confirmar-pago.html" class="menu-item">
+                    <span class="menu-icono">💰</span>
+                    <span class="menu-texto">Confirmar Pago</span>
+                </a>
+                <a href="asignar-asiento.html" class="menu-item">
+                    <span class="menu-icono">💺</span>
+                    <span class="menu-texto">Asignar Asiento</span>
+                </a>
+                <a href="detalle-reserva.html" class="menu-item">
+                    <span class="menu-icono">📄</span>
+                    <span class="menu-texto">Detalle Reserva</span>
+                </a>
             </div>
 
-            <!-- ✅ La estructura de la tabla (columnas) es PERMANENTE -->
-            <!-- ✅ Los datos dentro del <tbody> son EJEMPLO y se reemplazarán con JavaScript -->
-            <table class="tabla-reservas-agente" id="tablaReservas">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Documento</th>
-                        <th>Vuelo</th>
-                        <th>Origen → Destino</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <!-- 🔴🔴🔴 DATOS DE EJEMPLO - DESPUÉS SE REEMPLAZAN CON JAVASCRIPT 🔴🔴🔴 -->
-                <tbody id="cuerpoTabla">
-                    <!-- RESERVA 1 - PENDIENTE (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-001</td>
-                        <td>María González</td>
-                        <td>1002433789</td>
-                        <td>AV-1234</td>
-                        <td>Bogotá → Medellín</td>
-                        <td>2025-04-15</td>
-                        <td>$250 USD</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td><a href="detalle-reserva.html?id=001" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 2 - CONFIRMADA (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-002</td>
-                        <td>Carlos Rodríguez</td>
-                        <td>87654321</td>
-                        <td>AV-5678</td>
-                        <td>Medellín → Cartagena</td>
-                        <td>2025-04-16</td>
-                        <td>$320 USD</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td><a href="detalle-reserva.html?id=002" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 3 - PENDIENTE (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-003</td>
-                        <td>Ana Martínez</td>
-                        <td>11223344</td>
-                        <td>AV-9012</td>
-                        <td>Cali → Bogotá</td>
-                        <td>2025-04-17</td>
-                        <td>$180 USD</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td><a href="detalle-reserva.html?id=003" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 4 - CANCELADA (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-004</td>
-                        <td>Luis Fernández</td>
-                        <td>55667788</td>
-                        <td>AV-3456</td>
-                        <td>Bogotá → Miami</td>
-                        <td>2025-04-18</td>
-                        <td>$850 USD</td>
-                        <td><span class="estado cancelada">Cancelada</span></td>
-                        <td><a href="detalle-reserva.html?id=004" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 5 - CONFIRMADA (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-005</td>
-                        <td>Laura Sánchez</td>
-                        <td>99887766</td>
-                        <td>AV-7890</td>
-                        <td>Cartagena → Bogotá</td>
-                        <td>2025-04-19</td>
-                        <td>$210 USD</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td><a href="detalle-reserva.html?id=005" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 6 - PENDIENTE (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-006</td>
-                        <td>Pedro Ramírez</td>
-                        <td>44332211</td>
-                        <td>AV-2345</td>
-                        <td>Bogotá → Lima</td>
-                        <td>2025-04-20</td>
-                        <td>$620 USD</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td><a href="detalle-reserva.html?id=006" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 7 - CONFIRMADA (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-007</td>
-                        <td>Sofía Torres</td>
-                        <td>77788899</td>
-                        <td>AV-6789</td>
-                        <td>Medellín → Miami</td>
-                        <td>2025-04-21</td>
-                        <td>$780 USD</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td><a href="detalle-reserva.html?id=007" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                    <!-- RESERVA 8 - PENDIENTE (EJEMPLO) -->
-                    <tr>
-                        <td>#RES-008</td>
-                        <td>Diego Morales</td>
-                        <td>12398765</td>
-                        <td>AV-4321</td>
-                        <td>Cali → Madrid</td>
-                        <td>2025-04-22</td>
-                        <td>$1200 USD</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td><a href="detalle-reserva.html?id=008" class="btn-accion">Ver detalle</a></td>
-                    </tr>
-                </tbody>
-                <!-- 🔴🔴🔴 FIN DE DATOS DE EJEMPLO 🔴🔴🔴 -->
-            </table>
-            <!-- ✅ AQUÍ VA LA PAGINACIÓN SIMULADA - DEBAJO DE LA TABLA -->
-            <div class="paginacion">
-                <button class="btn-paginacion" disabled>« Anterior</button>
-                <span class="pagina-actual">Página 1 de 3</span>
-                <button class="btn-paginacion">Siguiente »</button>
+            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">JF</div>
+                <div class="perfil-info">
+                    <h4>Juan Fernando</h4>
+                    <p>Agente de Aerolínea</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
             </div>
-            <!-- FIN DE PAGINACIÓN -->
-        </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO Y DESCRIPCIÓN -->
+            <div class="saludo">
+                <h2>📋 Gestión de Reservas</h2>
+                <p>Administra todas las reservas de los clientes | Confirma pagos, asigna asientos y cambia estados</p>
+            </div>
+
+            <!-- BARRA DE BÚSQUEDA Y FILTROS -->
+            <div class="barra-busqueda">
+                <div class="campo-filtro">
+                    <label>🔍 Buscar por cliente</label>
+                    <input type="text" id="buscarCliente" placeholder="Nombre o documento...">
+                </div>
+                <div class="campo-filtro">
+                    <label>✈️ Vuelo</label>
+                    <input type="text" id="buscarVuelo" placeholder="Código de vuelo...">
+                </div>
+                <div class="campo-filtro">
+                    <label>📅 Fecha</label>
+                    <input type="date" id="buscarFecha">
+                </div>
+                <div class="campo-filtro">
+                    <label>🏷️ Estado</label>
+                    <select id="buscarEstado">
+                        <option value="">Todos</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmada">Confirmada</option>
+                        <option value="cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="btn-buscar" id="btnBuscar">Buscar</button>
+                    <button class="btn-limpiar" id="btnLimpiar">Limpiar</button>
+                </div>
+            </div>
+
+            <!-- FILTROS RÁPIDOS (por estado) -->
+            <div class="filtros-rapidos">
+                <button class="filtro-btn active" data-estado="todos">📋 Todos <span>(27)</span></button>
+                <button class="filtro-btn" data-estado="pendiente">⏳ Pendientes <span>(5)</span></button>
+                <button class="filtro-btn" data-estado="confirmada">✅ Confirmadas <span>(8)</span></button>
+                <button class="filtro-btn" data-estado="proceso">🔄 En proceso <span>(9)</span></button>
+                <button class="filtro-btn" data-estado="cancelada">❌ Canceladas <span>(5)</span></button>
+            </div>
+
+            <!-- TABLA DE RESERVAS -->
+            <div class="seccion-reservas">
+                <div class="seccion-header">
+                    <h3>📋 Todas las reservas</h3>
+                    <span class="total-registros" id="totalRegistros">Mostrando 8 reservas</span>
+                </div>
+
+                <table class="tabla-reservas-agente" id="tablaReservas">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Pasajero</th>
+                            <th>Documento</th>
+                            <th>Vuelo</th>
+                            <th>Origen → Destino</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Pago</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <!-- 🔴 DATOS DE EJEMPLO - SE REEMPLAZARÁN CON JAVASCRIPT 🔴 -->
+                    <tbody id="cuerpoTabla">
+                        <!-- RESERVA 1 -->
+                        <tr>
+                            <td>#RES-001</td>
+                            <td>María González</td>
+                            <td>1002433789</td>
+                            <td>AV-1234</td>
+                            <td>Bogotá → Medellín</td>
+                            <td>15/04/2025</td>
+                            <td>$250 USD</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><a href="detalle-reserva.html?id=1" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 2 -->
+                        <tr>
+                            <td>#RES-002</td>
+                            <td>Carlos Rodríguez</td>
+                            <td>87654321</td>
+                            <td>AV-5678</td>
+                            <td>Medellín → Cartagena</td>
+                            <td>16/04/2025</td>
+                            <td>$320 USD</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><a href="detalle-reserva.html?id=2" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 3 -->
+                        <tr>
+                            <td>#RES-003</td>
+                            <td>Ana Martínez</td>
+                            <td>11223344</td>
+                            <td>AV-9012</td>
+                            <td>Cali → Bogotá</td>
+                            <td>17/04/2025</td>
+                            <td>$180 USD</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><a href="detalle-reserva.html?id=3" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 4 -->
+                        <tr>
+                            <td>#RES-004</td>
+                            <td>Luis Fernández</td>
+                            <td>55667788</td>
+                            <td>AV-3456</td>
+                            <td>Bogotá → Miami</td>
+                            <td>18/04/2025</td>
+                            <td>$850 USD</td>
+                            <td><span class="estado cancelada">Cancelada</span></td>
+                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><a href="detalle-reserva.html?id=4" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 5 -->
+                        <tr>
+                            <td>#RES-005</td>
+                            <td>Laura Sánchez</td>
+                            <td>99887766</td>
+                            <td>AV-7890</td>
+                            <td>Cartagena → Bogotá</td>
+                            <td>19/04/2025</td>
+                            <td>$210 USD</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><a href="detalle-reserva.html?id=5" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 6 -->
+                        <tr>
+                            <td>#RES-006</td>
+                            <td>Pedro Ramírez</td>
+                            <td>44332211</td>
+                            <td>AV-2345</td>
+                            <td>Bogotá → Lima</td>
+                            <td>20/04/2025</td>
+                            <td>$620 USD</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><a href="detalle-reserva.html?id=6" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 7 -->
+                        <tr>
+                            <td>#RES-007</td>
+                            <td>Sofía Torres</td>
+                            <td>77788899</td>
+                            <td>AV-6789</td>
+                            <td>Medellín → Miami</td>
+                            <td>21/04/2025</td>
+                            <td>$780 USD</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><a href="detalle-reserva.html?id=7" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- RESERVA 8 -->
+                        <tr>
+                            <td>#RES-008</td>
+                            <td>Diego Morales</td>
+                            <td>12398765</td>
+                            <td>AV-4321</td>
+                            <td>Cali → Madrid</td>
+                            <td>22/04/2025</td>
+                            <td>$1200 USD</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><a href="detalle-reserva.html?id=8" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- PAGINACIÓN SIMULADA -->
+                <div class="paginacion">
+                    <button class="btn-paginacion" disabled>« Anterior</button>
+                    <span class="pagina-actual">Página 1 de 3</span>
+                    <button class="btn-paginacion">Siguiente »</button>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- ========== FOOTER (ESTRUCTURA PERMANENTE) ========== -->
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS">
-                <p>Tu viaje comienza con nosotros</p>
-            </div>
-            <div class="footer-columna">
-                <h4>Enlaces rápidos</h4>
-                <p>Reservar vuelo</p>
-                <p>Paquetes turísticos</p>
-                <p>Destinos</p>
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
             <div class="footer-columna">
                 <h4>Contacto</h4>
-                <p>📞 +57 123 456 7890</p>
-                <p>✉️ info@elaris.com</p>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
             </div>
             <div class="footer-columna">
                 <h4>Síguenos</h4>
                 <div class="redes">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
                 </div>
             </div>
         </div>
         <hr class="footer-hr">
         <div class="footer-bottom">
-            <p>© 2025 ELARIS Aerolíneas. Todos los derechos reservados.</p>
-            <p>Términos y condiciones | Política de privacidad</p>
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
         </div>
     </footer>
 

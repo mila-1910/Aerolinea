@@ -1,236 +1,248 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Agente | ELARIS</title>
-    
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- CSS GLOBAL (solo colores, variables y footer) -->
     <link rel="stylesheet" href="../../css/cliente.css">
+
+    <!-- CSS ESPECÍFICO DEL AGENTE (sidebar + estilos propios) -->
     <link rel="stylesheet" href="../../css/agente.css">
 </head>
+
 <body>
 
     <!-- ============================================
-         NAVBAR (BARRA DE NAVEGACIÓN SUPERIOR)
+         NAVBAR SUPERIOR (Logo | Panel Agente | Perfil)
          ============================================ -->
-    <!-- Reutilizo el mismo navbar del CSS global -->
-    <nav class="navbar">
-        <!-- Logo de la aerolínea -->
+    <nav class="navbar-agente">
         <div class="navbar-logo">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
         </div>
-        
-        <!-- Menú de navegación principal -->
-        <ul class="navbar-links">
-            <li><a href="dashboardeagente.html" style="opacity: 0.75;"title="Ir al panel principal">Inicio</a></li>
-            <li><a href="reservas.html">Gestionar Reservas</a></li>
-        </ul>
-        
-        <!-- Perfil del usuario con menú desplegable -->
-        <div class="navbar-perfil">
-            <div class="perfil-trigger">
-                <div class="avatar">JF</div>  <!-- Iniciales del agente -->
-                <span>Juan Fernando</span>
+
+        <div class="navbar-centro">
+            <span class="panel-texto">Panel de Agente</span>
+             <span class="badge-agente">AGENTE</span>
+        </div>
+
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono">🔔</span>
+                <span class="badge">3</span>
             </div>
-            <!-- Menú que aparece al hacer hover -->
-            <ul class="dropdown">
-                <li><a href="#">Mi Perfil</a></li>
-                <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
-            </ul>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">JF</div>
+                    <span>Juan Fernando</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
     <!-- ============================================
-         CONTENIDO PRINCIPAL DEL DASHBOARD
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
          ============================================ -->
-    <div class="contenido-agente">
-        
-        <!-- ==================== SALUDO ==================== -->
-        <div class="saludo">
-            <h2>Panel de Agente</h2>
-            <p>Hola, Juan Fernando | Aquí puedes gestionar las reservas de los clientes</p>
-        </div>
+    <div class="app-container">
 
-        <!-- ==================== KPIs (TARJETAS DE MÉTRICAS) ==================== -->
-        <!-- 
-            Estas tarjetas muestran números importantes:
-            - Reservas pendientes: reservas que necesitan atención
-            - Pagos por confirmar: reservas con pago no verificado
-            - Cambios necesarios: reservas que requieren alguna modificación
-        -->
-        <div class="cards-container">
-            <div class="card">
-                <div class="card-icono">📋</div>
-                <div class="numero">5</div>
-                <h3>Reservas pendientes</h3>
-                <p>Reservas que requieren atención</p>
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item active">
+                    <span class="menu-icono">📊</span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item">
+                    <span class="menu-icono">📋</span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="confirmar-pago.html" class="menu-item">
+                    <span class="menu-icono">💰</span>
+                    <span class="menu-texto">Confirmar Pago</span>
+                </a>
+                <a href="asignar-asiento.html" class="menu-item">
+                    <span class="menu-icono">💺</span>
+                    <span class="menu-texto">Asignar Asiento</span>
+                </a>
+                <a href="detalle-reserva.html" class="menu-item">
+                    <span class="menu-icono">📄</span>
+                    <span class="menu-texto">Detalle Reserva</span>
+                </a>
             </div>
-            <div class="card">
-                <div class="card-icono">💳</div>
-                <div class="numero">3</div>
-                <h3>Pagos por confirmar</h3>
-                <p>Pagos pendientes de verificación</p>
-            </div>
-            <div class="card">
-                <div class="card-icono">🔄</div>
-                <div class="numero">8</div>
-                <h3>Cambios necesarios</h3>
-                <p>Reservas que requieren modificación</p>
-            </div>
-        </div>
 
-        <!-- ==================== ACCESOS RÁPIDOS ==================== -->
-        <!-- 
-            Estos son botones/tarjetas que llevan directamente a las funciones principales.
-            Al hacer clic, redirigen a las otras páginas del módulo agente.
-        -->
-        <div class="accesos-rapidos">
-            <!-- Gestionar reservas: lleva a la tabla completa de reservas -->
-            <a href="reservas.html" class="card-acceso">
-                <div class="icono">📋</div>
-                <h3>Gestionar reservas</h3>
-                <p>Ver y administrar todas las reservas</p>
-            </a>
-            <!-- Cambiar estado: lleva al detalle de reserva (ejemplo con ID 1) -->
-            <a href="detalle-reserva.html?id=1" class="card-acceso">
-                <div class="icono">🔄</div>
-                <h3>Cambiar estado</h3>
-                <p>Actualizar estado de una reserva</p>
-            </a>
-            <!-- Asignar asiento: lleva al detalle de reserva (ejemplo con ID 2) -->
-            <a href="detalle-reserva.html?id=2" class="card-acceso">
-                <div class="icono">💺</div>
-                <h3>Asignar asiento</h3>
-                <p>Asignar ubicación al pasajero</p>
-            </a>
-            <!-- Confirmar pago: lleva al detalle de reserva (ejemplo con ID 3) -->
-            <a href="detalle-reserva.html?id=3" class="card-acceso">
-                <div class="icono">💰</div>
-                <h3>Confirmar pago</h3>
-                <p>Validar pagos pendientes</p>
-            </a>
-        </div>
-
-        <!-- ==================== TABLA DE RESERVAS RECIENTES ==================== -->
-        <!-- 
-            Esta tabla muestra las últimas 5 reservas para que el agente pueda actuar rápido.
-            Es un resumen, no la lista completa.
-        -->
-        <div class="seccion-reservas">
-            <div class="seccion-header">
-                <h3>📋 Reservas recientes</h3>
-                <a href="reservas.html">Ver todas →</a>
+            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">JF</div>
+                <div class="perfil-info">
+                    <h4>Juan Fernando</h4>
+                    <p>Agente de Aerolínea</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
             </div>
-            
-            <!-- Tabla con las reservas más recientes -->
-            <table class="tabla-reservas-agente">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Cliente</th>
-                        <th>Vuelo</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Fila 1: Reserva PENDIENTE -->
-                    <tr>
-                        <td>#RES-001</td>
-                        <td>María González</td>
-                        <td>AV-1234 | Bogotá → Medellín</td>
-                        <td>15/04/2025</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td>
-                            <a href="detalle-reserva.html?id=1" class="btn-accion">Ver detalle</a>
-                        </td>
-                    </tr>
-                    <!-- Fila 2: Reserva CONFIRMADA -->
-                    <tr>
-                        <td>#RES-002</td>
-                        <td>Carlos Rodríguez</td>
-                        <td>AV-5678 | Medellín → Cartagena</td>
-                        <td>16/04/2025</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td>
-                            <a href="detalle-reserva.html?id=2" class="btn-accion">Ver detalle</a>
-                        </td>
-                    </tr>
-                    <!-- Fila 3: Reserva PENDIENTE -->
-                    <tr>
-                        <td>#RES-003</td>
-                        <td>Ana Martínez</td>
-                        <td>AV-9012 | Cali → Bogotá</td>
-                        <td>17/04/2025</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td>
-                            <a href="detalle-reserva.html?id=3" class="btn-accion">Ver detalle</a>
-                        </td>
-                    </tr>
-                    <!-- Fila 4: Reserva CANCELADA -->
-                    <tr>
-                        <td>#RES-004</td>
-                        <td>Luis Fernández</td>
-                        <td>AV-3456 | Bogotá → Miami</td>
-                        <td>18/04/2025</td>
-                        <td><span class="estado cancelada">Cancelada</span></td>
-                        <td>
-                            <a href="detalle-reserva.html?id=4" class="btn-accion">Ver detalle</a>
-                        </td>
-                    </tr>
-                    <!-- Fila 5: Reserva CONFIRMADA -->
-                    <tr>
-                        <td>#RES-005</td>
-                        <td>Laura Sánchez</td>
-                        <td>AV-7890 | Cartagena → Bogotá</td>
-                        <td>19/04/2025</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td>
-                            <a href="detalle-reserva.html?id=5" class="btn-accion">Ver detalle</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- SALUDO -->
+            <div class="saludo">
+                <h2>Panel de Agente</h2>
+                <p>Hola, Juan Fernando | Aquí puedes gestionar las reservas de los clientes</p>
+            </div>
+
+            <!-- KPIs (TARJETAS DE MÉTRICAS) -->
+            <div class="cards-container">
+                <div class="card" title="Reservas que aún no han sido confirmadas">
+                    <div class="card-icono">📋</div>
+                    <div class="numero">5</div>
+                    <h3>Reservas pendientes</h3>
+                    <p>Reservas que requieren atención</p>
+                </div>
+                <div class="card" title="Pagos que esperan validación">
+                    <div class="card-icono">💳</div>
+                    <div class="numero">3</div>
+                    <h3>Pagos por confirmar</h3>
+                    <p>Pagos pendientes de verificación</p>
+                </div>
+                <div class="card" title="Reservas que requieren modificación">
+                    <div class="card-icono">🔄</div>
+                    <div class="numero">8</div>
+                    <h3>Cambios necesarios</h3>
+                    <p>Reservas que requieren modificación</p>
+                </div>
+            </div>
+
+            <!-- ACCESOS RÁPIDOS -->
+            <div class="accesos-rapidos">
+                <a href="reservas.html" class="card-acceso">
+                    <div class="icono">📋</div>
+                    <h3>Gestionar reservas</h3>
+                    <p>Ver y administrar todas las reservas</p>
+                </a>
+                <a href="detalle-reserva.html?id=1" class="card-acceso">
+                    <div class="icono">🔄</div>
+                    <h3>Cambiar estado</h3>
+                    <p>Actualizar estado de una reserva</p>
+                </a>
+                <a href="asignar-asiento.html" class="card-acceso">
+                    <div class="icono">💺</div>
+                    <h3>Asignar asiento</h3>
+                    <p>Asignar ubicación al pasajero</p>
+                </a>
+                <a href="confirmar-pago.html" class="card-acceso">
+                    <div class="icono">💰</div>
+                    <h3>Confirmar pago</h3>
+                    <p>Validar pagos pendientes</p>
+                </a>
+            </div>
+
+            <!-- TABLA DE RESERVAS RECIENTES -->
+            <div class="seccion-reservas">
+                <div class="seccion-header">
+                    <h3>📋 Reservas recientes</h3>
+                    <a href="reservas.html" title="Ver todas las reservas">Ver todas →</a>
+                </div>
+
+                <table class="tabla-reservas-agente">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Vuelo</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr title="Reserva pendiente de confirmación">
+                            <td>#RES-001</td>
+                            <td>María González</td>
+                            <td>AV-1234 | Bogotá → Medellín</td>
+                            <td>15/04/2025</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><a href="detalle-reserva.html?id=1" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <tr title="Reserva confirmada">
+                            <td>#RES-002</td>
+                            <td>Carlos Rodríguez</td>
+                            <td>AV-5678 | Medellín → Cartagena</td>
+                            <td>16/04/2025</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><a href="detalle-reserva.html?id=2" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <tr title="Reserva pendiente de confirmación">
+                            <td>#RES-003</td>
+                            <td>Ana Martínez</td>
+                            <td>AV-9012 | Cali → Bogotá</td>
+                            <td>17/04/2025</td>
+                            <td><span class="estado pendiente">Pendiente</span></td>
+                            <td><a href="detalle-reserva.html?id=3" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <tr title="Reserva cancelada">
+                            <td>#RES-004</td>
+                            <td>Luis Fernández</td>
+                            <td>AV-3456 | Bogotá → Miami</td>
+                            <td>18/04/2025</td>
+                            <td><span class="estado cancelada">Cancelada</span></td>
+                            <td><a href="detalle-reserva.html?id=4" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <tr title="Reserva confirmada">
+                            <td>#RES-005</td>
+                            <td>Laura Sánchez</td>
+                            <td>AV-7890 | Cartagena → Bogotá</td>
+                            <td>19/04/2025</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><a href="detalle-reserva.html?id=5" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 
     <!-- ============================================
-         FOOTER (PIE DE PÁGINA)
+         FOOTER
          ============================================ -->
-    <!-- Reutilizo el mismo footer del CSS global -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS">
-                <p>Tu viaje comienza con nosotros</p>
-            </div>
-            <div class="footer-columna">
-                <h4>Enlaces rápidos</h4>
-                <p>Reservar vuelo</p>
-                <p>Paquetes turísticos</p>
-                <p>Destinos</p>
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
             <div class="footer-columna">
                 <h4>Contacto</h4>
-                <p>📞 +57 123 456 7890</p>
-                <p>✉️ info@elaris.com</p>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
             </div>
             <div class="footer-columna">
                 <h4>Síguenos</h4>
                 <div class="redes">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
                 </div>
             </div>
         </div>
         <hr class="footer-hr">
         <div class="footer-bottom">
-            <p>© 2025 ELARIS Aerolíneas. Todos los derechos reservados.</p>
-            <p>Términos y condiciones | Política de privacidad</p>
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
         </div>
     </footer>
 
 </body>
+
 </html>

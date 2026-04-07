@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Asiento | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="../../css/cliente.css">
+
+    <!-- CSS ESPECÍFICO DEL AGENTE -->
+    <link rel="stylesheet" href="../../css/agente.css">
+</head>
+
+<body>
+
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar-agente">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
+        </div>
+
+        <div class="navbar-centro">
+            <span class="panel-texto">Asignar Asiento</span>
+            <span class="badge-agente">AGENTE</span>
+        </div>
+
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono">🔔</span>
+                <span class="badge">3</span>
+            </div>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">JF</div>
+                    <span>Juan Fernando</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
+
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item">
+                    <span class="menu-icono">📊</span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item">
+                    <span class="menu-icono">📋</span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="confirmar-pago.html" class="menu-item">
+                    <span class="menu-icono">💰</span>
+                    <span class="menu-texto">Confirmar Pago</span>
+                </a>
+                <a href="asignar-asiento.html" class="menu-item active">
+                    <span class="menu-icono">💺</span>
+                    <span class="menu-texto">Asignar Asiento</span>
+                </a>
+                <a href="detalle-reserva.html" class="menu-item">
+                    <span class="menu-icono">📄</span>
+                    <span class="menu-texto">Detalle Reserva</span>
+                </a>
+            </div>
+
+            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">JF</div>
+                <div class="perfil-info">
+                    <h4>Juan Fernando</h4>
+                    <p>Agente de Aerolínea</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO -->
+            <div class="saludo">
+                <h2>💺 Asignar Asiento</h2>
+                <p>Selecciona un vuelo y asigna el número de asiento al pasajero</p>
+            </div>
+
+            <!-- CONTENEDOR DE ASIGNACIÓN DE ASIENTO -->
+            <div class="asignar-asiento-container">
+
+                <!-- COLUMNA IZQUIERDA: Buscar reserva -->
+                <div class="buscar-reserva">
+                    <h3>🔍 Buscar reserva</h3>
+
+                    <div class="campo-busqueda">
+                        <label>Código de reserva</label>
+                        <input type="text" id="codigoReserva" placeholder="Ej: #RES-001, #RES-002">
+                        <button class="btn-buscar-reserva">Buscar</button>
+                    </div>
+
+                    <!-- 🔴 EJEMPLO - Resultado de búsqueda (simulado) -->
+                    <div class="resultado-reserva" id="resultadoReserva">
+                        <h4>📋 Reserva encontrada</h4>
+                        <div class="info-linea">
+                            <span class="label">Código:</span>
+                            <span class="valor">#RES-003</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Pasajero:</span>
+                            <span class="valor">Ana Martínez</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Documento:</span>
+                            <span class="valor">11223344</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Vuelo:</span>
+                            <span class="valor">AV-9012 | Cali → Bogotá</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Fecha:</span>
+                            <span class="valor">17/04/2025</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Clase:</span>
+                            <span class="valor">Económica</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Asiento actual:</span>
+                            <span class="valor" id="asientoActual">No asignado</span>
+                        </div>
+                    </div>
+
+                    <!-- DATOS ADICIONALES DEL PASAJERO -->
+                    <div class="datos-adicionales">
+                        <h4>📞 Contacto del pasajero</h4>
+                        <div class="info-linea">
+                            <span class="label">Email:</span>
+                            <span class="valor">ana.martinez@email.com</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Teléfono:</span>
+                            <span class="valor">+57 310 987 6543</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Dirección:</span>
+                            <span class="valor">Calle 123, Bogotá</span>
+                        </div>
+                        <div class="datos-adicionales-brand">
+                            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+                            <span>ELARIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: Asignar asiento -->
+                <div class="asignar-asiento">
+                    <h3>💺 Asignar asiento</h3>
+
+                    <div class="info-vuelo">
+                        <h4>✈️ Información del vuelo</h4>
+                        <div class="info-linea">
+                            <span class="label">Aeronave:</span>
+                            <span class="valor">Boeing 787 Dreamliner</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Capacidad:</span>
+                            <span class="valor">280 pasajeros</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Clases:</span>
+                            <span class="valor">Económica / Ejecutiva / Primera</span>
+                        </div>
+                    </div>
+
+                    <div class="seleccion-asiento">
+                        <h4>🎯 Seleccionar asiento</h4>
+
+                        <div class="campo-clase">
+                            <label>Clase:</label>
+                            <select id="claseAsiento">
+                                <option value="economica">Económica (Asientos: 30-60)</option>
+                                <option value="ejecutiva" selected>Ejecutiva (Asientos: 1-29)</option>
+                                <option value="primera">Primera Clase (Asientos: 1A-1F)</option>
+                            </select>
+                        </div>
+
+                        <div class="campo-asiento-numero">
+                            <label>Número de asiento:</label>
+                            <input type="text" id="numeroAsiento" placeholder="Ej: 4A, 12B, 21C" value="4A">
+                            <span class="sugerencia">Formato: número + letra (ej: 12A, 14B, 21C)</span>
+                        </div>
+
+                        <!-- MAPA DE ASIENTOS SIMULADO (visual) -->
+                        <div class="mapa-asientos">
+                            <h5>Mapa de asientos (Ejecutiva)</h5>
+                            <div class="filas-asientos">
+                                <div class="fila">
+                                    <span class="fila-numero">1</span>
+                                    <span class="asiento ocupado">A</span>
+                                    <span class="asiento ocupado">B</span>
+                                    <span class="asiento libre">C</span>
+                                    <span class="asiento libre">D</span>
+                                    <span class="asiento ocupado">E</span>
+                                    <span class="asiento libre">F</span>
+                                </div>
+                                <div class="fila">
+                                    <span class="fila-numero">2</span>
+                                    <span class="asiento libre">A</span>
+                                    <span class="asiento ocupado">B</span>
+                                    <span class="asiento libre">C</span>
+                                    <span class="asiento libre">D</span>
+                                    <span class="asiento libre">E</span>
+                                    <span class="asiento ocupado">F</span>
+                                </div>
+                                <div class="fila">
+                                    <span class="fila-numero">3</span>
+                                    <span class="asiento ocupado">A</span>
+                                    <span class="asiento libre">B</span>
+                                    <span class="asiento ocupado">C</span>
+                                    <span class="asiento libre">D</span>
+                                    <span class="asiento libre">E</span>
+                                    <span class="asiento libre">F</span>
+                                </div>
+                                <div class="fila">
+                                    <span class="fila-numero">4</span>
+                                    <span class="asiento libre">A</span>
+                                    <span class="asiento libre">B</span>
+                                    <span class="asiento ocupado">C</span>
+                                    <span class="asiento libre">D</span>
+                                    <span class="asiento ocupado">E</span>
+                                    <span class="asiento libre">F</span>
+                                </div>
+                            </div>
+                            <p class="leyenda">
+                                <span class="libre">🟢 Libre</span>
+                                <span class="ocupado">🔴 Ocupado</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="botones-asignacion">
+                        <button class="btn-cancelar-asignacion">Cancelar</button>
+                        <button class="btn-asignar-ahora">💺 Asignar asiento</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESERVAS PENDIENTES DE ASIGNAR (tabla) -->
+            <div class="reservas-pendientes-asiento">
+                <h3>📋 Reservas pendientes de asignar asiento</h3>
+                <table class="tabla-reservas-agente">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Pasajero</th>
+                            <th>Vuelo</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Asiento</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 🔴 EJEMPLOS - Reservas sin asiento asignado -->
+                        <tr>
+                            <td>#RES-001</d>
+                            <td>María González</d>
+                            <td>AV-1234 | Bogotá → Medellín</d>
+                            <td>15/04/2025</d>
+                            <td><span class="estado pendiente">Pendiente</span></d>
+                            <td><span class="sin-asiento">❌ Sin asignar</span></d>
+                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
+                        </tr>
+                        <tr>
+                            <td>#RES-003</d>
+                            <td>Ana Martínez</d>
+                            <td>AV-9012 | Cali → Bogotá</d>
+                            <td>17/04/2025</d>
+                            <td><span class="estado pendiente">Pendiente</span></d>
+                            <td><span class="sin-asiento">❌ Sin asignar</span></d>
+                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
+                        </tr>
+                        <tr>
+                            <td>#RES-006</d>
+                            <td>Pedro Ramírez</d>
+                            <td>AV-2345 | Bogotá → Lima</d>
+                            <td>20/04/2025</d>
+                            <td><span class="estado pendiente">Pendiente</span></d>
+                            <td><span class="sin-asiento">❌ Sin asignar</span></d>
+                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
+                        </tr>
+                        <tr>
+                            <td>#RES-008</d>
+                            <td>Diego Morales</d>
+                            <td>AV-4321 | Cali → Madrid</d>
+                            <td>22/04/2025</d>
+                            <td><span class="estado pendiente">Pendiente</span></d>
+                            <td><span class="sin-asiento">❌ Sin asignar</span></d>
+                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-hr">
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

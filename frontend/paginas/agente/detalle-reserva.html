@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle de Reserva | ELARIS</title>
+    <title>Detalle Reserva | ELARIS</title>
 
-    <!-- CSS GLOBAL (cliente.css) -->
+    <!-- CSS GLOBAL -->
     <link rel="stylesheet" href="../../css/cliente.css">
 
     <!-- CSS ESPECÍFICO DEL AGENTE -->
@@ -15,234 +15,326 @@
 
 <body>
 
-    <!-- ========== NAVBAR (ESTRUCTURA PERMANENTE) ========== -->
-    <nav class="navbar">
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar-agente">
         <div class="navbar-logo">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
         </div>
 
-        <ul class="navbar-links">
-            <li><a href="dashboardeagente.html">Inicio</a></li>
-            <li><a href="reservas.html">Gestionar Reservas</a></li>
-        </ul>
+        <div class="navbar-centro">
+            <span class="panel-texto">Detalle de Reserva</span>
+            <span class="badge-agente">AGENTE</span>
+        </div>
 
-        <div class="navbar-perfil">
-            <div class="perfil-trigger">
-                <div class="avatar">JF</div>
-                <span>Juan Fernando</span>
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono">🔔</span>
+                <span class="badge">3</span>
             </div>
-            <ul class="dropdown">
-                <li><a href="#">Mi Perfil</a></li>
-                <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
-            </ul>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">JF</div>
+                    <span>Juan Fernando</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- ========== CONTENIDO PRINCIPAL ========== -->
-    <div class="contenido-agente">
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
 
-        <!-- TÍTULO (ESTRUCTURA PERMANENTE) -->
-        <div class="saludo">
-            <h2>✈️ Detalle de Reserva</h2>
-            <p id="reservaId">Reserva #RES-001 | Gestión operativa</p>
-        </div>
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item">
+                    <span class="menu-icono">📊</span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item">
+                    <span class="menu-icono">📋</span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="confirmar-pago.html" class="menu-item">
+                    <span class="menu-icono">💰</span>
+                    <span class="menu-texto">Confirmar Pago</span>
+                </a>
+                <a href="asignar-asiento.html" class="menu-item">
+                    <span class="menu-icono">💺</span>
+                    <span class="menu-texto">Asignar Asiento</span>
+                </a>
+                <a href="detalle-reserva.html" class="menu-item active">
+                    <span class="menu-icono">📄</span>
+                    <span class="menu-texto">Detalle Reserva</span>
+                </a>
+            </div>
 
-        <!-- ========== GRID DE DOS COLUMNAS (ESTRUCTURA PERMANENTE) ========== -->
-        <div class="grid-detalle">
+            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">JF</div>
+                <div class="perfil-info">
+                    <h4>Juan Fernando</h4>
+                    <p>Agente de Aerolínea</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
+            </div>
+        </aside>
 
-            <!-- 🔴 COLUMNA IZQUIERDA: Información del pasajero 🔴 -->
-            <!-- ✅ La ESTRUCTURA (divs, clases) es PERMANENTE -->
-            <!-- 🔴 Los VALORES (María González, etc.) son EJEMPLO y se reemplazarán con JS 🔴 -->
-            <div class="tarjeta-info">
-                <h3>👤 Pasajero</h3>
-                <div class="dato-linea">
-                    <span class="label">Nombre completo:</span>
-                    <span class="valor" id="pasajeroNombre">María González</span> <!-- 🔴 EJEMPLO -->
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO -->
+            <div class="saludo">
+                <h2>📄 Detalle de Reserva</h2>
+                <p>Información completa de la reserva | Historial de cambios</p>
+            </div>
+
+            <!-- ============================================
+                 GRID PRINCIPAL: INFORMACIÓN DE LA RESERVA
+                 ============================================ -->
+            <div class="grid-detalle">
+
+                <!-- COLUMNA IZQUIERDA: Datos del pasajero -->
+                <div class="tarjeta-info">
+                    <h3>👤 Datos del pasajero</h3>
+                    <!-- 🔴 DATOS DE EJEMPLO -->
+                    <div class="dato-linea">
+                        <span class="label">Código reserva:</span>
+                        <span class="valor">#RES-001</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Nombre completo:</span>
+                        <span class="valor">María González</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Documento:</span>
+                        <span class="valor">1002433789</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Nacionalidad:</span>
+                        <span class="valor">Colombiana</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Fecha de nacimiento:</span>
+                        <span class="valor">15/08/1990</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Email:</span>
+                        <span class="valor">maria.gonzalez@email.com</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Teléfono:</span>
+                        <span class="valor">+57 310 123 4567</span>
+                    </div>
                 </div>
-                <div class="dato-linea">
-                    <span class="label">Documento:</span>
-                    <span class="valor" id="pasajeroDocumento">1002433789</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Nacionalidad:</span>
-                    <span class="valor" id="pasajeroNacionalidad">Colombiana</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Fecha de nacimiento:</span>
-                    <span class="valor" id="pasajeroFechaNac">11/03/1991</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Email:</span>
-                    <span class="valor" id="pasajeroEmail">maria.gonzalez@email.com</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Teléfono:</span>
-                    <span class="valor" id="pasajeroTelefono">+57 310 123 4567</span> <!-- 🔴 EJEMPLO -->
+
+                <!-- COLUMNA DERECHA: Datos del vuelo -->
+                <div class="tarjeta-info">
+                    <h3>✈️ Datos del vuelo</h3>
+                    <!-- 🔴 DATOS DE EJEMPLO -->
+                    <div class="dato-linea">
+                        <span class="label">Código de vuelo:</span>
+                        <span class="valor">AV-1234</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Origen:</span>
+                        <span class="valor">Bogotá (BOG)</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Destino:</span>
+                        <span class="valor">Medellín (MDE)</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Fecha de salida:</span>
+                        <span class="valor">15/04/2025</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Hora de salida:</span>
+                        <span class="valor">10:30 AM</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Hora de llegada:</span>
+                        <span class="valor">11:45 AM</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Clase:</span>
+                        <span class="valor">Económica</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Asiento asignado:</span>
+                        <span class="valor">12A</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- 🔴 COLUMNA DERECHA: Información del vuelo 🔴 -->
-            <!-- ✅ La ESTRUCTURA (divs, clases) es PERMANENTE -->
-            <!-- 🔴 Los VALORES (AV-1234, etc.) son EJEMPLO y se reemplazarán con JS 🔴 -->
-            <div class="tarjeta-info">
-                <h3>✈️ Vuelo</h3>
-                <div class="dato-linea">
-                    <span class="label">Código de vuelo:</span>
-                    <span class="valor" id="vueloCodigo">AV-1234</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Origen:</span>
-                    <span class="valor" id="vueloOrigen">Bogotá (BOG)</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Destino:</span>
-                    <span class="valor" id="vueloDestino">Medellín (MDE)</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Fecha de salida:</span>
-                    <span class="valor" id="vueloFechaSalida">12 abril 2025</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Hora de salida:</span>
-                    <span class="valor" id="vueloHoraSalida">22:35</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Hora de llegada:</span>
-                    <span class="valor" id="vueloHoraLlegada">22:45</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Clase:</span>
-                    <span class="valor" id="vueloClase">Ejecutiva</span> <!-- 🔴 EJEMPLO -->
-                </div>
-            </div>
-        </div>
+            <!-- ============================================
+                 SEGUNDO GRID: PAGO Y ESTADO
+                 ============================================ -->
+            <div class="grid-detalle">
 
-        <!-- ========== SEGUNDO GRID: PAGO Y ASIENTO + HISTORIAL ========== -->
-        <div class="grid-detalle">
-
-            <!-- 🔴 DETALLES DE PAGO Y ASIENTO (ESTRUCTURA PERMANENTE) 🔴 -->
-            <div class="tarjeta-info">
-                <h3>💰 Detalles de pago</h3>
-                <div class="dato-linea">
-                    <span class="label">Estado del pago:</span>
-                    <span class="valor">
-                        <span class="estado-pago pendiente" id="estadoPago">Pendiente</span> <!-- 🔴 EJEMPLO -->
-                    </span>
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Método de pago:</span>
-                    <span class="valor" id="metodoPago">Tarjeta de crédito</span> <!-- 🔴 EJEMPLO -->
-                </div>
-                <div class="dato-linea">
-                    <span class="label">Monto total:</span>
-                    <span class="valor" id="montoTotal">$1,422 USD</span> <!-- 🔴 EJEMPLO -->
+                <!-- Detalles de pago -->
+                <div class="tarjeta-info">
+                    <h3>💰 Detalles de pago</h3>
+                    <!-- 🔴 DATOS DE EJEMPLO -->
+                    <div class="dato-linea">
+                        <span class="label">Estado del pago:</span>
+                        <span class="valor">
+                            <span class="estado-pago-badge pendiente">Pendiente</span>
+                        </span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Método de pago:</span>
+                        <span class="valor">Tarjeta de crédito</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Monto total:</span>
+                        <span class="valor">$250 USD</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Precio base:</span>
+                        <span class="valor">$200 USD</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Paquetes turísticos:</span>
+                        <span class="valor">$50 USD</span>
+                    </div>
                 </div>
 
-                <!-- Campo para asignar asiento (ESTRUCTURA PERMANENTE) -->
-                <div class="campo-asiento">
-                    <label>💺 Asignar asiento</label>
-                    <input type="text" id="asientoInput" placeholder="Ej: 12A, 14B, 21C" value="4A">
-                    <!-- 🔴 VALOR EJEMPLO -->
-                </div>
-
-                <!-- Campo de observación opcional (ESTRUCTURA PERMANENTE) -->
-                <div class="observacion">
-                    <label>📝 Observación (opcional)</label>
-                    <textarea id="observacionInput" rows="3" placeholder="Añadir nota sobre la reserva..."></textarea>
+                <!-- Estado de la reserva -->
+                <div class="tarjeta-info">
+                    <h3>🏷️ Estado de la reserva</h3>
+                    <!-- 🔴 DATOS DE EJEMPLO -->
+                    <div class="dato-linea">
+                        <span class="label">Estado actual:</span>
+                        <span class="valor">
+                            <span class="estado pendiente">Pendiente</span>
+                        </span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Fecha de reserva:</span>
+                        <span class="valor">10/04/2025 - 14:23:15</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Última modificación:</span>
+                        <span class="valor">11/04/2025 - 09:30:00</span>
+                    </div>
+                    <div class="observacion-reserva">
+                        <label>📝 Observación del agente:</label>
+                        <textarea rows="2" placeholder="Añadir nota sobre esta reserva..."></textarea>
+                    </div>
                 </div>
             </div>
 
-            <!-- 🔴 HISTORIAL DE ESTADOS (ESTRUCTURA PERMANENTE) 🔴 -->
-            <div class="tarjeta-info">
+            <!-- ============================================
+                 HISTORIAL DE ESTADOS (REQUISITO DEL PROYECTO)
+                 ============================================ -->
+            <div class="tarjeta-info historial-container">
                 <h3>📜 Historial de estados</h3>
-                <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
-                    Registro de fecha y hora de cada cambio en la reserva
-                </p>
-                <!-- ✅ La ESTRUCTURA de la tabla es PERMANENTE -->
-                <!-- 🔴 Las FILAS son EJEMPLO y se reemplazarán con JavaScript 🔴 -->
-                <table class="historial-tabla" id="historialTabla">
+                <p class="historial-descripcion">Registro de fecha y hora de cada cambio en la reserva</p>
+                
+                <!-- 🔴 DATOS DE EJEMPLO - TABLA DE HISTORIAL -->
+                <table class="historial-tabla">
                     <thead>
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Estado anterior</th>
                             <th>Estado nuevo</th>
-                            <th>Agente</th>
+                            <th>Agente / Cliente</th>
                         </tr>
                     </thead>
-                    <!-- 🔴🔴🔴 DATOS DE EJEMPLO - DESPUÉS SE REEMPLAZAN CON JAVASCRIPT 🔴🔴🔴 -->
-                    <tbody id="historialCuerpo">
+                    <tbody>
+                        <!-- 🔴 EJEMPLO 1 -->
                         <tr>
-                            <td>2025-04-10</td> <!-- 🔴 EJEMPLO -->
-                            <td>14:23:15</td> <!-- 🔴 EJEMPLO -->
-                            <td>creada</td> <!-- 🔴 EJEMPLO -->
-                            <td>pendiente</td> <!-- 🔴 EJEMPLO -->
-                            <td>Sistema</td> <!-- 🔴 EJEMPLO -->
+                            <td>10/04/2025</d>
+                            <td>14:23:15</d>
+                            <td>-</d>
+                            <td>Reservada</d>
+                            <td>Cliente</d>
                         </tr>
+                        <!-- 🔴 EJEMPLO 2 -->
                         <tr>
-                            <td>2025-04-10</td> <!-- 🔴 EJEMPLO -->
-                            <td>14:23:15</td> <!-- 🔴 EJEMPLO -->
-                            <td>-</td> <!-- 🔴 EJEMPLO -->
-                            <td>Reservada</td> <!-- 🔴 EJEMPLO -->
-                            <td>Cliente</td> <!-- 🔴 EJEMPLO -->
+                            <td>10/04/2025</d>
+                            <td>14:23:15</d>
+                            <td>Reservada</d>
+                            <td>Pendiente de pago</d>
+                            <td>Cliente</d>
                         </tr>
+                        <!-- 🔴 EJEMPLO 3 -->
                         <tr>
-                            <td>2025-04-11</td> <!-- 🔴 EJEMPLO -->
-                            <td>09:15:30</td> <!-- 🔴 EJEMPLO -->
-                            <td>Reservada</td> <!-- 🔴 EJEMPLO -->
-                            <td>Pendiente pago</td> <!-- 🔴 EJEMPLO -->
-                            <td>Cliente</td> <!-- 🔴 EJEMPLO -->
+                            <td>11/04/2025</d>
+                            <td>09:30:00</d>
+                            <td>Pendiente de pago</d>
+                            <td>Pendiente</d>
+                            <td>Agente (Juan Fernando)</d>
+                        </tr>
+                        <!-- 🔴 EJEMPLO 4 -->
+                        <tr>
+                            <td>12/04/2025</d>
+                            <td>15:20:00</d>
+                            <td>Pendiente</d>
+                            <td>En proceso</d>
+                            <td>Sistema</d>
                         </tr>
                     </tbody>
-                    <!-- 🔴🔴🔴 FIN DE DATOS DE EJEMPLO 🔴🔴🔴 -->
                 </table>
             </div>
-        </div>
 
-        <!-- ========== BOTONES DE ACCIÓN (ESTRUCTURA PERMANENTE) ========== -->
-        <!-- ✅ Los botones son PERMANENTES, solo se les agrega funcionalidad con JS después -->
-        <div class="tarjeta-info" style="margin-top: 0;">
-            <h3>⚡ Acciones</h3>
-            <div class="grupo-botones">
-                <button class="btn-confirmar" id="btnConfirmarPago">✅ Confirmar pago</button>
-                <button class="btn-rechazar" id="btnRechazarPago">❌ Rechazar pago</button>
-                <button class="btn-asignar" id="btnAsignarAsiento">💺 Asignar asiento</button>
-                <button class="btn-cancelar" id="btnCancelarReserva">🗑️ Cancelar reserva</button>
+            <!-- ============================================
+                 BOTONES DE ACCIÓN
+                 ============================================ -->
+            <div class="tarjeta-info botones-accion-container">
+                <h3>⚡ Acciones</h3>
+                <div class="grupo-botones">
+                    <button class="btn-confirmar-pago-detalle">✅ Confirmar pago</button>
+                    <button class="btn-rechazar-pago-detalle">❌ Rechazar pago</button>
+                    <button class="btn-asignar-asiento-detalle">💺 Asignar asiento</button>
+                    <button class="btn-cancelar-reserva-detalle">🗑️ Cancelar reserva</button>
+                </div>
             </div>
-        </div>
+
+        </main>
     </div>
 
-    <!-- ========== FOOTER (ESTRUCTURA PERMANENTE) ========== -->
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
     <footer class="footer">
         <div class="footer-top">
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS">
-                <p>Tu viaje comienza con nosotros</p>
-            </div>
-            <div class="footer-columna">
-                <h4>Enlaces rápidos</h4>
-                <p>Reservar vuelo</p>
-                <p>Paquetes turísticos</p>
-                <p>Destinos</p>
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
             <div class="footer-columna">
                 <h4>Contacto</h4>
-                <p>📞 +57 123 456 7890</p>
-                <p>✉️ info@elaris.com</p>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
             </div>
             <div class="footer-columna">
                 <h4>Síguenos</h4>
                 <div class="redes">
-                    <a href="#">Facebook</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
                 </div>
             </div>
         </div>
         <hr class="footer-hr">
         <div class="footer-bottom">
-            <p>© 2025 ELARIS Aerolíneas. Todos los derechos reservados.</p>
-            <p>Términos y condiciones | Política de privacidad</p>
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
         </div>
     </footer>
 

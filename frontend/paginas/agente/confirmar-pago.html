@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Pago | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="../../css/cliente.css">
+
+    <!-- CSS ESPECÍFICO DEL AGENTE -->
+    <link rel="stylesheet" href="../../css/agente.css">
+</head>
+
+<body>
+
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar-agente">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
+        </div>
+
+        <div class="navbar-centro">
+            <span class="panel-texto">Confirmar Pago</span>
+            <span class="badge-agente">AGENTE</span>
+        </div>
+
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono">🔔</span>
+                <span class="badge">3</span>
+            </div>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">JF</div>
+                    <span>Juan Fernando</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
+
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item">
+                    <span class="menu-icono">📊</span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item">
+                    <span class="menu-icono">📋</span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="confirmar-pago.html" class="menu-item active">
+                    <span class="menu-icono">💰</span>
+                    <span class="menu-texto">Confirmar Pago</span>
+                </a>
+                <a href="asignar-asiento.html" class="menu-item">
+                    <span class="menu-icono">💺</span>
+                    <span class="menu-texto">Asignar Asiento</span>
+                </a>
+                <a href="detalle-reserva.html" class="menu-item">
+                    <span class="menu-icono">📄</span>
+                    <span class="menu-texto">Detalle Reserva</span>
+                </a>
+            </div>
+
+            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">JF</div>
+                <div class="perfil-info">
+                    <h4>Juan Fernando</h4>
+                    <p>Agente de Aerolínea</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO -->
+            <div class="saludo">
+                <h2>💰 Confirmar Pago</h2>
+                <p>Revisa los detalles de la reserva y confirma o rechaza el pago</p>
+            </div>
+
+            <!-- CONTENEDOR DE CONFIRMACIÓN DE PAGO -->
+            <div class="confirmar-pago-container">
+
+                <!-- COLUMNA IZQUIERDA: Resumen de reserva -->
+                <div class="resumen-reserva">
+                    <h3>📋 Resumen de la reserva</h3>
+
+                    <div class="pasajero-info">
+                        <h4>👤 Datos del pasajero</h4>
+                        <div class="info-linea">
+                            <span class="label">Código reserva:</span>
+                            <span class="valor">#RES-011</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Nombre:</span>
+                            <span class="valor">Juan Pérez</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Documento:</span>
+                            <span class="valor">1002433789</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Nacionalidad:</span>
+                            <span class="valor">Colombiano</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Fecha nacimiento:</span>
+                            <span class="valor">11/03/1991</span>
+                        </div>
+                    </div>
+
+                    <div class="vuelo-info">
+                        <h4>✈️ Datos del vuelo</h4>
+                        <div class="info-linea">
+                            <span class="label">Origen:</span>
+                            <span class="valor">Bogotá (BOG)</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Destino:</span>
+                            <span class="valor">Roma (FCO)</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Código vuelo:</span>
+                            <span class="valor">EL345</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Fecha salida:</span>
+                            <span class="valor">12 abril 2025</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Hora salida:</span>
+                            <span class="valor">22:35</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Hora llegada:</span>
+                            <span class="valor">22:45</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Clase:</span>
+                            <span class="valor">Ejecutiva</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Asiento:</span>
+                            <span class="valor">4A</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: Detalles del pago -->
+                <div class="detalles-pago">
+                    <h3>💳 Detalles del pago</h3>
+
+                    <div class="estado-pago-container">
+                        <div class="info-linea">
+                            <span class="label">Estado del pago:</span>
+                            <span class="valor">
+                                <span class="estado-pago-badge pendiente">Pendiente</span>
+                            </span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Método de pago:</span>
+                            <span class="valor">Tarjeta de crédito</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Monto total:</span>
+                            <span class="valor">$1,422 USD</span>
+                        </div>
+                    </div>
+
+                    <div class="desglose-precios">
+                        <h4>📊 Desglose</h4>
+                        <div class="info-linea">
+                            <span class="label">Precio base tiquete:</span>
+                            <span class="valor">$1,200 USD</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Paquete turístico:</span>
+                            <span class="valor">$200 USD</span>
+                        </div>
+                        <div class="info-linea">
+                            <span class="label">Seguro de viaje:</span>
+                            <span class="valor">$22 USD</span>
+                        </div>
+                        <div class="info-linea total">
+                            <span class="label">TOTAL:</span>
+                            <span class="valor">$1,422 USD</span>
+                        </div>
+                    </div>
+
+                    <div class="observacion-pago">
+                        <label>📝 Observación (opcional)</label>
+                        <textarea rows="3" placeholder="Añadir nota sobre el pago..."></textarea>
+                    </div>
+
+                    <div class="botones-pago">
+                        <button class="btn-rechazar-pago">❌ Rechazar pago</button>
+                        <button class="btn-confirmar-pago">✅ Confirmar pago</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESERVAS RELACIONADAS (opcional) -->
+            <div class="reservas-relacionadas">
+                <h3>📋 Otras reservas del cliente</h3>
+                <table class="tabla-reservas-agente">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Pasajero</th>
+                            <th>Vuelo</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 🔴 EJEMPLO 1 -->
+                        <tr>
+                            <td>#RES-012</td>
+                            <td>María González</td> <!-- Del dashboard -->
+                            <td>Bogotá → Medellín</td>
+                            <td>15/03/2025</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><a href="detalle-reserva.html?id=12" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- 🔴 EJEMPLO 2 -->
+                        <tr>
+                            <td>#RES-009</td>
+                            <td>Carlos Rodríguez</td> <!-- Del dashboard -->
+                            <td>Medellín → Cartagena</td>
+                            <td>20/02/2025</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><a href="detalle-reserva.html?id=9" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                        <!-- 🔴 EJEMPLO 3 -->
+                        <tr>
+                            <td>#RES-007</td>
+                            <td>Sofía Torres</td> <!-- ✅ CORREGIDO -->
+                            <td>Medellín → Miami</td> <!-- ✅ CORREGIDO -->
+                            <td>21/04/2025</td>
+                            <td><span class="estado confirmada">Confirmada</span></td>
+                            <td><a href="detalle-reserva.html?id=7" class="btn-accion">Ver detalle</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p>📧 contacto@elaris.com</p>
+                <p>📞 +57 300 123 4567</p>
+                <p>📍 Tuluá, Colombia</p>
+            </div>
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📸 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                </div>
+            </div>
+        </div>
+        <hr class="footer-hr">
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
