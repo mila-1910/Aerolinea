@@ -282,7 +282,7 @@
    ============================================ */
 .contenido-principal {
     flex: 1;
-    padding: 30px;
+    padding: 30px 30px 0 30px;
     background-color: var(--gris-claro);
 }
 
@@ -474,14 +474,15 @@
     opacity: 0.85;
 }
 
-/* ============================================
-   FOOTER (color vino original)
-   ============================================ */
+
+/* ===========================
+   FOOTER (Traído de cliente.css)
+=========================== */
 .footer {
     background-color: var(--vino);
     color: var(--blanco);
     padding: 50px 40px 20px 40px;
-    margin-top: 0;
+    margin-top: 0px;
     border-top: 2px solid #D4AF37;
 }
 
@@ -546,11 +547,28 @@
     color: #f0c0d8;
 }
 
+
 .footer-columna img {
     width: 120px;
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+/* ===========================
+   ÍCONOS DEL FOOTER (Font Awesome)
+=========================== */
+.footer-icono {
+    width: 18px;              /* ancho fijo para alinear iconos de distintos tamaños */
+    text-align: center;
+    margin-right: 8px;
+    color: #c9a76d;           /* dorado ELARIS — contrasta bien sobre el fondo vino */
+    font-size: 0.95rem;
+}
+
+/* Íconos de redes sociales: un poco más grandes */
+.redes .footer-icono {
+    font-size: 1rem;
 }
 
 /* ============================================
