@@ -7,11 +7,11 @@
     <title>Detalle Reserva | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-     <!-- CSS GLOBAL -->
+    <!-- CSS GLOBAL -->
     <link rel="stylesheet" href="../../css/cliente.css">
     <!-- CSS ESPECÍFICO DEL AGENTE -->
     <link rel="stylesheet" href="../../css/agente.css">
-     <!-- Font Awesome 6 — íconos profesionales -->
+    <!-- Font Awesome 6 — íconos profesionales -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
@@ -67,18 +67,6 @@
                 <a href="reservas.html" class="menu-item">
                     <span class="menu-icono">📋</span>
                     <span class="menu-texto">Gestionar Reservas</span>
-                </a>
-                <a href="confirmar-pago.html" class="menu-item">
-                    <span class="menu-icono">💰</span>
-                    <span class="menu-texto">Confirmar Pago</span>
-                </a>
-                <a href="asignar-asiento.html" class="menu-item">
-                    <span class="menu-icono">💺</span>
-                    <span class="menu-texto">Asignar Asiento</span>
-                </a>
-                <a href="detalle-reserva.html" class="menu-item active">
-                    <span class="menu-icono">📄</span>
-                    <span class="menu-texto">Detalle Reserva</span>
                 </a>
             </div>
 
@@ -244,7 +232,7 @@
             <div class="tarjeta-info historial-container">
                 <h3>📜 Historial de estados</h3>
                 <p class="historial-descripcion">Registro de fecha y hora de cada cambio en la reserva</p>
-                
+
                 <!-- 🔴 DATOS DE EJEMPLO - TABLA DE HISTORIAL -->
                 <table class="historial-tabla">
                     <thead>
@@ -299,15 +287,40 @@
             <div class="tarjeta-info botones-accion-container">
                 <h3>⚡ Acciones</h3>
                 <div class="grupo-botones">
-                    <button class="btn-confirmar-pago-detalle">✅ Confirmar pago</button>
-                    <button class="btn-rechazar-pago-detalle">❌ Rechazar pago</button>
-                    <button class="btn-asignar-asiento-detalle">💺 Asignar asiento</button>
-                    <button class="btn-cancelar-reserva-detalle">🗑️ Cancelar reserva</button>
+                    <a id="btnConfirmarPago" href="#" class="btn-confirmar-pago-detalle">✅ Confirmar pago</a>
+                    <button id="btnRechazarPago" class="btn-rechazar-pago-detalle">❌ Rechazar pago</button>
+                    <a id="btnAsignarAsiento" href="#" class="btn-asignar-asiento-detalle">💺 Asignar asiento</a>
+                    <button id="btnCancelarReserva" class="btn-cancelar-reserva-detalle">🗑️ Cancelar reserva</button>
                 </div>
             </div>
 
         </main>
     </div>
+
+    <script>
+    // Leer ID de la URL (ej: detalle-reserva.html?id=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    let reservaId = urlParams.get('id');
+    if (!reservaId) reservaId = '1'; // valor por defecto
+
+    // Actualizar los enlaces
+    document.getElementById('btnConfirmarPago').href = `confirmar-pago.html?id=${reservaId}`;
+    document.getElementById('btnAsignarAsiento').href = `asignar-asiento.html?id=${reservaId}`;
+
+    // Acción para Rechazar pago (simulada)
+    document.getElementById('btnRechazarPago').addEventListener('click', () => {
+        if (confirm('¿Rechazar el pago de esta reserva?')) {
+            alert('Pago rechazado (simulación)');
+        }
+    });
+
+    // Acción para Cancelar reserva (simulada)
+    document.getElementById('btnCancelarReserva').addEventListener('click', () => {
+        if (confirm('¿Cancelar esta reserva? Esta acción no se puede deshacer.')) {
+            alert(`Reserva ${reservaId} cancelada (simulación)`);
+        }
+    });
+</script>
 
     <!-- Footer ELARIS copiado de cliente -->
     <footer class="footer">

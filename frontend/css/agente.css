@@ -1346,6 +1346,14 @@
     font-family: inherit;
 }
 
+/* Quitar subrayado de los botones que son enlaces */
+.btn-confirmar-pago-detalle,
+.btn-asignar-asiento-detalle,
+.btn-confirmar-pago-detalle:hover,
+.btn-asignar-asiento-detalle:hover {
+    text-decoration: none;
+}
+
 /* Historial de estados */
 .historial-container {
     margin-bottom: 30px;
