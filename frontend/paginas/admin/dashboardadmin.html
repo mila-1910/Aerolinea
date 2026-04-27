@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../../css/agente.css">
     <!-- Font Awesome 6 — íconos profesionales -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -132,6 +134,21 @@
                         <p>Activas</p>
                     </div>
                 </div>
+
+ <!-- GRÁFICOS ESTADÍSTICOS (LADO A LADO) -->
+            <div style="display: flex; gap: 20px; margin: 30px 0; flex-wrap: wrap;">
+                <!-- Gráfico de barras (izquierda) -->
+                <div class="card" style="flex: 1; min-width: 280px; max-width: 400px; padding: 15px;">
+                    <h4 style="text-align:center; margin-bottom:10px;">📊 Frecuencias</h4>
+                    <canvas id="graficoBarras" height="200"></canvas>
+                </div>
+                <!-- Gráfico circular (derecha) -->
+                <div class="card" style="flex: 1; min-width: 280px; max-width: 400px; padding: 15px;">
+                    <h4 style="text-align:center; margin-bottom:10px;">🥧 Distribución</h4>
+                    <canvas id="graficoTorta" height="200"></canvas>
+                </div>
+            </div>
+
                 <table class="tabla-reservas-agente" style="margin-top: 30px; margin-bottom: 40px;">
                     <thead>
                         <tr>
@@ -153,60 +170,135 @@
                         </tr>
                     </tbody>
                 </table>
-
-            </div>
-
         </main>
     </div>
 
 
-   
 
+    <!-- Footer ELARIS copiado de cliente -->
+    <footer class="footer">
 
-        <!-- Footer ELARIS copiado de cliente -->
-        <footer class="footer">
+        <!-- Parte superior del footer -->
+        <div class="footer-top">
 
-            <!-- Parte superior del footer -->
-            <div class="footer-top">
-
-                <!-- Logo y descripción -->
-                <div class="footer-columna">
-                    <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
-                    <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
-                </div>
-
-                <!-- Contacto -->
-                <div class="footer-columna">
-                    <h4>Contacto</h4>
-                    <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
-                    <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
-                    <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
-                </div>
-
-                <!-- Redes sociales -->
-                <div class="footer-columna">
-                    <h4>Síguenos</h4>
-                    <div class="redes">
-                        <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
-                        <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
-                        <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
-                        <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
-                    </div>
-                </div>
-
+            <!-- Logo y descripción -->
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 
-            <!-- Línea divisora -->
-            <hr class="footer-hr">
-
-            <!-- Parte inferior -->
-            <div class="footer-bottom">
-                <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
-                <p>Diseñado con ❤️ por el equipo ELARIS</p>
+            <!-- Contacto -->
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
+                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
+                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
             </div>
 
-        </footer>
+            <!-- Redes sociales -->
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
+                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
+                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
+                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisora -->
+        <hr class="footer-hr">
+
+        <!-- Parte inferior -->
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
+  
+    <!-- SCRIPTS PARA LOS GRÁFICOS -->
+    <script>
+        // Datos comunes
+        const etiquetas = ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'];
+        const datos = [120, 45, 30, 80];
+        const coloresFondo = [
+            'rgba(123, 28, 78, 0.7)',
+            'rgba(168, 50, 110, 0.7)',
+            'rgba(200, 100, 140, 0.7)',
+            'rgba(230, 150, 170, 0.7)'
+        ];
+        const coloresBorde = [
+            '#7B1C4E', '#a8326e', '#c8648c', '#e696aa'
+        ];
+
+        // Gráfico de BARRAS (izquierda)
+        const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
+        new Chart(ctxBarras, {
+            type: 'bar',
+            data: {
+                labels: etiquetas,
+                datasets: [{
+                    label: 'Cantidad',
+                    data: datos,
+                    backgroundColor: coloresFondo,
+                    borderColor: coloresBorde,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 20 }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de TORTA / PASTEL (derecha)
+        const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
+        new Chart(ctxTorta, {
+            type: 'pie',
+            data: {
+                labels: etiquetas,
+                datasets: [{
+                    data: datos,
+                    backgroundColor: coloresFondo,
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            font: { size: 10 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
-
 </html>
