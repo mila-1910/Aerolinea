@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../../css/agente.css">
     <!-- Font Awesome 6 — íconos profesionales -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
@@ -98,72 +97,70 @@
                 <!-- COLUMNA IZQUIERDA: Datos del pasajero -->
                 <div class="tarjeta-info">
                     <h3>👤 Datos del pasajero</h3>
-                    <!-- 🔴 DATOS DE EJEMPLO -->
                     <div class="dato-linea">
                         <span class="label">Código reserva:</span>
-                        <span class="valor">#RES-001</span>
+                        <span class="valor" id="codigoReserva">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Nombre completo:</span>
-                        <span class="valor">María González</span>
+                        <span class="valor" id="nombrePasajero">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Documento:</span>
-                        <span class="valor">1002433789</span>
+                        <span class="valor" id="documentoPasajero">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Nacionalidad:</span>
-                        <span class="valor">Colombiana</span>
+                        <span class="valor" id="nacionalidad">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Fecha de nacimiento:</span>
-                        <span class="valor">15/08/1990</span>
+                        <span class="valor" id="fechaNac">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Email:</span>
-                        <span class="valor">maria.gonzalez@email.com</span>
+                        <span class="valor" id="email">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Teléfono:</span>
-                        <span class="valor">+57 310 123 4567</span>
+                        <span class="valor" id="telefono">-</span>
                     </div>
                 </div>
 
                 <!-- COLUMNA DERECHA: Datos del vuelo -->
                 <div class="tarjeta-info">
                     <h3>✈️ Datos del vuelo</h3>
-                    <!-- 🔴 DATOS DE EJEMPLO -->
                     <div class="dato-linea">
                         <span class="label">Código de vuelo:</span>
-                        <span class="valor">AV-1234</span>
+                        <span class="valor" id="codigoVuelo">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Origen:</span>
-                        <span class="valor">Bogotá (BOG)</span>
+                        <span class="valor" id="origen">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Destino:</span>
-                        <span class="valor">Medellín (MDE)</span>
+                        <span class="valor" id="destino">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Fecha de salida:</span>
-                        <span class="valor">15/04/2025</span>
+                        <span class="valor" id="fechaSalida">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Hora de salida:</span>
-                        <span class="valor">10:30 AM</span>
+                        <span class="valor" id="horaSalida">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Hora de llegada:</span>
-                        <span class="valor">11:45 AM</span>
+                        <span class="valor" id="horaLlegada">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Clase:</span>
-                        <span class="valor">Económica</span>
+                        <span class="valor" id="clase">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Asiento asignado:</span>
-                        <span class="valor">12A</span>
+                        <span class="valor" id="asiento">-</span>
                     </div>
                 </div>
             </div>
@@ -176,48 +173,46 @@
                 <!-- Detalles de pago -->
                 <div class="tarjeta-info">
                     <h3>💰 Detalles de pago</h3>
-                    <!-- 🔴 DATOS DE EJEMPLO -->
                     <div class="dato-linea">
                         <span class="label">Estado del pago:</span>
                         <span class="valor">
-                            <span class="estado-pago-badge pendiente">Pendiente</span>
+                            <span class="estado-pago-badge" id="estadoPagoBadge">Pendiente</span>
                         </span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Método de pago:</span>
-                        <span class="valor">Tarjeta de crédito</span>
+                        <span class="valor" id="metodoPago">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Monto total:</span>
-                        <span class="valor">$250 USD</span>
+                        <span class="valor" id="montoTotal">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Precio base:</span>
-                        <span class="valor">$200 USD</span>
+                        <span class="valor" id="precioBase">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Paquetes turísticos:</span>
-                        <span class="valor">$50 USD</span>
+                        <span class="valor" id="paquetes">-</span>
                     </div>
                 </div>
 
                 <!-- Estado de la reserva -->
                 <div class="tarjeta-info">
                     <h3>🏷️ Estado de la reserva</h3>
-                    <!-- 🔴 DATOS DE EJEMPLO -->
                     <div class="dato-linea">
                         <span class="label">Estado actual:</span>
                         <span class="valor">
-                            <span class="estado pendiente">Pendiente</span>
+                            <span class="estado" id="estadoReservaBadge">Pendiente</span>
                         </span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Fecha de reserva:</span>
-                        <span class="valor">10/04/2025 - 14:23:15</span>
+                        <span class="valor" id="fechaReserva">-</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Última modificación:</span>
-                        <span class="valor">11/04/2025 - 09:30:00</span>
+                        <span class="valor" id="ultimaModificacion">-</span>
                     </div>
                     <div class="observacion-reserva">
                         <label>📝 Observación del agente:</label>
@@ -232,8 +227,6 @@
             <div class="tarjeta-info historial-container">
                 <h3>📜 Historial de estados</h3>
                 <p class="historial-descripcion">Registro de fecha y hora de cada cambio en la reserva</p>
-
-                <!-- 🔴 DATOS DE EJEMPLO - TABLA DE HISTORIAL -->
                 <table class="historial-tabla">
                     <thead>
                         <tr>
@@ -244,39 +237,8 @@
                             <th>Agente / Cliente</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- 🔴 EJEMPLO 1 -->
-                        <tr>
-                            <td>10/04/2025</d>
-                            <td>14:23:15</d>
-                            <td>-</d>
-                            <td>Reservada</d>
-                            <td>Cliente</d>
-                        </tr>
-                        <!-- 🔴 EJEMPLO 2 -->
-                        <tr>
-                            <td>10/04/2025</d>
-                            <td>14:23:15</d>
-                            <td>Reservada</d>
-                            <td>Pendiente de pago</d>
-                            <td>Cliente</d>
-                        </tr>
-                        <!-- 🔴 EJEMPLO 3 -->
-                        <tr>
-                            <td>11/04/2025</d>
-                            <td>09:30:00</d>
-                            <td>Pendiente de pago</d>
-                            <td>Pendiente</d>
-                            <td>Agente (Juan Fernando)</d>
-                        </tr>
-                        <!-- 🔴 EJEMPLO 4 -->
-                        <tr>
-                            <td>12/04/2025</d>
-                            <td>15:20:00</d>
-                            <td>Pendiente</d>
-                            <td>En proceso</d>
-                            <td>Sistema</d>
-                        </tr>
+                    <tbody id="historialBody">
+                        <!-- Se llenará con JavaScript según la reserva -->
                     </tbody>
                 </table>
             </div>
@@ -297,52 +259,19 @@
         </main>
     </div>
 
-    <script>
-    // Leer ID de la URL (ej: detalle-reserva.html?id=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    let reservaId = urlParams.get('id');
-    if (!reservaId) reservaId = '1'; // valor por defecto
-
-    // Actualizar los enlaces
-    document.getElementById('btnConfirmarPago').href = `confirmar-pago.html?id=${reservaId}`;
-    document.getElementById('btnAsignarAsiento').href = `asignar-asiento.html?id=${reservaId}`;
-
-    // Acción para Rechazar pago (simulada)
-    document.getElementById('btnRechazarPago').addEventListener('click', () => {
-        if (confirm('¿Rechazar el pago de esta reserva?')) {
-            alert('Pago rechazado (simulación)');
-        }
-    });
-
-    // Acción para Cancelar reserva (simulada)
-    document.getElementById('btnCancelarReserva').addEventListener('click', () => {
-        if (confirm('¿Cancelar esta reserva? Esta acción no se puede deshacer.')) {
-            alert(`Reserva ${reservaId} cancelada (simulación)`);
-        }
-    });
-</script>
-
     <!-- Footer ELARIS copiado de cliente -->
     <footer class="footer">
-
-        <!-- Parte superior del footer -->
         <div class="footer-top">
-
-            <!-- Logo y descripción -->
             <div class="footer-columna">
                 <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
-
-            <!-- Contacto -->
             <div class="footer-columna">
                 <h4>Contacto</h4>
                 <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
                 <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
                 <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
             </div>
-
-            <!-- Redes sociales -->
             <div class="footer-columna">
                 <h4>Síguenos</h4>
                 <div class="redes">
@@ -352,20 +281,226 @@
                     <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
                 </div>
             </div>
-
         </div>
-
-        <!-- Línea divisora -->
         <hr class="footer-hr">
-
-        <!-- Parte inferior -->
         <div class="footer-bottom">
             <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
             <p>Diseñado con ❤️ por el equipo ELARIS</p>
         </div>
-
     </footer>
 
+    <!-- JavaScript para carga dinámica de datos -->
+    <script>
+        // ============================================
+        // BASE DE DATOS SIMULADA (para pruebas)
+        // ============================================
+        const reservasSimuladas = {
+            1: {
+                codigo: "#RES-001",
+                pasajero: {
+                    nombre: "María González",
+                    documento: "1002433789",
+                    nacionalidad: "Colombiana",
+                    fechaNac: "15/08/1990",
+                    email: "maria.gonzalez@email.com",
+                    telefono: "+57 310 123 4567"
+                },
+                vuelo: {
+                    codigo: "AV-1234",
+                    origen: "Bogotá (BOG)",
+                    destino: "Medellín (MDE)",
+                    fechaSalida: "15/04/2025",
+                    horaSalida: "10:30 AM",
+                    horaLlegada: "11:45 AM",
+                    clase: "Económica",
+                    asiento: "12A"
+                },
+                pago: {
+                    estado: "Pendiente",
+                    metodo: "Tarjeta de crédito",
+                    montoTotal: "$250 USD",
+                    precioBase: "$200 USD",
+                    paquetes: "$50 USD"
+                },
+                estadoReserva: {
+                    actual: "Pendiente",
+                    fechaReserva: "10/04/2025 - 14:23:15",
+                    ultimaModificacion: "11/04/2025 - 09:30:00"
+                },
+                historial: [
+                    { fecha: "10/04/2025", hora: "14:23:15", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "10/04/2025", hora: "14:23:15", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
+                    { fecha: "11/04/2025", hora: "09:30:00", anterior: "Pendiente de pago", nuevo: "Pendiente", agente: "Agente (Juan Fernando)" },
+                    { fecha: "12/04/2025", hora: "15:20:00", anterior: "Pendiente", nuevo: "En proceso", agente: "Sistema" }
+                ]
+            },
+            2: {
+                codigo: "#RES-002",
+                pasajero: {
+                    nombre: "Carlos Rodríguez",
+                    documento: "87654321",
+                    nacionalidad: "Colombiana",
+                    fechaNac: "22/03/1985",
+                    email: "carlos.rodriguez@email.com",
+                    telefono: "+57 311 987 6543"
+                },
+                vuelo: {
+                    codigo: "AV-5678",
+                    origen: "Medellín (MDE)",
+                    destino: "Cartagena (CTG)",
+                    fechaSalida: "16/04/2025",
+                    horaSalida: "08:00 AM",
+                    horaLlegada: "09:15 AM",
+                    clase: "Ejecutiva",
+                    asiento: "4B"
+                },
+                pago: {
+                    estado: "Confirmado",
+                    metodo: "Tarjeta débito",
+                    montoTotal: "$320 USD",
+                    precioBase: "$280 USD",
+                    paquetes: "$40 USD"
+                },
+                estadoReserva: {
+                    actual: "Confirmada",
+                    fechaReserva: "05/04/2025 - 10:30:00",
+                    ultimaModificacion: "06/04/2025 - 14:20:00"
+                },
+                historial: [
+                    { fecha: "05/04/2025", hora: "10:30:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "05/04/2025", hora: "10:35:00", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
+                    { fecha: "06/04/2025", hora: "14:20:00", anterior: "Pendiente de pago", nuevo: "Confirmada", agente: "Agente" }
+                ]
+            },
+            3: {
+                codigo: "#RES-003",
+                pasajero: {
+                    nombre: "Ana Martínez",
+                    documento: "11223344",
+                    nacionalidad: "Colombiana",
+                    fechaNac: "10/12/1992",
+                    email: "ana.martinez@email.com",
+                    telefono: "+57 312 456 7890"
+                },
+                vuelo: {
+                    codigo: "AV-9012",
+                    origen: "Cali (CLO)",
+                    destino: "Bogotá (BOG)",
+                    fechaSalida: "17/04/2025",
+                    horaSalida: "18:30 PM",
+                    horaLlegada: "19:45 PM",
+                    clase: "Económica",
+                    asiento: "22C"
+                },
+                pago: {
+                    estado: "Pendiente",
+                    metodo: "Efectivo (punto de venta)",
+                    montoTotal: "$180 USD",
+                    precioBase: "$150 USD",
+                    paquetes: "$30 USD"
+                },
+                estadoReserva: {
+                    actual: "Pendiente",
+                    fechaReserva: "12/04/2025 - 09:15:00",
+                    ultimaModificacion: "12/04/2025 - 09:20:00"
+                },
+                historial: [
+                    { fecha: "12/04/2025", hora: "09:15:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "12/04/2025", hora: "09:20:00", anterior: "Reservada", nuevo: "Pendiente", agente: "Cliente" }
+                ]
+            }
+        };
+
+        // ============================================
+        // Leer ID de la URL y cargar los datos
+        // ============================================
+        const urlParams = new URLSearchParams(window.location.search);
+        let id = urlParams.get('id');
+        if (!id) id = '1'; // valor por defecto
+
+        // Validar que exista la reserva simulada
+        const reserva = reservasSimuladas[id];
+        if (!reserva) {
+            alert(`No se encontró la reserva con ID ${id}. Se mostrarán datos de ejemplo.`);
+            // Podrías redirigir o cargar un objeto por defecto, pero dejamos que se muestre un error.
+            // Para no romper la vista, cargamos la primera reserva.
+            cargarReserva(reservasSimuladas[1]);
+        } else {
+            cargarReserva(reserva);
+        }
+
+        function cargarReserva(data) {
+            // Datos del pasajero
+            document.getElementById('codigoReserva').innerText = data.codigo;
+            document.getElementById('nombrePasajero').innerText = data.pasajero.nombre;
+            document.getElementById('documentoPasajero').innerText = data.pasajero.documento;
+            document.getElementById('nacionalidad').innerText = data.pasajero.nacionalidad;
+            document.getElementById('fechaNac').innerText = data.pasajero.fechaNac;
+            document.getElementById('email').innerText = data.pasajero.email;
+            document.getElementById('telefono').innerText = data.pasajero.telefono;
+
+            // Datos del vuelo
+            document.getElementById('codigoVuelo').innerText = data.vuelo.codigo;
+            document.getElementById('origen').innerText = data.vuelo.origen;
+            document.getElementById('destino').innerText = data.vuelo.destino;
+            document.getElementById('fechaSalida').innerText = data.vuelo.fechaSalida;
+            document.getElementById('horaSalida').innerText = data.vuelo.horaSalida;
+            document.getElementById('horaLlegada').innerText = data.vuelo.horaLlegada;
+            document.getElementById('clase').innerText = data.vuelo.clase;
+            document.getElementById('asiento').innerText = data.vuelo.asiento;
+
+            // Detalles de pago
+            const estadoPagoSpan = document.getElementById('estadoPagoBadge');
+            estadoPagoSpan.innerText = data.pago.estado;
+            estadoPagoSpan.className = `estado-pago-badge ${data.pago.estado === 'Pendiente' ? 'pendiente' : 'confirmado'}`;
+            document.getElementById('metodoPago').innerText = data.pago.metodo;
+            document.getElementById('montoTotal').innerText = data.pago.montoTotal;
+            document.getElementById('precioBase').innerText = data.pago.precioBase;
+            document.getElementById('paquetes').innerText = data.pago.paquetes;
+
+            // Estado de la reserva
+            const estadoReservaSpan = document.getElementById('estadoReservaBadge');
+            estadoReservaSpan.innerText = data.estadoReserva.actual;
+            estadoReservaSpan.className = `estado ${data.estadoReserva.actual === 'Pendiente' ? 'pendiente' : (data.estadoReserva.actual === 'Confirmada' ? 'confirmada' : 'cancelada')}`;
+            document.getElementById('fechaReserva').innerText = data.estadoReserva.fechaReserva;
+            document.getElementById('ultimaModificacion').innerText = data.estadoReserva.ultimaModificacion;
+
+            // Historial de estados
+            const tbody = document.getElementById('historialBody');
+            tbody.innerHTML = '';
+            data.historial.forEach(item => {
+                const row = `<tr>
+                    <td>${item.fecha}</td>
+                    <td>${item.hora}</td>
+                    <td>${item.anterior}</td>
+                    <td>${item.nuevo}</td>
+                    <td>${item.agente}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+
+            // Actualizar los enlaces de los botones con el ID correcto
+            const btnConfirmar = document.getElementById('btnConfirmarPago');
+            const btnAsignar = document.getElementById('btnAsignarAsiento');
+            if (btnConfirmar) btnConfirmar.href = `confirmar-pago.html?id=${id}`;
+            if (btnAsignar) btnAsignar.href = `asignar-asiento.html?id=${id}`;
+        }
+
+        // Funcionalidad de botones (simulada)
+        document.getElementById('btnRechazarPago')?.addEventListener('click', () => {
+            if (confirm('¿Rechazar el pago de esta reserva?')) {
+                alert('Pago rechazado (simulado). Actualice la página para ver cambios (en un caso real se conectaría con el backend).');
+                // Aquí después se enviaría al backend
+            }
+        });
+
+        document.getElementById('btnCancelarReserva')?.addEventListener('click', () => {
+            if (confirm('¿Cancelar esta reserva? Esta acción no se puede deshacer.')) {
+                alert(`Reserva ${document.getElementById('codigoReserva').innerText} cancelada (simulado).`);
+                // Opcional: cambiar el estado visualmente
+            }
+        });
+    </script>
 </body>
 
 </html>
