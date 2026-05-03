@@ -139,70 +139,136 @@ body {
 
 /* Saludo */
 .saludo {
-    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--blanco);
+    border-radius: 16px;
+    padding: 24px 30px;
+    box-shadow: var(--sombra);
+    margin-bottom: 30px;
 }
 
-.saludo h2 {
-    font-size: 1.8rem;
-    color: var(--vino);
+.saludo-izq {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.saludo-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--vino);
+    color: var(--blanco);
+    font-size: 1.4rem;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.saludo p {
+.saludo-texto h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+.saludo-texto p {
+    font-size: 0.9rem;
     color: var(--gris-texto);
-    margin-top: 6px;
+    margin-top: 4px;
+}
+
+.saludo-btn {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+}
+
+.saludo-btn:hover {
+    opacity: 0.85;
 }
 
 /* Cards */
 .cards-container {
     display: flex;
-    gap: 24px;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
 }
 
 .card {
     background-color: var(--blanco);
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: var(--sombra);
-    padding: 30px 20px;
-    flex: 1;
-    text-align: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 110px;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(123,28,78,0.2);
+}
+
+.card-imagen {
+    width: 160px;
+    min-width: 160px;
+    background-size: cover;
+    background-position: center;
+}
+
+.card-cuerpo {
+    display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
+    padding: 16px 24px;
+    flex: 1;
 }
 
 .card-icono {
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
-.card h3 {
-    font-size: 1.1rem;
+.card-texto {
+    flex: 1;
+}
+
+.card-texto h3 {
+    font-size: 1rem;
     font-weight: 700;
     color: #333;
+    margin-bottom: 4px;
 }
 
-.card p {
+.card-texto p {
+    font-size: 0.85rem;
     color: var(--gris-texto);
-    font-size: 0.9rem;
 }
 
 .btn-card {
-    margin-top: 10px;
     background-color: var(--vino);
     color: var(--blanco);
     text-decoration: none;
     padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.88rem;
     transition: opacity 0.2s;
+    white-space: nowrap;
 }
 
 .btn-card:hover {
     opacity: 0.85;
 }
-
 /* ===========================
    BANNER PROMOCIONAL
 =========================== */
