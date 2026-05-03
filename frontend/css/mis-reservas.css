@@ -121,11 +121,21 @@
 =========================== */
 .reservas-buscador {
     margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.reservas-buscador i {
+    position: absolute;
+    left: 14px;
+    color: var(--gris-texto);
+    font-size: 0.95rem;
 }
 
 .reservas-buscador input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 12px 16px 12px 40px;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 0.95rem;
