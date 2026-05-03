@@ -435,3 +435,104 @@ body {
 .redes .footer-icono {
     font-size: 1rem;
 }
+
+/* ===========================
+   VUELOS DESTACADOS
+=========================== */
+.vuelos-destacados {
+    padding: 60px 40px;
+    background-color: #f7f9fc;
+}
+
+.vuelos-destacados-contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.vuelos-destacados h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--vino);
+    margin-bottom: 8px;
+}
+
+.vuelos-destacados > .vuelos-destacados-contenedor > p {
+    font-size: 0.95rem;
+    color: var(--gris);
+    margin-bottom: 30px;
+}
+
+.vuelos-grid-index {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.vuelo-card-index {
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.vuelo-card-index:hover {
+    transform: translateY(-4px);
+}
+
+.vuelo-card-index img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
+.vuelo-card-index .vuelo-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.vuelo-card-index .vuelo-info h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.vuelo-card-index .vuelo-info p {
+    font-size: 0.82rem;
+    color: var(--gris);
+    margin-bottom: 0;
+}
+
+.vuelo-card-index .vuelo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.vuelo-card-index .vuelo-precio {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--vino);
+}
+
+.vuelo-card-index .btn-detalle {
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.vuelo-card-index .btn-detalle:hover {
+    opacity: 0.85;
+}
