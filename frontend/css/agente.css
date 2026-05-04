@@ -1297,6 +1297,8 @@ body {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-confirmar-pago-detalle {
