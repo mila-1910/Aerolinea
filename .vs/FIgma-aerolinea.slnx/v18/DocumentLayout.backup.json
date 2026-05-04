@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\admin\\dashboardadmin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\vuelos.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\admin\\vuelos.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\ubicaciones.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\admin\\ubicaciones.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\paquetes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\admin\\paquetes.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -18,27 +26,47 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "vuelos.html",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\vuelos.html",
+              "RelativeDocumentMoniker": "frontend\\paginas\\admin\\vuelos.html",
+              "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\vuelos.html",
+              "RelativeToolTip": "frontend\\paginas\\admin\\vuelos.html",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAAkAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-05-04T01:45:08.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ubicaciones.html",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\ubicaciones.html",
+              "RelativeDocumentMoniker": "frontend\\paginas\\admin\\ubicaciones.html",
+              "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\ubicaciones.html",
+              "RelativeToolTip": "frontend\\paginas\\admin\\ubicaciones.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-05-04T01:44:55.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "paquetes.html",
               "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\paquetes.html",
               "RelativeDocumentMoniker": "frontend\\paginas\\admin\\paquetes.html",
               "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\paquetes.html",
               "RelativeToolTip": "frontend\\paginas\\admin\\paquetes.html",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAAkAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-05-04T01:44:51.854Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -47,7 +75,7 @@
               "RelativeDocumentMoniker": "frontend\\paginas\\admin\\dashboardadmin.html",
               "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\dashboardadmin.html",
               "RelativeToolTip": "frontend\\paginas\\admin\\dashboardadmin.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAANAAAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAB0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-05-04T01:38:38.248Z",
               "EditorCaption": ""
