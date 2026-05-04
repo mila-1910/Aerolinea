@@ -7,8 +7,7 @@
     <title>Paquetes | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-    <!-- CSS GLOBAL -->
-    <link rel="stylesheet" href="../../css/cliente.css">
+    
     <!-- CSS ESPECÍFICO DEL AGENTE -->
     <link rel="stylesheet" href="../../css/agente.css">
     <!-- Font Awesome 6 — íconos profesionales -->
@@ -34,7 +33,7 @@
 
         <div class="navbar-right">
             <div class="notificaciones" title="Notificaciones">
-                <span class="icono">🔔</span>
+                <span class="icono"><i class="fas fa-bell" style="color: #d4af37;"></i></span>
                 <span class="badge">3</span>
             </div>
 
@@ -61,19 +60,19 @@
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardadmin.html" class="menu-item">
-                    <span class="menu-icono">📊</span>
+                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Dashboard</span>
                 </a>
                 <a href="vuelos.html" class="menu-item">
-                    <span class="menu-icono">✈️</span>
+                    <span class="menu-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Vuelos</span>
                 </a>
                 <a href="paquetes.html" class="menu-item active">
-                    <span class="menu-icono">🎒</span>
+                    <span class="menu-icono"><i class="fas fa-box" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Paquetes</span>
                 </a>
                 <a href="ubicaciones.html" class="menu-item">
-                    <span class="menu-icono">📍</span>
+                    <span class="menu-icono"><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Ubicaciones</span>
                 </a>
             </div>
@@ -85,7 +84,7 @@
                     <h4>Kamila Marin</h4>
                     <p>Administradora</p>
                 </div>
-                <a href="#" class="cerrar-sesion-sidebar">🚪 Cerrar Sesión</a>
+                <a href="#" class="cerrar-sesion-sidebar"><i class="fas fa-sign-out-alt" style="color: #d4af37;"></i> Cerrar Sesión</a>
             </div>
         </aside>
 
@@ -94,7 +93,7 @@
 
             <!-- TÍTULO -->
             <div class="saludo">
-                <h2>✈️ Gestión de paquetes</h2>
+                <h2><i class="fas fa-box" style="color: #d4af37;"></i> Gestión de Paquetes</h2>
                 <p>Administra los paquetes del sistema</p>
             </div>
 
@@ -104,12 +103,14 @@
                 <!-- 🔹 RESUMEN PEQUEÑO -->
                 <div style="display:flex; gap:20px; margin-bottom:25px;">
                     <div class="card">
+                        <div class="card-icono"><i class="fas fa-box" style="color: #d4af37;"></i></div>
                         <div class="numero">45</div>
                         <h3>Paquetes</h3>
                         <p>Disponibles</p>
                     </div>
 
                     <div class="card">
+                        <div class="card-icono"><i class="fas fa-gift" style="color: #d4af37;"></i></div>
                         <div class="numero">12</div>
                         <h3>Promociones</h3>
                         <p>Activas</p>
@@ -151,52 +152,30 @@
                 </div>
 
             </div>
+
+        </main>
     </div>
 
+    <!-- SCRIPT PARA EL DROPDOWN DEL PERFIL -->
+    <script>
+        const perfilTrigger = document.querySelector('.perfil-trigger');
+        const dropdown = document.querySelector('.navbar-perfil .dropdown');
 
-    <!-- Footer ELARIS copiado de cliente -->
-    <footer class="footer">
+        perfilTrigger.addEventListener('click', () => {
+            dropdown.classList.toggle('show');
+        });
 
-        <!-- Parte superior del footer -->
-        <div class="footer-top">
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar-perfil')) {
+                dropdown.classList.remove('show');
+            }
+        });
 
-            <!-- Logo y descripción -->
-            <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
-                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
-            </div>
-
-            <!-- Contacto -->
-            <div class="footer-columna">
-                <h4>Contacto</h4>
-                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
-                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
-                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
-            </div>
-
-            <!-- Redes sociales -->
-            <div class="footer-columna">
-                <h4>Síguenos</h4>
-                <div class="redes">
-                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
-                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
-                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
-                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Línea divisora -->
-        <hr class="footer-hr">
-
-        <!-- Parte inferior -->
-        <div class="footer-bottom">
-            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
-            <p>Diseñado con ❤️ por el equipo ELARIS</p>
-        </div>
-
-    </footer>
+        document.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Cerrando sesión...');
+        });
+    </script>
 
 </body>
 

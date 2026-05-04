@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicaciones | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="../../css/cliente.css">
+    <!-- CSS ESPECÍFICO DEL AGENTE -->
+    <link rel="stylesheet" href="../../css/agente.css">
+    <!-- Font Awesome 6 — íconos profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar-agente">
+        <div class="navbar-logo">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <span class="logo-texto">ELARIS</span>
+        </div>
+
+        <div class="navbar-centro">
+            <span class="panel-texto">Ubicaciones</span>
+            <span class="badge-agente">ADMINISTRADOR</span>
+        </div>
+
+        <div class="navbar-right">
+            <div class="notificaciones" title="Notificaciones">
+                <span class="icono"><i class="fas fa-bell" style="color: #d4af37;"></i></span>
+                <span class="badge">3</span>
+            </div>
+
+            <div class="navbar-perfil">
+                <div class="perfil-trigger">
+                    <div class="avatar">KM</div>
+                    <span>Kamila Marin</span>
+                    <span class="flecha">▼</span>
+                </div>
+                <ul class="dropdown">
+                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
+
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardadmin.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: #d4af37;"></i></span>
+                    <span class="menu-texto">Dashboard</span>
+                </a>
+                <a href="vuelos.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></span>
+                    <span class="menu-texto">Vuelos</span>
+                </a>
+                <a href="paquetes.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-box" style="color: #d4af37;"></i></span>
+                    <span class="menu-texto">Paquetes</span>
+                </a>
+                <a href="ubicaciones.html" class="menu-item active">
+                    <span class="menu-icono"><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i></span>
+                    <span class="menu-texto">Ubicaciones</span>
+                </a>
+            </div>
+
+            <!-- PERFIL ABAJO -->
+            <div class="sidebar-perfil">
+                <div class="perfil-avatar">KM</div>
+                <div class="perfil-info">
+                    <h4>Kamila Marin</h4>
+                    <p>Administradora</p>
+                </div>
+                <a href="#" class="cerrar-sesion-sidebar">🚪 Cerrar Sesión</a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO -->
+            <div class="saludo">
+                <h2>📍 Ubicaciones</h2>
+                <p>Gestión de destinos disponibles</p>
+            </div>
+            <div style="display:flex; gap:15px; margin-bottom:20px;">
+                <input type="text" placeholder="Buscar ciudad..."
+                       style="padding:10px; border:1px solid #ddd; border-radius:8px; flex:1;">
+
+                <button class="btn-accion">Buscar</button>
+            </div>
+
+            <!-- BOTÓN AGREGAR -->
+            <div style="margin-bottom:20px;">
+                <button class="btn-accion">+ Agregar Ubicación</button>
+            </div>
+
+
+            <!-- TABLA DE UBICACIONES -->
+            <table class="tabla-reservas-agente" style="margin-bottom:40px;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ciudad</th>
+                        <th>País</th>
+                        <th>Aeropuerto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#UB-001</td>
+                        <td>Bogotá</td>
+                        <td>Colombia</td>
+                        <td>El Dorado</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#UB-002</td>
+                        <td>Medellín</td>
+                        <td>Colombia</td>
+                        <td>José María Córdova</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#UB-003</td>
+                        <td>Miami</td>
+                        <td>Estados Unidos</td>
+                        <td>Miami Intl</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </main>
+    </div>
+
+    <!-- Footer ELARIS copiado de cliente -->
+    <footer class="footer">
+
+        <!-- Parte superior del footer -->
+        <div class="footer-top">
+
+            <!-- Logo y descripción -->
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
+                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
+                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
+                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
+                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
+                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisora -->
+        <hr class="footer-hr">
+
+        <!-- Parte inferior -->
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
