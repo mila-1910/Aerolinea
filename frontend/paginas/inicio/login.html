@@ -4,17 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- El título de la pestaña del navegador -->
-    <title>Login | ELARIS</title>
-    <!-- Ícono de la pestaña (favicon) -->
+    <title>Acceso | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-    <!-- Enlace a tu archivo CSS externo para los estilos visuales -->
     <link rel="stylesheet" href="../../css/Inicio/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-
-    <!-- navbar de inicio -->
 
     <header class="navbar-auth">
         <a href="index.html" class="navbar-auth__logo">
@@ -28,68 +24,151 @@
         </nav>
 
         <div class="navbar-auth__actions">
-            <!-- Como estamos en Login, Iniciar sesión es Sólido (activo) -->
-            <a href="login.html" class="btn-nav btn-nav--solid">Iniciar sesión</a>
-            <!-- Y Registrarse pasa a Fantasma (inactivo) -->
-            <a href="register.html" class="btn-nav btn-nav--ghost">Registrarse</a>
+            <a href="#" id="nav-btn-login" class="btn-nav btn-nav--solid switch-to-login">Iniciar sesión</a>
+            <a href="#" id="nav-btn-register" class="btn-nav btn-nav--ghost switch-to-register">Registrarse</a>
         </div>
     </header>
 
-
-
-
-
-    <!-- La etiqueta <main> indica el contenido principal de esta página, el contenedor general -->
-    <main class="auth">
-        <!-- <section> divide la página. Esta sección es para la imagen de fondo y el mensaje motivacional ("hero") -->
+    <main class="auth" id="auth-main">
         <section class="auth__hero">
+            <div class="hero-bg hero-bg--login"></div>
+            <div class="hero-bg hero-bg--register"></div>
+            
             <div class="brand">
                 <a href="index.html"></a>
             </div>
 
-            <div class="hero-content">
-                <h1>Tu próximo horizonte te espera</h1>
-                <p>Experiencias de vuelo diseñadas con precisión para el viajero moderno.</p>
+            <div class="hero-content-wrapper">
+                <div class="hero-content hero-login">
+                    <h1>Tu próximo horizonte te espera</h1>
+                    <p>Experiencias de vuelo diseñadas con precisión para el viajero moderno.</p>
+                </div>
+                <div class="hero-content hero-register">
+                    <h1>Eleva tu perspectiva.</h1>
+                    <p>Únete y descubre destinos diseñados para el viajero moderno.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Esta sección contiene específicamente el recuadro blanco donde va el formulario -->
         <section class="auth__form-section">
-            <div class="auth-box">
-                <div class="auth-header">
-                    <h2>Bienvenido de nuevo</h2>
-                    <p>Ingresa tus credenciales para acceder a tu cuenta.</p>
-                </div>
-
-                <!-- <form> envuelve los campos que el usuario va a llenar -->
-                <form class="auth-form" action="../cliente/dashboard.html" method="get">
-
-                    <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" name="email" placeholder="nombre@ejemplo.com" required>
+            <div class="auth-box-wrapper">
+                
+                <!-- ====== CAJA DE LOGIN ====== -->
+                <div class="auth-box" id="login-box">
+                    <div class="auth-header">
+                        <h2>Bienvenido de nuevo</h2>
+                        <p>Ingresa tus credenciales para acceder a tu cuenta.</p>
                     </div>
 
-                    <div class="form-group">
-                        <div class="label-row">
-                            <label for="password">Contraseña</label>
-                            <a href="#" class="forgot-link">Olvidé mi contraseña</a>
+                    <form class="auth-form" action="../cliente/buscar-vuelos.html" method="get">
+                        <div class="form-group">
+                            <label for="email-login">Correo electrónico</label>
+                            <input type="email" id="email-login" name="email" placeholder="nombre@ejemplo.com" required>
                         </div>
-                        <input type="password" id="password" name="password" placeholder="••••••••" required>
-                    </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Iniciar Sesión</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="password-login">Contraseña</label>
+                                <a href="#" class="forgot-link">Olvidé mi contraseña</a>
+                            </div>
+                            <div class="password-wrapper">
+                                <input type="password" id="password-login" name="password" placeholder="••••••••" required>
+                                <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
+                            </div>
+                        </div>
 
-                <div class="auth-footer">
-                    <p>¿No tienes una cuenta? <a href="register.html">Regístrate</a></p>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                        </div>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>¿No tienes una cuenta? <a href="#" class="switch-to-register">Regístrate</a></p>
+                    </div>
                 </div>
+
+                <!-- ====== CAJA DE REGISTRO ====== -->
+                <div class="auth-box" id="register-box">
+                    <div class="auth-header">
+                        <h2>Crea tu cuenta</h2>
+                        <p>Comienza tu viaje con nosotros hoy mismo.</p>
+                    </div>
+
+                    <form class="auth-form" action="#" method="post">
+                        <!-- Tipo + Número de identificación en fila -->
+                        <div class="form-row">
+                            <div class="form-group form-group--tipo-id">
+                                <label for="tipo-identificacion">Tipo de identificación</label>
+                                <select id="tipo-identificacion" name="tipo_identificacion" required>
+                                    <option value="" disabled selected>Selecciona...</option>
+                                    <option value="CC">Cédula de ciudadanía</option>
+                                    <option value="CE">Cédula de extranjería</option>
+                                    <option value="PA">Pasaporte</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="NIT">NIT</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group--num-id">
+                                <label for="numero-identificacion">Número de identificación</label>
+                                <input type="text" id="numero-identificacion" name="numero_identificacion" placeholder="Ej: 1234567890" required>
+                            </div>
+                        </div>
+
+                        <!-- Nombre completo -->
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                        </div>
+
+                        <!-- Correo (separado del de login) -->
+                        <div class="form-group">
+                            <label for="email-reg">Correo electrónico</label>
+                            <input type="email" id="email-reg" name="email" placeholder="nombre@ejemplo.com" required>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="tel" id="telefono" name="telefono" placeholder="Ej: +57 300 123 4567" required>
+                        </div>
+
+                        <!-- Contraseña y confirmar en fila -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password-reg">Contraseña</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="password-reg" name="password" placeholder="••••••••" required>
+                                    <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmar">Confirmar Contraseña</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="confirmar" name="confirmar" placeholder="••••••••" required>
+                                    <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checkbox de términos -->
+                        <div class="form-check">
+                            <input type="checkbox" id="terminos" name="terminos" required>
+                            <label for="terminos">Acepto los <a href="#" class="terms-link">términos y condiciones</a>.</label>
+                        </div>
+
+                        <div class="form-actions" style="margin-top: 10px;">
+                            <button type="submit" class="btn-primary">Crear Cuenta</button>
+                        </div>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>¿Ya tienes una cuenta? <a href="#" class="switch-to-login">Inicia sesión</a></p>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
-
-
 
     <script src="../../js/auth.js"></script>
 </body>

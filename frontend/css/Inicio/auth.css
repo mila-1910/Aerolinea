@@ -11,12 +11,17 @@
 /* Variables de color del proyecto. Se usan con var(--nombre) en todo el archivo */
 :root {
     --vino: #7B1C4E;
+    --vino-oscuro: #5a1138;
     --blanco: #ffffff;
     --gris-claro: #f5f5f5;
     --gris-texto: #666666;
     --texto: #333333;
     --borde: #e6d9e1;
     --sombra: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    /* Animaciones (Emil Kowalski) */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 body {
@@ -32,7 +37,7 @@ body {
 
 /* sticky + top: 0 hace que el menú se quede fijo al hacer scroll */
 .navbar-auth {
-    background-color: var(--vino);
+    background: linear-gradient(135deg, var(--vino-oscuro) 0%, var(--vino) 50%, #3a0a22 100%);
     height: 80px;
     padding: 0 40px;
     display: flex;
@@ -116,10 +121,27 @@ body {
    100vh es la altura total de la ventana del navegador.
    Le restamos 80px que ocupa el navbar para que no haya scroll.
 */
+/* ================================
+   ANIMACIÓN DE ENTRADA (Emil Kowalski)
+================================ */
+@keyframes emilPageEnter {
+    from {
+        opacity: 0;
+        transform: scale(0.97) translateY(12px);
+        filter: blur(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+}
+
 .auth {
     display: flex;
     height: calc(100vh - 80px);
     overflow: hidden;
+    animation: emilPageEnter 700ms cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 /* Las dos columnas: foto a la izquierda, formulario a la derecha */
@@ -127,7 +149,15 @@ body {
 .auth__form-section {
     width: 50%;
     height: 100%;
-    /* Si el contenido no cabe, permite scroll solo dentro de esa columna */
+}
+
+.auth__form-section {
+    /* Por defecto en login ocultamos el scroll para evitar barras innecesarias */
+    overflow-y: hidden;
+}
+
+/* Cuando estamos registrando, activamos el scroll porque el form es muy largo */
+.auth.is-registering .auth__form-section {
     overflow-y: auto;
 }
 
@@ -138,37 +168,61 @@ body {
 
 .auth__hero {
     position: relative;
-    background-image: url("../../imagenes/Inicio/Avion_Login.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     color: var(--blanco);
     padding: 40px;
     display: flex;
     flex-direction: column;
     /* space-between empuja el logo al tope y el texto inspiracional al fondo */
     justify-content: space-between;
+    overflow: hidden; /* Para que la animación de escala no se desborde */
 }
 
-/*
-   ::before crea un elemento "fantasma" encima de la imagen.
-   Se usa para oscurecer la foto y que el texto blanco sea legible.
-   inset: 0 hace que cubra toda la sección.
-*/
-.auth__hero::before {
+/* Fondos cinemáticos separados */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 800ms cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 0;
+}
+
+/* Sombra oscura sobre las fotos para leer el texto blanco */
+.hero-bg::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.18);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.hero-bg--login {
+    background-image: url("../../imagenes/Inicio/Avion_Login.png");
+    opacity: 1;
+    transform: scale(1) translateX(0);
+}
+
+.hero-bg--register {
+    background-image: url("../../imagenes/Inicio/Ventana_Register3.jpg");
+    opacity: 0;
+    transform: scale(1.05) translateX(30px);
+}
+
+.auth.is-registering .hero-bg--login {
+    opacity: 0;
+    transform: scale(1.05) translateX(-30px);
+}
+
+.auth.is-registering .hero-bg--register {
+    opacity: 1;
+    transform: scale(1) translateX(0);
 }
 
 /*
-   z-index controla qué tan "encima" está un elemento.
-   El ::before tiene z-index 0 por defecto, así que ponemos z-index: 1
-   aquí para que el texto aparezca por encima del filtro oscuro.
+   El texto y logo deben ir por encima del fondo
 */
 .brand,
-.hero-content {
+.hero-content-wrapper {
     position: relative;
     z-index: 1;
 }
@@ -210,14 +264,94 @@ body {
     background-color: #f8f8f8;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Evita que el form se corte arriba cuando es muy alto */
     padding: 60px 40px;
 }
 
-/* Caja que contiene el formulario con un ancho máximo para que no se estire en pantallas grandes */
-.auth-box {
+/* Caja contenedora usando Grid para encimar los formularios */
+.auth-box-wrapper {
+    position: relative;
     width: 100%;
     max-width: 460px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    align-items: start;
+    margin: auto 0; /* Centra verticalmente solo si sobra espacio */
+}
+
+.auth-box {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ESTADO: LOGIN (Por defecto) */
+#login-box {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+    z-index: 2;
+    pointer-events: auto;
+}
+#register-box {
+    opacity: 0;
+    transform: translateX(40px) scale(0.96);
+    filter: blur(8px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ESTADO: REGISTRO */
+.auth.is-registering #login-box {
+    opacity: 0;
+    transform: translateX(-40px) scale(0.96);
+    filter: blur(8px);
+    z-index: 1;
+    pointer-events: none;
+}
+.auth.is-registering #register-box {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+    z-index: 2;
+    pointer-events: auto;
+}
+
+/* ================================
+   TRANSICIÓN DEL HERO (TEXTOS)
+================================ */
+.hero-content-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+}
+
+.hero-login, .hero-register {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-register {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.auth.is-registering .hero-login {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+.auth.is-registering .hero-register {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 
@@ -302,7 +436,7 @@ body {
     font-size: 1rem;
     color: var(--texto);
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
 }
 
 .form-group input::placeholder {
@@ -312,6 +446,8 @@ body {
 /* Cuando el usuario hace clic en el input, la línea inferior cambia a vino */
 .form-group input:focus {
     border-bottom-color: var(--vino);
+    /* Focus visible según accesibilidad UI/UX Pro Max */
+    box-shadow: 0 2px 0 0 var(--vino);
 }
 
 
@@ -338,7 +474,7 @@ body {
     font-weight: 700;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(123, 28, 78, 0.2);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), filter 200ms ease;
 }
 
 /* Al pasar el mouse, el botón sube un poco y la sombra se intensifica */
@@ -347,9 +483,10 @@ body {
     box-shadow: 0 6px 20px rgba(123, 28, 78, 0.3);
 }
 
-/* Al hacer clic, scale(0.98) lo encoge ligeramente como si lo presionaras */
+/* Al hacer clic, scale(0.97) lo encoge ligeramente y un sutil blur (Emil Design) */
 .btn-primary:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
+    filter: blur(1px);
 }
 
 
@@ -493,11 +630,12 @@ body {
     background-repeat: no-repeat;
     background-position: right 4px center;
     padding-right: 24px;
-    transition: border-color 0.3s ease;
+    transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
 }
 
 .form-group select:focus {
     border-bottom-color: var(--vino);
+    box-shadow: 0 2px 0 0 var(--vino);
 }
 
 /* Opción placeholder gris */
@@ -522,4 +660,43 @@ body {
     max-width: 480px;
     width: 100%;
     margin: auto;               /* auto vertical centra si hay espacio */
+}
+
+/* ================================
+   CONTRASEÑA VISIBLE ICONO
+================================ */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 35px; /* Espacio para el icono */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px; /* Touch target 44x44pt mínimo (UI/UX Pro Max) */
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--gris-texto);
+    font-size: 1.3rem; 
+    transition: color 150ms var(--ease-out), background-color 150ms var(--ease-out), transform 160ms var(--ease-out);
+    border-radius: 50%;
+}
+
+.toggle-password:hover {
+    color: var(--vino);
+    background-color: rgba(123, 28, 78, 0.05);
+}
+
+.toggle-password:active {
+    transform: translateY(-50%) scale(0.9);
 }

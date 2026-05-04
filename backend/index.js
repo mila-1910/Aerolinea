@@ -13,11 +13,22 @@ app.use(express.json()); // Permite recibir datos en formato JSON
 // Configuración de la conexión a la base de datos (Neon)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Obligatorio para Neon
+    }
 });
 
-pool.connect()
-    .then(() => console.log('Conectado exitosamente a la base de datos Neon 🐘'))
-    .catch(err => console.error('Error conectando a la base de datos', err));
+// 🛡️ EL ESCUDO ANTI-CAÍDAS: 
+// Esto evita que el servidor se apague si Neon corta la conexión por inactividad
+pool.on('error', (err, client) => {
+    console.error('Neon cortó una conexión inactiva (es normal):', err.message);
+});
+
+// 3. PRUEBA DE CONEXIÓN LIGERA
+// Esto solo pregunta la hora una vez y "cuelga" el teléfono de inmediato.
+pool.query('SELECT NOW()')
+    .then(() => console.log('✅ Conexión inicial con Neon exitosa 🐘'))
+    .catch(err => console.error('❌ Error al hablar con Neon:', err.message));
 
 // --- RUTAS ---
 

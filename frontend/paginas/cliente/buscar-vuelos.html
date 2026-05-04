@@ -14,10 +14,9 @@
 
 <body>
 
-    <!-- Navbar definido -->
     <nav class="navbar">
 
-        <a class="navbar-logo" href="dashboard.html">
+        <a class="navbar-logo" href="buscar-vuelos.html">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
         </a>
 
@@ -30,8 +29,10 @@
 
         <div class="navbar-perfil">
             <div class="perfil-trigger">
-                <div class="avatar">M</div>
-                <span>Messi</span>
+                <!-- Agregamos id="user-initial" -->
+                <div class="avatar" id="user-initial">M</div>
+                <!-- Agregamos id="user-display-name" -->
+                <span id="user-display-name">Messi</span>
             </div>
 
             <ul class="dropdown">
@@ -40,16 +41,17 @@
                 <li>
                     <hr>
                 </li>
-                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+                <!-- Agregamos la clase cerrar-sesion-btn para que funcione el clic -->
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion" id="logout-btn">Cerrar sesión</a>
+                </li>
             </ul>
-
         </div>
 
     </nav>
 
     <!-- Este es el formulario de la busquedad de vuelos de usuario -->
 
-    <div class="buscador-header">
+    <div class="buscador-header reveal">
 
         <h2>¿Cual sera tu proximo destino?</h2>
         <p>Encuentra el vuelo perfecto para tu proximo viaje!! </p>
@@ -65,11 +67,8 @@
         </div>
 
 
-    </div>
-
-    <!-- Campos -->
-
-    <div class="buscador-campos">
+        <!-- Campos AHORA ADENTRO -->
+        <div class="buscador-campos reveal reveal-delay-1">
 
         <div class="campo-grupo">
             <label>Origen</label>
@@ -81,30 +80,31 @@
             <input type="text" placeholder="Ciudad de destino">
         </div>
 
-        <div class="campo-grupo">
+        <div class="campo-grupo fecha">
             <label>Fecha de ida</label>
             <input type="date">
         </div>
 
-        <div class="campo-grupo">
+        <div class="campo-grupo fecha">
             <label>Fecha de regreso</label>
             <input type="date">
         </div>
 
-        <div class="campo-grupo">
+        <div class="campo-grupo pasajeros">
             <label>Pasajeros</label>
             <input type="number" min="1" max="10" value="1">
         </div>
 
         <button class="boton-buscar">Buscar vuelos</button>
 
+        </div>
     </div>
 
     <!-- Filtros y resultados -->
     <div class="buscar-contenido">
 
         <!-- Filtros izquierda -->
-        <aside class="filtros">
+        <aside class="filtros reveal reveal-delay-2">
             <h3>Filtros</h3>
 
             <div class="filtro-grupo">
@@ -153,57 +153,57 @@
 
             <div class="vuelos-grid">
 
-               <div class="vuelo-card">
-    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
-    <div class="vuelo-info">
-        <h4>Bogotá → Nueva York</h4>
-        <p><i class="fa-solid fa-plane"></i> Directo · 6h 30min</p>
-        <p><i class="fa-solid fa-calendar-days"></i> 15 Abr 2026</p>
-        <div class="vuelo-footer">
-            <span class="vuelo-precio">$3.290.000 COP</span>
-            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
-        </div>
-    </div>
-</div>
+                <div class="vuelo-card">
+                    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
+                    <div class="vuelo-info">
+                        <h4>Bogotá → Nueva York</h4>
+                        <p><i class="fa-solid fa-plane"></i> Directo · 6h 30min</p>
+                        <p><i class="fa-solid fa-calendar-days"></i> 15 Abr 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$3.290.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
 
-<div class="vuelo-card">
-    <img src="../../imagenes/paris.jpg" alt="París">
-    <div class="vuelo-info">
-        <h4>Bogotá → París</h4>
-        <p><i class="fa-solid fa-plane"></i> Una escala · 12h 45min</p>
-        <p><i class="fa-solid fa-calendar-days"></i> 22 May 2026</p>
-        <div class="vuelo-footer">
-            <span class="vuelo-precio">$4.480.000 COP</span>
-            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
-        </div>
-    </div>
-</div>
+                <div class="vuelo-card">
+                    <img src="../../imagenes/paris.jpg" alt="París">
+                    <div class="vuelo-info">
+                        <h4>Bogotá → París</h4>
+                        <p><i class="fa-solid fa-plane"></i> Una escala · 12h 45min</p>
+                        <p><i class="fa-solid fa-calendar-days"></i> 22 May 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$4.480.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
 
-<div class="vuelo-card">
-    <img src="../../imagenes/cancun.jpg" alt="Cancún">
-    <div class="vuelo-info">
-        <h4>Medellín → Cancún</h4>
-        <p><i class="fa-solid fa-plane"></i> Directo · 4h 15min</p>
-        <p><i class="fa-solid fa-calendar-days"></i> 10 Jun 2026</p>
-        <div class="vuelo-footer">
-            <span class="vuelo-precio">$2.170.000 COP</span>
-            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
-        </div>
-    </div>
-</div>
+                <div class="vuelo-card">
+                    <img src="../../imagenes/cancun.jpg" alt="Cancún">
+                    <div class="vuelo-info">
+                        <h4>Medellín → Cancún</h4>
+                        <p><i class="fa-solid fa-plane"></i> Directo · 4h 15min</p>
+                        <p><i class="fa-solid fa-calendar-days"></i> 10 Jun 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$2.170.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
 
-<div class="vuelo-card">
-    <img src="../../imagenes/madrid.jpg" alt="Madrid">
-    <div class="vuelo-info">
-        <h4>Cali → Madrid</h4>
-        <p><i class="fa-solid fa-plane"></i> Una escala · 14h 20min</p>
-        <p><i class="fa-solid fa-calendar-days"></i> 5 Jul 2026</p>
-        <div class="vuelo-footer">
-            <span class="vuelo-precio">$3.890.000 COP</span>
-            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
-        </div>
-    </div>
-</div>
+                <div class="vuelo-card">
+                    <img src="../../imagenes/madrid.jpg" alt="Madrid">
+                    <div class="vuelo-info">
+                        <h4>Cali → Madrid</h4>
+                        <p><i class="fa-solid fa-plane"></i> Una escala · 14h 20min</p>
+                        <p><i class="fa-solid fa-calendar-days"></i> 5 Jul 2026</p>
+                        <div class="vuelo-footer">
+                            <span class="vuelo-precio">$3.890.000 COP</span>
+                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
@@ -211,7 +211,7 @@
 
     </div>
 
-   <!-- Footer ELARIS copiado de cliente -->
+    <!-- Footer ELARIS copiado de cliente -->
     <footer class="footer">
 
         <!-- Parte superior del footer -->
@@ -255,6 +255,32 @@
 
     </footer>
 
+    <script src="../../js/session.js"></script>
+    <script>
+        // Emil Design - Intersection Observer para animaciones de entrada
+        document.addEventListener('DOMContentLoaded', () => {
+            // Añadir dinámicamente las clases reveal a las tarjetas de vuelos
+            const tarjetasVuelos = document.querySelectorAll('.vuelo-card');
+            tarjetasVuelos.forEach((card, index) => {
+                card.classList.add('reveal');
+                card.classList.add('reveal-delay-' + (Math.min((index % 3) + 1, 5)));
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 
 </html>
