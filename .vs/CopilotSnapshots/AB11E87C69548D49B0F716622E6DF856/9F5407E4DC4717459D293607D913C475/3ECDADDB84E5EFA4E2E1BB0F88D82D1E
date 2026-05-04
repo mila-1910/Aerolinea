@@ -1,13 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos | ELARIS</title>
+    <title>Ubicaciones | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-  
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="../../css/cliente.css">
     <!-- CSS ESPECÍFICO DEL AGENTE -->
     <link rel="stylesheet" href="../../css/agente.css">
     <!-- Font Awesome 6 — íconos profesionales -->
@@ -27,7 +28,7 @@
         </div>
 
         <div class="navbar-centro">
-            <span class="panel-texto">Vuelos</span>
+            <span class="panel-texto">Ubicaciones</span>
             <span class="badge-agente">ADMINISTRADOR</span>
         </div>
 
@@ -63,7 +64,7 @@
                     <span class="menu-icono"><i class="fas fa-chart-line" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Dashboard</span>
                 </a>
-                <a href="vuelos.html" class="menu-item active">
+                <a href="vuelos.html" class="menu-item">
                     <span class="menu-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Vuelos</span>
                 </a>
@@ -71,7 +72,7 @@
                     <span class="menu-icono"><i class="fas fa-box" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Paquetes</span>
                 </a>
-                <a href="ubicaciones.html" class="menu-item">
+                <a href="ubicaciones.html" class="menu-item active">
                     <span class="menu-icono"><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i></span>
                     <span class="menu-texto">Ubicaciones</span>
                 </a>
@@ -93,72 +94,110 @@
 
             <!-- TÍTULO -->
             <div class="saludo">
-                <h2><i class="fas fa-plane" style="color: #d4af37;"></i> Gestión de Vuelos</h2>
-                <p>Administra los vuelos del sistema</p>
+                <h2><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i> Ubicaciones</h2>
+                <p>Gestión de destinos disponibles</p>
+            </div>
+            <div style="display:flex; gap:15px; margin-bottom:20px;">
+                <input type="text" placeholder="Buscar ciudad..."
+                       style="padding:10px; border:1px solid #ddd; border-radius:8px; flex:1;">
+
+                <button class="btn-accion">Buscar</button>
             </div>
 
-            <!-- 🔥 CONTENIDO DEL DASHBOARD -->
-            <div class="cards-dashboard">
-
-                <!-- 🔹 SOLO 2 CARDS (no 4 como dashboard) -->
-                <div style="display:flex; gap:20px; margin-bottom:25px;">
-                    <div class="card">
-                        <div class="card-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></div>
-                        <div class="numero">120</div>
-                        <h3>Vuelos</h3>
-                        <p>Total registrados</p>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-icono"><i class="fas fa-check-circle" style="color: #d4af37;"></i></div>
-                        <div class="numero">95</div>
-                        <h3>Activos</h3>
-                        <p>En operación</p>
-                    </div>
-                </div>
-
-                <!-- 🔥 BOTÓN (esto lo hace ver diferente) -->
-                <div style="margin-bottom:20px;">
-                    <a href="#" class="btn-accion">➕ Crear nuevo vuelo</a>
-                </div>
-
-                <!-- 🔥 TABLA PRINCIPAL -->
-                <table class="tabla-reservas-agente" style="margin-top:10px;">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#VL-001</td>
-                            <td>Bogotá</td>
-                            <td>Medellín</td>
-                            <td>20/04/2026</td>
-                            <td><span class="estado confirmada">Activo</span></td>
-                            <td><a href="#" class="btn-accion">Editar</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>#VL-002</td>
-                            <td>Cali</td>
-                            <td>Cartagena</td>
-                            <td>20/04/2026</td>
-                            <td><span class="estado pendiente">Retrasado</span></td>
-                            <td><a href="#" class="btn-accion">Editar</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <!-- BOTÓN AGREGAR -->
+            <div style="margin-bottom:20px;">
+                <button class="btn-accion">+ Agregar Ubicación</button>
             </div>
+
+
+            <!-- TABLA DE UBICACIONES -->
+            <table class="tabla-reservas-agente" style="margin-bottom:40px;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ciudad</th>
+                        <th>País</th>
+                        <th>Aeropuerto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#UB-001</td>
+                        <td>Bogotá</td>
+                        <td>Colombia</td>
+                        <td>El Dorado</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#UB-002</td>
+                        <td>Medellín</td>
+                        <td>Colombia</td>
+                        <td>José María Córdova</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#UB-003</td>
+                        <td>Miami</td>
+                        <td>Estados Unidos</td>
+                        <td>Miami Intl</td>
+                        <td>
+                            <a href="#" class="btn-accion">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </main>
     </div>
+
+    <!-- Footer ELARIS copiado de cliente -->
+    <footer class="footer">
+
+        <!-- Parte superior del footer -->
+        <div class="footer-top">
+
+            <!-- Logo y descripción -->
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
+                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
+                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
+                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
+                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
+                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisora -->
+        <hr class="footer-hr">
+
+        <!-- Parte inferior -->
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
 
     <!-- SCRIPT PARA EL DROPDOWN DEL PERFIL -->
     <script>

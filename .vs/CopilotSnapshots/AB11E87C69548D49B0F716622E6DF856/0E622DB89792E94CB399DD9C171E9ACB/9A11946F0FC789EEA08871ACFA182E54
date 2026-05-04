@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,7 +7,8 @@
     <title>Paquetes | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-    
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="../../css/cliente.css">
     <!-- CSS ESPECÍFICO DEL AGENTE -->
     <link rel="stylesheet" href="../../css/agente.css">
     <!-- Font Awesome 6 — íconos profesionales -->
@@ -153,30 +154,57 @@
 
             </div>
 
-        </main>
-    </div>
+            <!-- Footer ELARIS -->
+            <footer class="footer">
+
+        <!-- Parte superior del footer -->
+        <div class="footer-top">
+
+            <!-- Logo y descripción -->
+            <div class="footer-columna">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-columna">
+                <h4>Contacto</h4>
+                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
+                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
+                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
+            </div>
+
+            <!-- Redes sociales -->
+            <div class="footer-columna">
+                <h4>Síguenos</h4>
+                <div class="redes">
+                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
+                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
+                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
+                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Línea divisora -->
+        <hr class="footer-hr">
+
+        <!-- Parte inferior -->
+        <div class="footer-bottom">
+            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
+            <p>Diseñado con ❤️ por el equipo ELARIS</p>
+        </div>
+
+    </footer>
 
     <!-- SCRIPT PARA EL DROPDOWN DEL PERFIL -->
-    <script>
-        const perfilTrigger = document.querySelector('.perfil-trigger');
-        const dropdown = document.querySelector('.navbar-perfil .dropdown');
-
-        perfilTrigger.addEventListener('click', () => {
-            dropdown.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navbar-perfil')) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        document.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
-            e.preventDefault();
+    <script>            e.preventDefault();
             console.log('Cerrando sesión...');
         });
     </script>
 
 </body>
 
+</html>
 </html>

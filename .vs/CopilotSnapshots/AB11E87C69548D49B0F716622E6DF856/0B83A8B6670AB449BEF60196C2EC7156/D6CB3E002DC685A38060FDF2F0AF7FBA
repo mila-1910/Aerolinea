@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | ELARIS</title>
-    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-
-   
-    <link rel="stylesheet" href="../../css/agente.css">
-    <!-- Font Awesome 6 — íconos profesionales -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-</head>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -41,7 +23,7 @@
          ============================================ -->
     <nav class="navbar-agente">
         <div class="navbar-logo">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
+            <i class="fas fa-plane" style="color: #d4af37; font-size: 28px;"></i>
             <span class="logo-texto">ELARIS</span>
         </div>
 
@@ -119,8 +101,7 @@
             <!-- 🔥 CONTENIDO DEL DASHBOARD -->
             <div class="cards-dashboard">
 
-                <!-- ESTADÍSTICAS 2x2 -->
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:40px;">
+                <div style="display:flex; gap:20px; margin-bottom:20px;">
                     <div class="card">
                         <div class="card-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></div>
                         <div class="numero">120</div>
@@ -134,7 +115,9 @@
                         <h3>Paquetes</h3>
                         <p>Disponibles</p>
                     </div>
+                </div>
 
+                <div style="display:flex; gap:20px;">
                     <div class="card">
                         <div class="card-icono"><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i></div>
                         <div class="numero">30</div>
@@ -150,144 +133,117 @@
                     </div>
                 </div>
 
-                <!-- TABLA Y GRÁFICOS -->
-                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-top: 20px;">
+                <div style="display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap; width: 100%;">
 
-                    <!-- TABLA -->
-                    <div>
-                        <h4 style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-list" style="color: #d4af37;"></i> Últimas Reservas</h4>
-                        <table class="tabla-reservas-agente" style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>Código</th>
-                                    <th>Pasajero</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>#RES-001</td>
-                                    <td>María Gómez</td>
-                                    <td><span class="estado confirmada">Confirmada</span></td>
-                                </tr>
-                                <tr>
-                                    <td>#RES-002</td>
-                                    <td>Juan Pérez</td>
-                                    <td><span class="estado pendiente">Pendiente</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <div style="display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap;">
 
-                    <!-- GRÁFICOS -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-
-                        <!-- GRÁFICO BARRAS -->
-                        <div class="card">
-                            <h4 style="text-align:center; margin-bottom: 15px;"><i class="fas fa-chart-bar" style="color: #d4af37;"></i> Frecuencias</h4>
-                            <canvas id="graficoBarras"></canvas>
+                        <!-- MITAD 1: TABLA -->
+                        <div style="flex: 1 1 250px;">
+                            <table class="tabla-reservas-agente" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Pasajero</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#RES-001</td>
+                                        <td>María Gómez</td>
+                                        <td><span class="estado confirmada">Confirmada</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#RES-002</td>
+                                        <td>Juan Pérez</td>
+                                        <td><span class="estado pendiente">Pendiente</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
-                        <!-- GRÁFICO TORTA -->
-                        <div class="card">
-                            <h4 style="text-align:center; margin-bottom: 15px;"><i class="fas fa-chart-pie" style="color: #d4af37;"></i> Distribución</h4>
-                            <canvas id="graficoTorta"></canvas>
+                        <!-- MITAD 2: TUS GRÁFICOS -->
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;  ">
+
+                            <!-- GRÁFICO BARRAS -->
+                            <div class="card" style="flex: 1 1 250px;">
+                                <h4 style="text-align:center;">📊 Frecuencias</h4>
+                                <canvas id="graficoBarras"></canvas>
+                            </div>
+
+                            <!-- GRÁFICO TORTA -->
+                            <div class="card" style="flex: 1 1 250px;">
+                                <h4 style="text-align:center;">🥧 Distribución</h4>
+                                <canvas id="graficoTorta"></canvas>
+                            </div>
+
+                        </div>
+
                         </div>
 
                     </div>
 
                 </div>
-
             </div>
 
-        </main>
-
     </div>
-
-    <!-- SCRIPTS PARA LOS GRÁFICOS Y NAVBAR -->
+    
+    <!-- SCRIPTS PARA LOS GRÁFICOS -->
     <script>
-        // ============================================
-        // DROPDOWN DEL PERFIL
-        // ============================================
-        const perfilTrigger = document.querySelector('.perfil-trigger');
-        const dropdown = document.querySelector('.navbar-perfil .dropdown');
+        // Datos comunes
+        const etiquetas = ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'];
+        const datos = [120, 45, 30, 80];
+        const coloresFondo = [
+            'rgba(123, 28, 78, 0.7)',
+            'rgba(168, 50, 110, 0.7)',
+            'rgba(200, 100, 140, 0.7)',
+            'rgba(230, 150, 170, 0.7)'
+        ];
+        const coloresBorde = [
+            '#7B1C4E', '#a8326e', '#c8648c', '#e696aa'
+        ];
 
-        perfilTrigger.addEventListener('click', () => {
-            dropdown.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navbar-perfil')) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        document.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('Cerrando sesión...');
-        });
-    </script>
-
-    <!-- GRÁFICOS CON CHART.JS -->
-    <script>
-        // Configuración de gráficos
+        // Gráfico de BARRAS (izquierda)
         const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
-        const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
-
-        // GRÁFICO DE BARRAS
         new Chart(ctxBarras, {
             type: 'bar',
             data: {
-                labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
+                labels: etiquetas,
                 datasets: [{
                     label: 'Cantidad',
-                    data: [120, 45, 30, 80],
-                    backgroundColor: [
-                        '#d4af37',
-                        '#a8326e',
-                        '#7B1C4E',
-                        '#c8648c'
-                    ],
-                    borderColor: '#7B1C4E',
-                    borderWidth: 2
+                    data: datos,
+                    backgroundColor: coloresFondo,
+                    borderColor: coloresBorde,
+                    borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#333',
-                            font: { size: 12 }
-                        }
-                    }
+                    legend: { display: false },
+                    title: { display: false }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 150
+                        ticks: { stepSize: 20 }
                     }
                 }
             }
         });
 
-        // GRÁFICO DE PASTEL
+        // Gráfico de TORTA / PASTEL (derecha)
+        const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
         new Chart(ctxTorta, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
-                labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
+                labels: etiquetas,
                 datasets: [{
-                    data: [120, 45, 30, 80],
-                    backgroundColor: [
-                        '#d4af37',
-                        '#a8326e',
-                        '#7B1C4E',
-                        '#c8648c'
-                    ],
+                    data: datos,
+                    backgroundColor: coloresFondo,
                     borderColor: '#ffffff',
-                    borderWidth: 3
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -297,9 +253,15 @@
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#333',
-                            font: { size: 11 },
-                            padding: 15
+                            boxWidth: 12,
+                            font: { size: 10 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.label + ': ' + context.raw;
+                            }
                         }
                     }
                 }

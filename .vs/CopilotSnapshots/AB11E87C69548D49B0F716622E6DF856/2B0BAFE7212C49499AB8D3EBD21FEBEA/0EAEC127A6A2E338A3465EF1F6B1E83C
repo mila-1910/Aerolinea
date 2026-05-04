@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -155,7 +155,7 @@
 
                     <!-- TABLA -->
                     <div>
-                        <h4 style="margin-bottom: 15px; font-size: 1.1rem;"><i class="fas fa-list" style="color: #d4af37;"></i> Últimas Reservas</h4>
+                        <h4 style="margin-bottom: 15px; font-size: 1.1rem;">📋 Últimas Reservas</h4>
                         <table class="tabla-reservas-agente" style="width: 100%;">
                             <thead>
                                 <tr>
@@ -197,11 +197,9 @@
                     </div>
 
                 </div>
-
             </div>
-
-        </main>
-
+     </div>
+     </div>
     </div>
 
     <!-- SCRIPTS PARA LOS GRÁFICOS Y NAVBAR -->
@@ -216,90 +214,96 @@
             dropdown.classList.toggle('show');
         });
 
+        // Cerrar el dropdown cuando se hace clic fuera
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.navbar-perfil')) {
                 dropdown.classList.remove('show');
             }
         });
 
+        // Cerrar sesión
         document.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
             e.preventDefault();
+            // Aquí puedes agregar la lógica para cerrar sesión
             console.log('Cerrando sesión...');
+            // window.location.href = '../../login.html'; // Descomenta cuando tengas tu página de login
         });
     </script>
 
-    <!-- GRÁFICOS CON CHART.JS -->
     <script>
-        // Configuración de gráficos
-        const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
-        const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
+        // Datos comunes
+        const etiquetas = ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'];
+        const datos = [120, 45, 30, 80];
+        const coloresFondo = [
+            'rgba(123, 28, 78, 0.7)',
+            'rgba(168, 50, 110, 0.7)',
+            'rgba(200, 100, 140, 0.7)',
+            'rgba(230, 150, 170, 0.7)'
+        ];
+        const coloresBorde = [
+            '#7B1C4E', '#a8326e', '#c8648c', '#e696aa'
+        ];
 
-        // GRÁFICO DE BARRAS
+        // Gráfico de BARRAS (izquierda)
+        const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
         new Chart(ctxBarras, {
             type: 'bar',
             data: {
-                labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
+                labels: etiquetas,
                 datasets: [{
                     label: 'Cantidad',
-                    data: [120, 45, 30, 80],
-                    backgroundColor: [
-                        '#d4af37',
-                        '#a8326e',
-                        '#7B1C4E',
-                        '#c8648c'
-                    ],
-                    borderColor: '#7B1C4E',
+                    data: datos,
+                    backgroundColor: coloresFondo,
+                    borderColor: coloresBorde,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 20 }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de TORTA / PASTEL (derecha)
+        const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
+        new Chart(ctxTorta, {
+            type: 'pie',
+            data: {
+                labels: etiquetas,
+                datasets: [{
+                    data: datos,
+                    backgroundColor: coloresFondo,
+                    borderColor: '#ffffff',
                     borderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#333',
-                            font: { size: 12 }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 150
-                    }
-                }
-            }
-        });
-
-        // GRÁFICO DE PASTEL
-        new Chart(ctxTorta, {
-            type: 'doughnut',
-            data: {
-                labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
-                datasets: [{
-                    data: [120, 45, 30, 80],
-                    backgroundColor: [
-                        '#d4af37',
-                        '#a8326e',
-                        '#7B1C4E',
-                        '#c8648c'
-                    ],
-                    borderColor: '#ffffff',
-                    borderWidth: 3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
+            </body>
+</html>gins: {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#333',
-                            font: { size: 11 },
-                            padding: 15
+                            boxWidth: 12,
+                            font: { size: 10 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return context.label + ': ' + context.raw;
+                            }
                         }
                     }
                 }
