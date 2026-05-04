@@ -34,7 +34,7 @@
 
         <div class="navbar-right">
             <div class="notificaciones" title="Notificaciones">
-                <span class="icono"><i class="fas fa-bell" style="color: gold;"></i></span>
+                <span class="icono"><i class="far fa-bell" style="color: gold;"></i></span>
                 <span class="badge">3</span>
             </div>
 
@@ -86,7 +86,7 @@
 
             <!-- TÍTULO -->
             <div class="saludo">
-                <h2>📄 Detalle de Reserva</h2>
+                <h2><i class="fas fa-file-alt" style="color: gold;"></i> Detalle de Reserva</h2>
                 <p>Información completa de la reserva | Historial de cambios</p>
             </div>
 
@@ -97,7 +97,7 @@
 
                 <!-- COLUMNA IZQUIERDA: Datos del pasajero -->
                 <div class="tarjeta-info">
-                    <h3>👤 Datos del pasajero</h3>
+                    <h3><i class="fas fa-user" style="color: gold;"></i> Datos del pasajero</h3>
                     <div class="dato-linea">
                         <span class="label">Código reserva:</span>
                         <span class="valor" id="codigoReserva">-</span>
@@ -200,7 +200,7 @@
 
                 <!-- Estado de la reserva -->
                 <div class="tarjeta-info">
-                    <h3>🏷️ Estado de la reserva</h3>
+                    <h3><i class="fas fa-tags" style="color: gold;"></i> Estado de la reserva</h3>
                     <div class="dato-linea">
                         <span class="label">Estado actual:</span>
                         <span class="valor">
@@ -216,7 +216,7 @@
                         <span class="valor" id="ultimaModificacion">-</span>
                     </div>
                     <div class="observacion-reserva">
-                        <label>📝 Observación del agente:</label>
+                        <label><i class="fas fa-sticky-note" style="color: gold;"></i> Observación del agente:</label>
                         <textarea rows="2" placeholder="Añadir nota sobre esta reserva..."></textarea>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                  HISTORIAL DE ESTADOS (REQUISITO DEL PROYECTO)
                  ============================================ -->
             <div class="tarjeta-info historial-container">
-                <h3>📜 Historial de estados</h3>
+                <h3><i class="fas fa-history" style="color: gold;"></i> Historial de estados</h3>
                 <p class="historial-descripcion">Registro de fecha y hora de cada cambio en la reserva</p>
                 <table class="historial-tabla">
                     <thead>
@@ -251,9 +251,10 @@
                 <h3><i class="fas fa-bolt" style="color: gold;"></i> Acciones</h3>
                 <div class="grupo-botones">
                     <a id="btnConfirmarPago" href="#" class="btn-confirmar-pago-detalle"><i class="fas fa-check" style="color: gold;"></i> Confirmar pago</a>
-                    <button id="btnRechazarPago" class="btn-rechazar-pago-detalle"><i class="fas fa-times" style="color: gold;"></i> Rechazar pago</button>
+                    <button id="btnRechazarPago" class="btn-rechazar-pago-detalle"><i class="fas fa-times fa-lg" style="color: gold;"></i> Rechazar pago</button>
                     <a id="btnAsignarAsiento" href="#" class="btn-asignar-asiento-detalle"><i class="fas fa-chair" style="color: gold;"></i> Asignar asiento</a>
                     <button id="btnCancelarReserva" class="btn-cancelar-reserva-detalle"><i class="fas fa-trash" style="color: gold;"></i> Cancelar reserva</button>
+                </div>
             </div>
 
         </main>
@@ -279,7 +280,7 @@
                     codigo: "AV-1234",
                     origen: "Bogotá (BOG)",
                     destino: "Medellín (MDE)",
-                    fechaSalida: "15/04/2025",
+                    fechaSalida: "15/04/2026",
                     horaSalida: "10:30 AM",
                     horaLlegada: "11:45 AM",
                     clase: "Económica",
@@ -294,14 +295,14 @@
                 },
                 estadoReserva: {
                     actual: "Pendiente",
-                    fechaReserva: "10/04/2025 - 14:23:15",
-                    ultimaModificacion: "11/04/2025 - 09:30:00"
+                    fechaReserva: "10/04/2026 - 14:23:15",
+                    ultimaModificacion: "11/04/2026 - 09:30:00"
                 },
                 historial: [
-                    { fecha: "10/04/2025", hora: "14:23:15", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-                    { fecha: "10/04/2025", hora: "14:23:15", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
-                    { fecha: "11/04/2025", hora: "09:30:00", anterior: "Pendiente de pago", nuevo: "Pendiente", agente: "Agente (Juan Fernando)" },
-                    { fecha: "12/04/2025", hora: "15:20:00", anterior: "Pendiente", nuevo: "En proceso", agente: "Sistema" }
+                    { fecha: "10/04/2026", hora: "14:23:15", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "10/04/2026", hora: "14:23:15", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
+                    { fecha: "11/04/2026", hora: "09:30:00", anterior: "Pendiente de pago", nuevo: "Pendiente", agente: "Agente (Juan Fernando)" },
+                    { fecha: "12/04/2026", hora: "15:20:00", anterior: "Pendiente", nuevo: "En proceso", agente: "Sistema" }
                 ]
             },
             2: {
@@ -318,7 +319,7 @@
                     codigo: "AV-5678",
                     origen: "Medellín (MDE)",
                     destino: "Cartagena (CTG)",
-                    fechaSalida: "16/04/2025",
+                    fechaSalida: "16/04/2026",
                     horaSalida: "08:00 AM",
                     horaLlegada: "09:15 AM",
                     clase: "Ejecutiva",
@@ -333,13 +334,13 @@
                 },
                 estadoReserva: {
                     actual: "Confirmada",
-                    fechaReserva: "05/04/2025 - 10:30:00",
-                    ultimaModificacion: "06/04/2025 - 14:20:00"
+                    fechaReserva: "05/04/2026 - 10:30:00",
+                    ultimaModificacion: "06/04/2026 - 14:20:00"
                 },
                 historial: [
-                    { fecha: "05/04/2025", hora: "10:30:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-                    { fecha: "05/04/2025", hora: "10:35:00", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
-                    { fecha: "06/04/2025", hora: "14:20:00", anterior: "Pendiente de pago", nuevo: "Confirmada", agente: "Agente" }
+                    { fecha: "05/04/2026", hora: "10:30:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "05/04/2026", hora: "10:35:00", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
+                    { fecha: "06/04/2026", hora: "14:20:00", anterior: "Pendiente de pago", nuevo: "Confirmada", agente: "Agente" }
                 ]
             },
             3: {
@@ -356,7 +357,7 @@
                     codigo: "AV-9012",
                     origen: "Cali (CLO)",
                     destino: "Bogotá (BOG)",
-                    fechaSalida: "17/04/2025",
+                    fechaSalida: "17/04/2026",
                     horaSalida: "18:30 PM",
                     horaLlegada: "19:45 PM",
                     clase: "Económica",
@@ -371,12 +372,12 @@
                 },
                 estadoReserva: {
                     actual: "Pendiente",
-                    fechaReserva: "12/04/2025 - 09:15:00",
-                    ultimaModificacion: "12/04/2025 - 09:20:00"
+                    fechaReserva: "12/04/2026 - 09:15:00",
+                    ultimaModificacion: "12/04/2026 - 09:20:00"
                 },
                 historial: [
-                    { fecha: "12/04/2025", hora: "09:15:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-                    { fecha: "12/04/2025", hora: "09:20:00", anterior: "Reservada", nuevo: "Pendiente", agente: "Cliente" }
+                    { fecha: "12/04/2026", hora: "09:15:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
+                    { fecha: "12/04/2026", hora: "09:20:00", anterior: "Reservada", nuevo: "Pendiente", agente: "Cliente" }
                 ]
             }
         };
