@@ -7,12 +7,11 @@
     <title>Gestionar Reservas | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-    <!-- CSS GLOBAL -->
-    <link rel="stylesheet" href="../../css/cliente.css">
     <!-- CSS ESPECÍFICO DEL AGENTE -->
     <link rel="stylesheet" href="../../css/agente.css">
-     <!-- Font Awesome 6 — íconos profesionales -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 
@@ -34,19 +33,19 @@
 
         <div class="navbar-right">
             <div class="notificaciones" title="Notificaciones">
-                <span class="icono">🔔</span>
+                <span class="icono"><i class="fas fa-bell" style="color: gold;"></i></span>
                 <span class="badge">3</span>
             </div>
 
-            <div class="navbar-perfil">
+            <div class="navbar-perfil" id="perfilDropdown">
                 <div class="perfil-trigger">
                     <div class="avatar">JF</div>
                     <span>Juan Fernando</span>
                     <span class="flecha">▼</span>
                 </div>
-                <ul class="dropdown">
-                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
-                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                <ul class="dropdown" id="perfilMenu">
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>
@@ -61,11 +60,11 @@
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item">
-                    <span class="menu-icono">📊</span>
+                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: gold;"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item active">
-                    <span class="menu-icono">📋</span>
+                    <span class="menu-icono"><i class="fas fa-clipboard-list" style="color: gold;"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
             </div>
@@ -77,7 +76,7 @@
                     <h4>Juan Fernando</h4>
                     <p>Agente de Aerolínea</p>
                 </div>
-                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión">🚪 Cerrar Sesión</a>
+                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión"><i class="fas fa-sign-out-alt" style="color: gold;"></i> Cerrar Sesión</a>
             </div>
         </aside>
 
@@ -86,18 +85,18 @@
 
             <!-- TÍTULO Y DESCRIPCIÓN -->
             <div class="saludo">
-                <h2>📋 Gestión de Reservas</h2>
+                <h2><i class="fas fa-clipboard-list" style="color: gold;"></i> Gestión de Reservas</h2>
                 <p>Administra todas las reservas de los clientes | Confirma pagos, asigna asientos y cambia estados</p>
             </div>
 
             <!-- BARRA DE BÚSQUEDA Y FILTROS -->
             <div class="barra-busqueda">
                 <div class="campo-filtro">
-                    <label>🔍 Buscar por cliente</label>
+                    <label><i class="fas fa-search" style="color: gold;"></i> Buscar por cliente</label>
                     <input type="text" id="buscarCliente" placeholder="Nombre o documento...">
                 </div>
                 <div class="campo-filtro">
-                    <label>✈️ Vuelo</label>
+                    <label><i class="fas fa-plane" style="color: gold;"></i> Vuelo</label>
                     <input type="text" id="buscarVuelo" placeholder="Código de vuelo...">
                 </div>
                 <div class="campo-filtro">
@@ -121,17 +120,17 @@
 
             <!-- FILTROS RÁPIDOS (por estado) -->
             <div class="filtros-rapidos">
-                <button class="filtro-btn active" data-estado="todos">📋 Todos <span>(27)</span></button>
-                <button class="filtro-btn" data-estado="pendiente">⏳ Pendientes <span>(5)</span></button>
-                <button class="filtro-btn" data-estado="confirmada">✅ Confirmadas <span>(8)</span></button>
-                <button class="filtro-btn" data-estado="proceso">🔄 En proceso <span>(9)</span></button>
-                <button class="filtro-btn" data-estado="cancelada">❌ Canceladas <span>(5)</span></button>
+                <button class="filtro-btn active" data-estado="todos"><i class="fas fa-clipboard-list" style="color: gold;"></i> Todos <span>(27)</span></button>
+                <button class="filtro-btn" data-estado="pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendientes <span>(5)</span></button>
+                <button class="filtro-btn" data-estado="confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmadas <span>(8)</span></button>
+                <button class="filtro-btn" data-estado="proceso"><i class="fas fa-sync-alt" style="color: gold;"></i> En proceso <span>(9)</span></button>
+                <button class="filtro-btn" data-estado="cancelada"><i class="fas fa-times" style="color: gold;"></i> Canceladas <span>(5)</span></button>
             </div>
 
             <!-- TABLA DE RESERVAS -->
             <div class="seccion-reservas">
                 <div class="seccion-header">
-                    <h3>📋 Todas las reservas</h3>
+                    <h3><i class="fas fa-clipboard-list" style="color: gold;"></i> Todas las reservas</h3>
                     <span class="total-registros" id="totalRegistros">Mostrando 8 reservas</span>
                 </div>
 
@@ -162,7 +161,7 @@
                             <td>15/04/2025</td>
                             <td>$250 USD</td>
                             <td><span class="estado pendiente">Pendiente</span></td>
-                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=1" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 2 -->
@@ -175,7 +174,7 @@
                             <td>16/04/2025</td>
                             <td>$320 USD</td>
                             <td><span class="estado confirmada">Confirmada</span></td>
-                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=2" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 3 -->
@@ -188,7 +187,7 @@
                             <td>17/04/2025</td>
                             <td>$180 USD</td>
                             <td><span class="estado pendiente">Pendiente</span></td>
-                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=3" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 4 -->
@@ -201,7 +200,7 @@
                             <td>18/04/2025</td>
                             <td>$850 USD</td>
                             <td><span class="estado cancelada">Cancelada</span></td>
-                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=4" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 5 -->
@@ -214,7 +213,7 @@
                             <td>19/04/2025</td>
                             <td>$210 USD</td>
                             <td><span class="estado confirmada">Confirmada</span></td>
-                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=5" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 6 -->
@@ -227,7 +226,7 @@
                             <td>20/04/2025</td>
                             <td>$620 USD</td>
                             <td><span class="estado pendiente">Pendiente</span></td>
-                            <td><span class="pago-pendiente">⏳</span></td>
+                             <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=6" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 7 -->
@@ -240,7 +239,7 @@
                             <td>21/04/2025</td>
                             <td>$780 USD</td>
                             <td><span class="estado confirmada">Confirmada</span></td>
-                            <td><span class="pago-confirmado">✅</span></td>
+                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=7" class="btn-accion">Ver detalle</a></td>
                         </tr>
                         <!-- RESERVA 8 -->
@@ -253,7 +252,7 @@
                             <td>22/04/2025</td>
                             <td>$1200 USD</td>
                             <td><span class="estado pendiente">Pendiente</span></td>
-                            <td><span class="pago-pendiente">⏳</span></td>
+                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
                             <td><a href="detalle-reserva.html?id=8" class="btn-accion">Ver detalle</a></td>
                         </tr>
                     </tbody>
@@ -268,50 +267,24 @@
             </div>
         </main>
     </div>
+    <script>
+        // Obtener elementos del perfil y el menú
+        const perfil = document.getElementById('perfilDropdown');
+        const menu = document.getElementById('perfilMenu');
 
-     <!-- Footer ELARIS copiado de cliente -->
-    <footer class="footer">
+        // Al hacer clic en el área del perfil, alternar el menú
+        perfil.addEventListener('click', function (event) {
+            event.stopPropagation(); // Evita que el clic se propague y cierre inmediatamente
+            menu.classList.toggle('show');
+        });
 
-        <!-- Parte superior del footer -->
-        <div class="footer-top">
-
-            <!-- Logo y descripción -->
-            <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
-                <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
-            </div>
-
-            <!-- Contacto -->
-            <div class="footer-columna">
-                <h4>Contacto</h4>
-                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
-                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
-                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
-            </div>
-
-            <!-- Redes sociales -->
-            <div class="footer-columna">
-                <h4>Síguenos</h4>
-                <div class="redes">
-                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
-                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
-                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
-                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Línea divisora -->
-        <hr class="footer-hr">
-
-        <!-- Parte inferior -->
-        <div class="footer-bottom">
-            <p>© 2026 ELARIS Airlines. Todos los derechos reservados.</p>
-            <p>Diseñado con ❤️ por el equipo ELARIS</p>
-        </div>
-
-    </footer>
+        // Si se hace clic fuera del área del perfil, cerrar el menú
+        document.addEventListener('click', function (event) {
+            if (!perfil.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
 
 </body>
 
