@@ -294,3 +294,39 @@
 .redes .footer-icono {
     font-size: 1rem;
 }
+
+/* ===========================
+DATOS PRINCIPALES DEL VUELO
+============================== */
+.detalle-datos-vuelo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.detalle-datos-vuelo div {
+    background-color: var(--blanco);
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+    padding: 12px;
+}
+
+.detalle-datos-vuelo span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gris-texto);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.detalle-datos-vuelo strong {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Descripción plegable */
+.descripcion-texto.oculta {
+    display: none;
+}
