@@ -192,23 +192,33 @@ if (!vuelosGrid || vuelos.length === 0) return;
     };
 
 
-    const guardarVueloSeleccionado = (event) => {
+        const guardarVueloSeleccionado = (event) => {
         const boton = event.target.closest(".btn-detalle");
 
         if (!boton) return;
 
         const card = boton.closest(".vuelo-card");
 
+        // Guarda el vuelo para mostrarlo en el detalle
         const vueloSeleccionado = {
+            numeroVuelo: card.dataset.numero,
+            origen: card.dataset.origen,
+            destino: card.dataset.destino,
+            ciudad: card.dataset.ciudad,
+            fecha: card.dataset.fecha,
+            fechaTexto: card.dataset.fechaTexto,
+            escala: card.dataset.escala,
+            duracion: card.dataset.duracion,
+            clase: card.dataset.clase,
+            avion: card.dataset.avion,
             ruta: card.querySelector("h4").textContent,
             precio: card.querySelector(".vuelo-precio").textContent,
-            imagen: card.querySelector("img").getAttribute("src"),
-            informacion: card.querySelectorAll("p")[0].textContent,
-            fecha: card.querySelectorAll("p")[1].textContent
+            imagen: card.querySelector("img").getAttribute("src")
         };
 
         localStorage.setItem("vueloSeleccionado", JSON.stringify(vueloSeleccionado));
     };
+
     
         // Búsqueda automática
     origenInput.addEventListener("input", filtrarVuelos);
