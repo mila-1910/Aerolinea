@@ -30,7 +30,7 @@
 
         <div class="navbar__actions">
             <a href="login.html" class="btn-nav btn-nav--ghost">Iniciar sesión</a>
-            <a href="register.html" class="btn-nav btn-nav--solid">Registrarse</a>
+            <a href="login.html#register" class="btn-nav btn-nav--solid">Registrarse</a>
         </div>
     </header>
 
@@ -39,14 +39,14 @@
         <section class="hero">
             <div class="hero_overlay"></div>
 
-            <div class="hero_content">
+            <div class="hero_content reveal">
                 <h1>Vuela hacia lo que importa</h1>
             </div>
         </section>
 
         <!-- Tarjeta de reserva -->
         <section class="booking">
-            <div class="booking-card">
+            <div class="booking-card reveal">
                 <div class="booking-card__tabs">
                     <button type="button" class="active">Reservar un vuelo</button>
                     <button type="button">Paquetes</button>
@@ -107,7 +107,7 @@
 
         <div class="vuelos-grid-index">
 
-            <div class="vuelo-card-index">
+            <div class="vuelo-card-index reveal">
                 <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
                 <div class="vuelo-info">
                     <h4>Bogotá → Nueva York</h4>
@@ -120,7 +120,7 @@
                 </div>
             </div>
 
-            <div class="vuelo-card-index">
+            <div class="vuelo-card-index reveal">
                 <img src="../../imagenes/paris.jpg" alt="París">
                 <div class="vuelo-info">
                     <h4>Bogotá → París</h4>
@@ -133,7 +133,7 @@
                 </div>
             </div>
 
-            <div class="vuelo-card-index">
+            <div class="vuelo-card-index reveal">
                 <img src="../../imagenes/cancun.jpg" alt="Cancún">
                 <div class="vuelo-info">
                     <h4>Medellín → Cancún</h4>
@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="vuelo-card-index">
+            <div class="vuelo-card-index reveal">
                 <img src="../../imagenes/madrid.jpg" alt="Madrid">
                 <div class="vuelo-info">
                     <h4>Cali → Madrid</h4>
@@ -165,7 +165,7 @@
 
  <!-- Bloque promocional -->
         <section class="promo">
-            <div class="promo__card">
+            <div class="promo__card reveal">
                 <h2>Acercamos destinos</h2>
                 <p>
                     Viajar no es solo llegar a un lugar. Es reencontrarte con quienes quieres,
@@ -222,7 +222,25 @@
 
     </footer>
 
+    <script>
+        // Emil Design - Intersection Observer para animaciones de entrada fluidas
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Dejamos de observar para que la animación ocurra solo 1 vez
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
 
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        });
+    </script>
 </body>
 
 </html>
