@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const fechaRegresoGrupo = document.querySelectorAll(".campo-grupo.fecha")[1];
     const soloIda = document.getElementById("solo-ida");
     const idaVuelta = document.getElementById("ida-vuelta");
-    const botonBuscar = document.querySelector(".boton-buscar");
     const precioFiltro = document.querySelector(".filtro-grupo input[type='range']");
     const precioTexto = document.querySelector(".precio-rango span:last-child");
     const contador = document.querySelector(".resultados-header p");
@@ -16,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
 
 
-    if (!botonBuscar || !vuelosGrid || vuelos.length === 0) return;
+if (!vuelosGrid || vuelos.length === 0) return;
 
     precioFiltro.min = "0";
     precioFiltro.max = "5000000";
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtrarVuelos = () => {
         const origen = normalizar(origenInput.value);
         const destino = normalizar(destinoInput.value);
-        const fechaBuscada = convertirFecha(fechaIdaInput.value);
+        const fechaBuscada = fechaIdaInput.value;
         const precioMaximo = Number(precioFiltro.value);
         const escalasSeleccionadas = obtenerEscalasSeleccionadas();
 
@@ -114,7 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const pasaOrigen = origen === "" || texto.includes(origen);
             const pasaDestino = destino === "" || texto.includes(destino);
-            const pasaFecha = fechaBuscada === "" || texto.includes(fechaBuscada);
+            // Filtra por fecha de ida
+            const pasaFecha = fechaBuscada === "" || card.dataset.fecha === fechaBuscada;
+
             const pasaPrecio = precio <= precioMaximo;
             const pasaEscala = coincideEscala(card, escalasSeleccionadas);
 
@@ -208,8 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.setItem("vueloSeleccionado", JSON.stringify(vueloSeleccionado));
     };
-
-    botonBuscar.addEventListener("click", filtrarVuelos);
+    
         // Búsqueda automática
     origenInput.addEventListener("input", filtrarVuelos);
     destinoInput.addEventListener("input", filtrarVuelos);
