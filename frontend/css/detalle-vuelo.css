@@ -397,3 +397,26 @@ DATOS PRINCIPALES DEL VUELO
         height: 190px;
     }
 }
+/* Aviso al reservar */
+.aviso-reserva {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    background-color: var(--vino);
+    color: var(--blanco);
+    padding: 14px 20px;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+    font-size: 0.92rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 1000;
+}
+
+.aviso-reserva.activo {
+    opacity: 1;
+    transform: translateY(0);
+}

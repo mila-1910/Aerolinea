@@ -162,6 +162,18 @@ document.addEventListener("DOMContentLoaded", () => {
             fechaSelect.appendChild(option);
         });
     };
+    const mostrarAvisoReserva = () => {
+        // Aviso antes de ir al resumen
+        const aviso = document.createElement("div");
+        aviso.className = "aviso-reserva";
+        aviso.textContent = "Reserva preparada. Te llevamos al resumen...";
+
+        document.body.appendChild(aviso);
+
+        setTimeout(() => {
+            aviso.classList.add("activo");
+        }, 50);
+    };
 
     const cargarRelacionados = () => {
         // Destinos relacionados
@@ -212,7 +224,9 @@ document.addEventListener("DOMContentLoaded", () => {
         vuelo.fechaTexto = fechaSelect.value;
     });
 
-    btnReservar.addEventListener("click", () => {
+        btnReservar.addEventListener("click", (event) => {
+        event.preventDefault();
+
         vuelo.origen = origenSelect.value;
         vuelo.fechaTexto = fechaSelect.value;
         vuelo.ruta = `${vuelo.origen} → ${vuelo.destino}`;
@@ -230,7 +244,13 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         localStorage.setItem("reservaEnProceso", JSON.stringify(reservaEnProceso));
+        mostrarAvisoReserva();
+
+        setTimeout(() => {
+            window.location.href = "resumen-reserva.html";
+        }, 900);
     });
+
 
     cargarDetalle();
     cargarSelects();
