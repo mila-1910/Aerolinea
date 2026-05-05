@@ -136,6 +136,11 @@
                 <label><input type="checkbox"> Airbus</label>
                 <label><input type="checkbox"> Regional</label>
             </div>
+                        <!-- Botón para reiniciar filtros -->
+            <button class="btn-limpiar-filtros" id="btn-limpiar-filtros" type="button">
+                Limpiar filtros
+            </button>
+
         </aside>
 
         <!-- Resultados derecha -->
@@ -205,6 +210,12 @@
                     </div>
                 </div>
 
+            </div>
+            <!-- Mensaje cuando no hay vuelos -->
+            <div class="sin-resultados-buscar" id="sin-resultados-buscar">
+                <p>✈</p>
+                <h3>No encontramos vuelos</h3>
+                <span>Intenta cambiar el origen, destino o los filtros seleccionados.</span>
             </div>
 
         </div>

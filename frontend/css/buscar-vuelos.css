@@ -350,3 +350,47 @@
 .redes .footer-icono {
     font-size: 1rem;
 }
+
+/* ===================================
+    MENSAJE CUANDO NO HAY RESULTADOS
+=====================================*/
+.sin-resultados-buscar {
+    display: none;
+    background-color: var(--blanco);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    padding: 45px 20px;
+    text-align: center;
+    color: var(--gris-texto);
+    margin-top: 20px;
+}
+
+.sin-resultados-buscar p {
+    font-size: 3rem;
+    margin-bottom: 8px;
+}
+
+.sin-resultados-buscar h3 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+/* Botón para limpiar filtros */
+.btn-limpiar-filtros {
+    width: 100%;
+    background-color: transparent;
+    color: var(--vino);
+    border: 2px solid var(--vino);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-limpiar-filtros:hover {
+    background-color: var(--vino);
+    color: var(--blanco);
+}

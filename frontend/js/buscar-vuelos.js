@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const ordenar = document.querySelector(".ordenar");
     const vuelosGrid = document.querySelector(".vuelos-grid");
     const vuelos = Array.from(document.querySelectorAll(".vuelo-card"));
+    const sinResultados = document.getElementById("sin-resultados-buscar");
+    const btnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
+
 
     if (!botonBuscar || !vuelosGrid || vuelos.length === 0) return;
 
@@ -129,6 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
         contador.textContent = visibles.length === 1
             ? "1 vuelo encontrado"
             : visibles.length + " vuelos encontrados";
+                    // Mensaje cuando no hay resultados
+        sinResultados.style.display = visibles.length === 0 ? "block" : "none";
+
     };
 
     const ordenarVuelos = (visibles) => {
@@ -161,6 +167,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+        const limpiarFiltros = () => {
+        // Limpia campos de búsqueda
+        origenInput.value = "";
+        destinoInput.value = "";
+        fechaIdaInput.value = "";
+
+        // Reinicia tipo de viaje
+        idaVuelta.checked = true;
+        soloIda.checked = false;
+        actualizarTipoViaje();
+
+        // Reinicia precio
+        precioFiltro.value = "5000000";
+        precioTexto.textContent = formatoPrecio(precioFiltro.value);
+
+        // Marca todos los filtros
+        document.querySelectorAll(".filtro-grupo input[type='checkbox']").forEach((check) => {
+            check.checked = true;
+        });
+
+        filtrarVuelos();
+    };
+
+
     const guardarVueloSeleccionado = (event) => {
         const boton = event.target.closest(".btn-detalle");
 
@@ -180,12 +210,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     botonBuscar.addEventListener("click", filtrarVuelos);
+        // Búsqueda automática
+    origenInput.addEventListener("input", filtrarVuelos);
+    destinoInput.addEventListener("input", filtrarVuelos);
+    fechaIdaInput.addEventListener("change", filtrarVuelos);
+
     precioFiltro.addEventListener("input", () => {
         precioTexto.textContent = formatoPrecio(precioFiltro.value);
         filtrarVuelos();
     });
 
     ordenar.addEventListener("change", filtrarVuelos);
+    btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
     soloIda.addEventListener("change", actualizarTipoViaje);
     idaVuelta.addEventListener("change", actualizarTipoViaje);
     vuelosGrid.addEventListener("click", guardarVueloSeleccionado);
