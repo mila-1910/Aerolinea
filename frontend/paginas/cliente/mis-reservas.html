@@ -54,16 +54,18 @@
 
         <!-- Tabs de reservas -->
         <div class="reservas-tabs">
-            <button class="tab-reserva activo">Todas</button>
-            <button class="tab-reserva">Pendientes</button>
-            <button class="tab-reserva">Confirmadas</button>
-            <button class="tab-reserva">Canceladas</button>
+            <button class="tab-reserva activo" data-estado="Todas">Todas <span id="count-todas">0</span></button>
+            <button class="tab-reserva" data-estado="Pendiente">Pendientes <span id="count-pendientes">0</span></button>
+            <button class="tab-reserva" data-estado="Confirmada">Confirmadas <span id="count-confirmadas">0</span></button>
+            <button class="tab-reserva" data-estado="Cancelada">Canceladas <span id="count-canceladas">0</span></button>
         </div>
+
         <!-- Barra de búsqueda -->
         <div class="reservas-buscador">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" placeholder="Buscar por destino o número de reserva...">
-</div>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="buscar-reserva-input" placeholder="Buscar por destino o número de reserva...">
+        </div>
+
         <!-- Tabla de reservas -->
         <div class="tabla-contenedor">
             <table class="tabla-mis-reservas">
@@ -78,45 +80,10 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>#RES-001</td>
-                        <td>EL-204</td>
-                        <td>Bogotá → Nueva York</td>
-                        <td>15 Abr 2026</td>
-                        <td>Económica</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>#RES-002</td>
-                        <td>EL-310</td>
-                        <td>Medellín → Cancún</td>
-                        <td>22 May 2026</td>
-                        <td>Ejecutiva</td>
-                        <td><span class="estado pendiente">Pendiente</span></td>
-                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>#RES-003</td>
-                        <td>EL-105</td>
-                        <td>Cali → Madrid</td>
-                        <td>10 Jun 2026</td>
-                        <td>Primera clase</td>
-                        <td><span class="estado cancelada">Cancelada</span></td>
-                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
-                    </tr>
-                    <tr>
-                        <td>#RES-004</td>
-                        <td>EL-422</td>
-                        <td>Bogotá → París</td>
-                        <td>5 Jul 2026</td>
-                        <td>Económica</td>
-                        <td><span class="estado confirmada">Confirmada</span></td>
-                        <td><a href="resumen-reserva.html" class="btn-ver">Ver detalle</a></td>
-                    </tr>
+                <tbody id="tabla-reservas-body">
                 </tbody>
             </table>
+
             <!-- Mensaje sin reservas -->
             <div class="sin-reservas">
                 <p>✈</p>
@@ -126,7 +93,8 @@
             </div>
         </div>
     </div>
-     <!-- Footer ELARIS copiado de cliente -->
+
+    <!-- Footer ELARIS copiado de cliente -->
     <footer class="footer">
 
         <!-- Parte superior del footer -->
@@ -169,6 +137,10 @@
         </div>
 
     </footer>
+
+    <script src="../../js/session.js"></script>
+    <script src="../../js/mis-reservas.js"></script>
+
 </body>
 
 </html>
