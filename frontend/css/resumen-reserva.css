@@ -260,3 +260,99 @@
 .redes .footer-icono {
     font-size: 1rem;
 }
+/* Número de reserva */
+.reserva-numero-badge {
+    display: inline-block;
+    margin-top: 12px;
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--blanco);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Mensaje si no hay reserva */
+.reserva-vacia {
+    display: none;
+    max-width: 720px;
+    margin: 50px auto;
+    padding: 40px 24px;
+    background-color: var(--blanco);
+    box-shadow: var(--sombra);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.reserva-vacia h3 {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.reserva-vacia p {
+    color: var(--gris-texto);
+    margin-bottom: 18px;
+}
+
+.reserva-vacia a {
+    display: inline-block;
+    background-color: var(--vino);
+    color: var(--blanco);
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+/* Mejoras visuales del resumen */
+.resumen-bloque {
+    border: 1px solid #f1e4eb;
+}
+
+.bloque-contenido {
+    background: linear-gradient(180deg, #ffffff 0%, #fffafd 100%);
+}
+
+.tarifa-texto {
+    color: var(--gris-texto);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.pago-nota {
+    font-size: 0.78rem;
+    color: var(--gris-texto);
+    line-height: 1.4;
+    margin-top: -6px;
+}
+
+/* Aviso de acciones */
+.aviso-resumen {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    background-color: var(--vino);
+    color: var(--blanco);
+    padding: 14px 20px;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+    font-size: 0.92rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 1000;
+}
+
+.aviso-resumen.activo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.resumen-botones a.deshabilitado {
+    opacity: 0.65;
+    pointer-events: none;
+}

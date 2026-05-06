@@ -45,9 +45,18 @@
 <div class="resumen-header">
     <h1><i class="fa-solid fa-plane"></i> Resumen de tu reserva</h1>
     <p>Revisá los detalles antes de confirmar</p>
+    <span class="reserva-numero-badge" id="reserva-numero-badge">Reserva #RES-0000</span>
 </div>
+<!-- Mensaje si no hay reserva activa -->
+<div class="reserva-vacia" id="reserva-vacia">
+    <h3>No hay una reserva en proceso</h3>
+    <p>Selecciona un vuelo para poder revisar el resumen de tu reserva.</p>
+    <a href="buscar-vuelos.html">Buscar vuelos</a>
+</div>
+
     <!-- CONTENIDO PRINCIPAL -->
-    <div class="resumen-contenedor">
+    <div class="resumen-contenedor" id="resumen-contenedor">
+
 
         <!-- Columna izquierda -->
         <div class="resumen-columna-izq">
@@ -59,36 +68,39 @@
                 </div>
                 <div class="bloque-contenido">
                     <div class="vuelo-ruta">
-                        <span class="vuelo-ciudad">Bogotá</span>
-                        <span class="vuelo-flecha">→</span>
-                        <span class="vuelo-ciudad">Madrid</span>
+                        <span class="vuelo-ciudad" id="resumen-origen">Bogotá</span>
+<span class="vuelo-flecha">→</span>
+<span class="vuelo-ciudad" id="resumen-destino">Madrid</span>
                     </div>
                     <div class="vuelo-detalles">
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Hora salida</span>
-                            <span class="detalle-valor">10:30</span>
+                            <span class="detalle-valor" id="resumen-hora-salida">10:30</span>
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Llegada</span>
-                            <span class="detalle-valor">8:45 am (+1 día)</span>
+                            <span class="detalle-valor" id="resumen-llegada">8:45 am (+1 día)</span>
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Duración</span>
-                            <span class="detalle-valor">12h</span>
+                            <span class="detalle-valor" id="resumen-duracion">12h</span>
                         </div>
                     </div>
                     <div class="vuelo-detalles">
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Vuelo</span>
-                            <span class="detalle-valor">EL 123</span>
+                            <span class="detalle-valor" id="resumen-vuelo">EL 123</span>
+
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Fecha</span>
-                            <span class="detalle-valor">15 MAY 2026</span>
+                            <span class="detalle-valor" id="resumen-fecha">15 MAY 2026</span>
+
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Escala</span>
-                            <span class="detalle-valor">1 (Miami)</span>
+                            <span class="detalle-valor" id="resumen-escala">1 (Miami)</span>
+
                         </div>
                     </div>
                 </div>
@@ -100,16 +112,17 @@
                     <h3>Tarifa elegida</h3>
                 </div>
                 <div class="bloque-contenido">
-                    <h4 class="tarifa-clase">EJECUTIVA</h4>
+                    <h4 class="tarifa-clase" id="resumen-clase">EJECUTIVA</h4>
                     <ul class="tarifa-beneficios">
                         <li>✔ 2 maletas (23kg c/u)</li>
                         <li>✔ Acceso a sala VIP</li>
                         <li>✔ Selección de asiento preferencial</li>
                     </ul>
                     <div class="tarifa-footer">
-                        <a href="#" class="btn-cambiar-tarifa">Cambiar tarifa</a>
-                        <span class="tarifa-precio">$890.000 COP</span>
-                    </div>
+    <span class="tarifa-texto">Tarifa seleccionada</span>
+    <span class="tarifa-precio" id="resumen-tarifa-precio">$890.000 COP</span>
+</div>
+
                 </div>
             </div>
 
@@ -127,19 +140,19 @@
                     <div class="pasajero-datos">
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Nombre</span>
-                            <span class="detalle-valor">María González</span>
+                            <span class="detalle-valor" id="pasajero-nombre">María González</span>
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Documento</span>
-                            <span class="detalle-valor">123456789</span>
+                            <span class="detalle-valor" id="pasajero-documento">123456789</span>
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Nacionalidad</span>
-                            <span class="detalle-valor">Colombiana</span>
+                            <span class="detalle-valor" id="pasajero-nacionalidad">Colombiana</span>
                         </div>
                         <div class="vuelo-detalle-item">
                             <span class="detalle-label">Fecha Nacimiento</span>
-                            <span class="detalle-valor">15/05/1990</span>
+                            <span class="detalle-valor" id="pasajero-nacimiento">15/05/1990</span>
                         </div>
                     </div>
                 </div>
@@ -153,28 +166,35 @@
                 <div class="bloque-contenido">
                     <div class="pago-linea">
                         <span>Vuelo</span>
-                        <span>$3.290.000 COP</span>
+                        <span id="pago-vuelo">$3.290.000 COP</span>
                     </div>
                     <div class="pago-linea">
-                        <span>Tarifa ejecutiva</span>
-                        <span>$890.000 COP</span>
+                        <span id="pago-tarifa-label">Tarifa ejecutiva</span>
+
+                        <span id="pago-tarifa">$890.000 COP</span>
+
                     </div>
                     <div class="pago-linea">
                         <span>Descuento 20%</span>
-                        <span class="descuento">-$658.000 COP</span>
+                        <span class="descuento" id="pago-descuento">-$658.000 COP</span>
+
                     </div>
                     <hr class="pago-hr">
                     <div class="pago-total">
                         <span>Total</span>
-                        <span>$3.522.000 COP</span>
+                        <span id="pago-total">$3.522.000 COP</span>
+
                     </div>
+                    <p class="pago-nota">Total final para esta reserva. Incluye impuestos y descuento aplicado.</p>
+
                 </div>
             </div>
 
             <!-- Botones -->
             <div class="resumen-botones">
-                <a href="mis-reservas.html" class="btn-confirmar">Confirmar Reserva</a>
-                <a href="mis-reservas.html" class="btn-guardar">Guardar para después</a>
+                <a href="mis-reservas.html" class="btn-confirmar" id="btn-confirmar-reserva">Confirmar Reserva</a>
+<a href="mis-reservas.html" class="btn-guardar" id="btn-guardar-reserva">Guardar para después</a>
+
             </div>
 
         </div>
@@ -224,6 +244,8 @@
         </div>
 
     </footer>
+<script src="../../js/session.js"></script>
+<script src="../../js/resumen-reserva.js"></script>
 
 </body>
 
