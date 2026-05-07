@@ -5,7 +5,7 @@ function showToast(message, type = 'success') {
         toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
         document.body.appendChild(toastContainer);
-        
+
         Object.assign(toastContainer.style, {
             position: 'fixed',
             top: '32px',
@@ -135,10 +135,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     showToast('¡Bienvenido, ' + data.usuario.nombre_completo + '!', 'success');
-                    // Guardar los datos del usuario en el navegador
-                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                    // Redirigir a buscar vuelos tras un delay para ver la animación
-                    setTimeout(() => window.location.href = '../cliente/buscar-vuelos.html', 1800);
+
+                    // Guardar sesión con el rol que nos da el backend
+                    const usuario = {
+                        id: data.usuario.id_usuario,
+                        nombre_completo: data.usuario.nombre_completo,
+                        correo: data.usuario.correo,
+                        rol: data.usuario.rol       // ¡esto ahora se usa!
+                    };
+                    localStorage.setItem('usuario', JSON.stringify(usuario));
+
+                    // Elegir destino según el rol
+                    let destino = '../cliente/buscar-vuelos.html'; // por defecto cliente
+                    if (data.usuario.rol === 'admin') {
+                        destino = '../admin/dashboardadmin.html'; // panel del admin
+                    } else if (data.usuario.rol === 'agente') {
+                        destino = '../agente/dashboardeagente.html'; // página del agente
+                    }
+                    setTimeout(() => window.location.href = destino, 1800);
                 } else {
                     showToast('Error: ' + data.error, 'error');
                 }
@@ -169,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         icon.addEventListener('click', togglePassword);
-        icon.addEventListener('keydown', function(e) {
+        icon.addEventListener('keydown', function (e) {
             // Permitir activar con Enter o Espacio para accesibilidad
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -216,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Quitar el delay de la transición para que cargue instantáneamente en el estado de registro
             const authBoxes = document.querySelectorAll('.auth-box, .hero-login, .hero-register, .hero-bg');
             authBoxes.forEach(el => el.style.transition = 'none');
-            
+
             if (navBtnLogin && navBtnRegister) {
                 navBtnLogin.className = 'btn-nav btn-nav--ghost switch-to-login';
                 navBtnRegister.className = 'btn-nav btn-nav--solid switch-to-register';
