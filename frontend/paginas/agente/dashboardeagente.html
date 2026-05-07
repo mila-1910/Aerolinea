@@ -205,30 +205,10 @@
             </div>
         </main>
     </div>
-    <script>
-        // Obtener elementos del perfil y el menú
-        const perfil = document.getElementById('perfilDropdown');
-        const menu = document.getElementById('perfilMenu');
 
-        // Al hacer clic en el área del perfil, alternar el menú
-        perfil.addEventListener('click', function (event) {
-            event.stopPropagation(); // Evita que el clic se propague y cierre inmediatamente
-            menu.classList.toggle('show');
-        });
-
-        // Si se hace clic fuera del área del perfil, cerrar el menú
-        document.addEventListener('click', function (event) {
-            if (!perfil.contains(event.target)) {
-                menu.classList.remove('show');
-            }
-        });
-
-        // redirección si no es agente ni admin
-        const u = JSON.parse(localStorage.getItem('usuario'));
-        if (!u || (u.rol !== 'agente' && u.rol !== 'admin')) {
-            window.location.href = '../Inicio/login.html';
-        }
-    </script>
+    <!-- SCRIPTS DEL AGENTE -->
+    <script src="../../js/agente/agente-comun.js"></script>
+    <script src="../../js/agente/dashboardeagente.js"></script>
 
 </body>
 

@@ -261,13 +261,9 @@
     </div>
 
     <!-- JavaScript para carga dinámica de datos -->
-    <script>
-        // ============================================
-        // BASE DE DATOS SIMULADA (para pruebas)
-        // ============================================
-        const reservasSimuladas = {
-            1: {
-                codigo: "#RES-001",
+    <!-- SCRIPTS DEL AGENTE (MOVIDOS A ARCHIVOS EXTERNOS) -->
+
+    <!-- SCRIPTS DEL AGENTE -->
                 pasajero: {
                     nombre: "María González",
                     documento: "1002433789",
@@ -472,24 +468,11 @@
             }
         });
     </script>
-    <script>
-        // Obtener elementos del perfil y el menú
-        const perfil = document.getElementById('perfilDropdown');
-        const menu = document.getElementById('perfilMenu');
 
-        // Al hacer clic en el área del perfil, alternar el menú
-        perfil.addEventListener('click', function (event) {
-            event.stopPropagation(); // Evita que el clic se propague y cierre inmediatamente
-            menu.classList.toggle('show');
-        });
+    <!-- SCRIPTS DEL AGENTE -->
+    <script src="../../js/agente/agente-comun.js"></script>
+    <script src="../../js/agente/detalle-reserva.js"></script>
 
-        // Si se hace clic fuera del área del perfil, cerrar el menú
-        document.addEventListener('click', function (event) {
-            if (!perfil.contains(event.target)) {
-                menu.classList.remove('show');
-            }
-        });
-    </script>
 </body>
 
 </html>
