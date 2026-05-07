@@ -32,6 +32,164 @@ pool.query('SELECT NOW()')
 
 // --- RUTAS ---
 
+// Ruta para listar vuelos disponibles
+app.get('/api/vuelos', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                id_vuelo,
+                numero_vuelo,
+                origen,
+                destino,
+                ciudad_destino,
+                fecha_salida,
+                hora_salida,
+                hora_llegada,
+                duracion_minutos,
+                escala,
+                clase,
+                tipo_avion,
+                precio_base,
+                imagen_url,
+                descripcion
+            FROM vuelos
+            WHERE activo = true
+            ORDER BY fecha_salida ASC
+        `);
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error al obtener vuelos:', error);
+        res.status(500).json({ error: 'Error al obtener los vuelos' });
+    }
+});
+
+
+// Ruta para crear una reserva
+app.post('/api/reservas', async (req, res) => {
+    const {
+        numero_reserva,
+        id_usuario,
+        id_vuelo,
+        estado,
+        clase,
+        pasajeros,
+        tarifa_extra,
+        descuento,
+        total
+    } = req.body;
+
+    if (!numero_reserva || !id_usuario || !id_vuelo || !clase || !total) {
+        return res.status(400).json({ error: 'Faltan datos para crear la reserva' });
+    }
+
+    try {
+        const result = await pool.query(
+            `INSERT INTO reservas (
+                numero_reserva,
+                id_usuario,
+                id_vuelo,
+                estado,
+                clase,
+                pasajeros,
+                tarifa_extra,
+                descuento,
+                total
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING *`,
+            [
+                numero_reserva,
+                id_usuario,
+                id_vuelo,
+                estado || 'Pendiente',
+                clase,
+                pasajeros || 1,
+                tarifa_extra || 0,
+                descuento || 0,
+                total
+            ]
+        );
+
+        res.status(201).json({
+            mensaje: 'Reserva creada correctamente',
+            reserva: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error al crear reserva:', error);
+        res.status(500).json({ error: 'Error al crear la reserva' });
+    }
+});
+
+// Ruta para listar reservas de un usuario
+app.get('/api/reservas/usuario/:id_usuario', async (req, res) => {
+    const { id_usuario } = req.params;
+
+    try {
+        const result = await pool.query(`
+            SELECT 
+                r.id_reserva,
+                r.numero_reserva,
+                r.estado,
+                r.clase,
+                r.pasajeros,
+                r.tarifa_extra,
+                r.descuento,
+                r.total,
+                r.fecha_reserva,
+                v.id_vuelo,
+                v.numero_vuelo,
+                v.origen,
+                v.destino,
+                v.ciudad_destino,
+                v.fecha_salida,
+                v.hora_salida,
+                v.hora_llegada,
+                v.duracion_minutos,
+                v.escala,
+                v.tipo_avion,
+                v.precio_base,
+                v.imagen_url
+            FROM reservas r
+            INNER JOIN vuelos v ON r.id_vuelo = v.id_vuelo
+            WHERE r.id_usuario = $1
+            ORDER BY r.fecha_reserva DESC
+        `, [id_usuario]);
+
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error al obtener reservas:', error);
+        res.status(500).json({ error: 'Error al obtener las reservas' });
+    }
+});
+
+// Ruta para cancelar una reserva
+app.put('/api/reservas/:id_reserva/cancelar', async (req, res) => {
+    const { id_reserva } = req.params;
+
+    try {
+        const result = await pool.query(
+            `UPDATE reservas
+             SET estado = 'Cancelada'
+             WHERE id_reserva = $1
+             RETURNING *`,
+            [id_reserva]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+
+        res.json({
+            mensaje: 'Reserva cancelada correctamente',
+            reserva: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error al cancelar reserva:', error);
+        res.status(500).json({ error: 'Error al cancelar la reserva' });
+    }
+});
+
+
 // Ruta para Registrarse (Crear cuenta)
 app.post('/api/register', async (req, res) => {
     const { tipo_identificacion, numero_identificacion, nombre, email, telefono, password, confirmar } = req.body;
