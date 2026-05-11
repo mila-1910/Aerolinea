@@ -255,4 +255,21 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarDetalle();
     cargarSelects();
     cargarRelacionados();
+
+    // --- LÓGICA DEL LOADER ---
+    // Ocultamos el spinner y mostramos los contenedores.
+    // Usamos setTimeout (ej. 300ms) para que el loader sea visible por un instante 
+    // y la transición sea más fluida. Si ya haces un fetch real, puedes poner esto 
+    // justo después de recibir los datos.
+    setTimeout(() => {
+        const loader = document.getElementById("loader-vuelo");
+        const contenedor = document.querySelector(".detalle-contenedor");
+        const descripcionContenedor = document.querySelector(".detalle-descripcion-contenedor");
+        const relacionadosContenedor = document.querySelector(".destinos-relacionados-contenedor");
+        
+        if(loader) loader.style.display = "none";
+        if(contenedor) contenedor.classList.add("cargado");
+        if(descripcionContenedor) descripcionContenedor.classList.add("cargado");
+        if(relacionadosContenedor) relacionadosContenedor.classList.add("cargado");
+    }, 300);
 });

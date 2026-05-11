@@ -11,6 +11,7 @@
     /* Premium Physics (Emil Design) para PC */
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 * {
@@ -188,7 +189,8 @@ body {
 }
 
 .booking-card__tabs button:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
+    filter: blur(1px);
 }
 
 .booking-card__tabs button.active {
@@ -265,6 +267,15 @@ body {
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.field-icon {
+    width: 14px;
+    height: 14px;
+    color: #c9a76d;
 }
 
 .field input {
@@ -303,6 +314,14 @@ body {
     cursor: pointer;
     transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out), box-shadow 160ms var(--ease-out), filter 200ms ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-icon {
+    width: 18px;
+    height: 18px;
 }
 
 .booking-card__actions button:hover {
@@ -472,19 +491,20 @@ body {
 }
 
 /* ===========================
-   ÍCONOS DEL FOOTER (Font Awesome)
+   ÍCONOS DEL FOOTER (Lucide)
 =========================== */
 .footer-icono {
-    width: 18px;              /* ancho fijo para alinear iconos de distintos tamaños */
-    text-align: center;
+    width: 18px;              
+    height: 18px;
     margin-right: 8px;
-    color: #c9a76d;           /* dorado ELARIS — contrasta bien sobre el fondo vino */
-    font-size: 0.95rem;
+    color: #c9a76d;           
+    vertical-align: middle;
 }
 
 /* Íconos de redes sociales: un poco más grandes */
 .redes .footer-icono {
-    font-size: 1rem;
+    width: 20px;
+    height: 20px;
 }
 
 /* ===========================
@@ -515,91 +535,194 @@ body {
 
 .vuelos-grid-index {
     display: grid;
-    /* Grid de 4 columnas para PC */
+    /* Grid asimétrico tipo Qatar Airways */
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 24px;
+}
+
+/* 1era, 4ta y 5ta tarjeta ocupan 2 columnas */
+.vuelo-card-index:nth-child(1),
+.vuelo-card-index:nth-child(4),
+.vuelo-card-index:nth-child(5) {
+    grid-column: span 2;
 }
 
 .vuelo-card-index {
-    background-color: var(--blanco);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    border-radius: 20px; /* Bordes un poco más redondeados como Qatar */
     overflow: hidden;
+    height: 340px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     cursor: pointer;
-    transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 400ms var(--spring-bounce), box-shadow 400ms var(--ease-out);
+    background-color: #000;
 }
 
 .vuelo-card-index:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-/* Efecto premium de zoom en la imagen al hover */
-.vuelo-card-index img {
+.vuelo-card-bg {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 160px;
+    height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 400ms var(--ease-out);
+    z-index: 1;
+    transition: transform 600ms var(--ease-out), opacity 400ms ease;
 }
 
-.vuelo-card-index:hover img {
-    transform: scale(1.05);
+.vuelo-card-index:hover .vuelo-card-bg {
+    transform: scale(1.08);
 }
 
-.vuelo-card-index .vuelo-info {
-    padding: 12px;
+.vuelo-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+    transition: background-color 400ms ease;
+}
+
+.vuelo-card-index:hover .vuelo-card-overlay {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.vuelo-card-content {
+    position: relative;
+    z-index: 3;
+    padding: 24px;
+    color: var(--blanco);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: flex-end;
+    height: 100%;
 }
 
-.vuelo-card-index .vuelo-info h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.vuelo-card-index .vuelo-info p {
-    font-size: 0.82rem;
-    color: var(--gris);
-    margin-bottom: 0;
-}
-
-.vuelo-card-index .vuelo-footer {
+.vuelo-card-info-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
+    align-items: flex-end;
+    transition: transform 400ms var(--spring-bounce), opacity 400ms ease;
 }
 
-.vuelo-card-index .vuelo-precio {
-    font-size: 0.95rem;
+.vuelo-card-index:hover .vuelo-card-info-row {
+    transform: translateY(-100px);
+    opacity: 1;
+}
+
+.card-icon {
+    width: 14px;
+    height: 14px;
+    vertical-align: text-bottom;
+    margin-right: 4px;
+    color: #c9a76d;
+}
+
+.vuelo-card-info h4 {
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--vino);
+    margin-bottom: 4px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.vuelo-card-index .btn-detalle {
+.vuelo-card-info p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.vuelo-card-price {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.vuelo-card-price span {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vuelo-card-price strong {
+    font-size: 1.1rem;
+    color: #c9a76d;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.vuelo-card-hover-actions {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 300ms var(--ease-out), transform 400ms var(--spring-bounce);
+    pointer-events: none;
+}
+
+.vuelo-card-index:hover .vuelo-card-hover-actions {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.vuelo-card-hover-actions .btn-reservar {
     background-color: var(--vino);
     color: var(--blanco);
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
     text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.85rem;
     font-weight: 600;
-    transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out), filter 200ms ease;
+    font-size: 0.95rem;
+    transition: background-color 200ms ease, transform 200ms var(--ease-out), filter 200ms ease;
 }
 
-.vuelo-card-index .btn-detalle:hover {
-    opacity: 0.95;
-    transform: translateY(-1px);
+.vuelo-card-hover-actions .btn-reservar:hover {
+    background-color: var(--vino-oscuro);
+    transform: translateY(-2px);
 }
 
-.vuelo-card-index .btn-detalle:active {
-    transform: scale(0.95);
-    filter: blur(0.5px);
+.vuelo-card-hover-actions .btn-reservar:active {
+    transform: scale(0.96);
+    filter: blur(1px);
+}
+
+.vuelo-card-hover-actions .btn-ver-detalle {
+    background-color: transparent;
+    color: var(--blanco);
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: background-color 200ms ease, border-color 200ms ease, transform 200ms var(--ease-out), filter 200ms ease;
+}
+
+.vuelo-card-hover-actions .btn-ver-detalle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.vuelo-card-hover-actions .btn-ver-detalle:active {
+    transform: scale(0.96);
+    filter: blur(1px);
 }
 
 /* ===========================
@@ -631,3 +754,39 @@ body {
 .vuelos-grid-index .vuelo-card-index:nth-child(2).is-visible { animation-delay: 100ms; }
 .vuelos-grid-index .vuelo-card-index:nth-child(3).is-visible { animation-delay: 200ms; }
 .vuelos-grid-index .vuelo-card-index:nth-child(4).is-visible { animation-delay: 300ms; }
+.vuelos-grid-index .vuelo-card-index:nth-child(5).is-visible { animation-delay: 400ms; }
+
+/* ===========================
+   MEDIA QUERIES
+=========================== */
+@media (max-width: 1024px) {
+    .vuelos-grid-index {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .vuelos-grid-index {
+        grid-template-columns: 1fr;
+    }
+    
+    .vuelo-card-index:nth-child(1),
+    .vuelo-card-index:nth-child(4),
+    .vuelo-card-index:nth-child(5) {
+        grid-column: span 1;
+    }
+
+    /* Eliminar el delay en móviles para que no se sienta laggy al hacer scroll */
+    .vuelos-grid-index .vuelo-card-index.is-visible {
+        animation-delay: 0ms !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
