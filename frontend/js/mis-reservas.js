@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const API_URL = "http://localhost:3000/api";
+
     const tablaBody = document.getElementById("tabla-reservas-body");
     const tabs = document.querySelectorAll(".tab-reserva");
     const buscador = document.getElementById("buscar-reserva-input");
@@ -9,77 +11,84 @@ document.addEventListener("DOMContentLoaded", () => {
     const countConfirmadas = document.getElementById("count-confirmadas");
     const countCanceladas = document.getElementById("count-canceladas");
 
-    const reservasEjemplo = [
-        {
-            numeroReserva: "RES-001",
-            estado: "Confirmada",
-            clase: "Económica",
-            vuelo: {
-                numeroVuelo: "EL-204",
-                origen: "Bogotá",
-                destino: "Nueva York",
-                fechaTexto: "15 Abr 2026"
-            }
-        },
-        {
-            numeroReserva: "RES-002",
-            estado: "Pendiente",
-            clase: "Ejecutiva",
-            vuelo: {
-                numeroVuelo: "EL-310",
-                origen: "Medellín",
-                destino: "Cancún",
-                fechaTexto: "22 May 2026"
-            }
-        },
-        {
-            numeroReserva: "RES-003",
-            estado: "Cancelada",
-            clase: "Primera clase",
-            vuelo: {
-                numeroVuelo: "EL-105",
-                origen: "Cali",
-                destino: "Madrid",
-                fechaTexto: "10 Jun 2026"
-            }
-        },
-        {
-            numeroReserva: "RES-004",
-            estado: "Confirmada",
-            clase: "Económica",
-            vuelo: {
-                numeroVuelo: "EL-422",
-                origen: "Bogotá",
-                destino: "París",
-                fechaTexto: "5 Jul 2026"
-            }
-        }
-    ];
-
     let estadoActivo = "Todas";
+    let reservas = [];
 
     const normalizar = (texto) => {
-        return texto
+        return String(texto)
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .trim();
     };
 
-    const obtenerReservas = () => {
-        // Reservas guardadas desde el resumen
-        const reservasGuardadas = JSON.parse(localStorage.getItem("reservasCliente")) || [];
+    const obtenerUsuario = () => {
+        // Usuario que inició sesión
+        const usuarioRaw = localStorage.getItem("usuario");
 
-        if (reservasGuardadas.length > 0) {
-            return reservasGuardadas;
-        }
+        if (!usuarioRaw) return null;
 
-        return reservasEjemplo;
+        return JSON.parse(usuarioRaw);
     };
 
-    const guardarReservas = (reservas) => {
-        // Actualiza reservas locales
-        localStorage.setItem("reservasCliente", JSON.stringify(reservas));
+    const formatoFecha = (fechaISO) => {
+        const fecha = String(fechaISO).split("T")[0];
+        const partes = fecha.split("-");
+
+        const meses = {
+            "01": "Ene",
+            "02": "Feb",
+            "03": "Mar",
+            "04": "Abr",
+            "05": "May",
+            "06": "Jun",
+            "07": "Jul",
+            "08": "Ago",
+            "09": "Sep",
+            "10": "Oct",
+            "11": "Nov",
+            "12": "Dic"
+        };
+
+        return `${Number(partes[2])} ${meses[partes[1]]} ${partes[0]}`;
+    };
+
+    const formatoDuracion = (minutos) => {
+        const horas = Math.floor(minutos / 60);
+        const mins = minutos % 60;
+
+        if (mins === 0) return `${horas}h`;
+        return `${horas}h ${mins}min`;
+    };
+
+    const adaptarReservaApi = (item) => {
+        return {
+            idReserva: item.id_reserva,
+            numeroReserva: item.numero_reserva,
+            estado: item.estado,
+            clase: item.clase,
+            pasajeros: item.pasajeros,
+            totalNumero: item.total,
+            descuento: item.descuento,
+            tarifaExtra: item.tarifa_extra,
+            vuelo: {
+                idVuelo: item.id_vuelo,
+                numeroVuelo: item.numero_vuelo,
+                origen: item.origen,
+                destino: item.destino,
+                ciudad: item.ciudad_destino,
+                fecha: String(item.fecha_salida).split("T")[0],
+                fechaTexto: formatoFecha(item.fecha_salida),
+                horaSalida: item.hora_salida,
+                horaLlegada: item.hora_llegada,
+                duracion: formatoDuracion(item.duracion_minutos),
+                escala: item.escala,
+                avion: item.tipo_avion,
+                precioNumero: item.precio_base,
+                imagen: item.imagen_url,
+                ruta: `${item.origen} → ${item.destino}`
+            }
+        };
     };
 
     const claseEstado = (estado) => {
@@ -91,8 +100,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const actualizarContadores = () => {
         // Contadores de estados
-        const reservas = obtenerReservas();
-
         countTodas.textContent = reservas.length;
         countPendientes.textContent = reservas.filter(item => item.estado === "Pendiente").length;
         countConfirmadas.textContent = reservas.filter(item => item.estado === "Confirmada").length;
@@ -105,23 +112,35 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("reservaEnProceso", JSON.stringify(reserva));
     };
 
-    const cancelarReserva = (numeroReserva) => {
-        // Cancela una reserva guardada
-        let reservas = obtenerReservas();
+    const cancelarReserva = async (idReserva) => {
+        try {
+            // Cancela la reserva en Neon
+            const response = await fetch(`${API_URL}/reservas/${idReserva}/cancelar`, {
+                method: "PUT"
+            });
 
-        reservas = reservas.map((reserva) => {
-            if (reserva.numeroReserva === numeroReserva) {
-                return {
-                    ...reserva,
-                    estado: "Cancelada"
-                };
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "No se pudo cancelar la reserva");
             }
 
-            return reserva;
-        });
+            reservas = reservas.map((reserva) => {
+                if (reserva.idReserva === idReserva) {
+                    return {
+                        ...reserva,
+                        estado: "Cancelada"
+                    };
+                }
 
-        guardarReservas(reservas);
-        pintarReservas();
+                return reserva;
+            });
+
+            pintarReservas();
+        } catch (error) {
+            console.error("Error cancelando reserva:", error);
+            alert("No se pudo cancelar la reserva. Revisa que el backend esté encendido.");
+        }
     };
 
     const crearFila = (reserva) => {
@@ -151,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (btnCancelar) {
             btnCancelar.addEventListener("click", () => {
-                cancelarReserva(reserva.numeroReserva);
+                cancelarReserva(reserva.idReserva);
             });
         }
 
@@ -161,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const pintarReservas = () => {
         // Filtros de tabla
         const textoBusqueda = normalizar(buscador.value);
-        const reservas = obtenerReservas();
 
         const filtradas = reservas.filter((reserva) => {
             const textoReserva = normalizar(`
@@ -189,6 +207,31 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarContadores();
     };
 
+    const cargarReservasDesdeBaseDatos = async () => {
+        const usuario = obtenerUsuario();
+
+        if (!usuario) {
+            tablaContenedor.classList.add("sin-datos");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/reservas/usuario/${usuario.id}`);
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "No se pudieron cargar las reservas");
+            }
+
+            reservas = data.map(adaptarReservaApi);
+            pintarReservas();
+        } catch (error) {
+            console.error("Error cargando reservas:", error);
+            tablaContenedor.classList.add("sin-datos");
+        }
+    };
+
     tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
             // Cambia filtro activo
@@ -202,5 +245,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     buscador.addEventListener("input", pintarReservas);
 
-    pintarReservas();
+    cargarReservasDesdeBaseDatos();
 });
