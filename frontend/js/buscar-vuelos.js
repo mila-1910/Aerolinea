@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const origenInput = document.querySelector(".buscador-campos input[type='text']:nth-of-type(1)");
+    const API_URL = "http://localhost:3000/api";
+
+    const origenInput = document.querySelectorAll(".buscador-campos input[type='text']")[0];
     const destinoInput = document.querySelectorAll(".buscador-campos input[type='text']")[1];
     const fechaIdaInput = document.querySelector(".buscador-campos input[type='date']");
     const fechaRegresoGrupo = document.querySelectorAll(".campo-grupo.fecha")[1];
@@ -10,154 +12,177 @@ document.addEventListener("DOMContentLoaded", () => {
     const contador = document.querySelector(".resultados-header p");
     const ordenar = document.querySelector(".ordenar");
     const vuelosGrid = document.querySelector(".vuelos-grid");
-    const vuelos = Array.from(document.querySelectorAll(".vuelo-card"));
     const sinResultados = document.getElementById("sin-resultados-buscar");
     const btnLimpiarFiltros = document.getElementById("btn-limpiar-filtros");
 
-
-if (!vuelosGrid || vuelos.length === 0) return;
-
-    precioFiltro.min = "0";
-    precioFiltro.max = "5000000";
-    precioFiltro.step = "100000";
-    precioFiltro.value = "5000000";
-    precioTexto.textContent = "$5.000.000 COP";
+    let vuelos = [];
 
     const normalizar = (texto) => {
-        return texto
+        return String(texto)
             .toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .trim();
     };
 
-    const obtenerPrecio = (card) => {
-        const precio = card.querySelector(".vuelo-precio").textContent;
-        return Number(precio.replace(/\D/g, ""));
-    };
-
-    const obtenerDuracion = (card) => {
-        const texto = normalizar(card.textContent);
-        const horas = texto.match(/(\d+)h/);
-        const minutos = texto.match(/(\d+)min/);
-
-        return (horas ? Number(horas[1]) * 60 : 0) + (minutos ? Number(minutos[1]) : 0);
-    };
-
-    const formatoPrecio = (valor) => {
+    const formatoCOP = (valor) => {
         return "$" + Number(valor).toLocaleString("es-CO") + " COP";
     };
 
-    const convertirFecha = (fechaInput) => {
-        if (!fechaInput) return "";
+    const formatoFecha = (fechaISO) => {
+        const fecha = String(fechaISO).split("T")[0];
+        const partes = fecha.split("-");
 
         const meses = {
-            "01": "ene",
-            "02": "feb",
-            "03": "mar",
-            "04": "abr",
-            "05": "may",
-            "06": "jun",
-            "07": "jul",
-            "08": "ago",
-            "09": "sep",
-            "10": "oct",
-            "11": "nov",
-            "12": "dic"
+            "01": "Ene",
+            "02": "Feb",
+            "03": "Mar",
+            "04": "Abr",
+            "05": "May",
+            "06": "Jun",
+            "07": "Jul",
+            "08": "Ago",
+            "09": "Sep",
+            "10": "Oct",
+            "11": "Nov",
+            "12": "Dic"
         };
 
-        const partes = fechaInput.split("-");
         return `${Number(partes[2])} ${meses[partes[1]]} ${partes[0]}`;
     };
 
-    const obtenerEscalasSeleccionadas = () => {
-        const checks = document.querySelectorAll(".filtro-grupo:nth-of-type(2) input[type='checkbox']:checked");
+    const formatoDuracion = (minutos) => {
+        const horas = Math.floor(minutos / 60);
+        const mins = minutos % 60;
 
-        return Array.from(checks).map((check) => {
-            return normalizar(check.parentElement.textContent);
-        });
+        if (mins === 0) return `${horas}h`;
+        return `${horas}h ${mins}min`;
     };
 
-    const coincideEscala = (card, escalasSeleccionadas) => {
-        const texto = normalizar(card.textContent);
+    const obtenerSeleccionados = (grupoIndex) => {
+        const grupos = document.querySelectorAll(".filtro-grupo");
+        const grupo = grupos[grupoIndex];
 
-        if (escalasSeleccionadas.length === 0) return false;
+        if (!grupo) return [];
 
-        if (texto.includes("directo") && escalasSeleccionadas.some(e => e.includes("directo"))) {
-            return true;
-        }
+        return Array.from(grupo.querySelectorAll("input[type='checkbox']:checked"))
+            .map(input => normalizar(input.parentElement.textContent));
+    };
 
-        if (texto.includes("una escala") && escalasSeleccionadas.some(e => e.includes("una escala"))) {
-            return true;
-        }
+    const adaptarVueloApi = (vuelo) => {
+        return {
+            idVuelo: vuelo.id_vuelo,
+            numeroVuelo: vuelo.numero_vuelo,
+            origen: vuelo.origen,
+            destino: vuelo.destino,
+            ciudad: vuelo.ciudad_destino,
+            fecha: String(vuelo.fecha_salida).split("T")[0],
+            fechaTexto: formatoFecha(vuelo.fecha_salida),
+            escala: vuelo.escala,
+            duracion: formatoDuracion(vuelo.duracion_minutos),
+            duracionMinutos: vuelo.duracion_minutos,
+            clase: vuelo.clase,
+            avion: vuelo.tipo_avion,
+            precioNumero: vuelo.precio_base,
+            precio: formatoCOP(vuelo.precio_base),
+            imagen: vuelo.imagen_url,
+            descripcion: vuelo.descripcion,
+            ruta: `${vuelo.origen} → ${vuelo.destino}`
+        };
+    };
 
-        if ((texto.includes("dos") || texto.includes("mas")) && escalasSeleccionadas.some(e => e.includes("dos"))) {
-            return true;
-        }
+    const renderizarVuelos = (listaVuelos) => {
+        vuelosGrid.innerHTML = "";
 
-        return false;
+        listaVuelos.forEach((vuelo) => {
+            const card = document.createElement("div");
+            card.className = "vuelo-card";
+            card.dataset.idVuelo = vuelo.idVuelo;
+            card.dataset.numeroVuelo = vuelo.numeroVuelo;
+
+            card.innerHTML = `
+                <img src="${vuelo.imagen}" alt="${vuelo.ciudad}">
+                <div class="vuelo-info">
+                    <h4>${vuelo.ruta}</h4>
+                    <p><i class="fa-solid fa-plane"></i> ${vuelo.escala} · ${vuelo.duracion}</p>
+                    <p><i class="fa-solid fa-calendar-days"></i> ${vuelo.fechaTexto}</p>
+                    <div class="vuelo-footer">
+                        <span class="vuelo-precio">${vuelo.precio}</span>
+                        <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                    </div>
+                </div>
+            `;
+
+            vuelosGrid.appendChild(card);
+        });
     };
 
     const filtrarVuelos = () => {
         const origen = normalizar(origenInput.value);
         const destino = normalizar(destinoInput.value);
-        const fechaBuscada = fechaIdaInput.value;
+        const fecha = fechaIdaInput.value;
         const precioMaximo = Number(precioFiltro.value);
-        const escalasSeleccionadas = obtenerEscalasSeleccionadas();
 
-        let visibles = [];
+        const escalas = obtenerSeleccionados(1);
+        const clases = obtenerSeleccionados(2);
+        const aviones = obtenerSeleccionados(3);
 
-        vuelos.forEach((card) => {
-            const texto = normalizar(card.textContent);
-            const precio = obtenerPrecio(card);
+        let filtrados = vuelos.filter((vuelo) => {
+            const pasaOrigen = origen === "" || normalizar(vuelo.origen).includes(origen);
+            const pasaDestino = destino === "" || normalizar(vuelo.destino).includes(destino);
+            const pasaFecha = fecha === "" || vuelo.fecha === fecha;
+            const pasaPrecio = vuelo.precioNumero <= precioMaximo;
 
-            const pasaOrigen = origen === "" || texto.includes(origen);
-            const pasaDestino = destino === "" || texto.includes(destino);
-            // Filtra por fecha de ida
-            const pasaFecha = fechaBuscada === "" || card.dataset.fecha === fechaBuscada;
+            const pasaEscala = escalas.length === 0 || escalas.some(item => normalizar(vuelo.escala).includes(item.replace("vuelo ", "")));
+            const pasaClase = clases.length === 0 || clases.some(item => normalizar(vuelo.clase).includes(item));
+            const pasaAvion = aviones.length === 0 || aviones.some(item => normalizar(vuelo.avion).includes(item));
 
-            const pasaPrecio = precio <= precioMaximo;
-            const pasaEscala = coincideEscala(card, escalasSeleccionadas);
-
-            const mostrar = pasaOrigen && pasaDestino && pasaFecha && pasaPrecio && pasaEscala;
-
-            card.style.display = mostrar ? "" : "none";
-
-            if (mostrar) {
-                visibles.push(card);
-            }
+            return pasaOrigen && pasaDestino && pasaFecha && pasaPrecio && pasaEscala && pasaClase && pasaAvion;
         });
 
-        ordenarVuelos(visibles);
+        const opcionOrden = normalizar(ordenar.options[ordenar.selectedIndex].textContent);
 
-        contador.textContent = visibles.length === 1
+        if (opcionOrden.includes("menor")) {
+            filtrados.sort((a, b) => a.precioNumero - b.precioNumero);
+        }
+
+        if (opcionOrden.includes("mayor")) {
+            filtrados.sort((a, b) => b.precioNumero - a.precioNumero);
+        }
+
+        if (opcionOrden.includes("duracion")) {
+            filtrados.sort((a, b) => a.duracionMinutos - b.duracionMinutos);
+        }
+
+        renderizarVuelos(filtrados);
+
+        contador.textContent = filtrados.length === 1
             ? "1 vuelo encontrado"
-            : visibles.length + " vuelos encontrados";
-                    // Mensaje cuando no hay resultados
-        sinResultados.style.display = visibles.length === 0 ? "block" : "none";
+            : `${filtrados.length} vuelos encontrados`;
 
+        if (sinResultados) {
+            sinResultados.style.display = filtrados.length === 0 ? "block" : "none";
+        }
     };
 
-    const ordenarVuelos = (visibles) => {
-        const opcion = ordenar.value;
+    const limpiarFiltros = () => {
+        // Limpia campos y filtros
+        origenInput.value = "";
+        destinoInput.value = "";
+        fechaIdaInput.value = "";
 
-        visibles.sort((a, b) => {
-            if (opcion === "Menor a mayor precio") {
-                return obtenerPrecio(a) - obtenerPrecio(b);
-            }
+        idaVuelta.checked = true;
+        soloIda.checked = false;
+        actualizarTipoViaje();
 
-            if (opcion === "Mayor a menor precio") {
-                return obtenerPrecio(b) - obtenerPrecio(a);
-            }
+        precioFiltro.value = "5000000";
+        precioTexto.textContent = formatoCOP(precioFiltro.value);
 
-            if (opcion === "Mejor calificados") {
-                return obtenerDuracion(a) - obtenerDuracion(b);
-            }
-
-            return 0;
+        document.querySelectorAll(".filtro-grupo input[type='checkbox']").forEach((check) => {
+            check.checked = true;
         });
 
-        visibles.forEach(card => vuelosGrid.appendChild(card));
+        filtrarVuelos();
     };
 
     const actualizarTipoViaje = () => {
@@ -168,70 +193,56 @@ if (!vuelosGrid || vuelos.length === 0) return;
         }
     };
 
-        const limpiarFiltros = () => {
-        // Limpia campos de búsqueda
-        origenInput.value = "";
-        destinoInput.value = "";
-        fechaIdaInput.value = "";
-
-        // Reinicia tipo de viaje
-        idaVuelta.checked = true;
-        soloIda.checked = false;
-        actualizarTipoViaje();
-
-        // Reinicia precio
-        precioFiltro.value = "5000000";
-        precioTexto.textContent = formatoPrecio(precioFiltro.value);
-
-        // Marca todos los filtros
-        document.querySelectorAll(".filtro-grupo input[type='checkbox']").forEach((check) => {
-            check.checked = true;
-        });
-
-        filtrarVuelos();
-    };
-
-
-        const guardarVueloSeleccionado = (event) => {
+    const guardarVueloSeleccionado = (event) => {
         const boton = event.target.closest(".btn-detalle");
 
         if (!boton) return;
 
         const card = boton.closest(".vuelo-card");
+        const idVuelo = Number(card.dataset.idVuelo);
 
-        // Guarda el vuelo para mostrarlo en el detalle
-        const vueloSeleccionado = {
-            numeroVuelo: card.dataset.numero,
-            origen: card.dataset.origen,
-            destino: card.dataset.destino,
-            ciudad: card.dataset.ciudad,
-            fecha: card.dataset.fecha,
-            fechaTexto: card.dataset.fechaTexto,
-            escala: card.dataset.escala,
-            duracion: card.dataset.duracion,
-            clase: card.dataset.clase,
-            avion: card.dataset.avion,
-            ruta: card.querySelector("h4").textContent,
-            precio: card.querySelector(".vuelo-precio").textContent,
-            imagen: card.querySelector("img").getAttribute("src")
-        };
+        const vueloSeleccionado = vuelos.find(vuelo => vuelo.idVuelo === idVuelo);
 
+        if (!vueloSeleccionado) return;
+
+        // Guarda el vuelo para mostrarlo en detalle
         localStorage.setItem("vueloSeleccionado", JSON.stringify(vueloSeleccionado));
     };
 
-    
-        // Búsqueda automática
+    const cargarVuelosDesdeBaseDatos = async () => {
+        try {
+            const response = await fetch(`${API_URL}/vuelos`);
+
+            if (!response.ok) {
+                throw new Error("No se pudieron cargar los vuelos");
+            }
+
+            const data = await response.json();
+
+            vuelos = data.map(adaptarVueloApi);
+
+            precioFiltro.min = "0";
+            precioFiltro.max = "5000000";
+            precioFiltro.step = "100000";
+            precioFiltro.value = "5000000";
+            precioTexto.textContent = formatoCOP(precioFiltro.value);
+
+            filtrarVuelos();
+        } catch (error) {
+            console.error("Error cargando vuelos:", error);
+            contador.textContent = "No se pudieron cargar los vuelos";
+        }
+    };
+
     origenInput.addEventListener("input", filtrarVuelos);
     destinoInput.addEventListener("input", filtrarVuelos);
     fechaIdaInput.addEventListener("change", filtrarVuelos);
-
     precioFiltro.addEventListener("input", () => {
-        precioTexto.textContent = formatoPrecio(precioFiltro.value);
+        precioTexto.textContent = formatoCOP(precioFiltro.value);
         filtrarVuelos();
     });
 
     ordenar.addEventListener("change", filtrarVuelos);
-    btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
     soloIda.addEventListener("change", actualizarTipoViaje);
     idaVuelta.addEventListener("change", actualizarTipoViaje);
     vuelosGrid.addEventListener("click", guardarVueloSeleccionado);
@@ -240,6 +251,10 @@ if (!vuelosGrid || vuelos.length === 0) return;
         check.addEventListener("change", filtrarVuelos);
     });
 
+    if (btnLimpiarFiltros) {
+        btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
+    }
+
     actualizarTipoViaje();
-    contador.textContent = vuelos.length + " vuelos encontrados";
+    cargarVuelosDesdeBaseDatos();
 });

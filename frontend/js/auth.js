@@ -98,12 +98,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    showToast('¡Cuenta creada exitosamente! Bienvenido/a a ELARIS.', 'success');
-                    // Hacer auto-login guardando los datos (el backend devuelve el id, nombre y correo)
-                    localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                    // Redirigir a buscar vuelos tras un pequeño delay para ver la animación
-                    setTimeout(() => window.location.href = '../cliente/buscar-vuelos.html', 1800);
-                } else {
+    showToast('¡Cuenta creada exitosamente! Bienvenido/a a ELARIS.', 'success');
+
+    // Guardar sesión con el mismo formato del login
+    const usuario = {
+        id: data.usuario.id_usuario,
+        nombre_completo: data.usuario.nombre_completo,
+        correo: data.usuario.correo,
+        rol: 'cliente'
+    };
+
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+
+    // Redirigir a buscar vuelos tras un pequeño delay para ver la animación
+    setTimeout(() => window.location.href = '../cliente/buscar-vuelos.html', 1800);
+}
+ else {
                     showToast('Error: ' + data.error, 'error');
                 }
             } catch (error) {
