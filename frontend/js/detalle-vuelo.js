@@ -93,6 +93,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+        const mostrarAvisoLogin = () => {
+        // Aviso si no hay sesión
+        const aviso = document.createElement("div");
+        aviso.className = "aviso-reserva aviso-login";
+        aviso.innerHTML = `
+            <strong>Inicia sesión para reservar</strong>
+            <span>Te llevamos al login para continuar con tu reserva.</span>
+        `;
+
+        document.body.appendChild(aviso);
+
+        setTimeout(() => {
+            aviso.classList.add("activo");
+        }, 50);
+    };
+
     const mostrarAvisoReserva = () => {
         // Aviso antes de ir al resumen
         const aviso = document.createElement("div");
@@ -273,10 +289,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const usuario = obtenerUsuario();
 
         if (!usuario) {
-            alert("Debes iniciar sesión para reservar.");
-            window.location.href = "../inicio/login.html";
-            return;
-        }
+    mostrarAvisoLogin();
+
+    setTimeout(() => {
+        window.location.href = "../inicio/login.html";
+    }, 1200);
+
+    return;
+}
+
 
         vuelo.origen = origenSelect.value;
         vuelo.fechaTexto = fechaSelect.value;
