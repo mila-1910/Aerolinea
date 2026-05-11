@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const API_URL = "http://localhost:3000/api";
+
     const reservaGuardada = localStorage.getItem("reservaEnProceso");
     const resumenContenedor = document.getElementById("resumen-contenedor");
     const reservaVacia = document.getElementById("reserva-vacia");
@@ -37,11 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const obtenerUsuario = () => {
-        // Datos temporales del pasajero
-        const usuarioGuardado = localStorage.getItem("usuarioActivo");
+        // Usuario actual del navegador
+        const usuarioRaw = localStorage.getItem("usuario");
 
-        if (usuarioGuardado) {
-            return JSON.parse(usuarioGuardado);
+        if (!usuarioRaw) return null;
+
+        return JSON.parse(usuarioRaw);
+    };
+
+    const obtenerDatosPasajero = () => {
+        // Datos temporales del pasajero
+        const usuario = obtenerUsuario();
+
+        if (usuario) {
+            return {
+                nombre: usuario.nombre_completo,
+                documento: "Pendiente",
+                nacionalidad: "Colombiana",
+                nacimiento: "Pendiente"
+            };
         }
 
         return {
@@ -52,46 +68,102 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
-    const guardarReserva = (estado, mensaje) => {
-        // Evita guardar la misma reserva dos veces
+    const guardarReservaLocal = (estado, total, tarifa, descuento) => {
+        // Respaldo local para seguir usando Mis reservas si la API falla
+        const reservas = JSON.parse(localStorage.getItem("reservasCliente")) || [];
+
+        const reservaLocal = {
+            ...reserva,
+            estado: estado,
+            totalNumero: total,
+            totalTexto: formatoCOP(total),
+            tarifaExtra: tarifa,
+            descuento: descuento,
+            pasajero: obtenerDatosPasajero()
+        };
+
+        const existe = reservas.some(item => item.numeroReserva === reservaLocal.numeroReserva);
+
+        if (!existe) {
+            reservas.push(reservaLocal);
+            localStorage.setItem("reservasCliente", JSON.stringify(reservas));
+        }
+
+        return reservaLocal;
+    };
+
+    const guardarReservaEnBaseDatos = async (estado, total, tarifa, descuento) => {
+        const usuario = obtenerUsuario();
+
+        if (!usuario) {
+            throw new Error("No hay usuario activo");
+        }
+
+        // Envia la reserva a Neon por medio del backend
+        const response = await fetch(`${API_URL}/reservas`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                numero_reserva: reserva.numeroReserva,
+                id_usuario: usuario.id,
+                id_vuelo: reserva.idVuelo,
+                estado: estado,
+                clase: reserva.clase,
+                pasajeros: reserva.pasajeros || 1,
+                tarifa_extra: tarifa,
+                descuento: descuento,
+                total: total
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "No se pudo guardar la reserva");
+        }
+
+        return data.reserva;
+    };
+
+    const finalizarReserva = async (estado, mensaje) => {
         const btnConfirmar = document.getElementById("btn-confirmar-reserva");
         const btnGuardar = document.getElementById("btn-guardar-reserva");
 
         btnConfirmar.classList.add("deshabilitado");
         btnGuardar.classList.add("deshabilitado");
 
-        const reservas = JSON.parse(localStorage.getItem("reservasCliente")) || [];
-        const existeReserva = reservas.some(item => item.numeroReserva === reserva.numeroReserva);
+        const base = reserva.totalNumero;
+        const tarifa = precioTarifa();
+        const descuento = Math.round(base * 0.2);
+        const total = base + tarifa - descuento;
 
-        if (!existeReserva) {
-            const base = reserva.totalNumero;
-            const tarifa = precioTarifa();
-            const descuento = Math.round(base * 0.2);
-            const total = base + tarifa - descuento;
+        try {
+            await guardarReservaEnBaseDatos(estado, total, tarifa, descuento);
+            guardarReservaLocal(estado, total, tarifa, descuento);
 
-            reserva.estado = estado;
-            reserva.totalNumero = total;
-            reserva.totalTexto = formatoCOP(total);
-            reserva.pasajero = obtenerUsuario();
+            localStorage.removeItem("reservaEnProceso");
+            mostrarAviso(mensaje);
 
-            reservas.push(reserva);
+            setTimeout(() => {
+                window.location.href = "mis-reservas.html";
+            }, 900);
+        } catch (error) {
+            console.error("Error guardando reserva:", error);
 
-            localStorage.setItem("reservasCliente", JSON.stringify(reservas));
+            btnConfirmar.classList.remove("deshabilitado");
+            btnGuardar.classList.remove("deshabilitado");
+
+            alert("No se pudo guardar la reserva en la base de datos. Revisa que el backend esté encendido.");
         }
-
-        localStorage.removeItem("reservaEnProceso");
-        mostrarAviso(mensaje);
-
-        setTimeout(() => {
-            window.location.href = "mis-reservas.html";
-        }, 900);
     };
 
     // Número de reserva
     document.getElementById("reserva-numero-badge").textContent = "Reserva #" + reserva.numeroReserva;
 
     // Datos del pasajero
-    const pasajero = obtenerUsuario();
+    const pasajero = obtenerDatosPasajero();
 
     document.getElementById("pasajero-nombre").textContent = pasajero.nombre;
     document.getElementById("pasajero-documento").textContent = pasajero.documento;
@@ -125,11 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btn-confirmar-reserva").addEventListener("click", (event) => {
         event.preventDefault();
-        guardarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
+        finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
     });
 
     document.getElementById("btn-guardar-reserva").addEventListener("click", (event) => {
         event.preventDefault();
-        guardarReserva("Pendiente", "Reserva guardada para después...");
+        finalizarReserva("Pendiente", "Reserva guardada para después...");
     });
 });
