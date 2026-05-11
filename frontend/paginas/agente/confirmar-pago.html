@@ -25,10 +25,7 @@
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
         </a>
 
-        <div class="navbar-centro">
-            <span class="panel-texto">Confirmar Pago</span>
-            <span class="badge-agente">AGENTE</span>
-        </div>
+
 
         <div class="navbar-right">
 
@@ -54,15 +51,14 @@
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-clipboard-list" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-clipboard-list"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
             </div>
-
         </aside>
 
         <!-- CONTENIDO PRINCIPAL -->
@@ -70,175 +66,127 @@
 
             <!-- TÍTULO -->
             <div class="saludo">
-                <h2><i class="fas fa-money-bill-wave" style="color: gold;"></i> Confirmar Pago</h2>
-                <p>Revisa los detalles de la reserva y confirma o rechaza el pago</p>
+                <div class="saludo-texto">
+                    <h2>Validación Financiera</h2>
+                    <p>Revisión técnica de transacciones y conciliación de pagos de reserva</p>
+                </div>
             </div>
 
-            <!-- CONTENEDOR DE CONFIRMACIÓN DE PAGO -->
-            <div class="confirmar-pago-container">
+            <!-- GRID DE INFORMACIÓN -->
+            <div class="grid-detalle">
 
-                <!-- COLUMNA IZQUIERDA: Resumen de reserva -->
-                <div class="resumen-reserva">
-                    <h3><i class="fas fa-clipboard-list" style="color: gold;"></i> Resumen de la reserva</h3>
-
-                    <div class="pasajero-info">
-                        <h4><i class="fas fa-user" style="color: gold;"></i> Datos del pasajero</h4>
-                        <div class="info-linea">
-                            <span class="label">Código reserva:</span>
-                            <span class="valor">#RES-011</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Nombre:</span>
-                            <span class="valor">Juan Pérez</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Documento:</span>
-                            <span class="valor">1002433789</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Nacionalidad:</span>
-                            <span class="valor">Colombiano</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Fecha nacimiento:</span>
-                            <span class="valor">11/03/1991</span>
-                        </div>
+                <!-- RESUMEN DE RESERVA -->
+                <div class="tarjeta-info glass-card">
+                    <h3><i class="fas fa-ticket-alt"></i> Registro de Pasajero</h3>
+                    <div class="dato-linea">
+                        <span class="label">Localizador PNR</span>
+                        <span class="valor">#RES-011</span>
                     </div>
-
-                    <div class="vuelo-info">
-                        <h4><i class="fas fa-plane" style="color: gold;"></i> Datos del vuelo</h4>
-                        <div class="info-linea">
-                            <span class="label">Origen:</span>
-                            <span class="valor">Bogotá (BOG)</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Destino:</span>
-                            <span class="valor">Roma (FCO)</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Código vuelo:</span>
-                            <span class="valor">EL345</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Fecha salida:</span>
-                            <span class="valor">12 abril 2025</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Hora salida:</span>
-                            <span class="valor">22:35</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Hora llegada:</span>
-                            <span class="valor">22:45</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Clase:</span>
-                            <span class="valor">Ejecutiva</span>
-                        </div>
-                        <div class="info-linea">
-                            <span class="label">Asiento:</span>
-                            <span class="valor">4A</span>
-                        </div>
+                    <div class="dato-linea">
+                        <span class="label">Titular de Cuenta</span>
+                        <span class="valor">Juan Pérez</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Vuelo Asignado</span>
+                        <span class="valor">EL345 | BOG → ROME</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Cabina / Clase</span>
+                        <span class="valor">Ejecutiva (4A)</span>
+                    </div>
+                    <div class="dato-linea">
+                        <span class="label">Fecha de Viaje</span>
+                        <span class="valor">12 Abril 2025</span>
                     </div>
                 </div>
 
-                <!-- COLUMNA DERECHA: Detalles del pago -->
-                <div class="detalles-pago">
-                    <h3><i class="fas fa-credit-card" style="color: gold;"></i> Detalles del pago</h3>
-
+                <!-- DETALLES DEL PAGO -->
+                <div class="tarjeta-info glass-card">
+                    <h3><i class="fas fa-credit-card"></i> Estado de la Transacción</h3>
                     <div class="estado-pago-container">
-                        <div class="info-linea">
-                            <span class="label">Estado del pago:</span>
+                        <div class="dato-linea">
+                            <span class="label">Estado Actual</span>
                             <span class="valor">
-                                <span class="estado-pago-badge pendiente">Pendiente</span>
+                                <span class="estado-pago-badge pendiente">Validación Pendiente</span>
                             </span>
                         </div>
-                        <div class="info-linea">
-                            <span class="label">Método de pago:</span>
-                            <span class="valor">Tarjeta de crédito</span>
+                        <div class="dato-linea">
+                            <span class="label">Método de Captura</span>
+                            <span class="valor">Tarjeta de Crédito</span>
                         </div>
-                        <div class="info-linea">
-                            <span class="label">Monto total:</span>
-                            <span class="valor">$1,422 USD</span>
+                        <div class="dato-linea">
+                            <span class="label">Importe Total</span>
+                            <span class="valor" style="color: var(--vino); font-weight: 700; font-size: 1.2rem;">$1,422 USD</span>
                         </div>
                     </div>
 
-                    <div class="desglose-precios">
-                        <h4><i class="fas fa-chart-line" style="color: gold;"></i> Desglose</h4>
-                        <div class="info-linea">
-                            <span class="label">Precio base tiquete:</span>
-                            <span class="valor">$1,200 USD</span>
+                    <div class="desglose-premium">
+                        <div class="desglose-item">
+                            <span>Tarifa Base</span>
+                            <span>$1,200</span>
                         </div>
-                        <div class="info-linea">
-                            <span class="label">Paquete turístico:</span>
-                            <span class="valor">$200 USD</span>
+                        <div class="desglose-item">
+                            <span>Impuestos y Tasas</span>
+                            <span>$200</span>
                         </div>
-                        <div class="info-linea">
-                            <span class="label">Seguro de viaje:</span>
-                            <span class="valor">$22 USD</span>
-                        </div>
-                        <div class="info-linea total">
-                            <span class="label">TOTAL:</span>
-                            <span class="valor">$1,422 USD</span>
+                        <div class="desglose-item">
+                            <span>Seguro Complementario</span>
+                            <span>$22</span>
                         </div>
                     </div>
 
                     <div class="observacion-pago">
-                        <label>📝 Observación (opcional)</label>
-                        <textarea rows="3" placeholder="Añadir nota sobre el pago..."></textarea>
+                        <label><i class="fas fa-comment-dots"></i> Notas de Conciliación:</label>
+                        <textarea rows="2" placeholder="Ingrese detalles de la validación bancaria..."></textarea>
                     </div>
 
-                    <div class="botones-pago">
-                        <button class="btn-rechazar-pago">❌ Rechazar pago</button>
-                        <button class="btn-confirmar-pago">✅ Confirmar pago</button>
+                    <div class="grupo-botones-pago">
+                        <button class="btn-pago-rechazar">
+                            <i class="fas fa-times"></i> Denegar Pago
+                        </button>
+                        <button class="btn-pago-confirmar">
+                            <i class="fas fa-check"></i> Validar Transacción
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- RESERVAS RELACIONADAS (opcional) -->
-            <div class="reservas-relacionadas">
-                <h3><i class="fas fa-clipboard-list" style="color: gold;"></i> Otras reservas del cliente</h3>
-                <table class="tabla-reservas-agente">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Pasajero</th>
-                            <th>Vuelo</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 🔴 EJEMPLO 1 -->
-                        <tr>
-                            <td>#RES-012</td>
-                            <td>María González</td> <!-- Del dashboard -->
-                            <td>Bogotá → Medellín</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 15/03/2026</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><a href="detalle-reserva.html?id=12" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- 🔴 EJEMPLO 2 -->
-                        <tr>
-                            <td>#RES-009</td>
-                            <td>Carlos Rodríguez</td> <!-- Del dashboard -->
-                            <td>Medellín → Cartagena</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 20/02/2026</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><a href="detalle-reserva.html?id=9" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- 🔴 EJEMPLO 3 -->
-                        <tr>
-                            <td>#RES-007</td>
-                            <td>Sofía Torres</td> <!-- ✅ CORREGIDO -->
-                            <td>Medellín → Miami</td> <!-- ✅ CORREGIDO -->
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 21/04/2026</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><a href="detalle-reserva.html?id=7" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- TABLA DE AUDITORÍA -->
+            <div class="tarjeta-info glass-card">
+                <div class="tarjeta-header">
+                    <h3><i class="fas fa-history"></i> Historial de Registros Relacionados</h3>
+                    <p>Otras operaciones vinculadas a este perfil de cliente</p>
+                </div>
+                
+                <div class="tabla-responsive">
+                    <table class="tabla-reservas-agente">
+                        <thead>
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Itinerario</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="pnr-code">#RES-012</span></td>
+                                <td>Bogotá → Medellín</td>
+                                <td>15/03/2026</td>
+                                <td><span class="estado confirmada">Confirmada</span></td>
+                                <td><a href="detalle-reserva.html?id=12" class="btn-tabla-accion secondary">Auditar</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="pnr-code">#RES-009</span></td>
+                                <td>Medellín → Cartagena</td>
+                                <td>20/02/2026</td>
+                                <td><span class="estado confirmada">Confirmada</span></td>
+                                <td><a href="detalle-reserva.html?id=9" class="btn-tabla-accion secondary">Auditar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>

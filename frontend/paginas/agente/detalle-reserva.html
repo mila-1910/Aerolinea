@@ -26,10 +26,7 @@
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
         </a>
 
-        <div class="navbar-centro">
-            <span class="panel-texto">Detalle de Reserva</span>
-            <span class="badge-agente">AGENTE</span>
-        </div>
+
 
         <div class="navbar-right">
 
@@ -51,19 +48,17 @@
          ============================================ -->
     <div class="app-container">
 
-        <!-- SIDEBAR IZQUIERDO -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-clipboard-list" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-clipboard-list"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
             </div>
-
         </aside>
 
         <!-- CONTENIDO PRINCIPAL -->
@@ -71,8 +66,10 @@
 
             <!-- TÍTULO -->
             <div class="saludo">
-                <h2><i class="fas fa-file-alt" style="color: gold;"></i> Detalle de Reserva</h2>
-                <p>Información completa de la reserva | Historial de cambios</p>
+                <div class="saludo-texto">
+                    <h2>Expediente de Reserva</h2>
+                    <p>Consulta el historial completo y gestiona los estados operativos de la reserva</p>
+                </div>
             </div>
 
             <!-- ============================================
@@ -82,70 +79,70 @@
 
                 <!-- COLUMNA IZQUIERDA: Datos del pasajero -->
                 <div class="tarjeta-info">
-                    <h3><i class="fas fa-user" style="color: gold;"></i> Datos del pasajero</h3>
+                    <h3><i class="fas fa-user-circle"></i> Información del Pasajero</h3>
                     <div class="dato-linea">
-                        <span class="label">Código reserva:</span>
+                        <span class="label">Código de Reserva</span>
                         <span class="valor" id="codigoReserva">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Nombre completo:</span>
+                        <span class="label">Nombre Completo</span>
                         <span class="valor" id="nombrePasajero">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Documento:</span>
+                        <span class="label">Documento de Identidad</span>
                         <span class="valor" id="documentoPasajero">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Nacionalidad:</span>
+                        <span class="label">Nacionalidad</span>
                         <span class="valor" id="nacionalidad">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Fecha de nacimiento:</span>
+                        <span class="label">Fecha de Nacimiento</span>
                         <span class="valor" id="fechaNac">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Email:</span>
+                        <span class="label">Correo Electrónico</span>
                         <span class="valor" id="email">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Teléfono:</span>
+                        <span class="label">Teléfono de Contacto</span>
                         <span class="valor" id="telefono">-</span>
                     </div>
                 </div>
 
                 <!-- COLUMNA DERECHA: Datos del vuelo -->
                 <div class="tarjeta-info">
-                    <h3><i class="fas fa-plane" style="color: gold;"></i> Datos del vuelo</h3>
+                    <h3><i class="fas fa-plane-arrival"></i> Detalles del Itinerario</h3>
                     <div class="dato-linea">
-                        <span class="label">Código de vuelo:</span>
+                        <span class="label">Número de Vuelo</span>
                         <span class="valor" id="codigoVuelo">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Origen:</span>
+                        <span class="label">Aeropuerto Origen</span>
                         <span class="valor" id="origen">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Destino:</span>
+                        <span class="label">Aeropuerto Destino</span>
                         <span class="valor" id="destino">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Fecha de salida:</span>
+                        <span class="label">Fecha de Salida</span>
                         <span class="valor" id="fechaSalida">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Hora de salida:</span>
+                        <span class="label">Hora de Salida</span>
                         <span class="valor" id="horaSalida">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Hora de llegada:</span>
+                        <span class="label">Hora Estimada Llegada</span>
                         <span class="valor" id="horaLlegada">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Clase:</span>
+                        <span class="label">Cabina / Clase</span>
                         <span class="valor" id="clase">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Asiento asignado:</span>
+                        <span class="label">Asiento Asignado</span>
                         <span class="valor" id="asiento">-</span>
                     </div>
                 </div>
@@ -158,51 +155,51 @@
 
                 <!-- Detalles de pago -->
                 <div class="tarjeta-info">
-                    <h3><i class="fas fa-money-bill-wave" style="color: gold;"></i> Detalles de pago</h3>
+                    <h3><i class="fas fa-receipt"></i> Información Financiera</h3>
                     <div class="dato-linea">
-                        <span class="label">Estado del pago:</span>
+                        <span class="label">Estado del Pago</span>
                         <span class="valor">
                             <span class="estado-pago-badge" id="estadoPagoBadge">Pendiente</span>
                         </span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Método de pago:</span>
+                        <span class="label">Método de Pago</span>
                         <span class="valor" id="metodoPago">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Monto total:</span>
-                        <span class="valor" id="montoTotal">-</span>
+                        <span class="label">Inversión Total</span>
+                        <span class="valor" id="montoTotal" style="color: var(--vino); font-size: 1.1rem;">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Precio base:</span>
+                        <span class="label">Tarifa Base</span>
                         <span class="valor" id="precioBase">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Paquetes turísticos:</span>
+                        <span class="label">Servicios Adicionales</span>
                         <span class="valor" id="paquetes">-</span>
                     </div>
                 </div>
 
                 <!-- Estado de la reserva -->
                 <div class="tarjeta-info">
-                    <h3><i class="fas fa-tags" style="color: gold;"></i> Estado de la reserva</h3>
+                    <h3><i class="fas fa-info-circle"></i> Estado Operativo</h3>
                     <div class="dato-linea">
-                        <span class="label">Estado actual:</span>
+                        <span class="label">Estado Actual</span>
                         <span class="valor">
                             <span class="estado" id="estadoReservaBadge">Pendiente</span>
                         </span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Fecha de reserva:</span>
+                        <span class="label">Fecha de Creación</span>
                         <span class="valor" id="fechaReserva">-</span>
                     </div>
                     <div class="dato-linea">
-                        <span class="label">Última modificación:</span>
+                        <span class="label">Sincronización Sistema</span>
                         <span class="valor" id="ultimaModificacion">-</span>
                     </div>
                     <div class="observacion-reserva">
-                        <label><i class="fas fa-sticky-note" style="color: gold;"></i> Observación del agente:</label>
-                        <textarea rows="2" placeholder="Añadir nota sobre esta reserva..."></textarea>
+                        <label><i class="fas fa-pen-fancy"></i> Notas de Auditoría:</label>
+                        <textarea rows="2" placeholder="Ingrese observaciones internas..."></textarea>
                     </div>
                 </div>
             </div>
@@ -211,34 +208,44 @@
                  HISTORIAL DE ESTADOS (REQUISITO DEL PROYECTO)
                  ============================================ -->
             <div class="tarjeta-info historial-container">
-                <h3><i class="fas fa-history" style="color: gold;"></i> Historial de estados</h3>
-                <p class="historial-descripcion">Registro de fecha y hora de cada cambio en la reserva</p>
-                <table class="historial-tabla">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Estado anterior</th>
-                            <th>Estado nuevo</th>
-                            <th>Agente / Cliente</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historialBody">
-                        <!-- Se llenará con JavaScript según la reserva -->
-                    </tbody>
-                </table>
+                <h3><i class="fas fa-history"></i> Línea de Tiempo de Estados</h3>
+                <p class="historial-descripcion">Trazabilidad completa de cambios realizados por agentes o sistema</p>
+                <div class="tabla-responsive">
+                    <table class="historial-tabla">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estado Anterior</th>
+                                <th>Nuevo Estado</th>
+                                <th>Responsable</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historialBody">
+                            <!-- Se llenará con JavaScript según la reserva -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- ============================================
                  BOTONES DE ACCIÓN
                  ============================================ -->
             <div class="tarjeta-info botones-accion-container">
-                <h3><i class="fas fa-bolt" style="color: gold;"></i> Acciones</h3>
+                <h3><i class="fas fa-tasks"></i> Acciones Disponibles</h3>
                 <div class="grupo-botones">
-                    <a id="btnConfirmarPago" href="#" class="btn-confirmar-pago-detalle"><i class="fas fa-check" style="color: gold;"></i> Confirmar pago</a>
-                    <button id="btnRechazarPago" class="btn-rechazar-pago-detalle"><i class="fas fa-times fa-lg" style="color: gold;"></i> Rechazar pago</button>
-                    <a id="btnAsignarAsiento" href="#" class="btn-asignar-asiento-detalle"><i class="fas fa-chair" style="color: gold;"></i> Asignar asiento</a>
-                    <button id="btnCancelarReserva" class="btn-cancelar-reserva-detalle"><i class="fas fa-trash" style="color: gold;"></i> Cancelar reserva</button>
+                    <a id="btnConfirmarPago" href="#" class="btn-confirmar-pago-detalle">
+                        <i class="fas fa-check-circle"></i> Confirmar Pago
+                    </a>
+                    <button id="btnRechazarPago" class="btn-rechazar-pago-detalle">
+                        <i class="fas fa-times-circle"></i> Rechazar Transacción
+                    </button>
+                    <a id="btnAsignarAsiento" href="#" class="btn-asignar-asiento-detalle">
+                        <i class="fas fa-chair"></i> Asignar Butaca
+                    </a>
+                    <button id="btnCancelarReserva" class="btn-cancelar-reserva-detalle">
+                        <i class="fas fa-ban"></i> Anular Reserva
+                    </button>
                 </div>
             </div>
 

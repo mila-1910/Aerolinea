@@ -25,10 +25,7 @@
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
         </a>
 
-        <div class="navbar-centro">
-            <span class="panel-texto">Asignar Asiento</span>
-            <span class="badge-agente">AGENTE</span>
-        </div>
+
 
         <div class="navbar-right">
 
@@ -50,46 +47,86 @@
          ============================================ -->
     <div class="app-container">
 
-        <!-- SIDEBAR IZQUIERDO -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-clipboard-list" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-clipboard-list"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
             </div>
-
         </aside>
 
         <!-- CONTENIDO PRINCIPAL -->
-        <main class="contenido-principal">
-
-            <!-- TÍTULO -->
+        <main class="contenido-principal">            <!-- TÍTULO -->
             <div class="saludo">
-                <h2><i class="fas fa-chair" style="color: gold;"></i> Asignar Asiento</h2>
-                <p>Selecciona un vuelo y asigna el número de asiento al pasajero</p>
+                <div class="saludo-texto">
+                    <h2>Gestión de Cabina</h2>
+                    <p>Asignación técnica de butacas y gestión de preferencias de pasajero</p>
+                </div>
+            </div>
+
+            <!-- SECCIÓN DE BÚSQUEDA -->
+            <div class="busqueda-reserva-container glass-card">
+                <div class="busqueda-header">
+                    <h3><i class="fas fa-search"></i> Localizador de Reserva</h3>
+                    <p>Ingrese el código PNR para habilitar el mapa de asientos</p>
+                </div>
+                <div class="busqueda-form">
+                    <div class="input-group-premium">
+                        <i class="fas fa-ticket-alt"></i>
+                        <input type="text" id="pnrSearch" placeholder="Ej: ABC123" maxlength="6">
+                    </div>
+                    <button id="btnBuscarReserva" class="btn-buscar-premium">
+                        <i class="fas fa-sync-alt"></i> Sincronizar
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULTADO DE BÚSQUEDA -->
+            <div id="resultadoBusqueda" class="resultado-container glass-card" style="display: none;">
+                <div class="resultado-header">
+                    <h3><i class="fas fa-user-check"></i> Registro Localizado</h3>
+                    <div id="badgeReserva" class="estado-badge">Confirmada</div>
+                </div>
+                
+                <div class="tabla-responsive">
+                    <table class="tabla-reservas-agente">
+                        <thead>
+                            <tr>
+                                <th>Pasajero</th>
+                                <th>Vuelo</th>
+                                <th>Ruta</th>
+                                <th>Clase</th>
+                                <th>Asiento Actual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="pasajero-info">
+                                        <span class="nombre" id="resNombre">-</span>
+                                        <span class="id" id="resDocumento">-</span>
+                                    </div>
+                                </td>
+                                <td id="resVuelo">-</td>
+                                <td id="resRuta">-</td>
+                                <td><span class="clase-badge" id="resClase">-</span></td>
+                                <td><span class="asiento-badge" id="resAsientoActual">No asignado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- CONTENEDOR DE ASIGNACIÓN DE ASIENTO -->
             <div class="asignar-asiento-container">
 
-                <!-- COLUMNA IZQUIERDA: Buscar reserva -->
+                <!-- COLUMNA IZQUIERDA -->
                 <div class="buscar-reserva">
-                    <h3><i class="fas fa-search" style="color: gold;"></i> Buscar reserva</h3>
-
-                    <div class="campo-busqueda">
-                        <label>Código de reserva</label>
-                        <input type="text" id="codigoReserva" placeholder="Ej: #RES-001, #RES-002">
-                        <button class="btn-buscar-reserva">Buscar</button>
-                    </div>
-
-                    <!-- 🔴 EJEMPLO - Resultado de búsqueda (simulado) -->
-                    <div class="resultado-reserva" id="resultadoReserva">
-                        <h4><i class="fas fa-clipboard-list" style="color: gold;"></i> Reserva encontrada</h4>
                         <div class="info-linea">
                             <span class="label">Código:</span>
                             <span class="valor">#RES-003</span>
@@ -235,61 +272,64 @@
                 </div>
             </div>
 
-            <!-- RESERVAS PENDIENTES DE ASIGNAR (tabla) -->
-            <div class="reservas-pendientes-asiento">
-                <h3><i class="fas fa-clipboard-list" style="color: gold;"></i> Reservas pendientes de asignar asiento</h3>
-                <table class="tabla-reservas-agente">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Pasajero</th>
-                            <th>Vuelo</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Asiento</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 🔴 EJEMPLOS - Reservas sin asiento asignado -->
-                        <tr>
-                            <td>#RES-001</d>
-                            <td>María González</d>
-                            <td>AV-1234 | Bogotá → Medellín</d>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 15/04/2026</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="sin-asiento"><i class="fas fa-times" style="color: gold;"></i> Sin asignar</span></d>
-                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
-                        </tr>
-                        <tr>
-                            <td>#RES-003</d>
-                            <td>Ana Martínez</d>
-                            <td>AV-9012 | Cali → Bogotá</d>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 17/04/2026</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="sin-asiento"><i class="fas fa-times" style="color: gold;"></i> Sin asignar</span></d>
-                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
-                        </tr>
-                        <tr>
-                            <td>#RES-006</d>
-                            <td>Pedro Ramírez</d>
-                            <td>AV-2345 | Bogotá → Lima</d>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 20/04/2026</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="sin-asiento"><i class="fas fa-times" style="color: gold;"></i> Sin asignar</span></d>
-                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
-                        </tr>
-                        <tr>
-                            <td>#RES-008</d>
-                            <td>Diego Morales</d>
-                            <td>AV-4321 | Cali → Madrid</d>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 22/04/2026</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="sin-asiento"><i class="fas fa-times" style="color: gold;"></i> Sin asignar</span></d>
-                            <td><button class="btn-accion-asignar">Asignar asiento</button></d>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- LISTADO DE TRABAJO -->
+            <div class="tarjeta-info glass-card">
+                <div class="tarjeta-header">
+                    <h3><i class="fas fa-clipboard-list"></i> Cola de Procesamiento</h3>
+                    <p>Reservas confirmadas pendientes de asignación de butaca</p>
+                </div>
+                
+                <div class="tabla-responsive">
+                    <table class="tabla-reservas-agente">
+                        <thead>
+                            <tr>
+                                <th>Localizador</th>
+                                <th>Pasajero</th>
+                                <th>Vuelo / Itinerario</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Asiento</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="pnr-code">ABC123</span></td>
+                                <td>
+                                    <div class="pasajero-info">
+                                        <span class="nombre">María González</span>
+                                    </div>
+                                </td>
+                                <td>AV-1234 | Bogotá → Medellín</td>
+                                <td>15/04/2026</td>
+                                <td><span class="estado pendiente">Pendiente</span></td>
+                                <td><span class="asiento-badge alerta">Sin asignar</span></td>
+                                <td>
+                                    <button class="btn-tabla-accion primary">
+                                        <i class="fas fa-chair"></i> Asignar
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="pnr-code">XYZ789</span></td>
+                                <td>
+                                    <div class="pasajero-info">
+                                        <span class="nombre">Ana Martínez</span>
+                                    </div>
+                                </td>
+                                <td>AV-9012 | Cali → Bogotá</td>
+                                <td>17/04/2026</td>
+                                <td><span class="estado pendiente">Pendiente</span></td>
+                                <td><span class="asiento-badge alerta">Sin asignar</span></td>
+                                <td>
+                                    <button class="btn-tabla-accion primary">
+                                        <i class="fas fa-chair"></i> Asignar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
