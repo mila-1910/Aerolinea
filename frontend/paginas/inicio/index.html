@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-    <!-- Font Awesome 6 — íconos profesionales -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Lucide Icons (Premium UI) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="../../css/Inicio/index.css">
 </head>
 
@@ -63,33 +63,33 @@
                 <form class="booking-card__form">
                     <div class="booking-card__fields">
                         <div class="field">
-                            <label for="from">Origen</label>
+                            <label for="from"><i data-lucide="map-pin" class="field-icon"></i> Origen</label>
                             <input type="text" id="from" placeholder="Ciudad de origen">
                         </div>
 
                         <div class="field">
-                            <label for="to">Destino</label>
+                            <label for="to"><i data-lucide="map" class="field-icon"></i> Destino</label>
                             <input type="text" id="to" placeholder="Ciudad de destino">
                         </div>
 
                         <div class="field">
-                            <label for="departure">Fecha de ida</label>
+                            <label for="departure"><i data-lucide="calendar" class="field-icon"></i> Fecha de ida</label>
                             <input type="date" id="departure">
                         </div>
 
                         <div class="field">
-                            <label for="return">Fecha de regreso</label>
+                            <label for="return"><i data-lucide="calendar-check" class="field-icon"></i> Fecha de regreso</label>
                             <input type="date" id="return">
                         </div>
 
                         <div class="field">
-                            <label for="passengers">Pasajeros</label>
+                            <label for="passengers"><i data-lucide="users" class="field-icon"></i> Pasajeros</label>
                             <input type="number" id="passengers" min="1" max="10" value="1">
                         </div>
                     </div>
 
                     <div class="booking-card__actions">
-                        <button type="submit">Mostrar Vuelos</button>
+                        <button type="submit"><i data-lucide="search" class="btn-icon"></i> Mostrar Vuelos</button>
                     </div>
                 </form>
 
@@ -105,60 +105,9 @@
         <h2>Vuelos disponibles</h2>
         <p>Explorá nuestras opciones y encontrá tu próximo destino</p>
 
-        <div class="vuelos-grid-index">
-
-            <div class="vuelo-card-index reveal">
-                <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
-                <div class="vuelo-info">
-                    <h4>Bogotá → Nueva York</h4>
-                    <p><i class="fa-solid fa-plane"></i> Directo · 6h 30min</p>
-                    <p><i class="fa-solid fa-calendar-days"></i> 15 Abr 2026</p>
-                    <div class="vuelo-footer">
-                        <span class="vuelo-precio">$3.290.000 COP</span>
-                        <a href="../cliente/buscar-vuelos.html" class="btn-detalle">Ver detalle</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vuelo-card-index reveal">
-                <img src="../../imagenes/paris.jpg" alt="París">
-                <div class="vuelo-info">
-                    <h4>Bogotá → París</h4>
-                    <p><i class="fa-solid fa-plane"></i> Una escala · 12h 45min</p>
-                    <p><i class="fa-solid fa-calendar-days"></i> 22 May 2026</p>
-                    <div class="vuelo-footer">
-                        <span class="vuelo-precio">$4.480.000 COP</span>
-                        <a href="../cliente/buscar-vuelos.html" class="btn-detalle">Ver detalle</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vuelo-card-index reveal">
-                <img src="../../imagenes/cancun.jpg" alt="Cancún">
-                <div class="vuelo-info">
-                    <h4>Medellín → Cancún</h4>
-                    <p><i class="fa-solid fa-plane"></i> Directo · 4h 15min</p>
-                    <p><i class="fa-solid fa-calendar-days"></i> 10 Jun 2026</p>
-                    <div class="vuelo-footer">
-                        <span class="vuelo-precio">$2.170.000 COP</span>
-                        <a href="../cliente/buscar-vuelos.html" class="btn-detalle">Ver detalle</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vuelo-card-index reveal">
-                <img src="../../imagenes/madrid.jpg" alt="Madrid">
-                <div class="vuelo-info">
-                    <h4>Cali → Madrid</h4>
-                    <p><i class="fa-solid fa-plane"></i> Una escala · 14h 20min</p>
-                    <p><i class="fa-solid fa-calendar-days"></i> 5 Jul 2026</p>
-                    <div class="vuelo-footer">
-                        <span class="vuelo-precio">$3.890.000 COP</span>
-                        <a href="../cliente/buscar-vuelos.html" class="btn-detalle">Ver detalle</a>
-                    </div>
-                </div>
-            </div>
-
+        <div class="vuelos-grid-index" id="contenedor-vuelos">
+            <!-- Los vuelos se generarán dinámicamente aquí mediante JavaScript -->
+            <p style="text-align: center; width: 100%; padding: 2rem;">Cargando vuelos disponibles...</p>
         </div>
     </div>
 </section>
@@ -193,19 +142,19 @@
             <!-- Contacto -->
             <div class="footer-columna">
                 <h4>Contacto</h4>
-                <p><i class="fa-regular fa-envelope footer-icono"></i> contacto@elaris.com</p>
-                <p><i class="fa-solid fa-phone footer-icono"></i> +57 300 123 4567</p>
-                <p><i class="fa-solid fa-location-dot footer-icono"></i> Tuluá, Colombia</p>
+                <p><i data-lucide="mail" class="footer-icono"></i> contacto@elaris.com</p>
+                <p><i data-lucide="phone" class="footer-icono"></i> +57 300 123 4567</p>
+                <p><i data-lucide="map-pin" class="footer-icono"></i> Tuluá, Colombia</p>
             </div>
 
             <!-- Redes sociales -->
             <div class="footer-columna">
                 <h4>Síguenos</h4>
                 <div class="redes">
-                    <a href="#"><i class="fa-brands fa-facebook-f footer-icono"></i> Facebook</a>
-                    <a href="#"><i class="fa-brands fa-instagram footer-icono"></i> Instagram</a>
-                    <a href="#"><i class="fa-brands fa-x-twitter footer-icono"></i> X (Twitter)</a>
-                    <a href="#"><i class="fa-brands fa-youtube footer-icono"></i> YouTube</a>
+                    <a href="#"><i data-lucide="facebook" class="footer-icono"></i> Facebook</a>
+                    <a href="#"><i data-lucide="instagram" class="footer-icono"></i> Instagram</a>
+                    <a href="#"><i data-lucide="twitter" class="footer-icono"></i> X (Twitter)</a>
+                    <a href="#"><i data-lucide="youtube" class="footer-icono"></i> YouTube</a>
                 </div>
             </div>
 
@@ -223,23 +172,105 @@
     </footer>
 
     <script>
-        // Emil Design - Intersection Observer para animaciones de entrada fluidas
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        // Dejamos de observar para que la animación ocurra solo 1 vez
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
+        // Intersection Observer para animaciones de entrada fluidas
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Dejamos de observar para que la animación ocurra solo 1 vez
+                    obs.unobserve(entry.target);
+                }
             });
-
-            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observar elementos estáticos
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+            
+            // Inicializar iconos estáticos de Lucide
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+
+            // Cargar los vuelos destacados dinámicamente
+            cargarVuelosDestacados();
+        });
+
+        async function cargarVuelosDestacados() {
+            const contenedor = document.getElementById('contenedor-vuelos');
+            if (!contenedor) return;
+
+            try {
+                // Hacer la petición a la API (al puerto 3000 donde corre el backend)
+                const respuesta = await fetch('http://localhost:3000/api/vuelos');
+                if (!respuesta.ok) throw new Error('Error al obtener los vuelos');
+                
+                const vuelos = await respuesta.json();
+                
+                // Limpiar el estado de carga
+                contenedor.innerHTML = '';
+
+                // Tomar máximo 5 vuelos
+                const vuelosMostrar = vuelos.slice(0, 5);
+
+                vuelosMostrar.forEach(vuelo => {
+                    // Formatear precio a pesos colombianos (COP)
+                    const precioFormateado = new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0
+                    }).format(vuelo.precio_base);
+
+                    // Formatear la fecha ej. "15 abr 2026"
+                    // vuelo.fecha_salida puede venir como "2026-07-05T00:00:00.000Z", cortamos a YYYY-MM-DD
+                    const fechaObj = new Date(vuelo.fecha_salida.substring(0, 10) + 'T12:00:00'); // T12 para evitar problemas de zona horaria
+                    const opcionesFecha = { day: 'numeric', month: 'short', year: 'numeric' };
+                    const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
+
+                    // Crear la tarjeta (card)
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = 'vuelo-card-index reveal';
+                    
+                    tarjeta.innerHTML = `
+                        <img src="${vuelo.imagen_url}" alt="${vuelo.ciudad_destino}" class="vuelo-card-bg">
+                        <div class="vuelo-card-overlay"></div>
+                        <div class="vuelo-card-content">
+                            <div class="vuelo-card-info-row">
+                                <div class="vuelo-card-info">
+                                    <h4>${vuelo.destino}</h4>
+                                    <p><i data-lucide="calendar" class="card-icon"></i> ${fechaFormateada}</p>
+                                </div>
+                                <div class="vuelo-card-price">
+                                    <span>Desde</span>
+                                    <strong>${precioFormateado} COP</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vuelo-card-hover-actions">
+                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-reservar">Reservar vuelo</a>
+                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-ver-detalle">Ver detalle</a>
+                        </div>
+                    `;
+                    
+                    contenedor.appendChild(tarjeta);
+                    
+                    // Observar la nueva tarjeta para aplicar la animación
+                    observer.observe(tarjeta);
+                });
+
+                // Re-inicializar iconos Lucide para las tarjetas dinámicas
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+
+            } catch (error) {
+                console.error('Error cargando vuelos destacados:', error);
+                contenedor.innerHTML = '<p style="text-align: center; width: 100%; color: #888;">No se pudieron cargar los vuelos disponibles en este momento.</p>';
+            }
+        }
     </script>
 </body>
 

@@ -9,6 +9,41 @@
     <link rel="stylesheet" href="../../css/detalle-vuelo.css">
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Ocultar contenido por defecto para evitar el flicker */
+        .detalle-contenedor, .detalle-descripcion-contenedor, .destinos-relacionados-contenedor {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in;
+        }
+        /* Mostrar cuando tiene la clase 'cargado' */
+        .detalle-contenedor.cargado, .detalle-descripcion-contenedor.cargado, .destinos-relacionados-contenedor.cargado {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Estilos del spinner */
+        #loader-vuelo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            color: #777;
+            font-family: sans-serif;
+        }
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #8b1c41; /* Color primario ELARIS */
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes girar {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body>
@@ -40,26 +75,32 @@
         </div>
     </nav>
 
+    <!-- Spinner de carga inicial -->
+    <div id="loader-vuelo">
+        <div class="spinner"></div>
+        <p>Cargando detalles del vuelo...</p>
+    </div>
+
     <!-- Parte principal -->
     <div class="detalle-contenedor">
 
         <!-- Columna izquierda imagen -->
        <div class="detalle-imagen">
-    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York" id="detalle-imagen-vuelo">
+    <img src="" alt="Cargando imagen..." id="detalle-imagen-vuelo">
 </div>
 
 
         <!-- Columna derecha info -->
         <div class="detalle-info">
 
-           <h1 class="detalle-ciudad" id="detalle-ciudad">Nueva York</h1>
+           <h1 class="detalle-ciudad" id="detalle-ciudad">Cargando destino...</h1>
 
 
             <div class="detalle-descuento">
                 <span class="badge-descuento">Descuento 20%</span>
             </div>
 
-           <p class="detalle-precio" id="detalle-precio">$999.990 COP</p>
+           <p class="detalle-precio" id="detalle-precio">----</p>
 <p class="detalle-nota-precio" id="detalle-nota-precio">Precio por pasajero. Incluye impuestos.</p>
 <p class="detalle-tipo" id="detalle-tipo">Vuelo ida y vuelta</p>
 
@@ -67,19 +108,19 @@
 <div class="detalle-datos-vuelo">
     <div>
         <span>Número de vuelo</span>
-        <strong id="detalle-numero">EL-204</strong>
+        <strong id="detalle-numero">----</strong>
     </div>
     <div>
         <span>Ruta</span>
-        <strong id="detalle-ruta">Bogotá → Nueva York</strong>
+        <strong id="detalle-ruta">----</strong>
     </div>
     <div>
         <span>Duración</span>
-        <strong id="detalle-duracion">6h 30min</strong>
+        <strong id="detalle-duracion">----</strong>
     </div>
     <div>
         <span>Escala</span>
-        <strong id="detalle-escala">Directo</strong>
+        <strong id="detalle-escala">----</strong>
     </div>
 </div>
 
