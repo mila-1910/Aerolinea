@@ -93,3 +93,7 @@ INSERT INTO vuelos (
  'Airbus', 2340000, '../../imagenes/ciudad-mexico.jpg',
  'Explora Ciudad de México, un destino lleno de historia, sabores y lugares emblemáticos.')
 ON CONFLICT (numero_vuelo) DO NOTHING;
+-- Evitar reservas activas duplicadas para el mismo usuario y vuelo
+CREATE UNIQUE INDEX IF NOT EXISTS idx_reservas_usuario_vuelo_activa
+ON reservas(id_usuario, id_vuelo)
+WHERE estado IN ('Pendiente', 'Confirmada');

@@ -268,10 +268,18 @@ app.post('/api/login', async (req, res) => {
             }
         });
 
-    } catch (error) {
-        console.error('Error en el login:', error);
-        res.status(500).json({ error: 'Error del servidor al iniciar sesión' });
+   } catch (error) {
+    console.error('Error al crear reserva:', error);
+
+    if (error.code === '23505') {
+        return res.status(409).json({
+            error: 'Ya tienes una reserva activa para este vuelo'
+        });
     }
+
+    res.status(500).json({ error: 'Error al crear la reserva' });
+}
+
 });
 
 // Iniciar el servidor
