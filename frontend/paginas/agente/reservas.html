@@ -20,28 +20,19 @@
     <!-- ============================================
          NAVBAR SUPERIOR
          ============================================ -->
-    <nav class="navbar-agente">
-        <div class="navbar-logo">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
-            <span class="logo-texto">ELARIS</span>
-        </div>
+    <nav class="navbar">
+        <a class="navbar-logo" href="dashboardeagente.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
 
-        <div class="navbar-centro">
-            <span class="panel-texto">Gestión de Reservas</span>
-            <span class="badge-agente">AGENTE</span>
-        </div>
+
 
         <div class="navbar-right">
-            <div class="notificaciones" title="Notificaciones">
-                <span class="icono"><i class="far fa-bell" style="color: gold;"></i></span>
-                <span class="badge">3</span>
-            </div>
 
             <div class="navbar-perfil" id="perfilDropdown">
                 <div class="perfil-trigger">
                     <div class="avatar">JF</div>
                     <span>Juan Fernando</span>
-                    <span class="flecha">▼</span>
                 </div>
                 <ul class="dropdown" id="perfilMenu">
                     <li><a href="#">Mi Perfil</a></li>
@@ -56,27 +47,16 @@
          ============================================ -->
     <div class="app-container">
 
-        <!-- SIDEBAR IZQUIERDO -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item active">
-                    <span class="menu-icono"><i class="fas fa-clipboard-list" style="color: gold;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-clipboard-list"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
-            </div>
-
-            <!-- PERFIL DEL AGENTE EN EL SIDEBAR (abajo) -->
-            <div class="sidebar-perfil">
-                <div class="perfil-avatar">JF</div>
-                <div class="perfil-info">
-                    <h4>Juan Fernando</h4>
-                    <p>Agente de Aerolínea</p>
-                </div>
-                <a href="#" class="cerrar-sesion-sidebar" title="Cerrar sesión"><i class="fas fa-sign-out-alt" style="color: gold;"></i> Cerrar Sesión</a>
             </div>
         </aside>
 
@@ -85,184 +65,196 @@
 
             <!-- TÍTULO Y DESCRIPCIÓN -->
             <div class="saludo">
-                <h2><i class="fas fa-clipboard-list" style="color: gold;"></i> Gestión de Reservas</h2>
-                <p>Administra todas las reservas de los clientes | Confirma pagos, asigna asientos y cambia estados</p>
+                <div class="saludo-texto">
+                    <h2>Gestión de Reservas</h2>
+                    <p>Administra y monitorea el estado de las reservas globales en tiempo real</p>
+                </div>
+            </div>
+
+            <!-- STATS MINI GRID -->
+            <div class="stats-mini-grid">
+                <div class="stat-mini-card">
+                    <div class="stat-icon-circle vino">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">Total Reservas</span>
+                        <span class="value">1,284</span>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-circle dorado">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">Pendientes</span>
+                        <span class="value">42</span>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-circle verde">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">Confirmadas</span>
+                        <span class="value">956</span>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-circle azul">
+                        <i class="fas fa-plane-departure"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="label">En Proceso</span>
+                        <span class="value">186</span>
+                    </div>
+                </div>
             </div>
 
             <!-- BARRA DE BÚSQUEDA Y FILTROS -->
-            <div class="barra-busqueda">
+            <div class="barra-busqueda glass-card">
                 <div class="campo-filtro">
-                    <label><i class="fas fa-search" style="color: gold;"></i> Buscar por cliente</label>
-                    <input type="text" id="buscarCliente" placeholder="Nombre o documento...">
+                    <label>Pasajero / Documento</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="buscarCliente" placeholder="Ej: Juan Pérez o 1002...">
+                    </div>
                 </div>
                 <div class="campo-filtro">
-                    <label><i class="fas fa-plane" style="color: gold;"></i> Vuelo</label>
-                    <input type="text" id="buscarVuelo" placeholder="Código de vuelo...">
+                    <label>Código de Vuelo</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-plane"></i>
+                        <input type="text" id="buscarVuelo" placeholder="Ej: AV-1234">
+                    </div>
                 </div>
                 <div class="campo-filtro">
-                    <label><i class="fas fa-calendar" style="color: gold;"></i> Fecha</label>
-                    <input type="date" id="buscarFecha">
+                    <label>Fecha de Reserva</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="buscarFecha">
+                    </div>
                 </div>
-                <div class="campo-filtro">
-                    <label><i class="fas fa-tags" style="color: gold;"></i> Estado</label>
-                    <select id="buscarEstado">
-                        <option value="">Todos</option>
-                        <option value="pendiente">Pendiente</option>
-                        <option value="confirmada">Confirmada</option>
-                        <option value="cancelada">Cancelada</option>
-                    </select>
-                </div>
-                <div>
-                    <button class="btn-buscar" id="btnBuscar">Buscar</button>
-                    <button class="btn-limpiar" id="btnLimpiar">Limpiar</button>
+                <div style="display: flex; align-items: center; padding-top: 25px;">
+                    <button class="btn-buscar" id="btnBuscar">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                    <button class="btn-limpiar" id="btnLimpiar" title="Limpiar Filtros">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- FILTROS RÁPIDOS (por estado) -->
+            <!-- FILTROS RÁPIDOS (SEGMENTED CONTROL) -->
             <div class="filtros-rapidos">
-                <button class="filtro-btn active" data-estado="todos"><i class="fas fa-clipboard-list" style="color: gold;"></i> Todos <span>(27)</span></button>
-                <button class="filtro-btn" data-estado="pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendientes <span>(5)</span></button>
-                <button class="filtro-btn" data-estado="confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmadas <span>(8)</span></button>
-                <button class="filtro-btn" data-estado="proceso"><i class="fas fa-sync-alt" style="color: gold;"></i> En proceso <span>(9)</span></button>
-                <button class="filtro-btn" data-estado="cancelada"><i class="fas fa-times" style="color: gold;"></i> Canceladas <span>(5)</span></button>
+                <button class="filtro-btn active" data-estado="todos">
+                    <i class="fas fa-list"></i> Todos <span>1284</span>
+                </button>
+                <button class="filtro-btn" data-estado="pendiente">
+                    <i class="fas fa-clock"></i> Pendientes <span>42</span>
+                </button>
+                <button class="filtro-btn" data-estado="confirmada">
+                    <i class="fas fa-check"></i> Confirmadas <span>956</span>
+                </button>
+                <button class="filtro-btn" data-estado="proceso">
+                    <i class="fas fa-sync"></i> En proceso <span>186</span>
+                </button>
+                <button class="filtro-btn" data-estado="cancelada">
+                    <i class="fas fa-times"></i> Canceladas <span>100</span>
+                </button>
             </div>
 
             <!-- TABLA DE RESERVAS -->
             <div class="seccion-reservas">
                 <div class="seccion-header">
-                    <h3><i class="fas fa-clipboard-list" style="color: gold;"></i> Todas las reservas</h3>
-                    <span class="total-registros" id="totalRegistros">Mostrando 8 reservas</span>
+                    <h3><i class="fas fa-table"></i> Listado Maestro de Reservas</h3>
+                    <span class="total-registros" id="totalRegistros">Mostrando 8 de 1,284 registros</span>
                 </div>
 
-                <table class="tabla-reservas-agente" id="tablaReservas">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Pasajero</th>
-                            <th>Documento</th>
-                            <th>Vuelo</th>
-                            <th>Origen → Destino</th>
-                            <th>Fecha</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                            <th>Pago</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <!-- 🔴 DATOS DE EJEMPLO - SE REEMPLAZARÁN CON JAVASCRIPT 🔴 -->
-                    <tbody id="cuerpoTabla">
-                        <!-- RESERVA 1 -->
-                        <tr>
-                            <td>#RES-001</td>
-                            <td>María González</td>
-                            <td>1002433789</td>
-                            <td>AV-1234</td>
-                            <td>Bogotá → Medellín</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 15/04/2025</td>
-                            <td>$250 USD</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=1" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 2 -->
-                        <tr>
-                            <td>#RES-002</td>
-                            <td>Carlos Rodríguez</td>
-                            <td>87654321</td>
-                            <td>AV-5678</td>
-                            <td>Medellín → Cartagena</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 16/04/2025</td>
-                            <td>$320 USD</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=2" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 3 -->
-                        <tr>
-                            <td>#RES-003</td>
-                            <td>Ana Martínez</td>
-                            <td>11223344</td>
-                            <td>AV-9012</td>
-                            <td>Cali → Bogotá</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 17/04/2025</td>
-                            <td>$180 USD</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=3" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 4 -->
-                        <tr>
-                            <td>#RES-004</td>
-                            <td>Luis Fernández</td>
-                            <td>55667788</td>
-                            <td>AV-3456</td>
-                            <td>Bogotá → Miami</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 18/04/2025</td>
-                            <td>$850 USD</td>
-                            <td><span class="estado cancelada"><i class="fas fa-times" style="color: gold;"></i> Cancelada</span></td>
-                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=4" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 5 -->
-                        <tr>
-                            <td>#RES-005</td>
-                            <td>Laura Sánchez</td>
-                            <td>99887766</td>
-                            <td>AV-7890</td>
-                            <td>Cartagena → Bogotá</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 19/04/2025</td>
-                            <td>$210 USD</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=5" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 6 -->
-                        <tr>
-                            <td>#RES-006</td>
-                            <td>Pedro Ramírez</td>
-                            <td>44332211</td>
-                            <td>AV-2345</td>
-                            <td>Bogotá → Lima</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 20/04/2025</td>
-                            <td>$620 USD</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                             <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=6" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 7 -->
-                        <tr>
-                            <td>#RES-007</td>
-                            <td>Sofía Torres</td>
-                            <td>77788899</td>
-                            <td>AV-6789</td>
-                            <td>Medellín → Miami</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 21/04/2025</td>
-                            <td>$780 USD</td>
-                            <td><span class="estado confirmada"><i class="fas fa-check" style="color: gold;"></i> Confirmada</span></td>
-                            <td><span class="pago-confirmado"><i class="fas fa-check" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=7" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                        <!-- RESERVA 8 -->
-                        <tr>
-                            <td>#RES-008</td>
-                            <td>Diego Morales</td>
-                            <td>12398765</td>
-                            <td>AV-4321</td>
-                            <td>Cali → Madrid</td>
-                            <td><i class="fas fa-calendar" style="color: gold;"></i> 22/04/2025</td>
-                            <td>$1200 USD</td>
-                            <td><span class="estado pendiente"><i class="fas fa-clock" style="color: gold;"></i> Pendiente</span></td>
-                            <td><span class="pago-pendiente"><i class="fas fa-clock" style="color: gold;"></i></span></td>
-                            <td><a href="detalle-reserva.html?id=8" class="btn-accion">Ver detalle</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="tabla-responsive">
+                    <table class="tabla-reservas-agente" id="tablaReservas">
+                        <thead>
+                            <tr>
+                                <th>ID Reserva</th>
+                                <th>Pasajero</th>
+                                <th>Vuelo</th>
+                                <th>Ruta</th>
+                                <th>Fecha</th>
+                                <th>Importe</th>
+                                <th>Estado</th>
+                                <th>Pago</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla">
+                            <!-- RESERVA 1 -->
+                            <tr>
+                                <td>#RES-001</td>
+                                <td>
+                                    <div style="font-weight: 700;">María González</div>
+                                    <div style="font-size: 0.75rem; color: var(--gris-subtle);">CC: 1002433789</div>
+                                </td>
+                                <td>AV-1234</td>
+                                <td>BOG <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin: 0 5px;"></i> MDE</td>
+                                <td>15 Abr 2025</td>
+                                <td style="font-weight: 700; color: var(--negro);">$250.00</td>
+                                <td><span class="estado pendiente"><i class="fas fa-clock"></i> Pendiente</span></td>
+                                <td style="text-align: center;"><i class="fas fa-circle-exclamation pago-pendiente"></i></td>
+                                <td><a href="detalle-reserva.html?id=1" class="btn-accion">Gestionar</a></td>
+                            </tr>
+                            <!-- RESERVA 2 -->
+                            <tr>
+                                <td>#RES-002</td>
+                                <td>
+                                    <div style="font-weight: 700;">Carlos Rodríguez</div>
+                                    <div style="font-size: 0.75rem; color: var(--gris-subtle);">CC: 87654321</div>
+                                </td>
+                                <td>AV-5678</td>
+                                <td>MDE <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin: 0 5px;"></i> CTG</td>
+                                <td>16 Abr 2025</td>
+                                <td style="font-weight: 700; color: var(--negro);">$320.00</td>
+                                <td><span class="estado confirmada"><i class="fas fa-check-circle"></i> Confirmada</span></td>
+                                <td style="text-align: center;"><i class="fas fa-check-circle pago-confirmado"></i></td>
+                                <td><a href="detalle-reserva.html?id=2" class="btn-accion">Gestionar</a></td>
+                            </tr>
+                            <!-- RESERVA 3 -->
+                            <tr>
+                                <td>#RES-003</td>
+                                <td>
+                                    <div style="font-weight: 700;">Ana Martínez</div>
+                                    <div style="font-size: 0.75rem; color: var(--gris-subtle);">CC: 11223344</div>
+                                </td>
+                                <td>AV-9012</td>
+                                <td>CLO <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin: 0 5px;"></i> BOG</td>
+                                <td>17 Abr 2025</td>
+                                <td style="font-weight: 700; color: var(--negro);">$180.00</td>
+                                <td><span class="estado pendiente"><i class="fas fa-clock"></i> Pendiente</span></td>
+                                <td style="text-align: center;"><i class="fas fa-circle-exclamation pago-pendiente"></i></td>
+                                <td><a href="detalle-reserva.html?id=3" class="btn-accion">Gestionar</a></td>
+                            </tr>
+                            <!-- RESERVA 4 -->
+                            <tr>
+                                <td>#RES-004</td>
+                                <td>
+                                    <div style="font-weight: 700;">Luis Fernández</div>
+                                    <div style="font-size: 0.75rem; color: var(--gris-subtle);">CC: 55667788</div>
+                                </td>
+                                <td>AV-3456</td>
+                                <td>BOG <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin: 0 5px;"></i> MIA</td>
+                                <td>18 Abr 2025</td>
+                                <td style="font-weight: 700; color: var(--negro);">$850.00</td>
+                                <td><span class="estado cancelada"><i class="fas fa-times-circle"></i> Cancelada</span></td>
+                                <td style="text-align: center;"><i class="fas fa-circle-exclamation pago-pendiente"></i></td>
+                                <td><a href="detalle-reserva.html?id=4" class="btn-accion">Gestionar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <!-- PAGINACIÓN SIMULADA -->
+                <!-- PAGINACIÓN PREMIUM -->
                 <div class="paginacion">
-                    <button class="btn-paginacion" disabled>« Anterior</button>
-                    <span class="pagina-actual">Página 1 de 3</span>
-                    <button class="btn-paginacion">Siguiente »</button>
+                    <button class="btn-paginacion" disabled><i class="fas fa-chevron-left"></i> Anterior</button>
+                    <span class="pagina-actual">Página 1 de 160</span>
+                    <button class="btn-paginacion">Siguiente <i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </main>

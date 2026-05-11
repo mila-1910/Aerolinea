@@ -7,148 +7,136 @@
     <title>Paquetes | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
-    
-    <!-- CSS ESPECÍFICO DEL AGENTE -->
-    <link rel="stylesheet" href="../../css/agente.css">
-    <!-- Font Awesome 6 — íconos profesionales -->
+    <link rel="stylesheet" href="../../css/admin.css">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 
 <body>
 
-    <!-- ============================================
-         NAVBAR SUPERIOR
-         ============================================ -->
-    <nav class="navbar-agente">
-        <div class="navbar-logo">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
-            <span class="logo-texto">ELARIS</span>
-        </div>
-
-        <div class="navbar-centro">
-            <span class="panel-texto">Paquetes</span>
-            <span class="badge-agente">ADMINISTRADOR</span>
-        </div>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="dashboardadmin.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
 
         <div class="navbar-right">
-            <div class="notificaciones" title="Notificaciones">
-                <span class="icono"><i class="fas fa-bell" style="color: #d4af37;"></i></span>
-                <span class="badge">3</span>
-            </div>
-
-            <div class="navbar-perfil">
+            <div class="navbar-perfil" id="perfilDropdown">
                 <div class="perfil-trigger">
-                    <div class="avatar">KM</div>
-                    <span>Kamila Marin</span>
-                    <span class="flecha">▼</span>
+                    <div class="avatar">--</div>
+                    <span>Cargando...</span>
                 </div>
-                <ul class="dropdown">
-                    <li><a href="#" title="Ver mi información">Mi Perfil</a></li>
-                    <li><a href="#" class="cerrar-sesion" title="Cerrar sesión">Cerrar Sesión</a></li>
+                <ul class="dropdown" id="perfilMenu">
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- ============================================
-         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
-         ============================================ -->
     <div class="app-container">
 
-        <!-- SIDEBAR IZQUIERDO -->
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardadmin.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-chart-line" style="color: #d4af37;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Dashboard</span>
                 </a>
                 <a href="vuelos.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-plane" style="color: #d4af37;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-plane"></i></span>
                     <span class="menu-texto">Vuelos</span>
                 </a>
                 <a href="paquetes.html" class="menu-item active">
-                    <span class="menu-icono"><i class="fas fa-box" style="color: #d4af37;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-box"></i></span>
                     <span class="menu-texto">Paquetes</span>
                 </a>
                 <a href="ubicaciones.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-map-marker-alt" style="color: #d4af37;"></i></span>
+                    <span class="menu-icono"><i class="fas fa-map-marker-alt"></i></span>
                     <span class="menu-texto">Ubicaciones</span>
                 </a>
             </div>
-
-            <!-- PERFIL ABAJO -->
-            <div class="sidebar-perfil">
-                <div class="perfil-avatar">KM</div>
-                <div class="perfil-info">
-                    <h4>Kamila Marin</h4>
-                    <p>Administradora</p>
-                </div>
-                <a href="#" class="cerrar-sesion-sidebar"><i class="fas fa-sign-out-alt" style="color: #d4af37;"></i> Cerrar Sesión</a>
-            </div>
         </aside>
 
-        <!-- CONTENIDO PRINCIPAL -->
+        <!-- CONTENIDO -->
         <main class="contenido-principal">
 
-            <!-- TÍTULO -->
             <div class="saludo">
-                <h2><i class="fas fa-box" style="color: #d4af37;"></i> Gestión de Paquetes</h2>
-                <p>Administra los paquetes del sistema</p>
+                <h2><i class="fas fa-box"></i> Gestión de Paquetes</h2>
+                <p>Administra las ofertas y paquetes turísticos</p>
             </div>
 
-            <!-- 🔥 CONTENIDO DEL DASHBOARD -->
-            <div class="cards-dashboard">
-
-                <!-- 🔹 RESUMEN PEQUEÑO -->
-                <div style="display:flex; gap:20px; margin-bottom:25px;">
-                    <div class="card">
-                        <div class="card-icono"><i class="fas fa-box" style="color: #d4af37;"></i></div>
-                        <div class="numero">45</div>
-                        <h3>Paquetes</h3>
-                        <p>Disponibles</p>
+            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper"><i class="fas fa-box"></i></div>
                     </div>
-
-                    <div class="card">
-                        <div class="card-icono"><i class="fas fa-gift" style="color: #d4af37;"></i></div>
-                        <div class="numero">12</div>
-                        <h3>Promociones</h3>
-                        <p>Activas</p>
+                    <div class="kpi-content">
+                        <span class="kpi-value">45</span>
+                        <span class="kpi-label">Paquetes Disponibles</span>
                     </div>
                 </div>
 
-                <!-- 🔥 BOTÓN -->
-                <div style="margin-bottom:20px;">
-                    <a href="#" class="btn-accion">➕ Crear paquete</a>
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper"><i class="fas fa-gift"></i></div>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-value">12</span>
+                        <span class="kpi-label">Promociones Activas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header-premium">
+                <h3>Catálogo de Paquetes</h3>
+                <button class="btn-premium">
+                    <i class="fas fa-plus"></i> Crear Nuevo Paquete
+                </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">
+                
+                <!-- Paquete 1 -->
+                <div class="glass-card package-card">
+                    <div class="package-icon"><i class="fas fa-umbrella-beach"></i></div>
+                    <div class="package-details">
+                        <h3>San Andrés Premium</h3>
+                        <p class="package-duration"><i class="far fa-clock"></i> 3 días / 2 noches</p>
+                        <p class="package-price">$1.200.000 COP</p>
+                        <div class="package-actions">
+                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 🔥 TARJETAS DE PAQUETES -->
-                <div style="display:flex; gap:20px; flex-wrap:wrap;">
-
-                    <div class="card" style="width: 250px; margin-bottom: 20px;">
-                        <div class="card-icono">🏝️</div>
-                        <h3>San Andrés</h3>
-                        <p>3 días / 2 noches</p>
-                        <p><strong>$1.200.000</strong></p>
-                        <a href="#" class="btn-accion">Editar</a>
+                <!-- Paquete 2 -->
+                <div class="glass-card package-card">
+                    <div class="package-icon"><i class="fas fa-mountain"></i></div>
+                    <div class="package-details">
+                        <h3>Medellín Explora</h3>
+                        <p class="package-duration"><i class="far fa-clock"></i> 2 días / 1 noche</p>
+                        <p class="package-price">$600.000 COP</p>
+                        <div class="package-actions">
+                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="card" style="width: 250px; margin-bottom: 20px;">
-                        <div class="card-icono">🏔️</div>
-                        <h3>Medellín</h3>
-                        <p>2 días / 1 noche</p>
-                        <p><strong>$600.000</strong></p>
-                        <a href="#" class="btn-accion">Editar</a>
+                <!-- Paquete 3 -->
+                <div class="glass-card package-card">
+                    <div class="package-icon"><i class="fas fa-sun"></i></div>
+                    <div class="package-details">
+                        <h3>Cartagena Histórica</h3>
+                        <p class="package-duration"><i class="far fa-clock"></i> 4 días / 3 noches</p>
+                        <p class="package-price">$1.500.000 COP</p>
+                        <div class="package-actions">
+                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                        </div>
                     </div>
-
-                    <div class="card" style="width: 250px; margin-bottom: 20px;">
-                        <div class="card-icono">🏖️</div>
-                        <h3>Cartagena</h3>
-                        <p>4 días / 3 noches</p>
-                        <p><strong>$1.500.000</strong></p>
-                        <a href="#" class="btn-accion">Editar</a>
-                    </div>
-
                 </div>
 
             </div>
@@ -156,26 +144,8 @@
         </main>
     </div>
 
-    <!-- SCRIPT PARA EL DROPDOWN DEL PERFIL -->
-    <script>
-        const perfilTrigger = document.querySelector('.perfil-trigger');
-        const dropdown = document.querySelector('.navbar-perfil .dropdown');
-
-        perfilTrigger.addEventListener('click', () => {
-            dropdown.classList.toggle('show');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navbar-perfil')) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        document.querySelector('.cerrar-sesion').addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log('Cerrando sesión...');
-        });
-    </script>
+    <!-- SCRIPTS -->
+    <script src="../../js/admin-comun.js"></script>
 
 </body>
 
