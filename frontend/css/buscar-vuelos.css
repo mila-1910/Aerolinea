@@ -3,11 +3,47 @@
 =========================== */
 
 .buscador-header{
-    background: linear-gradient(135deg, var(--vino-oscuro) 0%, var(--vino) 50%, #3a0a22 100%);
-    padding: 60px 40px 60px 40px;
+    background: var(--vino);
+    padding: 80px 40px 80px 40px;
     text-align: center;
     position: relative;
     overflow: hidden;
+}
+
+/* ===========================
+   HERO CAROUSEL
+=========================== */
+.hero-carousel-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out, transform 8s ease-out;
+    transform: scale(1.05); /* Sutil zoom in */
+}
+
+.hero-slide.active {
+    opacity: 1;
+    transform: scale(1); /* Vuelve al tamaño original */
+}
+
+.hero-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(35, 8, 23, 0.65), rgba(35, 8, 23, 0.85));
 }
 
 .buscador-header::before {
@@ -25,7 +61,7 @@
 
 .buscador-header h2, .buscador-header p, .tipo-viaje {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 }
 
 .buscador-header h2{
@@ -47,11 +83,14 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 4px;
-    border-radius: 40px;
-    margin: 0 auto 24px auto;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 6px;
+    border-radius: 50px;
+    margin: 0 auto 30px auto;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .tipo-viaje input[type="radio"] {
@@ -59,80 +98,200 @@
 }
 
 .tipo-viaje label {
-    padding: 10px 24px;
+    padding: 12px 28px;
     border-radius: 40px;
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 300ms var(--ease-out);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tipo-viaje label i {
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 .tipo-viaje label:hover {
     color: var(--blanco);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .tipo-viaje input[type="radio"]:checked + label {
     background-color: var(--blanco);
     color: var(--vino);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
+.tipo-viaje input[type="radio"]:checked + label i {
+    color: var(--vino);
+    opacity: 1;
+}
+
+/* ===========================
+   HERO SEARCH BOX (PRO MAX)
+=========================== */
 .buscador-campos {
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.4);
-    border-radius: 20px;
-    padding: 24px 32px;
+    background: rgba(255, 255, 255, 0.15); /* Glassmorphism Premium */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 100px; /* Pill shape */
+    padding: 10px 20px;
     display: flex;
-    align-items: flex-end;
-    gap: 16px;
-    width: fit-content; /* Para que abrace exactamente todo su contenido */
-    max-width: 100%; /* Para que no desborde la pantalla */
+    align-items: center;
+    width: fit-content;
+    max-width: 95%;
     margin: 20px auto 0 auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
     position: relative;
     z-index: 10;
-    text-align: left; /* Para contrarrestar el center del header */
+    transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.buscador-campos:hover {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .campo-grupo {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex: 2; /* Mayor ancho para origen/destino */
+    padding: 12px 24px;
+    border-radius: 50px;
+    transition: background 0.2s ease;
+    cursor: text;
+    position: relative;
+    flex: 2; /* Greater width for origin/destination */
 }
 
 .campo-grupo.fecha {
-    flex: 1.3; /* Ancho medio para fechas */
+    flex: 1.3;
+}
+
+/* Animaciones Premium para Ocultar/Mostrar (Emil Kowalski style) */
+.campo-grupo.fecha#grupo-fecha-regreso {
+    transition: background 0.2s ease, flex 600ms cubic-bezier(0.32, 0.72, 0, 1), padding 600ms cubic-bezier(0.32, 0.72, 0, 1), opacity 500ms ease-out, max-width 600ms cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: 250px;
+    overflow: hidden;
+}
+
+.campo-grupo.fecha#grupo-fecha-regreso * {
+    white-space: nowrap;
+}
+
+.campo-grupo.fecha#grupo-fecha-regreso.oculto {
+    flex: 0.0001;
+    max-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .campo-grupo.pasajeros {
-    flex: 0.9; /* Ancho menor para pasajeros */
+    flex: 0.9;
+}
+
+.campo-grupo:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.campo-grupo:hover {
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .campo-grupo label {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
 }
 
+.campo-grupo label i {
+    color: #c9a76d; /* Dorado Elaris */
+    font-size: 0.9rem;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Hide inputs default background and borders */
 .campo-grupo input {
-    padding: 14px 16px;
-    border: 1px solid #cbd5e1;
-    border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #1e293b;
-    background: #f8fafc;
-    outline: none;
-    transition: all 200ms ease;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    color: var(--blanco) !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    outline: none !important;
+    width: 100%;
 }
 
-.campo-grupo input:focus {
-    background: #ffffff;
-    border-color: var(--vino);
-    box-shadow: 0 0 0 4px rgba(123, 28, 78, 0.1);
+.campo-grupo input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+/* Date picker specific color overrides and premium styling */
+.campo-grupo input[type="date"] {
+    color-scheme: dark;
+    position: relative;
+    font-family: inherit;
+}
+
+.campo-grupo input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.campo-grupo input[type="date"]::-webkit-datetime-edit {
+    padding: 2px 0;
+    color: var(--blanco);
+}
+
+.campo-grupo input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    display: flex;
+    gap: 2px;
+}
+
+.campo-grupo input[type="date"]::-webkit-datetime-edit-text {
+    color: rgba(255, 255, 255, 0.4);
+    padding: 0 2px;
+}
+
+.campo-grupo input[type="date"]::-webkit-datetime-edit-month-field:focus,
+.campo-grupo input[type="date"]::-webkit-datetime-edit-day-field:focus,
+.campo-grupo input[type="date"]::-webkit-datetime-edit-year-field:focus {
+    background: rgba(201, 167, 109, 0.3); /* Elaris Gold */
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
 }
 
 .boton-buscar {
@@ -172,20 +331,38 @@
 }
 
 .filtros {
-    width: 220px;
-    min-width: 220px;
-    background-color: var(--blanco);
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    padding: 24px;
+    width: 260px;
+    min-width: 260px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    padding: 32px 24px;
     height: fit-content;
+    position: sticky;
+    top: 100px; /* Sticky sidebar on scroll */
+    z-index: 10;
 }
 
 .filtros h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: var(--vino);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filtros h3::before {
+    content: '\f0b0'; /* FontAwesome filter icon */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 1rem;
+    color: #c9a76d;
 }
 
 .filtro-grupo {
@@ -196,36 +373,118 @@
 }
 
 .filtro-grupo h4 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    color: #333;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
 }
 
 .filtro-grupo label {
-    font-size: 0.88rem;
-    color: #555;
+    font-size: 0.95rem;
+    color: #444;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background-color 200ms ease, color 200ms ease;
+    margin-left: -8px; /* Offset to align text properly despite padding */
 }
 
+.filtro-grupo label:hover {
+    background-color: rgba(123, 28, 78, 0.05); /* very light vino */
+    color: var(--vino);
+}
+
+/* Custom Checkbox Styling */
 .filtro-grupo input[type="checkbox"] {
-    accent-color: var(--vino);
-    width: 16px;
-    height: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 200ms ease;
+    background-color: white;
 }
 
+.filtro-grupo input[type="checkbox"]:checked {
+    background-color: var(--vino);
+    border-color: var(--vino);
+}
+
+.filtro-grupo input[type="checkbox"]:checked::after {
+    content: '\f00c'; /* FontAwesome check */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Custom Range Slider Styling */
 .filtro-grupo input[type="range"] {
-    accent-color: var(--vino);
+    -webkit-appearance: none;
     width: 100%;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    outline: none;
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+.filtro-grupo input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--vino);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(123, 28, 78, 0.4);
+    border: 2px solid white;
+    transition: transform 200ms ease;
+}
+
+.filtro-grupo input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
 }
 
 .precio-rango {
     display: flex;
     justify-content: space-between;
     font-size: 0.82rem;
-    color: #777;
+    font-weight: 600;
+    color: #666;
+}
+
+.btn-limpiar-filtros {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--vino);
+    background-color: transparent;
+    color: var(--vino);
+    border-radius: 100px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 200ms ease;
+    font-size: 0.9rem;
+}
+
+.btn-limpiar-filtros:hover {
+    background-color: var(--vino);
+    color: white;
 }
 
 /* ===========================
@@ -238,24 +497,43 @@
 
 .resultados-header {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 0 10px;
 }
 
 .resultados-header p {
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #333;
+    color: #444;
+    letter-spacing: -0.3px;
 }
 
 .ordenar {
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 10px 40px 10px 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+    background: rgba(255, 255, 255, 0.8) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 16px center;
+    background-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
     outline: none;
     cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 200ms ease;
+}
+
+.ordenar:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0,0,0,0.15);
 }
 
 .vuelos-grid {
@@ -266,73 +544,181 @@
 }
 
 .vuelo-card {
-    background-color: var(--blanco);
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    border: 1px solid #f1f5f9;
+    position: relative;
+    border-radius: 20px;
     overflow: hidden;
+    height: 340px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     cursor: pointer;
-    transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 400ms ease-out;
+    background-color: #000;
+}
+
+@keyframes slide-up-fade {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animar-entrada {
+    animation: slide-up-fade 600ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+/* Configuracion de suavidad para la API View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 400ms;
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .vuelo-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.vuelo-card img {
+.vuelo-card-bg {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    height: 160px;
+    height: 100%;
     object-fit: cover;
-    display: block;
+    z-index: 1;
+    transition: transform 600ms ease-out, opacity 400ms ease;
 }
 
-.vuelo-info {
-    padding: 12px;
+.vuelo-card:hover .vuelo-card-bg {
+    transform: scale(1.08);
+}
+
+.vuelo-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    z-index: 2;
+    transition: background-color 400ms ease;
+}
+
+.vuelo-card:hover .vuelo-card-overlay {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.vuelo-card-content {
+    position: relative;
+    z-index: 3;
+    padding: 24px;
+    color: var(--blanco);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: flex-end;
+    height: 100%;
 }
 
-.vuelo-info h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.vuelo-info p {
-    font-size: 0.82rem;
-    color: var(--gris-texto);
-}
-
-.vuelo-footer {
+.vuelo-card-info-row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 8px;
+    align-items: flex-end;
+    transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 400ms ease;
 }
 
-.vuelo-precio {
-    font-size: 0.95rem;
+.vuelo-card:hover .vuelo-card-info-row {
+    transform: translateY(-60px);
+    opacity: 1;
+}
+
+.card-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    vertical-align: text-bottom;
+    margin-right: 4px;
+    color: #c9a76d;
+}
+
+.vuelo-card-info h4 {
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--vino);
+    margin-bottom: 4px;
+    font-family: 'Georgia', serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.btn-detalle {
+.vuelo-card-info p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin: 0;
+    margin-top: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.vuelo-card-price {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.vuelo-card-price span {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vuelo-card-price strong {
+    font-size: 1rem;
+    color: #c9a76d;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.vuelo-card-hover-actions {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 300ms ease-out, transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+.vuelo-card:hover .vuelo-card-hover-actions {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.vuelo-card-hover-actions .btn-reservar {
     background-color: var(--vino);
     color: var(--blanco);
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
     text-decoration: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.82rem;
     font-weight: 600;
-    transition: opacity 0.2s;
+    font-size: 0.95rem;
+    transition: background-color 200ms ease, transform 200ms ease-out, filter 200ms ease;
 }
 
-.btn-detalle:hover {
-    opacity: 0.85;
+.vuelo-card-hover-actions .btn-reservar:hover {
+    background-color: var(--vino-oscuro);
+    transform: translateY(-2px);
+}
+
+.vuelo-card-hover-actions .btn-reservar:active {
+    transform: scale(0.96);
+    filter: blur(1px);
 }
 
 /* ===========================

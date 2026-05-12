@@ -94,22 +94,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderizarVuelos = (listaVuelos) => {
         vuelosGrid.innerHTML = "";
 
-        listaVuelos.forEach((vuelo) => {
+        listaVuelos.forEach((vuelo, index) => {
             const card = document.createElement("div");
             card.className = "vuelo-card";
             card.dataset.idVuelo = vuelo.idVuelo;
             card.dataset.numeroVuelo = vuelo.numeroVuelo;
+            
+            // Asignar view-transition-name para animaciones premium de reordenamiento
+            card.style.viewTransitionName = `card-vuelo-${vuelo.idVuelo}`;
+            
+            if (!document.startViewTransition) {
+                card.classList.add("animar-entrada");
+                card.style.animationDelay = `${(index % 15) * 50}ms`;
+            }
 
             card.innerHTML = `
-                <img src="${vuelo.imagen}" alt="${vuelo.ciudad}">
-                <div class="vuelo-info">
-                    <h4>${vuelo.ruta}</h4>
-                    <p><i class="fa-solid fa-plane"></i> ${vuelo.escala} · ${vuelo.duracion}</p>
-                    <p><i class="fa-solid fa-calendar-days"></i> ${vuelo.fechaTexto}</p>
-                    <div class="vuelo-footer">
-                        <span class="vuelo-precio">${vuelo.precio}</span>
-                        <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                <img src="${vuelo.imagen}" alt="Vista representativa de ${vuelo.ciudad}" class="vuelo-card-bg">
+                <div class="vuelo-card-overlay"></div>
+                <div class="vuelo-card-content">
+                    <div class="vuelo-card-info-row">
+                        <div class="vuelo-card-info">
+                            <h4>${vuelo.ruta}</h4>
+                            <p><i class="fa-solid fa-plane card-icon"></i> ${vuelo.escala} · ${vuelo.duracion}</p>
+                            <p><i class="fa-solid fa-calendar-days card-icon"></i> ${vuelo.fechaTexto}</p>
+                        </div>
+                        <div class="vuelo-card-price">
+                            <span>Desde</span>
+                            <strong>${vuelo.precio}</strong>
+                        </div>
                     </div>
+                </div>
+                <div class="vuelo-card-hover-actions">
+                    <a href="detalle-vuelo.html?id=${vuelo.numeroVuelo}" class="btn-reservar">Reservar vuelo</a>
                 </div>
             `;
 
@@ -154,14 +170,22 @@ document.addEventListener("DOMContentLoaded", () => {
             filtrados.sort((a, b) => a.duracionMinutos - b.duracionMinutos);
         }
 
-        renderizarVuelos(filtrados);
+        const actualizarDOM = () => {
+            renderizarVuelos(filtrados);
 
-        contador.textContent = filtrados.length === 1
-            ? "1 vuelo encontrado"
-            : `${filtrados.length} vuelos encontrados`;
+            contador.textContent = filtrados.length === 1
+                ? "1 vuelo encontrado"
+                : `${filtrados.length} vuelos encontrados`;
 
-        if (sinResultados) {
-            sinResultados.style.display = filtrados.length === 0 ? "block" : "none";
+            if (sinResultados) {
+                sinResultados.style.display = filtrados.length === 0 ? "block" : "none";
+            }
+        };
+
+        if (document.startViewTransition) {
+            document.startViewTransition(() => actualizarDOM());
+        } else {
+            actualizarDOM();
         }
     };
 
@@ -179,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         precioTexto.textContent = formatoCOP(precioFiltro.value);
 
         document.querySelectorAll(".filtro-grupo input[type='checkbox']").forEach((check) => {
-            check.checked = true;
+            check.checked = false;
         });
 
         filtrarVuelos();
@@ -187,14 +211,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const actualizarTipoViaje = () => {
         if (soloIda.checked) {
-            fechaRegresoGrupo.style.display = "none";
+            fechaRegresoGrupo.classList.add("oculto");
         } else {
-            fechaRegresoGrupo.style.display = "";
+            fechaRegresoGrupo.classList.remove("oculto");
         }
     };
 
     const guardarVueloSeleccionado = (event) => {
-        const boton = event.target.closest(".btn-detalle");
+        const boton = event.target.closest(".btn-ver-detalle") || event.target.closest(".btn-reservar");
 
         if (!boton) return;
 
@@ -234,12 +258,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    origenInput.addEventListener("input", filtrarVuelos);
-    destinoInput.addEventListener("input", filtrarVuelos);
+    let debounceTimer;
+    const filtrarVuelosDebounced = () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            filtrarVuelos();
+        }, 150);
+    };
+
+    origenInput.addEventListener("input", filtrarVuelosDebounced);
+    destinoInput.addEventListener("input", filtrarVuelosDebounced);
     fechaIdaInput.addEventListener("change", filtrarVuelos);
     precioFiltro.addEventListener("input", () => {
         precioTexto.textContent = formatoCOP(precioFiltro.value);
-        filtrarVuelos();
+        filtrarVuelosDebounced();
     });
 
     ordenar.addEventListener("change", filtrarVuelos);
@@ -255,6 +287,20 @@ document.addEventListener("DOMContentLoaded", () => {
         btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
     }
 
+    const iniciarCarruselHero = () => {
+        const slides = document.querySelectorAll('.hero-slide');
+        if (slides.length === 0) return;
+
+        let currentSlide = 0;
+        
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000); // Cambia cada 5 segundos
+    };
+
     actualizarTipoViaje();
     cargarVuelosDesdeBaseDatos();
+    iniciarCarruselHero();
 });
