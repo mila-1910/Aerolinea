@@ -66,56 +66,57 @@
 
 
         <!-- Tipo de viaje -->
-
-        <div class="tipo-viaje">
+        <fieldset class="tipo-viaje" aria-label="Tipo de viaje">
+            <legend class="sr-only">Selecciona el tipo de viaje</legend>
             <input type="radio" name="tipo" id="ida-vuelta" checked>
-            <label for="ida-vuelta"><i class="fa-solid fa-right-left"></i> Ida y vuelta</label>
+            <label for="ida-vuelta"><i class="fa-solid fa-right-left" aria-hidden="true"></i> Ida y vuelta</label>
 
             <input type="radio" name="tipo" id="solo-ida">
-            <label for="solo-ida"><i class="fa-solid fa-arrow-right"></i> Solo ida</label>
-        </div>
+            <label for="solo-ida"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Solo ida</label>
+        </fieldset>
 
 
         <!-- Campos del buscador -->
+        <form id="form-buscador" role="search" aria-label="Buscador de vuelos" onsubmit="event.preventDefault();">
+            <div class="buscador-campos">
 
-        <div class="buscador-campos">
-
-            <div class="campo-grupo">
-                <label for="origen"><i class="fa-solid fa-plane-departure"></i> Origen</label>
-                <div class="input-wrapper">
-                    <input type="text" id="origen" placeholder="¿De dónde sales?">
+                <div class="campo-grupo">
+                    <label for="origen"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i> Origen</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="origen" placeholder="¿De dónde sales?">
+                    </div>
                 </div>
-            </div>
 
-            <div class="campo-grupo">
-                <label for="destino"><i class="fa-solid fa-plane-arrival"></i> Destino</label>
-                <div class="input-wrapper">
-                    <input type="text" id="destino" placeholder="¿A dónde vas?">
+                <div class="campo-grupo">
+                    <label for="destino"><i class="fa-solid fa-plane-arrival" aria-hidden="true"></i> Destino</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="destino" placeholder="¿A dónde vas?">
+                    </div>
                 </div>
-            </div>
 
-            <div class="campo-grupo fecha">
-                <label for="fecha-ida"><i class="fa-regular fa-calendar"></i> Ida</label>
-                <div class="input-wrapper">
-                    <input type="date" id="fecha-ida">
+                <div class="campo-grupo fecha">
+                    <label for="fecha-ida"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Ida</label>
+                    <div class="input-wrapper">
+                        <input type="date" id="fecha-ida">
+                    </div>
                 </div>
-            </div>
 
-            <div class="campo-grupo fecha" id="grupo-fecha-regreso">
-                <label for="fecha-regreso"><i class="fa-regular fa-calendar-check"></i> Regreso</label>
-                <div class="input-wrapper">
-                    <input type="date" id="fecha-regreso">
+                <div class="campo-grupo fecha" id="grupo-fecha-regreso">
+                    <label for="fecha-regreso"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Regreso</label>
+                    <div class="input-wrapper">
+                        <input type="date" id="fecha-regreso">
+                    </div>
                 </div>
-            </div>
 
-            <div class="campo-grupo pasajeros">
-                <label for="pasajeros"><i class="fa-solid fa-user-group"></i> Viajeros</label>
-                <div class="input-wrapper">
-                    <input type="number" id="pasajeros" min="1" max="10" value="1">
+                <div class="campo-grupo pasajeros">
+                    <label for="pasajeros"><i class="fa-solid fa-user-group" aria-hidden="true"></i> Viajeros</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="pasajeros" min="1" max="10" value="1">
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </form>
     </div>
 
     <!-- Filtros y resultados -->
@@ -125,36 +126,35 @@
         <aside class="filtros reveal reveal-delay-2">
             <h3>Filtros</h3>
 
-            <div class="filtro-grupo">
-                <h4>Precio</h4>
-                <input type="range" min="0" max="5000" value="5000">
+            <div class="filtro-grupo" role="group" aria-labelledby="precio-label">
+                <h4 id="precio-label">Precio</h4>
+                <input type="range" min="0" max="5000" value="5000" aria-label="Filtrar por precio máximo">
                 <div class="precio-rango">
                     <span>$0</span>
-                    <span>$5.000.000 COP</span>
-
+                    <span aria-live="polite">$5.000.000 COP</span>
                 </div>
             </div>
 
-            <div class="filtro-grupo">
-                <h4>Escalas</h4>
+            <fieldset class="filtro-grupo">
+                <legend>Escalas</legend>
                 <label for="filtro-directo"><input type="checkbox" id="filtro-directo"> Vuelo directo</label>
                 <label for="filtro-una-escala"><input type="checkbox" id="filtro-una-escala"> Una escala</label>
                 <label for="filtro-dos-escala"><input type="checkbox" id="filtro-dos-escala"> Dos o más</label>
-            </div>
+            </fieldset>
 
-            <div class="filtro-grupo">
-                <h4>Clase de vuelo</h4>
+            <fieldset class="filtro-grupo">
+                <legend>Clase de vuelo</legend>
                 <label for="filtro-economica"><input type="checkbox" id="filtro-economica"> Económica</label>
                 <label for="filtro-ejecutiva"><input type="checkbox" id="filtro-ejecutiva"> Ejecutiva</label>
                 <label for="filtro-primera"><input type="checkbox" id="filtro-primera"> Primera clase</label>
-            </div>
+            </fieldset>
 
-            <div class="filtro-grupo">
-                <h4>Tipo de avión</h4>
+            <fieldset class="filtro-grupo">
+                <legend>Tipo de avión</legend>
                 <label for="filtro-boeing"><input type="checkbox" id="filtro-boeing"> Boeing</label>
                 <label for="filtro-airbus"><input type="checkbox" id="filtro-airbus"> Airbus</label>
                 <label for="filtro-regional"><input type="checkbox" id="filtro-regional"> Regional</label>
-            </div>
+            </fieldset>
             <!-- Botón para reiniciar filtros -->
             <button class="btn-limpiar-filtros" id="btn-limpiar-filtros" type="button">
                 Limpiar filtros
@@ -166,7 +166,7 @@
         <div class="resultados">
 
             <div class="resultados-header">
-                <p>6 vuelos encontrados</p>
+                <p id="contador-vuelos" aria-live="polite">6 vuelos encontrados</p>
                 <label for="ordenar-vuelos" class="sr-only">Ordenar por</label>
                 <select class="ordenar" id="ordenar-vuelos">
                     <option>Nuevos destinos</option>
@@ -178,7 +178,7 @@
 
             <div class="vuelos-grid">
 
-                <div class="vuelo-card" data-numero="EL-204" data-origen="Bogotá" data-destino="Nueva York" data-ciudad="Nueva York" data-fecha="2026-04-15" data-fecha-texto="15 Abr 2026" data-escala="Directo" data-duracion="6h 30min" data-clase="Económica" data-avion="Boeing">
+                <div class="vuelo-card" data-numero="EL-204" data-origen="Bogotá" data-destino="Nueva York" data-ciudad="Nueva York" data-fecha="2026-04-15" data-fecha-texto="15 Abr 2026" data-escala="Directo" data-duracion="6h 30min" data-clase="Económica" data-avion="Boeing" role="article" aria-label="Vuelo de Bogotá a Nueva York">
                     <img src="../../imagenes/nueva-york.jpg" alt="Vista representativa de Nueva York" class="vuelo-card-bg">
                     <div class="vuelo-card-overlay"></div>
                     <div class="vuelo-card-content">
@@ -199,7 +199,7 @@
                     </div>
                 </div>
 
-                <div class="vuelo-card" data-numero="EL-422" data-origen="Bogotá" data-destino="París" data-ciudad="París" data-fecha="2026-05-22" data-fecha-texto="22 May 2026" data-escala="Una escala" data-duracion="12h 45min" data-clase="Económica" data-avion="Airbus">
+                <div class="vuelo-card" data-numero="EL-422" data-origen="Bogotá" data-destino="París" data-ciudad="París" data-fecha="2026-05-22" data-fecha-texto="22 May 2026" data-escala="Una escala" data-duracion="12h 45min" data-clase="Económica" data-avion="Airbus" role="article" aria-label="Vuelo de Bogotá a París">
                     <img src="../../imagenes/paris.jpg" alt="Vista representativa de París" class="vuelo-card-bg">
                     <div class="vuelo-card-overlay"></div>
                     <div class="vuelo-card-content">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
 
-                <div class="vuelo-card" data-numero="EL-310" data-origen="Medellín" data-destino="Cancún" data-ciudad="Cancún" data-fecha="2026-06-10" data-fecha-texto="10 Jun 2026" data-escala="Directo" data-duracion="4h 15min" data-clase="Ejecutiva" data-avion="Boeing">
+                <div class="vuelo-card" data-numero="EL-310" data-origen="Medellín" data-destino="Cancún" data-ciudad="Cancún" data-fecha="2026-06-10" data-fecha-texto="10 Jun 2026" data-escala="Directo" data-duracion="4h 15min" data-clase="Ejecutiva" data-avion="Boeing" role="article" aria-label="Vuelo de Medellín a Cancún">
                     <img src="../../imagenes/cancun.jpg" alt="Vista representativa de Cancún" class="vuelo-card-bg">
                     <div class="vuelo-card-overlay"></div>
                     <div class="vuelo-card-content">
@@ -241,7 +241,7 @@
                     </div>
                 </div>
 
-                <div class="vuelo-card" data-numero="EL-105" data-origen="Cali" data-destino="Madrid" data-ciudad="Madrid" data-fecha="2026-07-05" data-fecha-texto="5 Jul 2026" data-escala="Una escala" data-duracion="14h 20min" data-clase="Primera clase" data-avion="Airbus">
+                <div class="vuelo-card" data-numero="EL-105" data-origen="Cali" data-destino="Madrid" data-ciudad="Madrid" data-fecha="2026-07-05" data-fecha-texto="5 Jul 2026" data-escala="Una escala" data-duracion="14h 20min" data-clase="Primera clase" data-avion="Airbus" role="article" aria-label="Vuelo de Cali a Madrid">
                     <img src="../../imagenes/madrid.jpg" alt="Vista representativa de Madrid" class="vuelo-card-bg">
                     <div class="vuelo-card-overlay"></div>
                     <div class="vuelo-card-content">

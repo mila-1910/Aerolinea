@@ -501,6 +501,11 @@
     box-shadow: 0 12px 24px rgba(123, 28, 78, 0.4);
 }
 
+.btn-premium-confirm:focus-visible {
+    outline: 3px solid var(--vino);
+    outline-offset: 4px;
+}
+
 .btn-premium-confirm:active {
     transform: scale(0.98);
 }
@@ -525,6 +530,11 @@
 .btn-premium-outline:hover {
     background: var(--vino-50);
     border-color: var(--vino);
+}
+
+.btn-premium-outline:focus-visible {
+    outline: 3px solid var(--vino);
+    outline-offset: 4px;
 }
 
 .btn-premium-outline:active {

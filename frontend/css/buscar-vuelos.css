@@ -372,13 +372,20 @@
     gap: 8px;
 }
 
-.filtro-grupo h4 {
+fieldset.filtro-grupo {
+    border: none;
+    padding: 0;
+    margin-bottom: 24px;
+}
+
+.filtro-grupo h4, .filtro-grupo legend {
     font-size: 0.85rem;
     font-weight: 700;
     color: #888;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 8px;
+    padding: 0;
 }
 
 .filtro-grupo label {
@@ -579,7 +586,8 @@
     animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-.vuelo-card:hover {
+.vuelo-card:hover,
+.vuelo-card:focus-within {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
@@ -594,7 +602,8 @@
     transition: transform 600ms ease-out, opacity 400ms ease;
 }
 
-.vuelo-card:hover .vuelo-card-bg {
+.vuelo-card:hover .vuelo-card-bg,
+.vuelo-card:focus-within .vuelo-card-bg {
     transform: scale(1.08);
 }
 
@@ -606,7 +615,8 @@
     transition: background-color 400ms ease;
 }
 
-.vuelo-card:hover .vuelo-card-overlay {
+.vuelo-card:hover .vuelo-card-overlay,
+.vuelo-card:focus-within .vuelo-card-overlay {
     background-color: rgba(0,0,0,0.5);
 }
 
@@ -628,7 +638,8 @@
     transition: transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 400ms ease;
 }
 
-.vuelo-card:hover .vuelo-card-info-row {
+.vuelo-card:hover .vuelo-card-info-row,
+.vuelo-card:focus-within .vuelo-card-info-row {
     transform: translateY(-60px);
     opacity: 1;
 }
@@ -693,7 +704,8 @@
     pointer-events: none;
 }
 
-.vuelo-card:hover .vuelo-card-hover-actions {
+.vuelo-card:hover .vuelo-card-hover-actions,
+.vuelo-card:focus-within .vuelo-card-hover-actions {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;

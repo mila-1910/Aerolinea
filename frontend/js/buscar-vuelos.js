@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const idaVuelta = document.getElementById("ida-vuelta");
     const precioFiltro = document.querySelector(".filtro-grupo input[type='range']");
     const precioTexto = document.querySelector(".precio-rango span:last-child");
-    const contador = document.querySelector(".resultados-header p");
+    const contador = document.getElementById("contador-vuelos");
     const ordenar = document.querySelector(".ordenar");
     const vuelosGrid = document.querySelector(".vuelos-grid");
     const sinResultados = document.getElementById("sin-resultados-buscar");
@@ -99,6 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
             card.className = "vuelo-card";
             card.dataset.idVuelo = vuelo.idVuelo;
             card.dataset.numeroVuelo = vuelo.numeroVuelo;
+            card.setAttribute("role", "article");
+            card.setAttribute("aria-label", `Vuelo de ${vuelo.origen} a ${vuelo.destino}`);
             
             // Asignar view-transition-name para animaciones premium de reordenamiento
             card.style.viewTransitionName = `card-vuelo-${vuelo.idVuelo}`;

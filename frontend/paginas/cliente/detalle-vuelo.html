@@ -52,18 +52,18 @@
     <div class="vuelo-hero-container" id="hero-container">
         
         <!-- Carrusel de Imágenes Inmersivo -->
-        <div class="vuelo-hero-imagen carousel-container" id="detalle-carousel">
+        <div class="vuelo-hero-imagen carousel-container" id="detalle-carousel" role="region" aria-roledescription="carousel" aria-label="Galería de destino">
             <div class="vuelo-hero-overlay"></div>
-            <div class="carousel-slides" id="carousel-slides">
+            <div class="carousel-slides" id="carousel-slides" aria-live="polite">
                 <!-- Se inyectarán dinámicamente -->
-                <div class="carousel-slide active">
+                <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="1 de 1">
                     <img src="../../imagenes/nueva-york.jpg" alt="Vista de la ciudad de destino" id="detalle-imagen-vuelo">
                 </div>
             </div>
             
             <!-- Controles del carrusel -->
-            <button class="carousel-btn prev" id="carousel-prev" aria-label="Anterior imagen"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="carousel-btn next" id="carousel-next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="carousel-btn prev" id="carousel-prev" aria-label="Anterior imagen"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="carousel-btn next" id="carousel-next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
             
             <!-- Puntos de navegación -->
             <div class="carousel-dots" id="carousel-dots">
@@ -156,11 +156,11 @@
     </div>
 
     <!-- Descripcion del vuelo -->
-    <div class="detalle-descripcion-contenedor">
+    <div class="detalle-descripcion-contenedor" role="region" aria-labelledby="desc-titulo">
 
-        <div class="descripcion-header" id="descripcion-toggle" role="button" tabindex="0">
-            <h3>Descripción de vuelo</h3>
-            <span id="descripcion-icono">▲</span>
+        <div class="descripcion-header" id="descripcion-toggle" role="button" tabindex="0" aria-expanded="true" aria-controls="descripcion-texto">
+            <h3 id="desc-titulo">Descripción de vuelo</h3>
+            <span id="descripcion-icono" aria-hidden="true">▲</span>
         </div>
 
         <p class="descripcion-texto" id="descripcion-texto">

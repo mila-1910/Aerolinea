@@ -41,6 +41,8 @@
         </div>
     </nav>
 
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
     <!-- HEADER -->
     <div class="resumen-hero">
         <div class="hero-content fade-in-up" style="--stagger-idx: 1;">
@@ -55,7 +57,7 @@
 
     <!-- Mensaje si no hay reserva activa -->
     <div class="reserva-vacia" id="reserva-vacia">
-        <i class="fa-solid fa-plane-slash vacia-icon"></i>
+        <i class="fa-solid fa-plane-slash vacia-icon" aria-hidden="true"></i>
         <h3>No hay reserva en proceso</h3>
         <p>Selecciona un vuelo de lujo para vivir la experiencia ELARIS.</p>
         <a href="buscar-vuelos.html" class="btn-premium-confirm">Buscar vuelos</a>
@@ -65,7 +67,7 @@
     <div class="resumen-contenedor" id="resumen-contenedor">
 
         <!-- Columna izquierda: Boarding Pass y Tarifa -->
-        <div class="resumen-columna-izq">
+        <section class="resumen-columna-izq" aria-label="Detalles del boleto y tarifa">
 
             <!-- Vuelo seleccionado (Boarding Pass) -->
             <div class="premium-card boarding-pass fade-in-up" style="--stagger-idx: 2;">
@@ -82,7 +84,7 @@
                             <span class="bp-time" id="resumen-hora-salida">10:30</span>
                         </div>
                         <div class="bp-flight-path">
-                            <i class="fa-solid fa-plane plane-icon"></i>
+                            <i class="fa-solid fa-plane plane-icon" aria-hidden="true"></i>
                             <div class="path-line"></div>
                             <span class="bp-duration" id="resumen-duracion">12h</span>
                         </div>
@@ -117,7 +119,7 @@
             <div class="premium-card fade-in-up" style="--stagger-idx: 3;">
                 <div class="card-header-premium">
                     <div class="header-title-group">
-                        <i class="fa-solid fa-star header-icon"></i>
+                        <i class="fa-solid fa-star header-icon" aria-hidden="true"></i>
                         <h3>Tarifa & Beneficios</h3>
                     </div>
                 </div>
@@ -132,16 +134,16 @@
                 </div>
             </div>
 
-        </div>
+        </section>
 
         <!-- Columna derecha: Pasajero y Pago -->
-        <div class="resumen-columna-der">
+        <section class="resumen-columna-der" aria-label="Información del pasajero y facturación">
 
             <!-- Datos del pasajero -->
             <div class="premium-card fade-in-up" style="--stagger-idx: 4;">
                 <div class="card-header-premium">
                     <div class="header-title-group">
-                        <i class="fa-solid fa-user-tie header-icon"></i>
+                        <i class="fa-solid fa-user-tie header-icon" aria-hidden="true"></i>
                         <h3>Información del Pasajero</h3>
                     </div>
                 </div>
@@ -173,7 +175,7 @@
             <div class="premium-card receipt-card fade-in-up" style="--stagger-idx: 5;">
                 <div class="card-header-premium">
                     <div class="header-title-group">
-                        <i class="fa-solid fa-file-invoice-dollar header-icon"></i>
+                        <i class="fa-solid fa-file-invoice-dollar header-icon" aria-hidden="true"></i>
                         <h3>Detalle de Facturación</h3>
                     </div>
                 </div>
@@ -187,7 +189,7 @@
                         <span class="r-value" id="pago-tarifa">$890.000 COP</span>
                     </div>
                     <div class="receipt-line discount-line">
-                        <span class="r-label"><i class="fa-solid fa-tag"></i> Descuento Especial (20%)</span>
+                        <span class="r-label"><i class="fa-solid fa-tag" aria-hidden="true"></i> Descuento Especial (20%)</span>
                         <span class="r-value descuento" id="pago-descuento">-$658.000 COP</span>
                     </div>
                     
@@ -197,23 +199,24 @@
                         <span>Total Final</span>
                         <span id="pago-total" class="total-amount">$3.522.000 COP</span>
                     </div>
-                    <p class="receipt-note">Incluye todos los impuestos, tasas aeroportuarias y descuentos aplicados. Transacción segura <i class="fa-solid fa-shield-halved"></i></p>
+                    <p class="receipt-note">Incluye todos los impuestos, tasas aeroportuarias y descuentos aplicados. Transacción segura <i class="fa-solid fa-shield-halved" aria-hidden="true"></i></p>
                 </div>
             </div>
 
             <!-- Botones -->
             <div class="resumen-botones fade-in-up" id="resumen-botones-container" style="--stagger-idx: 6;">
                 <a href="mis-reservas.html" class="btn-premium-confirm" id="btn-confirmar-reserva">
-                    Confirmar y Pagar <i class="fa-solid fa-arrow-right"></i>
+                    Confirmar y Pagar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </a>
                 <a href="mis-reservas.html" class="btn-premium-outline" id="btn-guardar-reserva">
-                    <i class="fa-regular fa-bookmark"></i> Guardar para después
+                    <i class="fa-regular fa-bookmark" aria-hidden="true"></i> Guardar para después
                 </a>
             </div>
 
-        </div>
+        </section>
 
     </div>
+    </main>
 
      <!-- Footer ELARIS copiado de cliente -->
     <footer class="footer">
