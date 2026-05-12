@@ -15,9 +15,9 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Navegación principal">
         <a class="navbar-logo" href="dashboard.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
         <ul class="navbar-links">
             <li><a href="dashboard.html">Inicio</a></li>
@@ -62,7 +62,8 @@
 
         <!-- Barra de búsqueda -->
         <div class="reservas-buscador">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <label for="buscar-reserva-input" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">Buscar reserva</label>
             <input type="text" id="buscar-reserva-input" placeholder="Buscar por destino o número de reserva...">
         </div>
 
@@ -102,7 +103,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 

@@ -17,7 +17,7 @@
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
         </a>
 
-        <nav class="navbar-auth__nav">
+        <nav class="navbar-auth__nav" aria-label="Navegación principal">
             <a href="index.html">Inicio</a>
             <a href="../cliente/buscar-vuelos.html">Destinos</a>
             <a href="#">Ayuda</a>
@@ -31,8 +31,8 @@
 
     <main class="auth" id="auth-main">
         <section class="auth__hero">
-            <div class="hero-bg hero-bg--login"></div>
-            <div class="hero-bg hero-bg--register"></div>
+            <div class="hero-bg hero-bg--login" aria-hidden="true"></div>
+            <div class="hero-bg hero-bg--register" aria-hidden="true"></div>
             
             <div class="brand">
                 <a href="index.html"></a>
@@ -63,7 +63,8 @@
                     <form class="auth-form" action="../cliente/buscar-vuelos.html" method="get">
                         <div class="form-group">
                             <label for="email-login">Correo electrónico</label>
-                            <input type="email" id="email-login" name="email" placeholder="nombre@ejemplo.com" required>
+                            <input type="email" id="email-login" name="email" placeholder="nombre@ejemplo.com" aria-describedby="email-login-error" required>
+                            <span id="email-login-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio o inválido</span>
                         </div>
 
                         <div class="form-group">
@@ -72,9 +73,10 @@
                                 <a href="#" class="forgot-link">Olvidé mi contraseña</a>
                             </div>
                             <div class="password-wrapper">
-                                <input type="password" id="password-login" name="password" placeholder="••••••••" required>
+                                <input type="password" id="password-login" name="password" placeholder="••••••••" aria-describedby="password-login-error" required>
                                 <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
                             </div>
+                            <span id="password-login-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                         </div>
 
                         <div class="form-actions">
@@ -99,7 +101,7 @@
                         <div class="form-row">
                             <div class="form-group form-group--tipo-id">
                                 <label for="tipo-identificacion">Tipo de identificación</label>
-                                <select id="tipo-identificacion" name="tipo_identificacion" required>
+                                <select id="tipo-identificacion" name="tipo_identificacion" aria-describedby="tipo-identificacion-error" required>
                                     <option value="" disabled selected>Selecciona...</option>
                                     <option value="CC">Cédula de ciudadanía</option>
                                     <option value="CE">Cédula de extranjería</option>
@@ -107,29 +109,34 @@
                                     <option value="TI">Tarjeta de identidad</option>
                                     <option value="NIT">NIT</option>
                                 </select>
+                                <span id="tipo-identificacion-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Seleccione un tipo</span>
                             </div>
                             <div class="form-group form-group--num-id">
                                 <label for="numero-identificacion">Número de identificación</label>
-                                <input type="text" id="numero-identificacion" name="numero_identificacion" placeholder="Ej: 1234567890" required>
+                                <input type="text" id="numero-identificacion" name="numero_identificacion" placeholder="Ej: 1234567890" aria-describedby="numero-identificacion-error" required>
+                                <span id="numero-identificacion-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                             </div>
                         </div>
 
                         <!-- Nombre completo -->
                         <div class="form-group">
                             <label for="nombre">Nombre completo</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required>
+                            <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" aria-describedby="nombre-error" required>
+                            <span id="nombre-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                         </div>
 
                         <!-- Correo (separado del de login) -->
                         <div class="form-group">
                             <label for="email-reg">Correo electrónico</label>
-                            <input type="email" id="email-reg" name="email" placeholder="nombre@ejemplo.com" required>
+                            <input type="email" id="email-reg" name="email" placeholder="nombre@ejemplo.com" aria-describedby="email-reg-error" required>
+                            <span id="email-reg-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Correo inválido u obligatorio</span>
                         </div>
 
                         <!-- Teléfono -->
                         <div class="form-group">
                             <label for="telefono">Teléfono</label>
-                            <input type="tel" id="telefono" name="telefono" placeholder="Ej: +57 300 123 4567" required>
+                            <input type="tel" id="telefono" name="telefono" placeholder="Ej: +57 300 123 4567" aria-describedby="telefono-error" required>
+                            <span id="telefono-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                         </div>
 
                         <!-- Contraseña y confirmar en fila -->
@@ -137,16 +144,18 @@
                             <div class="form-group">
                                 <label for="password-reg">Contraseña</label>
                                 <div class="password-wrapper">
-                                    <input type="password" id="password-reg" name="password" placeholder="••••••••" required>
+                                    <input type="password" id="password-reg" name="password" placeholder="••••••••" aria-describedby="password-reg-error" required>
                                     <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
                                 </div>
+                                <span id="password-reg-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                             </div>
                             <div class="form-group">
                                 <label for="confirmar">Confirmar Contraseña</label>
                                 <div class="password-wrapper">
-                                    <input type="password" id="confirmar" name="confirmar" placeholder="••••••••" required>
+                                    <input type="password" id="confirmar" name="confirmar" placeholder="••••••••" aria-describedby="confirmar-error" required>
                                     <i class="fa-regular fa-eye toggle-password" aria-label="Mostrar contraseña" role="button" tabindex="0"></i>
                                 </div>
+                                <span id="confirmar-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Las contraseñas no coinciden</span>
                             </div>
                         </div>
 

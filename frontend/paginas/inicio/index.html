@@ -17,11 +17,11 @@
     <header class="header">
         <div class="header__logo">
             <a href="../index.html">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
             </a>
         </div>
 
-        <nav class="header__nav">
+        <nav class="header__nav" aria-label="Navegación principal">
             <a href="#">Inicio</a>
             <a href="../cliente/buscar-vuelos.html">Destinos</a>
             <a href="#">Información</a>
@@ -135,7 +135,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 
@@ -235,7 +235,7 @@
                     tarjeta.className = 'vuelo-card-index reveal';
                     
                     tarjeta.innerHTML = `
-                        <img src="${vuelo.imagen_url}" alt="${vuelo.ciudad_destino}" class="vuelo-card-bg">
+                        <img src="${vuelo.imagen_url}" alt="Vista representativa de ${vuelo.ciudad_destino}" class="vuelo-card-bg">
                         <div class="vuelo-card-overlay"></div>
                         <div class="vuelo-card-content">
                             <div class="vuelo-card-info-row">

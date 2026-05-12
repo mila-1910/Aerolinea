@@ -30,6 +30,14 @@ body {
     color: var(--texto);
 }
 
+/* ================================
+   ACCESIBILIDAD (A11Y)
+================================ */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid #D4AF37;
+    outline-offset: 2px;
+}
+
 
 /* ================================
    NAVBAR

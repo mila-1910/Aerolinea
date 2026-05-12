@@ -15,9 +15,9 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Navegación principal">
         <a class="navbar-logo" href="dashboard.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
         <ul class="navbar-links">
             <li><a href="dashboard.html">Inicio</a></li>
@@ -47,7 +47,7 @@
 
         <!-- Columna izquierda imagen -->
        <div class="detalle-imagen">
-    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York" id="detalle-imagen-vuelo">
+    <img src="../../imagenes/nueva-york.jpg" alt="Vista de la ciudad de destino" id="detalle-imagen-vuelo">
 
 </div>
 
@@ -89,7 +89,7 @@
 
             <div class="detalle-campos">
                 <div class="campo-select">
-                    <label>Origen</label>
+                    <label for="detalle-origen-select">Origen</label>
                     <select id="detalle-origen-select">
                         <option>Bogotá</option>
                         <option>Medellín</option>
@@ -97,7 +97,7 @@
                     </select>
                 </div>
                 <div class="campo-select">
-                    <label>Fecha</label>
+                    <label for="detalle-fecha-select">Fecha</label>
                     <select id="detalle-fecha-select">
                         <option>12-20 Mayo</option>
                         <option>21-30 Mayo</option>
@@ -115,7 +115,7 @@
     <!-- Descripcion del vuelo -->
     <div class="detalle-descripcion-contenedor">
 
-        <div class="descripcion-header" id="descripcion-toggle">
+        <div class="descripcion-header" id="descripcion-toggle" role="button" tabindex="0">
             <h3>Descripción de vuelo</h3>
             <span id="descripcion-icono">▲</span>
         </div>
@@ -138,7 +138,7 @@
         <div class="comentarios-grid">
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>Excelente vuelo</h4>
                 <p>El vuelo salió puntual, la atención fue muy buena y el proceso de embarque se sintió ordenado.</p>
                 <div class="comentario-autor">
@@ -151,7 +151,7 @@
             </div>
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>La mejor aerolínea de vuelo</h4>
                 <p>La experiencia fue cómoda desde el check-in hasta la llegada. Me gustó mucho la atención a bordo.</p>
                 <div class="comentario-autor">
@@ -164,7 +164,7 @@
             </div>
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>No cambio esta aerolínea</h4>
                 <p>Buena organización, asientos cómodos y una sensación de seguridad durante todo el viaje.</p>
                 <div class="comentario-autor">
@@ -188,14 +188,14 @@
       <div class="destinos-relacionados-grid" id="destinos-relacionados-grid">
 
             <div class="relacionado-card">
-                <img src="../../imagenes/cancun.jpg" alt="Las Vegas">
+                <img src="../../imagenes/cancun.jpg" alt="Hermosas playas en Cancún">
                 <div class="relacionado-overlay">
                     <span>Cancun</span>
                 </div>
             </div>
 
             <div class="relacionado-card">
-                <img src="../../imagenes/madrid.jpg" alt="Egipto">
+                <img src="../../imagenes/madrid.jpg" alt="Plaza clásica de Madrid">
                 <div class="relacionado-overlay">
                     <span>Madrid</span>
                 </div>
@@ -212,7 +212,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 
