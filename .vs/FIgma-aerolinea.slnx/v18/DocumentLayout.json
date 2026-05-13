@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\inicio\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\inicio\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\dashboardadmin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\paginas\\admin\\dashboardadmin.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -19,15 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\inicio\\index.html",
+              "RelativeDocumentMoniker": "frontend\\paginas\\inicio\\index.html",
+              "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\inicio\\index.html",
+              "RelativeToolTip": "frontend\\paginas\\inicio\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-05-11T23:33:12.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "dashboardadmin.html",
               "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\dashboardadmin.html",
               "RelativeDocumentMoniker": "frontend\\paginas\\admin\\dashboardadmin.html",
               "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\dashboardadmin.html",
               "RelativeToolTip": "frontend\\paginas\\admin\\dashboardadmin.html",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAACkAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-05-04T01:38:38.248Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-04T01:38:38.248Z"
             }
           ]
         }
