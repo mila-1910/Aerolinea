@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Permite recibir datos en formato JSON
+app.use(express.static(path.join(__dirname, '..')));
 
 // Configuración de la conexión a la base de datos (Neon)
 const pool = new Pool({
@@ -280,6 +282,45 @@ app.post('/api/login', async (req, res) => {
     res.status(500).json({ error: 'Error al crear la reserva' });
 }
 
+});
+// Dashboard Admin
+app.get('/api/admin/dashboard', async (req, res) => {
+    try {
+
+        const vuelos = await pool.query(`
+            SELECT COUNT(*) AS total FROM vuelos
+        `);
+
+        const reservas = await pool.query(`
+            SELECT COUNT(*) AS total FROM reservas
+        `);
+
+        const destinos = await pool.query(`
+            SELECT COUNT(DISTINCT destino) AS total FROM vuelos
+        `);
+
+        const ultimas = await pool.query(`
+            SELECT 
+                r.numero_reserva,
+                u.nombre_completo,
+                r.estado
+            FROM reservas r
+            JOIN usuarios u ON u.id_usuario = r.id_usuario
+            ORDER BY r.fecha_reserva DESC
+            LIMIT 5
+        `);
+
+        res.json({
+            totalVuelos: vuelos.rows[0].total,
+            totalReservas: reservas.rows[0].total,
+            totalDestinos: destinos.rows[0].total,
+            ultimasReservas: ultimas.rows
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error dashboard admin' });
+    }
 });
 
 // Iniciar el servidor

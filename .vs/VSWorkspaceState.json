@@ -3,7 +3,8 @@
     "",
     "\\frontend",
     "\\frontend\\paginas",
-    "\\frontend\\paginas\\inicio"
+    "\\frontend\\paginas\\admin"
   ],
+  "SelectedNode": "\\frontend\\paginas\\admin\\vuelos.html",
   "PreviewInSolutionExplorer": false
 }
