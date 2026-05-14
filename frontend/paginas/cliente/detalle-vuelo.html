@@ -14,21 +14,27 @@
 
 <body>
 
+    <!-- LOADER -->
+    <div id="loader-vuelo" class="loader-vuelo-pantalla">
+        <div class="spinner"></div>
+    </div>
+
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <a class="navbar-logo" href="dashboard.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+    <nav class="navbar" aria-label="Navegación principal">
+        <a class="navbar-logo" href="buscar-vuelos.html">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
         <ul class="navbar-links">
-            <li><a href="dashboard.html">Inicio</a></li>
-            <li><a href="buscar-vuelos.html">Destinos</a></li>
+            <li><a href="buscar-vuelos.html">Inicio</a></li>
+            <li><a href="mis-reservas.html">Mis reservas</a></li>
+            <li><a href="resumen-reserva.html">Resumen reserva</a></li>
             <li><a href="#">Información</a></li>
             <li><a href="#">Ayuda</a></li>
         </ul>
         <div class="navbar-perfil">
             <div class="perfil-trigger">
-                <div class="avatar">M</div>
-                <span>Messi</span>
+                <div class="avatar" id="user-initial">M</div>
+                <span id="user-display-name">Messi</span>
             </div>
             <ul class="dropdown">
                 <li><a href="#">Mi cuenta</a></li>
@@ -36,88 +42,125 @@
                 <li>
                     <hr>
                 </li>
-                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion" id="logout-btn">Cerrar sesión</a></li>
             </ul>
         </div>
     </nav>
 
 
-    <!-- Parte principal -->
-    <div class="detalle-contenedor">
-
-        <!-- Columna izquierda imagen -->
-       <div class="detalle-imagen">
-    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York" id="detalle-imagen-vuelo">
-
-</div>
-
-
-        <!-- Columna derecha info -->
-        <div class="detalle-info">
-
-         <h1 class="detalle-ciudad" id="detalle-ciudad">Nueva York</h1>
-
-
-
-            <div class="detalle-descuento">
-                <span class="badge-descuento">Descuento 20%</span>
-            </div>
-
-           <p class="detalle-precio" id="detalle-precio">----</p>
-<p class="detalle-nota-precio" id="detalle-nota-precio">Precio por pasajero. Incluye impuestos.</p>
-<p class="detalle-tipo" id="detalle-tipo">Vuelo ida y vuelta</p>
-
-
-<div class="detalle-datos-vuelo">
-    <div>
-        <span>Número de vuelo</span>
-        <strong id="detalle-numero">----</strong>
-    </div>
-    <div>
-        <span>Ruta</span>
-        <strong id="detalle-ruta">----</strong>
-    </div>
-    <div>
-        <span>Duración</span>
-        <strong id="detalle-duracion">----</strong>
-    </div>
-    <div>
-        <span>Escala</span>
-        <strong id="detalle-escala">----</strong>
-    </div>
-</div>
-
-            <div class="detalle-campos">
-                <div class="campo-select">
-                    <label>Origen</label>
-                    <select id="detalle-origen-select">
-                        <option>Bogotá</option>
-                        <option>Medellín</option>
-                        <option>Cali</option>
-                    </select>
+    <!-- Parte principal inmersiva -->
+    <div class="vuelo-hero-container" id="hero-container">
+        
+        <!-- Carrusel de Imágenes Inmersivo -->
+        <div class="vuelo-hero-imagen carousel-container" id="detalle-carousel" role="region" aria-roledescription="carousel" aria-label="Galería de destino">
+            <div class="vuelo-hero-overlay"></div>
+            <div class="carousel-slides" id="carousel-slides" aria-live="polite">
+                <!-- Se inyectarán dinámicamente -->
+                <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="1 de 1">
+                    <img src="../../imagenes/nueva-york.jpg" alt="Vista de la ciudad de destino" id="detalle-imagen-vuelo">
                 </div>
-                <div class="campo-select">
-                    <label>Fecha</label>
-                    <select id="detalle-fecha-select">
-                        <option>12-20 Mayo</option>
-                        <option>21-30 Mayo</option>
-                        <option>1-10 Junio</option>
-                    </select>
+            </div>
+            
+            <!-- Controles del carrusel -->
+            <button class="carousel-btn prev" id="carousel-prev" aria-label="Anterior imagen"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="carousel-btn next" id="carousel-next" aria-label="Siguiente imagen"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            
+            <!-- Puntos de navegación -->
+            <div class="carousel-dots" id="carousel-dots">
+                <!-- Se inyectarán dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Tarjeta de información Glassmorphism -->
+        <div class="vuelo-hero-info">
+            
+            <div class="info-header animate-element" style="--delay: 0.05s">
+                <h1 class="detalle-ciudad" id="detalle-ciudad">Nueva York</h1>
+                <div class="detalle-descuento">
+                    <span class="badge-descuento"><i class="fa-solid fa-tag"></i> 20% Dto</span>
                 </div>
             </div>
 
-            <a href="resumen-reserva.html" class="btn-reservar-vuelo" id="btn-reservar-vuelo">Reservar vuelo</a>
+            <div class="info-precio-wrapper animate-element" style="--delay: 0.1s">
+                <p class="detalle-precio" id="detalle-precio">----</p>
+                <div class="precio-detalles">
+                    <p class="detalle-tipo" id="detalle-tipo">Vuelo ida y vuelta</p>
+                    <p class="detalle-nota-precio" id="detalle-nota-precio">Precio por pasajero. Incluye impuestos.</p>
+                </div>
+            </div>
+
+            <div class="detalle-datos-vuelo animate-element" style="--delay: 0.2s">
+                <div class="dato-item">
+                    <div class="dato-icono"><i class="fa-solid fa-plane-departure"></i></div>
+                    <div class="dato-texto">
+                        <span>Vuelo</span>
+                        <strong id="detalle-numero">----</strong>
+                    </div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-icono"><i class="fa-solid fa-route"></i></div>
+                    <div class="dato-texto">
+                        <span>Ruta</span>
+                        <strong id="detalle-ruta">----</strong>
+                    </div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-icono"><i class="fa-regular fa-clock"></i></div>
+                    <div class="dato-texto">
+                        <span>Duración</span>
+                        <strong id="detalle-duracion">----</strong>
+                    </div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-icono"><i class="fa-solid fa-map-location-dot"></i></div>
+                    <div class="dato-texto">
+                        <span>Escala</span>
+                        <strong id="detalle-escala">----</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detalle-campos animate-element" style="--delay: 0.3s">
+                <div class="campo-select">
+                    <label for="detalle-origen-select"><i class="fa-solid fa-location-arrow"></i> Origen</label>
+                    <div class="select-wrapper">
+                        <select id="detalle-origen-select">
+                            <option>Bogotá</option>
+                            <option>Medellín</option>
+                            <option>Cali</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+                <div class="campo-select">
+                    <label for="detalle-fecha-select"><i class="fa-regular fa-calendar-days"></i> Fecha</label>
+                    <div class="select-wrapper">
+                        <select id="detalle-fecha-select">
+                            <option>12-20 Mayo</option>
+                            <option>21-30 Mayo</option>
+                            <option>1-10 Junio</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="animate-element" style="--delay: 0.4s">
+                <a href="resumen-reserva.html" class="btn-reservar-vuelo" id="btn-reservar-vuelo">
+                    Reservar vuelo <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
 
         </div>
 
     </div>
 
     <!-- Descripcion del vuelo -->
-    <div class="detalle-descripcion-contenedor">
+    <div class="detalle-descripcion-contenedor" role="region" aria-labelledby="desc-titulo">
 
-        <div class="descripcion-header" id="descripcion-toggle">
-            <h3>Descripción de vuelo</h3>
-            <span id="descripcion-icono">▲</span>
+        <div class="descripcion-header" id="descripcion-toggle" role="button" tabindex="0" aria-expanded="true" aria-controls="descripcion-texto">
+            <h3 id="desc-titulo">Descripción de vuelo</h3>
+            <span id="descripcion-icono" aria-hidden="true">▲</span>
         </div>
 
         <p class="descripcion-texto" id="descripcion-texto">
@@ -138,7 +181,7 @@
         <div class="comentarios-grid">
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>Excelente vuelo</h4>
                 <p>El vuelo salió puntual, la atención fue muy buena y el proceso de embarque se sintió ordenado.</p>
                 <div class="comentario-autor">
@@ -151,7 +194,7 @@
             </div>
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>La mejor aerolínea de vuelo</h4>
                 <p>La experiencia fue cómoda desde el check-in hasta la llegada. Me gustó mucho la atención a bordo.</p>
                 <div class="comentario-autor">
@@ -164,7 +207,7 @@
             </div>
 
             <div class="comentario-card">
-                <div class="estrellas">⭐⭐⭐⭐⭐</div>
+                <div class="estrellas" aria-label="5 de 5 estrellas">⭐⭐⭐⭐⭐</div>
                 <h4>No cambio esta aerolínea</h4>
                 <p>Buena organización, asientos cómodos y una sensación de seguridad durante todo el viaje.</p>
                 <div class="comentario-autor">
@@ -188,14 +231,14 @@
       <div class="destinos-relacionados-grid" id="destinos-relacionados-grid">
 
             <div class="relacionado-card">
-                <img src="../../imagenes/cancun.jpg" alt="Las Vegas">
+                <img src="../../imagenes/cancun.jpg" alt="Hermosas playas en Cancún">
                 <div class="relacionado-overlay">
                     <span>Cancun</span>
                 </div>
             </div>
 
             <div class="relacionado-card">
-                <img src="../../imagenes/madrid.jpg" alt="Egipto">
+                <img src="../../imagenes/madrid.jpg" alt="Plaza clásica de Madrid">
                 <div class="relacionado-overlay">
                     <span>Madrid</span>
                 </div>
@@ -212,7 +255,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 

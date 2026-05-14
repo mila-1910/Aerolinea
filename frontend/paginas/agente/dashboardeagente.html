@@ -20,9 +20,9 @@
     <!-- ============================================
          NAVBAR SUPERIOR (Logo | Panel Agente | Perfil)
          ============================================ -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Navegación principal">
         <a class="navbar-logo" href="dashboardeagente.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
 
 
@@ -51,11 +51,11 @@
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardeagente.html" class="menu-item active">
-                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Panel de Agente</span>
                 </a>
                 <a href="reservas.html" class="menu-item">
-                    <span class="menu-icono"><i class="fas fa-clipboard-list"></i></span>
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-clipboard-list"></i></span>
                     <span class="menu-texto">Gestionar Reservas</span>
                 </a>
             </div>
@@ -71,7 +71,7 @@
                     <p>Bienvenido de nuevo, Juan Fernando</p>
                 </div>
                 <div class="fecha-dashboard">
-                    <i class="fas fa-calendar-alt"></i>
+                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>
                     <span id="fechaActual">11 de Mayo, 2026</span>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 <!-- KPI 1: Reservas Pendientes -->
                 <div class="glass-card kpi-card area-kpi-1">
                     <div class="kpi-header">
-                        <div class="kpi-icon"><i class="fas fa-clock"></i></div>
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-clock"></i></div>
                         <span class="kpi-trend trend-up">+12%</span>
                     </div>
                     <div class="kpi-content">
@@ -95,7 +95,7 @@
                 <!-- KPI 2: Pagos -->
                 <div class="glass-card kpi-card area-kpi-2">
                     <div class="kpi-header">
-                        <div class="kpi-icon"><i class="fas fa-credit-card"></i></div>
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-credit-card"></i></div>
                         <span class="kpi-trend trend-down">-5%</span>
                     </div>
                     <div class="kpi-content">
@@ -108,7 +108,7 @@
                 <!-- KPI 3: Cambios -->
                 <div class="glass-card kpi-card area-kpi-3">
                     <div class="kpi-header">
-                        <div class="kpi-icon"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-exchange-alt"></i></div>
                         <span class="kpi-trend trend-up">+2</span>
                     </div>
                     <div class="kpi-content">
@@ -120,26 +120,27 @@
 
                 <!-- BENTO SEARCH & QUICK ACTIONS -->
                 <div class="glass-card search-panel area-search">
-                    <h3><i class="fas fa-bolt"></i> Acciones Rápidas</h3>
+                    <h3><i aria-hidden="true" class="fas fa-bolt"></i> Acciones Rápidas</h3>
                     <div class="search-input-group">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Buscar reserva (#RES-000)...">
+                        <i aria-hidden="true" class="fas fa-search"></i>
+                        <label for="buscar-reserva" class="sr-only">Buscar reserva</label>
+                        <input type="text" id="buscar-reserva" placeholder="Buscar reserva (#RES-000)...">
                     </div>
                     <div class="quick-links">
                         <a href="reservas.html" class="quick-link-btn">
-                            <i class="fas fa-list"></i>
+                            <i aria-hidden="true" class="fas fa-list"></i>
                             <span>Reservas</span>
                         </a>
                         <a href="asignar-asiento.html" class="quick-link-btn">
-                            <i class="fas fa-couch"></i>
+                            <i aria-hidden="true" class="fas fa-couch"></i>
                             <span>Asientos</span>
                         </a>
                         <a href="confirmar-pago.html" class="quick-link-btn">
-                            <i class="fas fa-wallet"></i>
+                            <i aria-hidden="true" class="fas fa-wallet"></i>
                             <span>Pagos</span>
                         </a>
                         <a href="#" class="quick-link-btn">
-                            <i class="fas fa-user-plus"></i>
+                            <i aria-hidden="true" class="fas fa-user-plus"></i>
                             <span>Nuevo</span>
                         </a>
                     </div>
@@ -148,8 +149,8 @@
                 <!-- TABLA DE RESERVAS RECIENTES (AREA ANCHA) -->
                 <div class="seccion-reservas area-reservas glass-card">
                     <div class="table-header-premium">
-                        <h3><i class="fas fa-history"></i> Actividad de Reservas Recientes</h3>
-                        <a href="reservas.html" class="btn-view-all">Ver Historial Completo <i class="fas fa-arrow-right"></i></a>
+                        <h3><i aria-hidden="true" class="fas fa-history"></i> Actividad de Reservas Recientes</h3>
+                        <a href="reservas.html" class="btn-view-all">Ver Historial Completo <i aria-hidden="true" class="fas fa-arrow-right"></i></a>
                     </div>
 
                     <div class="tabla-responsive">
@@ -174,7 +175,7 @@
                                     </td>
                                     <td>AV-1234 | BOG → MDE</td>
                                     <td>15 Abr 2025</td>
-                                    <td><span class="estado pendiente">Pendiente</span></td>
+                                    <td><span class="estado pendiente" role="status">Pendiente</span></td>
                                     <td><a href="detalle-reserva.html?id=1" class="btn-tabla-accion primary">Gestionar</a></td>
                                 </tr>
                                 <tr>
@@ -186,7 +187,7 @@
                                     </td>
                                     <td>AV-5678 | MDE → CTG</td>
                                     <td>16 Abr 2025</td>
-                                    <td><span class="estado confirmada">Confirmada</span></td>
+                                    <td><span class="estado confirmada" role="status">Confirmada</span></td>
                                     <td><a href="detalle-reserva.html?id=2" class="btn-tabla-accion primary">Gestionar</a></td>
                                 </tr>
                                 <tr>
@@ -198,7 +199,7 @@
                                     </td>
                                     <td>AV-9012 | CLO → BOG</td>
                                     <td>17 Abr 2025</td>
-                                    <td><span class="estado pendiente">Pendiente</span></td>
+                                    <td><span class="estado pendiente" role="status">Pendiente</span></td>
                                     <td><a href="detalle-reserva.html?id=3" class="btn-tabla-accion primary">Gestionar</a></td>
                                 </tr>
                                 <tr>
@@ -210,7 +211,7 @@
                                     </td>
                                     <td>AV-3456 | BOG → MIA</td>
                                     <td>18 Abr 2025</td>
-                                    <td><span class="estado cancelada">Cancelada</span></td>
+                                    <td><span class="estado cancelada" role="status">Cancelada</span></td>
                                     <td><a href="detalle-reserva.html?id=4" class="btn-tabla-accion primary">Gestionar</a></td>
                                 </tr>
                             </tbody>

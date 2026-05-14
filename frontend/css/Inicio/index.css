@@ -7,7 +7,7 @@
     --blanco: #ffffff;
     --texto: #333333;
     --gris: #666666;
-    
+
     /* Premium Physics (Emil Design) para PC */
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
@@ -416,7 +416,9 @@ body {
 }
 
 /* Asegurar que el contenido del footer quede por encima del resplandor */
-.footer-top, .footer-hr, .footer-bottom {
+.footer-top,
+.footer-hr,
+.footer-bottom {
     position: relative;
     z-index: 1;
 }
@@ -494,10 +496,10 @@ body {
    ÍCONOS DEL FOOTER (Lucide)
 =========================== */
 .footer-icono {
-    width: 18px;              
+    width: 18px;
     height: 18px;
     margin-right: 8px;
-    color: #c9a76d;           
+    color: #c9a76d;
     vertical-align: middle;
 }
 
@@ -527,7 +529,7 @@ body {
     margin-bottom: 8px;
 }
 
-.vuelos-destacados > .vuelos-destacados-contenedor > p {
+.vuelos-destacados>.vuelos-destacados-contenedor>p {
     font-size: 0.95rem;
     color: var(--gris);
     margin-bottom: 30px;
@@ -549,7 +551,8 @@ body {
 
 .vuelo-card-index {
     position: relative;
-    border-radius: 20px; /* Bordes un poco más redondeados como Qatar */
+    border-radius: 20px;
+    /* Bordes un poco más redondeados como Qatar */
     overflow: hidden;
     height: 340px;
     display: flex;
@@ -583,13 +586,13 @@ body {
 .vuelo-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%);
     z-index: 2;
     transition: background-color 400ms ease;
 }
 
 .vuelo-card-index:hover .vuelo-card-overlay {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .vuelo-card-content {
@@ -628,14 +631,14 @@ body {
     font-weight: 700;
     margin-bottom: 4px;
     font-family: 'Georgia', serif;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .vuelo-card-info p {
     font-size: 0.85rem;
     opacity: 0.85;
     margin: 0;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .vuelo-card-price {
@@ -655,7 +658,7 @@ body {
     font-size: 1.1rem;
     color: #c9a76d;
     font-weight: 700;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .vuelo-card-hover-actions {
@@ -734,6 +737,7 @@ body {
         transform: translateY(32px) scale(0.96);
         filter: blur(8px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -742,7 +746,8 @@ body {
 }
 
 .reveal {
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
+    /* Oculto por defecto */
 }
 
 .reveal.is-visible {
@@ -750,11 +755,25 @@ body {
 }
 
 /* Staggering para que las tarjetas de vuelo entren una tras otra */
-.vuelos-grid-index .vuelo-card-index:nth-child(1).is-visible { animation-delay: 0ms; }
-.vuelos-grid-index .vuelo-card-index:nth-child(2).is-visible { animation-delay: 100ms; }
-.vuelos-grid-index .vuelo-card-index:nth-child(3).is-visible { animation-delay: 200ms; }
-.vuelos-grid-index .vuelo-card-index:nth-child(4).is-visible { animation-delay: 300ms; }
-.vuelos-grid-index .vuelo-card-index:nth-child(5).is-visible { animation-delay: 400ms; }
+.vuelos-grid-index .vuelo-card-index:nth-child(1).is-visible {
+    animation-delay: 0ms;
+}
+
+.vuelos-grid-index .vuelo-card-index:nth-child(2).is-visible {
+    animation-delay: 100ms;
+}
+
+.vuelos-grid-index .vuelo-card-index:nth-child(3).is-visible {
+    animation-delay: 200ms;
+}
+
+.vuelos-grid-index .vuelo-card-index:nth-child(4).is-visible {
+    animation-delay: 300ms;
+}
+
+.vuelos-grid-index .vuelo-card-index:nth-child(5).is-visible {
+    animation-delay: 400ms;
+}
 
 /* ===========================
    MEDIA QUERIES
@@ -769,7 +788,7 @@ body {
     .vuelos-grid-index {
         grid-template-columns: 1fr;
     }
-    
+
     .vuelo-card-index:nth-child(1),
     .vuelo-card-index:nth-child(4),
     .vuelo-card-index:nth-child(5) {

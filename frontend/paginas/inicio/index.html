@@ -17,11 +17,11 @@
     <header class="header">
         <div class="header__logo">
             <a href="../index.html">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
             </a>
         </div>
 
-        <nav class="header__nav">
+        <nav class="header__nav" aria-label="Navegación principal">
             <a href="#">Inicio</a>
             <a href="../cliente/buscar-vuelos.html">Destinos</a>
             <a href="#">Información</a>
@@ -73,12 +73,14 @@
                         </div>
 
                         <div class="field">
-                            <label for="departure"><i data-lucide="calendar" class="field-icon"></i> Fecha de ida</label>
+                            <label for="departure"><i data-lucide="calendar" class="field-icon"></i> Fecha de
+                                ida</label>
                             <input type="date" id="departure">
                         </div>
 
                         <div class="field">
-                            <label for="return"><i data-lucide="calendar-check" class="field-icon"></i> Fecha de regreso</label>
+                            <label for="return"><i data-lucide="calendar-check" class="field-icon"></i> Fecha de
+                                regreso</label>
                             <input type="date" id="return">
                         </div>
 
@@ -97,22 +99,22 @@
             </div>
         </section>
 
-       
+
         <!-- Vuelos destacados -->
-<section class="vuelos-destacados">
-    <div class="vuelos-destacados-contenedor">
+        <section class="vuelos-destacados">
+            <div class="vuelos-destacados-contenedor">
 
-        <h2>Vuelos disponibles</h2>
-        <p>Explorá nuestras opciones y encontrá tu próximo destino</p>
+                <h2>Vuelos disponibles</h2>
+                <p>Explorá nuestras opciones y encontrá tu próximo destino</p>
 
-        <div class="vuelos-grid-index" id="contenedor-vuelos">
-            <!-- Los vuelos se generarán dinámicamente aquí mediante JavaScript -->
-            <p style="text-align: center; width: 100%; padding: 2rem;">Cargando vuelos disponibles...</p>
-        </div>
-    </div>
-</section>
+                <div class="vuelos-grid-index" id="contenedor-vuelos">
+                    <!-- Los vuelos se generarán dinámicamente aquí mediante JavaScript -->
+                    <p style="text-align: center; width: 100%; padding: 2rem;">Cargando vuelos disponibles...</p>
+                </div>
+            </div>
+        </section>
 
- <!-- Bloque promocional -->
+        <!-- Bloque promocional -->
         <section class="promo">
             <div class="promo__card reveal">
                 <h2>Acercamos destinos</h2>
@@ -135,7 +137,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 
@@ -189,7 +191,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Observar elementos estáticos
             document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-            
+
             // Inicializar iconos estáticos de Lucide
             if (window.lucide) {
                 lucide.createIcons();
@@ -207,9 +209,9 @@
                 // Hacer la petición a la API (al puerto 3000 donde corre el backend)
                 const respuesta = await fetch('http://localhost:3000/api/vuelos');
                 if (!respuesta.ok) throw new Error('Error al obtener los vuelos');
-                
+
                 const vuelos = await respuesta.json();
-                
+
                 // Limpiar el estado de carga
                 contenedor.innerHTML = '';
 
@@ -233,9 +235,9 @@
                     // Crear la tarjeta (card)
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'vuelo-card-index reveal';
-                    
+
                     tarjeta.innerHTML = `
-                        <img src="${vuelo.imagen_url}" alt="${vuelo.ciudad_destino}" class="vuelo-card-bg">
+                        <img src="${vuelo.imagen_url}" alt="Vista representativa de ${vuelo.ciudad_destino}" class="vuelo-card-bg">
                         <div class="vuelo-card-overlay"></div>
                         <div class="vuelo-card-content">
                             <div class="vuelo-card-info-row">
@@ -251,12 +253,12 @@
                         </div>
                         <div class="vuelo-card-hover-actions">
                             <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-reservar">Reservar vuelo</a>
-                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-ver-detalle">Ver detalle</a>
+                            <a href="../cliente/buscar-vuelos.html" class="btn-ver-detalle">Ver detalle</a>
                         </div>
                     `;
-                    
+
                     contenedor.appendChild(tarjeta);
-                    
+
                     // Observar la nueva tarjeta para aplicar la animación
                     observer.observe(tarjeta);
                 });

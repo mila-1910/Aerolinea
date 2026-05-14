@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     const API_URL = "http://localhost:3000/api";
 
-    const tablaBody = document.getElementById("tabla-reservas-body");
-    const tabs = document.querySelectorAll(".tab-reserva");
+    const gridContenedor = document.getElementById("tabla-reservas-body");
+    const tabs = document.querySelectorAll(".segment-btn");
     const buscador = document.getElementById("buscar-reserva-input");
-    const tablaContenedor = document.querySelector(".tabla-contenedor");
+    const mainContenedor = document.querySelector(".reservas-grid-contenedor");
 
     const countTodas = document.getElementById("count-todas");
     const countPendientes = document.getElementById("count-pendientes");
@@ -23,40 +23,25 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const obtenerUsuario = () => {
-        // Usuario que inició sesión
         const usuarioRaw = localStorage.getItem("usuario");
-
         if (!usuarioRaw) return null;
-
         return JSON.parse(usuarioRaw);
     };
 
     const formatoFecha = (fechaISO) => {
         const fecha = String(fechaISO).split("T")[0];
         const partes = fecha.split("-");
-
         const meses = {
-            "01": "Ene",
-            "02": "Feb",
-            "03": "Mar",
-            "04": "Abr",
-            "05": "May",
-            "06": "Jun",
-            "07": "Jul",
-            "08": "Ago",
-            "09": "Sep",
-            "10": "Oct",
-            "11": "Nov",
-            "12": "Dic"
+            "01": "Ene", "02": "Feb", "03": "Mar", "04": "Abr",
+            "05": "May", "06": "Jun", "07": "Jul", "08": "Ago",
+            "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dic"
         };
-
         return `${Number(partes[2])} ${meses[partes[1]]} ${partes[0]}`;
     };
 
     const formatoDuracion = (minutos) => {
         const horas = Math.floor(minutos / 60);
         const mins = minutos % 60;
-
         if (mins === 0) return `${horas}h`;
         return `${horas}h ${mins}min`;
     };
@@ -99,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const actualizarContadores = () => {
-        // Contadores de estados
         countTodas.textContent = reservas.length;
         countPendientes.textContent = reservas.filter(item => item.estado === "Pendiente").length;
         countConfirmadas.textContent = reservas.filter(item => item.estado === "Confirmada").length;
@@ -107,14 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const guardarReservaSeleccionada = (reserva) => {
-        // Reserva seleccionada para ver detalle
         localStorage.setItem("reservaSeleccionada", JSON.stringify(reserva));
         localStorage.setItem("reservaEnProceso", JSON.stringify(reserva));
     };
 
     const cancelarReserva = async (idReserva) => {
         try {
-            // Cancela la reserva en Neon
             const response = await fetch(`${API_URL}/reservas/${idReserva}/cancelar`, {
                 method: "PUT"
             });
@@ -127,12 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             reservas = reservas.map((reserva) => {
                 if (reserva.idReserva === idReserva) {
-                    return {
-                        ...reserva,
-                        estado: "Cancelada"
-                    };
+                    return { ...reserva, estado: "Cancelada" };
                 }
-
                 return reserva;
             });
 
@@ -143,81 +121,119 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const crearFila = (reserva) => {
-        const fila = document.createElement("tr");
+    const crearTarjetaReserva = (reserva, index) => {
+        const div = document.createElement("div");
+        div.className = "reserva-card";
+        
+        // Emil Kowalski stagger effect
+        div.style.animationDelay = `${index * 0.06}s`;
+
         const puedeCancelar = reserva.estado !== "Cancelada";
 
-        fila.innerHTML = `
-            <td>#${reserva.numeroReserva}</td>
-            <td>${reserva.vuelo.numeroVuelo}</td>
-            <td>${reserva.vuelo.origen} → ${reserva.vuelo.destino}</td>
-            <td>${reserva.vuelo.fechaTexto}</td>
-            <td>${reserva.clase}</td>
-            <td><span class="estado ${claseEstado(reserva.estado)}">${reserva.estado}</span></td>
-            <td>
-                <div class="reserva-acciones">
-                    <a href="resumen-reserva.html" class="btn-ver">Ver detalle</a>
-                    ${puedeCancelar ? '<button class="btn-cancelar" type="button">Cancelar</button>' : ""}
+        div.innerHTML = `
+            <div class="card-header">
+                <div class="card-meta">
+                    <span class="reserva-id">Reserva #${reserva.numeroReserva}</span>
+                    <span class="reserva-fecha">${reserva.vuelo.fechaTexto}</span>
                 </div>
-            </td>
+                <span class="estado-badge estado ${claseEstado(reserva.estado)}">${reserva.estado}</span>
+            </div>
+
+            <div class="card-route">
+                <div class="route-point origin">
+                    <div class="route-city">${reserva.vuelo.origen}</div>
+                </div>
+                <div class="route-icon"><i class="fa-solid fa-plane"></i></div>
+                <div class="route-point destination">
+                    <div class="route-city">${reserva.vuelo.destino}</div>
+                </div>
+            </div>
+
+            <div class="card-info">
+                <div class="info-item">
+                    <span class="info-label">Vuelo</span>
+                    <span class="info-value">${reserva.vuelo.numeroVuelo}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Clase</span>
+                    <span class="info-value">${reserva.clase}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Pasajeros</span>
+                    <span class="info-value">${reserva.pasajeros}</span>
+                </div>
+            </div>
+
+            <div class="card-actions">
+                <a href="resumen-reserva.html" class="btn-card secondary-btn btn-ver">Ver Detalle</a>
+                ${puedeCancelar ? '<button class="btn-card danger-btn btn-cancelar">Cancelar</button>' : ''}
+            </div>
         `;
 
-        fila.querySelector(".btn-ver").addEventListener("click", () => {
+        div.querySelector(".btn-ver").addEventListener("click", () => {
             guardarReservaSeleccionada(reserva);
         });
 
-        const btnCancelar = fila.querySelector(".btn-cancelar");
-
+        const btnCancelar = div.querySelector(".btn-cancelar");
         if (btnCancelar) {
             btnCancelar.addEventListener("click", () => {
                 cancelarReserva(reserva.idReserva);
             });
         }
 
-        return fila;
+        return div;
     };
 
     const pintarReservas = () => {
-        // Filtros de tabla
-        const textoBusqueda = normalizar(buscador.value);
+        const actualizarDOM = () => {
+            const textoBusqueda = normalizar(buscador.value);
 
-        const filtradas = reservas.filter((reserva) => {
-            const textoReserva = normalizar(`
-                ${reserva.numeroReserva}
-                ${reserva.vuelo.numeroVuelo}
-                ${reserva.vuelo.origen}
-                ${reserva.vuelo.destino}
-                ${reserva.estado}
-                ${reserva.clase}
-            `);
+            const filtradas = reservas.filter((reserva) => {
+                const textoReserva = normalizar(`
+                    ${reserva.numeroReserva}
+                    ${reserva.vuelo.numeroVuelo}
+                    ${reserva.vuelo.origen}
+                    ${reserva.vuelo.destino}
+                    ${reserva.estado}
+                    ${reserva.clase}
+                `);
 
-            const pasaEstado = estadoActivo === "Todas" || reserva.estado === estadoActivo;
-            const pasaBusqueda = textoBusqueda === "" || textoReserva.includes(textoBusqueda);
+                const pasaEstado = estadoActivo === "Todas" || reserva.estado === estadoActivo;
+                const pasaBusqueda = textoBusqueda === "" || textoReserva.includes(textoBusqueda);
 
-            return pasaEstado && pasaBusqueda;
-        });
+                return pasaEstado && pasaBusqueda;
+            });
 
-        tablaBody.innerHTML = "";
+            gridContenedor.innerHTML = "";
 
-        filtradas.forEach((reserva) => {
-            tablaBody.appendChild(crearFila(reserva));
-        });
+            filtradas.forEach((reserva, index) => {
+                gridContenedor.appendChild(crearTarjetaReserva(reserva, index));
+            });
 
-        tablaContenedor.classList.toggle("sin-datos", filtradas.length === 0);
-        actualizarContadores();
+            mainContenedor.classList.toggle("grid-empty", filtradas.length === 0);
+            actualizarContadores();
+        };
+
+        // Usa View Transitions API para animaciones suaves (Emil Kowalski style)
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                actualizarDOM();
+            });
+        } else {
+            actualizarDOM();
+        }
     };
 
     const cargarReservasDesdeBaseDatos = async () => {
         const usuario = obtenerUsuario();
 
         if (!usuario) {
-            tablaContenedor.classList.add("sin-datos");
+            mainContenedor.classList.add("grid-empty");
             return;
         }
 
         try {
             const response = await fetch(`${API_URL}/reservas/usuario/${usuario.id}`);
-
             const data = await response.json();
 
             if (!response.ok) {
@@ -228,22 +244,61 @@ document.addEventListener("DOMContentLoaded", () => {
             pintarReservas();
         } catch (error) {
             console.error("Error cargando reservas:", error);
-            tablaContenedor.classList.add("sin-datos");
+            mainContenedor.classList.add("grid-empty");
         }
     };
 
     tabs.forEach((tab) => {
         tab.addEventListener("click", () => {
-            // Cambia filtro activo
-            tabs.forEach(item => item.classList.remove("activo"));
-            tab.classList.add("activo");
-
+            tabs.forEach(item => item.classList.remove("active"));
+            tab.classList.add("active");
             estadoActivo = tab.dataset.estado;
             pintarReservas();
         });
     });
 
-    buscador.addEventListener("input", pintarReservas);
+    let debounceTimer;
+    buscador.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            pintarReservas();
+        }, 400);
+    });
+
+    const btnGrid = document.getElementById("btn-grid");
+    const btnCompact = document.getElementById("btn-compact");
+    const gridEl = document.querySelector(".reservas-grid");
+
+    const setView = (viewType) => {
+        const actualizarVista = () => {
+            if (viewType === "compact") {
+                gridEl.classList.add("vista-compacta");
+                btnCompact.classList.add("active");
+                btnGrid.classList.remove("active");
+                localStorage.setItem("elaris_reservas_view", "compact");
+            } else {
+                gridEl.classList.remove("vista-compacta");
+                btnGrid.classList.add("active");
+                btnCompact.classList.remove("active");
+                localStorage.setItem("elaris_reservas_view", "grid");
+            }
+        };
+
+        if (document.startViewTransition) {
+            document.startViewTransition(() => {
+                actualizarVista();
+            });
+        } else {
+            actualizarVista();
+        }
+    };
+
+    btnGrid.addEventListener("click", () => setView("grid"));
+    btnCompact.addEventListener("click", () => setView("compact"));
+
+    // Initialize view from local storage
+    const savedView = localStorage.getItem("elaris_reservas_view") || "grid";
+    setView(savedView);
 
     cargarReservasDesdeBaseDatos();
 });

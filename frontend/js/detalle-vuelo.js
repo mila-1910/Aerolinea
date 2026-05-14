@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const vuelosDisponibles = [
         {
             idVuelo: 1,
@@ -39,8 +39,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const descripcionIcono = document.getElementById("descripcion-icono");
     const relacionadosGrid = document.getElementById("destinos-relacionados-grid");
 
-    const vueloGuardado = localStorage.getItem("vueloSeleccionado");
-    let vuelo = vueloGuardado ? JSON.parse(vueloGuardado) : vuelosDisponibles[0];
+    let vuelo = vuelosDisponibles[0];
+    const urlParams = new URLSearchParams(window.location.search);
+    const idUrl = urlParams.get('id');
+
+    if (idUrl) {
+        try {
+            const res = await fetch('http://localhost:3000/api/vuelos');
+            if (res.ok) {
+                const vuelosApi = await res.json();
+                const v = vuelosApi.find(v => v.numero_vuelo === idUrl);
+                if (v) {
+                    const fechaObj = new Date(v.fecha_salida.substring(0, 10) + 'T12:00:00');
+                    const opcionesFecha = { day: 'numeric', month: 'short', year: 'numeric' };
+                    vuelo = {
+                        idVuelo: v.id_vuelo,
+                        numeroVuelo: v.numero_vuelo,
+                        origen: v.origen,
+                        destino: v.destino,
+                        ciudad: v.ciudad_destino || v.destino,
+                        fecha: v.fecha_salida.substring(0, 10),
+                        fechaTexto: fechaObj.toLocaleDateString('es-ES', opcionesFecha),
+                        escala: v.escala || "Directo",
+                        duracion: `${Math.floor(v.duracion_minutos / 60)}h ${v.duracion_minutos % 60}min`,
+                        duracionMinutos: v.duracion_minutos,
+                        clase: v.clase || "Económica",
+                        avion: v.tipo_avion || "Boeing",
+                        ruta: `${v.origen} → ${v.destino}`,
+                        precioNumero: Number(v.precio_base),
+                        precio: new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', minimumFractionDigits: 0}).format(v.precio_base) + " COP",
+                        imagen: v.imagen_url || "../../imagenes/nueva-york.jpg",
+                        descripcion: v.descripcion || `Disfruta de un increíble viaje a ${v.destino}.`
+                    };
+                    localStorage.setItem("vueloSeleccionado", JSON.stringify(vuelo));
+                }
+            }
+        } catch (e) {
+            console.error("Error cargando vuelo de la API:", e);
+        }
+    } else {
+        const vueloGuardado = localStorage.getItem("vueloSeleccionado");
+        if (vueloGuardado) {
+            vuelo = JSON.parse(vueloGuardado);
+        }
+    }
 
     const obtenerUsuario = () => {
         // Usuario que inició sesión
@@ -53,8 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cargarDetalle = () => {
         // Datos principales del vuelo
-        imagen.src = vuelo.imagen;
-        imagen.alt = vuelo.ciudad;
         ciudad.textContent = vuelo.ciudad;
         precio.textContent = vuelo.precio;
         tipo.textContent = "Vuelo ida y vuelta";
@@ -63,11 +103,126 @@ document.addEventListener("DOMContentLoaded", () => {
         duracion.textContent = vuelo.duracion;
         escala.textContent = vuelo.escala;
         descripcionTexto.textContent = vuelo.descripcion;
-                // Oculta el mensaje de carga
-        if (loaderVuelo) {
-            loaderVuelo.style.display = "none";
+        
+        // --- Lógica del Carrusel ---
+        let imagenes = [];
+        if (vuelo.ciudad.toLowerCase() === "nueva york") {
+            imagenes = [
+                "../../imagenes/detalles_vuelo/nueva_york/nueva-york1.jpg",
+                "../../imagenes/detalles_vuelo/nueva_york/nueva-york2.jpg",
+                "../../imagenes/detalles_vuelo/nueva_york/nueva-york3.jpg",
+                "../../imagenes/detalles_vuelo/nueva_york/nueva-york4.jpg"
+            ];
+        } else if (vuelo.ciudad.toLowerCase() === "cancún" || vuelo.ciudad.toLowerCase() === "cancun") {
+            imagenes = [
+                "../../imagenes/detalles_vuelo/cancun/cancun.jpg",
+                "../../imagenes/detalles_vuelo/cancun/cancun1.jpg",
+                "../../imagenes/detalles_vuelo/cancun/cancun2.jpg",
+                "../../imagenes/detalles_vuelo/cancun/cancun3.jpg"
+            ];
+        } else {
+            imagenes = [vuelo.imagen]; // Fallback a imagen única
         }
 
+        const slidesContainer = document.getElementById("carousel-slides");
+        const dotsContainer = document.getElementById("carousel-dots");
+        const carouselContainer = document.getElementById("detalle-carousel");
+        
+        slidesContainer.innerHTML = "";
+        dotsContainer.innerHTML = "";
+        
+        if (imagenes.length <= 1) {
+            carouselContainer.classList.add("single-image");
+        } else {
+            carouselContainer.classList.remove("single-image");
+        }
+
+        imagenes.forEach((imgSrc, index) => {
+            // Crear slide
+            const slide = document.createElement("div");
+            slide.className = `carousel-slide ${index === 0 ? "active" : ""}`;
+            slide.innerHTML = `<img src="${imgSrc}" alt="Vista de ${vuelo.ciudad}">`;
+            slidesContainer.appendChild(slide);
+
+            // Crear dot si hay más de una imagen
+            if (imagenes.length > 1) {
+                const dot = document.createElement("div");
+                dot.className = `dot ${index === 0 ? "active" : ""}`;
+                dot.dataset.index = index;
+                dotsContainer.appendChild(dot);
+                
+                dot.addEventListener("click", () => irASlide(index));
+            }
+        });
+
+        let currentSlide = 0;
+        let slideInterval;
+
+        const irASlide = (n) => {
+            const slides = document.querySelectorAll(".carousel-slide");
+            const dots = document.querySelectorAll(".dot");
+            
+            if (slides.length <= 1) return;
+            
+            slides[currentSlide].classList.remove("active");
+            if (dots.length > 0) dots[currentSlide].classList.remove("active");
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add("active");
+            if (dots.length > 0) dots[currentSlide].classList.add("active");
+            
+            resetInterval();
+        };
+
+        const siguienteSlide = () => irASlide(currentSlide + 1);
+        const anteriorSlide = () => irASlide(currentSlide - 1);
+
+        document.getElementById("carousel-next").addEventListener("click", siguienteSlide);
+        document.getElementById("carousel-prev").addEventListener("click", anteriorSlide);
+
+        const resetInterval = () => {
+            clearInterval(slideInterval);
+            if (imagenes.length > 1) {
+                slideInterval = setInterval(siguienteSlide, 5000); // 5 segundos por slide
+            }
+        };
+
+        resetInterval();
+
+        // Función para ocultar el loader con transición suave
+        const ocultarLoader = () => {
+            if (loaderVuelo) {
+                loaderVuelo.style.transition = "opacity 0.4s ease";
+                loaderVuelo.style.opacity = "0";
+                setTimeout(() => {
+                    loaderVuelo.style.display = "none";
+                    
+                    // Activar animaciones de entrada del hero
+                    const heroContainer = document.getElementById("hero-container");
+                    if (heroContainer) {
+                        heroContainer.classList.add("loaded");
+                    }
+                }, 400);
+            }
+        };
+
+        // Esperar a que la primera imagen del carrusel cargue
+        const primeraImagen = slidesContainer.querySelector("img");
+        const tiempoMinimo = new Promise(resolve => setTimeout(resolve, 600)); 
+        
+        const cargaImagen = new Promise((resolve) => {
+            if (!primeraImagen || primeraImagen.complete) {
+                resolve();
+            } else {
+                primeraImagen.onload = resolve;
+                primeraImagen.onerror = resolve; 
+            }
+        });
+
+        Promise.all([tiempoMinimo, cargaImagen]).then(() => {
+            ocultarLoader();
+        });
     };
 
     const cargarSelects = () => {

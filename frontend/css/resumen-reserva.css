@@ -1,22 +1,83 @@
 /* ===========================
-   HEADER
+   VARIABLES & GLOBALS
 =========================== */
-.resumen-header {
-    background-color: var(--vino);
-    padding: 40px;
+:root {
+    --vino-50: rgba(123, 28, 78, 0.05);
+    --vino-100: rgba(123, 28, 78, 0.1);
+    --sombra-premium: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    --sombra-flotante: 0 20px 40px -10px rgba(123, 28, 78, 0.15);
+    --blur-intenso: blur(20px);
+    --borde-cristal: 1px solid rgba(255, 255, 255, 0.6);
+    --spring-easing: cubic-bezier(0.175, 0.885, 0.32, 1.1); /* Emil Kowalski spring */
+}
+
+/* ===========================
+   ANIMACIONES (Emil Kowalski & Pro Max)
+=========================== */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Usamos una variable custom para escalonar */
+    animation-delay: calc(var(--stagger-idx, 0) * 0.08s);
+}
+
+/* ===========================
+   HERO / HEADER
+=========================== */
+.resumen-hero {
+    background: linear-gradient(135deg, var(--vino-oscuro) 0%, var(--vino) 100%);
+    padding: 60px 20px 80px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-.resumen-header h1 {
+/* Efecto sutil de fondo en el hero */
+.resumen-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%);
+    pointer-events: none;
+}
+
+.hero-content h1 {
     color: var(--blanco);
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
 }
 
-.resumen-header p {
-    color: #f0c0d8;
-    font-size: 1rem;
+.hero-content p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto 20px;
+}
+
+.reserva-numero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--blanco);
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 /* ===========================
@@ -24,335 +85,547 @@
 =========================== */
 .resumen-contenedor {
     display: flex;
-    gap: 24px;
+    gap: 32px;
     max-width: 1100px;
-    margin: 40px auto;
+    margin: -40px auto 80px; /* Sube sobre el hero */
     padding: 0 40px;
     align-items: flex-start;
-    margin-bottom: 60px;
+    position: relative;
+    z-index: 10;
 }
 
 .resumen-columna-izq {
-    flex: 1.2;
+    flex: 1.3;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 .resumen-columna-der {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 /* ===========================
-   BLOQUES
+   PREMIUM CARDS (Glassmorphism base)
 =========================== */
-.resumen-bloque {
-    border-radius: 12px;
+.premium-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: var(--blur-intenso);
+    -webkit-backdrop-filter: var(--blur-intenso);
+    border: var(--borde-cristal);
+    border-radius: 20px;
+    box-shadow: var(--sombra-premium);
     overflow: hidden;
-    box-shadow: var(--sombra);
+    transition: transform 0.4s var(--spring-easing), box-shadow 0.4s ease;
 }
 
-.bloque-header {
-    background-color: var(--vino);
-    padding: 12px 20px;
+.premium-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-flotante);
 }
 
-.bloque-header h3 {
-    color: var(--blanco);
-    font-size: 0.95rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.card-header-premium {
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 }
 
-.bloque-contenido {
-    background-color: var(--blanco);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* ===========================
-   VUELO
-=========================== */
-.vuelo-ruta {
+.header-title-group {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.vuelo-ciudad {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.vuelo-flecha {
+.header-icon {
     color: var(--vino);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    background: var(--vino-50);
+    padding: 10px;
+    border-radius: 10px;
 }
 
-.vuelo-detalles {
-    display: flex;
-    gap: 24px;
+.card-header-premium h3 {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 700;
+    letter-spacing: -0.3px;
 }
 
-.vuelo-detalle-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.detalle-label {
-    font-size: 0.78rem;
-    color: var(--gris-texto);
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.detalle-valor {
-    font-size: 0.9rem;
-    color: #333;
-    font-weight: 500;
+.card-body-premium {
+    padding: 20px 28px 28px;
 }
 
 /* ===========================
-   TARIFA
+   BOARDING PASS (El Toque Mágico)
 =========================== */
-.tarifa-clase {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #333;
+.boarding-pass {
+    position: relative;
+    background: #ffffff; /* Sólido para el boleto */
 }
 
-.tarifa-beneficios {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.tarifa-beneficios li {
-    font-size: 0.9rem;
-    color: var(--gris-texto);
-}
-
-.tarifa-footer {
+.bp-header {
+    background: var(--vino);
+    color: var(--blanco);
+    padding: 16px 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 12px;
-    border-top: 1px solid #f0f0f0;
-}
-
-.btn-cambiar-tarifa {
-    color: var(--vino);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.btn-cambiar-tarifa:hover {
-    opacity: 0.75;
-}
-
-.tarifa-precio {
-    font-size: 1rem;
     font-weight: 700;
-    color: var(--vino);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
 }
+
+.bp-airline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bp-body {
+    padding: 32px 28px;
+}
+
+.bp-route {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.bp-city {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.bp-city-code {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #111;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.bp-city-name {
+    font-size: 1.1rem;
+    color: var(--gris-texto);
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.bp-time {
+    font-size: 1rem;
+    color: var(--vino);
+    font-weight: 700;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Path de vuelo (Línea con avión) */
+.bp-flight-path {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 0 20px;
+}
+
+.path-line {
+    width: 100%;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #ccc 0, #ccc 6px, transparent 6px, transparent 12px);
+    margin: 10px 0;
+    position: relative;
+}
+
+.path-line::before, .path-line::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background: #fff;
+}
+.path-line::before { left: -10px; }
+.path-line::after { right: -10px; }
+
+.plane-icon {
+    color: var(--vino);
+    font-size: 1.4rem;
+    position: absolute;
+    top: -12px;
+    background: #fff;
+    padding: 0 10px;
+}
+
+.bp-duration {
+    font-size: 0.85rem;
+    color: var(--gris-texto);
+    font-weight: 600;
+    background: var(--gris-claro);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-top: -8px;
+}
+
+/* Detalles abajo del boarding pass */
+.bp-details {
+    display: flex;
+    justify-content: space-between;
+    background: var(--gris-claro);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.bp-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bp-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--gris-texto);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.bp-value {
+    font-size: 0.95rem;
+    color: #111;
+    font-weight: 700;
+}
+
+/* Recortes del boleto */
+.bp-cutout {
+    position: absolute;
+    bottom: 95px; /* Alinear con el bloque gris */
+    width: 30px;
+    height: 30px;
+    background-color: var(--gris-claro); /* Debe coincidir con el body bg (ahora es gris-claro del padre) */
+    border-radius: 50%;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); /* Sombra invertida ligera */
+    z-index: 2;
+}
+
+.bp-cutout-left { left: -15px; }
+.bp-cutout-right { right: -15px; }
 
 /* ===========================
-   DATOS PASAJERO
+   TARIFA Y BENEFICIOS
 =========================== */
-.pasajero-datos {
+.tarifa-highlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--vino-50);
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--vino-100);
+}
+
+.tarifa-clase {
+    font-size: 1.2rem;
+    color: var(--vino);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.tarifa-precio-badge {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #111;
+    font-variant-numeric: tabular-nums;
+}
+
+.tarifa-beneficios-grid {
+    list-style: none;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
 
-/* ===========================
-   RESUMEN DE PAGO
-=========================== */
-.pago-linea {
+.tarifa-beneficios-grid li {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
     font-size: 0.9rem;
-    color: #333;
+    color: #444;
+    font-weight: 500;
 }
 
-.descuento {
-    color: #28a745;
+.tarifa-beneficios-grid li i {
+    color: var(--vino);
+    font-size: 1.1rem;
+}
+
+/* ===========================
+   INFORMACIÓN PASAJERO
+=========================== */
+.pasajero-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pasajero-item-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.pasajero-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #fbfbfb;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #f0f0f0;
+}
+
+.p-label {
+    font-size: 0.75rem;
+    color: var(--gris-texto);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.p-value {
+    font-size: 0.95rem;
+    color: #111;
     font-weight: 600;
 }
 
-.pago-hr {
-    border: none;
-    border-top: 1px solid #f0f0f0;
-}
-
-.pago-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--vino);
-}
-
 /* ===========================
-   BOTONES FINALES
+   RESUMEN DE PAGO (RECEIPT)
 =========================== */
-.resumen-botones {
+.receipt-card {
+    background: #ffffff;
+    position: relative;
+}
+
+.receipt-body {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-.btn-confirmar {
-    background-color: var(--vino);
+.receipt-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #444;
+    font-weight: 500;
+}
+
+.r-value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: #111;
+}
+
+.discount-line {
+    color: #059669; /* Verde esmeralda premium */
+}
+.discount-line .r-value {
+    color: #059669;
+}
+
+.receipt-divider {
+    height: 1px;
+    border: none;
+    border-top: dashed 2px #e0e0e0;
+    margin: 8px 0;
+}
+
+.receipt-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #111;
+}
+
+.total-amount {
+    font-size: 1.5rem;
+    color: var(--vino);
+    font-variant-numeric: tabular-nums;
+}
+
+.receipt-note {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 12px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ===========================
+   BOTONES
+=========================== */
+.resumen-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn-premium-confirm {
+    background: linear-gradient(135deg, var(--vino) 0%, var(--vino-oscuro) 100%);
     color: var(--blanco);
     text-decoration: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 18px;
+    border-radius: 14px;
+    font-size: 1.05rem;
     font-weight: 700;
     text-align: center;
-    transition: opacity 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 20px rgba(123, 28, 78, 0.3);
+    transition: all 0.2s var(--spring-easing);
 }
 
-.btn-confirmar:hover {
-    opacity: 0.85;
+.btn-premium-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(123, 28, 78, 0.4);
 }
 
-.btn-guardar {
-    background-color: transparent;
+.btn-premium-confirm:focus-visible {
+    outline: 3px solid var(--vino);
+    outline-offset: 4px;
+}
+
+.btn-premium-confirm:active {
+    transform: scale(0.98);
+}
+
+.btn-premium-outline {
+    background: transparent;
     color: var(--vino);
     text-decoration: none;
-    padding: 14px;
-    border-radius: 8px;
+    padding: 16px;
+    border-radius: 14px;
     font-size: 1rem;
     font-weight: 700;
-    border: 2px solid var(--vino);
     text-align: center;
-    transition: all 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid var(--vino-100);
+    transition: all 0.2s ease;
 }
 
-.btn-guardar:hover {
-    background-color: var(--vino);
-    color: var(--blanco);
+.btn-premium-outline:hover {
+    background: var(--vino-50);
+    border-color: var(--vino);
 }
+
+.btn-premium-outline:focus-visible {
+    outline: 3px solid var(--vino);
+    outline-offset: 4px;
+}
+
+.btn-premium-outline:active {
+    transform: scale(0.98);
+}
+
 /* ===========================
-   ÍCONOS DEL FOOTER (Font Awesome)
+   ESTADO VACÍO
 =========================== */
-.footer-icono {
-    width: 18px;              /* ancho fijo para alinear iconos de distintos tamaños */
-    text-align: center;
-    margin-right: 8px;
-    color: #c9a76d;           /* dorado ELARIS — contrasta bien sobre el fondo vino */
-    font-size: 0.95rem;
-}
-
-/* Íconos de redes sociales: un poco más grandes */
-.redes .footer-icono {
-    font-size: 1rem;
-}
-/* Número de reserva */
-.reserva-numero-badge {
-    display: inline-block;
-    margin-top: 12px;
-    background-color: rgba(255, 255, 255, 0.14);
-    color: var(--blanco);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 999px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-/* Mensaje si no hay reserva */
 .reserva-vacia {
     display: none;
-    max-width: 720px;
-    margin: 50px auto;
-    padding: 40px 24px;
-    background-color: var(--blanco);
-    box-shadow: var(--sombra);
-    border-radius: 12px;
+    max-width: 600px;
+    margin: 80px auto;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 60px 40px;
+    border-radius: 24px;
+    box-shadow: var(--sombra-premium);
     text-align: center;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.vacia-icon {
+    font-size: 4rem;
+    color: var(--vino-100);
+    margin-bottom: 24px;
 }
 
 .reserva-vacia h3 {
-    color: #333;
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    font-size: 1.8rem;
+    color: #111;
+    margin-bottom: 12px;
 }
 
 .reserva-vacia p {
     color: var(--gris-texto);
-    margin-bottom: 18px;
+    font-size: 1.1rem;
+    margin-bottom: 32px;
 }
 
-.reserva-vacia a {
-    display: inline-block;
-    background-color: var(--vino);
-    color: var(--blanco);
-    text-decoration: none;
-    padding: 12px 22px;
-    border-radius: 8px;
-    font-weight: 700;
+.reserva-vacia .btn-premium-confirm {
+    display: inline-flex;
+    padding: 16px 40px;
 }
 
-/* Mejoras visuales del resumen */
-.resumen-bloque {
-    border: 1px solid #f1e4eb;
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 992px) {
+    .resumen-contenedor {
+        flex-direction: column;
+        padding: 0 20px;
+        margin-top: -20px;
+    }
+    
+    .resumen-columna-izq, .resumen-columna-der {
+        width: 100%;
+    }
+    
+    .bp-cutout {
+        display: none; /* Simplificar en móvil */
+    }
 }
 
-.bloque-contenido {
-    background: linear-gradient(180deg, #ffffff 0%, #fffafd 100%);
-}
-
-.tarifa-texto {
-    color: var(--gris-texto);
-    font-size: 0.88rem;
-    font-weight: 600;
-}
-
-.pago-nota {
-    font-size: 0.78rem;
-    color: var(--gris-texto);
-    line-height: 1.4;
-    margin-top: -6px;
-}
-
-/* Aviso de acciones */
-.aviso-resumen {
-    position: fixed;
-    right: 28px;
-    bottom: 28px;
-    background-color: var(--vino);
-    color: var(--blanco);
-    padding: 14px 20px;
-    border-radius: 10px;
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
-    font-size: 0.92rem;
-    font-weight: 600;
-    opacity: 0;
-    transform: translateY(12px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 1000;
-}
-
-.aviso-resumen.activo {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.resumen-botones a.deshabilitado {
-    opacity: 0.65;
-    pointer-events: none;
+@media (max-width: 600px) {
+    .tarifa-beneficios-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pasajero-item-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .bp-route {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .path-line {
+        display: none;
+    }
+    
+    .plane-icon {
+        position: relative;
+        top: 0;
+    }
+    
+    .text-right {
+        text-align: center;
+    }
+    .text-left {
+        text-align: center;
+    }
 }

@@ -14,15 +14,15 @@
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Navegación principal">
 
         <a class="navbar-logo" href="buscar-vuelos.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
 
         <ul class="navbar-links">
-            <li><a href="dashboard.html">Inicio</a></li>
-            <li><a href="buscar-vuelos.html">Destinos</a></li>
+            <li><a href="buscar-vuelos.html">Inicio</a></li>
+            <li><a href="mis-reservas.html">Mis reservas</a></li>
             <li><a href="#">Información</a></li>
             <li><a href="#">Ayuda</a></li>
         </ul>
@@ -52,7 +52,13 @@
     <!-- Formulario de búsqueda de vuelos -->
 
 
-    <div class="buscador-header reveal">
+    <div class="buscador-header">
+        <div class="hero-carousel-container" id="hero-carousel">
+            <div class="hero-slide active" style="background-image: url('../../imagenes/buscar_vuelos/buscar_vuelos1.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('../../imagenes/buscar_vuelos/buscar_vuelos2.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('../../imagenes/buscar_vuelos/buscar_vuelos3.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('../../imagenes/buscar_vuelos/buscar_vuelos4.jpg');"></div>
+        </div>
 
         <h2>¿Cuál será tu próximo destino?</h2>
 
@@ -60,47 +66,57 @@
 
 
         <!-- Tipo de viaje -->
-
-        <div class="tipo-viaje">
+        <fieldset class="tipo-viaje" aria-label="Tipo de viaje">
+            <legend class="sr-only">Selecciona el tipo de viaje</legend>
             <input type="radio" name="tipo" id="ida-vuelta" checked>
-            <label for="ida-vuelta">Ida y vuelta</label>
+            <label for="ida-vuelta"><i class="fa-solid fa-right-left" aria-hidden="true"></i> Ida y vuelta</label>
 
             <input type="radio" name="tipo" id="solo-ida">
-            <label for="solo-ida">Solo ida</label>
-        </div>
+            <label for="solo-ida"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Solo ida</label>
+        </fieldset>
 
 
         <!-- Campos del buscador -->
+        <form id="form-buscador" role="search" aria-label="Buscador de vuelos" onsubmit="event.preventDefault();">
+            <div class="buscador-campos">
 
-        <div class="buscador-campos reveal reveal-delay-1">
+                <div class="campo-grupo">
+                    <label for="origen"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i> Origen</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="origen" placeholder="¿De dónde sales?">
+                    </div>
+                </div>
 
-            <div class="campo-grupo">
-                <label>Origen</label>
-                <input type="text" placeholder="Ciudad de origen">
+                <div class="campo-grupo">
+                    <label for="destino"><i class="fa-solid fa-plane-arrival" aria-hidden="true"></i> Destino</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="destino" placeholder="¿A dónde vas?">
+                    </div>
+                </div>
+
+                <div class="campo-grupo fecha">
+                    <label for="fecha-ida"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Ida</label>
+                    <div class="input-wrapper">
+                        <input type="date" id="fecha-ida">
+                    </div>
+                </div>
+
+                <div class="campo-grupo fecha" id="grupo-fecha-regreso">
+                    <label for="fecha-regreso"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Regreso</label>
+                    <div class="input-wrapper">
+                        <input type="date" id="fecha-regreso">
+                    </div>
+                </div>
+
+                <div class="campo-grupo pasajeros">
+                    <label for="pasajeros"><i class="fa-solid fa-user-group" aria-hidden="true"></i> Viajeros</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="pasajeros" min="1" max="10" value="1">
+                    </div>
+                </div>
+
             </div>
-
-            <div class="campo-grupo">
-                <label>Destino</label>
-                <input type="text" placeholder="Ciudad de destino">
-            </div>
-
-            <div class="campo-grupo fecha">
-                <label>Fecha de ida</label>
-                <input type="date">
-            </div>
-
-            <div class="campo-grupo fecha">
-                <label>Fecha de regreso</label>
-                <input type="date">
-            </div>
-
-            <div class="campo-grupo pasajeros">
-                <label>Pasajeros</label>
-                <input type="number" min="1" max="10" value="1">
-            </div>
-
-
-        </div>
+        </form>
     </div>
 
     <!-- Filtros y resultados -->
@@ -110,36 +126,35 @@
         <aside class="filtros reveal reveal-delay-2">
             <h3>Filtros</h3>
 
-            <div class="filtro-grupo">
-                <h4>Precio</h4>
-                <input type="range" min="0" max="5000" value="5000">
+            <div class="filtro-grupo" role="group" aria-labelledby="precio-label">
+                <h4 id="precio-label">Precio</h4>
+                <input type="range" min="0" max="5000" value="5000" aria-label="Filtrar por precio máximo">
                 <div class="precio-rango">
                     <span>$0</span>
-                    <span>$5.000.000 COP</span>
-
+                    <span aria-live="polite">$5.000.000 COP</span>
                 </div>
             </div>
 
-            <div class="filtro-grupo">
-                <h4>Escalas</h4>
-                <label><input type="checkbox" checked> Vuelo directo</label>
-                <label><input type="checkbox" checked> Una escala</label>
-                <label><input type="checkbox" checked> Dos o más</label>
-            </div>
+            <fieldset class="filtro-grupo">
+                <legend>Escalas</legend>
+                <label for="filtro-directo"><input type="checkbox" id="filtro-directo"> Vuelo directo</label>
+                <label for="filtro-una-escala"><input type="checkbox" id="filtro-una-escala"> Una escala</label>
+                <label for="filtro-dos-escala"><input type="checkbox" id="filtro-dos-escala"> Dos o más</label>
+            </fieldset>
 
-            <div class="filtro-grupo">
-                <h4>Clase de vuelo</h4>
-                <label><input type="checkbox" checked> Económica</label>
-                <label><input type="checkbox" checked> Ejecutiva</label>
-                <label><input type="checkbox" checked> Primera clase</label>
-            </div>
+            <fieldset class="filtro-grupo">
+                <legend>Clase de vuelo</legend>
+                <label for="filtro-economica"><input type="checkbox" id="filtro-economica"> Económica</label>
+                <label for="filtro-ejecutiva"><input type="checkbox" id="filtro-ejecutiva"> Ejecutiva</label>
+                <label for="filtro-primera"><input type="checkbox" id="filtro-primera"> Primera clase</label>
+            </fieldset>
 
-            <div class="filtro-grupo">
-                <h4>Tipo de avión</h4>
-                <label><input type="checkbox" checked> Boeing</label>
-                <label><input type="checkbox" checked> Airbus</label>
-                <label><input type="checkbox" checked> Regional</label>
-            </div>
+            <fieldset class="filtro-grupo">
+                <legend>Tipo de avión</legend>
+                <label for="filtro-boeing"><input type="checkbox" id="filtro-boeing"> Boeing</label>
+                <label for="filtro-airbus"><input type="checkbox" id="filtro-airbus"> Airbus</label>
+                <label for="filtro-regional"><input type="checkbox" id="filtro-regional"> Regional</label>
+            </fieldset>
             <!-- Botón para reiniciar filtros -->
             <button class="btn-limpiar-filtros" id="btn-limpiar-filtros" type="button">
                 Limpiar filtros
@@ -151,8 +166,9 @@
         <div class="resultados">
 
             <div class="resultados-header">
-                <p>6 vuelos encontrados</p>
-                <select class="ordenar">
+                <p id="contador-vuelos" aria-live="polite">6 vuelos encontrados</p>
+                <label for="ordenar-vuelos" class="sr-only">Ordenar por</label>
+                <select class="ordenar" id="ordenar-vuelos">
                     <option>Nuevos destinos</option>
                     <option>Menor a mayor precio</option>
                     <option>Mayor a menor precio</option>
@@ -162,83 +178,129 @@
 
             <div class="vuelos-grid">
 
-                <div class="vuelo-card" data-numero="EL-204" data-origen="Bogotá" data-destino="Nueva York" data-ciudad="Nueva York" data-fecha="2026-04-15" data-fecha-texto="15 Abr 2026" data-escala="Directo" data-duracion="6h 30min" data-clase="Económica" data-avion="Boeing">
-                    <img src="../../imagenes/nueva-york.jpg" alt="Nueva York">
-                    <div class="vuelo-info">
-                        <h4>Bogotá → Nueva York</h4>
-                        <p><i class="fa-solid fa-plane"></i> Directo · 6h 30min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 15 Abr 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$3.290.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                <div class="vuelo-card" data-numero="EL-204" data-origen="Bogotá" data-destino="Nueva York" data-ciudad="Nueva York" data-fecha="2026-04-15" data-fecha-texto="15 Abr 2026" data-escala="Directo" data-duracion="6h 30min" data-clase="Económica" data-avion="Boeing" role="article" aria-label="Vuelo de Bogotá a Nueva York">
+                    <img src="../../imagenes/nueva-york.jpg" alt="Vista representativa de Nueva York" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Bogotá → Nueva York</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Directo · 6h 30min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 15 Abr 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$3.290.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-204" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
-                <div class="vuelo-card" data-numero="EL-422" data-origen="Bogotá" data-destino="París" data-ciudad="París" data-fecha="2026-05-22" data-fecha-texto="22 May 2026" data-escala="Una escala" data-duracion="12h 45min" data-clase="Económica" data-avion="Airbus">
-                    <img src="../../imagenes/paris.jpg" alt="París">
-                    <div class="vuelo-info">
-                        <h4>Bogotá → París</h4>
-                        <p><i class="fa-solid fa-plane"></i> Una escala · 12h 45min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 22 May 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$4.480.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                <div class="vuelo-card" data-numero="EL-422" data-origen="Bogotá" data-destino="París" data-ciudad="París" data-fecha="2026-05-22" data-fecha-texto="22 May 2026" data-escala="Una escala" data-duracion="12h 45min" data-clase="Económica" data-avion="Airbus" role="article" aria-label="Vuelo de Bogotá a París">
+                    <img src="../../imagenes/paris.jpg" alt="Vista representativa de París" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Bogotá → París</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Una escala · 12h 45min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 22 May 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$4.480.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-422" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
-            <div class="vuelo-card" data-numero="EL-310" data-origen="Medellín" data-destino="Cancún" data-ciudad="Cancún" data-fecha="2026-06-10" data-fecha-texto="10 Jun 2026" data-escala="Directo" data-duracion="4h 15min" data-clase="Ejecutiva" data-avion="Boeing">
-                    <img src="../../imagenes/cancun.jpg" alt="Cancún">
-                    <div class="vuelo-info">
-                        <h4>Medellín → Cancún</h4>
-                        <p><i class="fa-solid fa-plane"></i> Directo · 4h 15min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 10 Jun 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$2.170.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                <div class="vuelo-card" data-numero="EL-310" data-origen="Medellín" data-destino="Cancún" data-ciudad="Cancún" data-fecha="2026-06-10" data-fecha-texto="10 Jun 2026" data-escala="Directo" data-duracion="4h 15min" data-clase="Ejecutiva" data-avion="Boeing" role="article" aria-label="Vuelo de Medellín a Cancún">
+                    <img src="../../imagenes/cancun.jpg" alt="Vista representativa de Cancún" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Medellín → Cancún</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Directo · 4h 15min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 10 Jun 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$2.170.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-310" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
-                <div class="vuelo-card" data-numero="EL-105" data-origen="Cali" data-destino="Madrid" data-ciudad="Madrid" data-fecha="2026-07-05" data-fecha-texto="5 Jul 2026" data-escala="Una escala" data-duracion="14h 20min" data-clase="Primera clase" data-avion="Airbus">
-                    <img src="../../imagenes/madrid.jpg" alt="Madrid">
-                    <div class="vuelo-info">
-                        <h4>Cali → Madrid</h4>
-                        <p><i class="fa-solid fa-plane"></i> Una escala · 14h 20min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 5 Jul 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$3.890.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                <div class="vuelo-card" data-numero="EL-105" data-origen="Cali" data-destino="Madrid" data-ciudad="Madrid" data-fecha="2026-07-05" data-fecha-texto="5 Jul 2026" data-escala="Una escala" data-duracion="14h 20min" data-clase="Primera clase" data-avion="Airbus" role="article" aria-label="Vuelo de Cali a Madrid">
+                    <img src="../../imagenes/madrid.jpg" alt="Vista representativa de Madrid" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Cali → Madrid</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Una escala · 14h 20min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 5 Jul 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$3.890.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-105" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
-                <!-- Vuelo a Buenos Aires -->
                 <div class="vuelo-card" data-numero="EL-518" data-origen="Bogotá" data-destino="Buenos Aires" data-ciudad="Buenos Aires" data-fecha="2026-08-18" data-fecha-texto="18 Ago 2026" data-escala="Directo" data-duracion="6h 10min" data-clase="Económica" data-avion="Boeing">
-                    <img src="../../imagenes/buenos-aires.jpg" alt="Buenos Aires">
-                    <div class="vuelo-info">
-                        <h4>Bogotá → Buenos Aires</h4>
-                        <p><i class="fa-solid fa-plane"></i> Directo · 6h 10min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 18 Ago 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$2.760.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                    <img src="../../imagenes/buenos-aires.jpg" alt="Vista representativa de Buenos Aires" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Bogotá → Buenos Aires</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Directo · 6h 10min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 18 Ago 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$2.760.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-518" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
-                <!-- Vuelo a Ciudad de México -->
                 <div class="vuelo-card" data-numero="EL-267" data-origen="Cartagena" data-destino="Ciudad de México" data-ciudad="Ciudad de México" data-fecha="2026-09-02" data-fecha-texto="2 Sep 2026" data-escala="Una escala" data-duracion="5h 55min" data-clase="Ejecutiva" data-avion="Airbus">
-                    <img src="../../imagenes/ciudad-mexico.jpg" alt="Ciudad de México">
-                    <div class="vuelo-info">
-                        <h4>Cartagena → Ciudad de México</h4>
-                        <p><i class="fa-solid fa-plane"></i> Una escala · 5h 55min</p>
-                        <p><i class="fa-solid fa-calendar-days"></i> 2 Sep 2026</p>
-                        <div class="vuelo-footer">
-                            <span class="vuelo-precio">$2.340.000 COP</span>
-                            <a href="detalle-vuelo.html" class="btn-detalle">Ver detalle</a>
+                    <img src="../../imagenes/ciudad-mexico.jpg" alt="Vista representativa de Ciudad de México" class="vuelo-card-bg">
+                    <div class="vuelo-card-overlay"></div>
+                    <div class="vuelo-card-content">
+                        <div class="vuelo-card-info-row">
+                            <div class="vuelo-card-info">
+                                <h4>Cartagena → Ciudad de México</h4>
+                                <p><i class="fa-solid fa-plane card-icon"></i> Una escala · 5h 55min</p>
+                                <p><i class="fa-solid fa-calendar-days card-icon"></i> 2 Sep 2026</p>
+                            </div>
+                            <div class="vuelo-card-price">
+                                <span>Desde</span>
+                                <strong>$2.340.000 COP</strong>
+                            </div>
                         </div>
+                    </div>
+                    <div class="vuelo-card-hover-actions">
+                        <a href="detalle-vuelo.html?id=EL-267" class="btn-reservar">Reservar vuelo</a>
                     </div>
                 </div>
 
@@ -263,7 +325,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 

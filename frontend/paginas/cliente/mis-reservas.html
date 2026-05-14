@@ -15,20 +15,20 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <a class="navbar-logo" href="dashboard.html">
-            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+    <nav class="navbar" aria-label="Navegación principal">
+        <a class="navbar-logo" href="buscar-vuelos.html">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
         </a>
         <ul class="navbar-links">
-            <li><a href="dashboard.html">Inicio</a></li>
-            <li><a href="buscar-vuelos.html">Destinos</a></li>
+            <li><a href="buscar-vuelos.html">Inicio</a></li>
+            <li><a href="mis-reservas.html">Mis reservas</a></li>
             <li><a href="#">Información</a></li>
             <li><a href="#">Ayuda</a></li>
         </ul>
         <div class="navbar-perfil">
             <div class="perfil-trigger">
-                <div class="avatar">M</div>
-                <span>Messi</span>
+                <div class="avatar" id="user-initial">M</div>
+                <span id="user-display-name">Messi</span>
             </div>
             <ul class="dropdown">
                 <li><a href="#">Mi cuenta</a></li>
@@ -36,61 +36,66 @@
                 <li>
                     <hr>
                 </li>
-                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion">Cerrar sesión</a></li>
+                <li><a href="../../paginas/inicio/login.html" class="cerrar-sesion" id="logout-btn">Cerrar sesión</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Listo de reservas de clientes -->
-    <div class="reservas-header">
+    <div class="reservas-header premium-header">
         <div class="reservas-header-contenido">
             <h1>Mis Reservas</h1>
-            <p>Consultá el estado de todos tus vuelos</p>
+            <p>Gestiona tus próximos destinos con la experiencia ELARIS</p>
         </div>
     </div>
 
     <!-- Contenido -->
     <div class="reservas-contenido">
 
-        <!-- Tabs de reservas -->
-        <div class="reservas-tabs">
-            <button class="tab-reserva activo" data-estado="Todas">Todas <span id="count-todas">0</span></button>
-            <button class="tab-reserva" data-estado="Pendiente">Pendientes <span id="count-pendientes">0</span></button>
-            <button class="tab-reserva" data-estado="Confirmada">Confirmadas <span id="count-confirmadas">0</span></button>
-            <button class="tab-reserva" data-estado="Cancelada">Canceladas <span id="count-canceladas">0</span></button>
+        <div class="reservas-controls">
+            <!-- Segmented Control Tabs -->
+            <div class="segmented-control" id="reservas-tabs">
+                <button class="segment-btn active" data-estado="Todas">Todas <span id="count-todas" class="count-badge">0</span></button>
+                <button class="segment-btn" data-estado="Pendiente">Pendientes <span id="count-pendientes" class="count-badge">0</span></button>
+                <button class="segment-btn" data-estado="Confirmada">Confirmadas <span id="count-confirmadas" class="count-badge">0</span></button>
+                <button class="segment-btn" data-estado="Cancelada">Canceladas <span id="count-canceladas" class="count-badge">0</span></button>
+                <div class="segment-indicator"></div>
+            </div>
+
+            <!-- View Toggle -->
+            <div class="view-toggle-container">
+                <button class="view-btn active" id="btn-grid" aria-label="Vista de tarjetas">
+                    <i class="fa-solid fa-border-all"></i>
+                </button>
+                <button class="view-btn" id="btn-compact" aria-label="Vista compacta">
+                    <i class="fa-solid fa-list"></i>
+                </button>
+            </div>
+
+            <!-- Barra de búsqueda -->
+            <div class="reservas-buscador premium-search">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <label for="buscar-reserva-input" class="sr-only">Buscar reserva</label>
+                <input type="text" id="buscar-reserva-input" placeholder="Buscar por destino o número de reserva...">
+            </div>
         </div>
 
-        <!-- Barra de búsqueda -->
-        <div class="reservas-buscador">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="buscar-reserva-input" placeholder="Buscar por destino o número de reserva...">
-        </div>
-
-        <!-- Tabla de reservas -->
-        <div class="tabla-contenedor">
-            <table class="tabla-mis-reservas">
-                <thead>
-                    <tr>
-                        <th># Reserva</th>
-                        <th>Vuelo</th>
-                        <th>Origen → Destino</th>
-                        <th>Fecha</th>
-                        <th>Clase</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-reservas-body">
-                </tbody>
-            </table>
+        <!-- Grid de Reservas -->
+        <div class="reservas-grid-contenedor">
+            <div class="reservas-grid" id="tabla-reservas-body">
+                <!-- Las tarjetas de reserva se inyectarán aquí -->
+            </div>
 
             <!-- Mensaje sin reservas -->
-            <div class="sin-reservas">
-                <p>✈</p>
+            <div class="sin-reservas premium-empty-state">
+                <div class="empty-icon-wrapper">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
                 <h3>No tienes reservas aún</h3>
-                <p>Explorá nuestros destinos y reservá tu próximo vuelo</p>
-                <a href="buscar-vuelos.html" class="btn-card">Buscar vuelos</a>
+                <p>El mundo te espera. Comienza a planear tu próxima aventura inolvidable.</p>
+                <a href="buscar-vuelos.html" class="btn-card primary-btn">Explorar Destinos</a>
             </div>
+        </div>
         </div>
     </div>
 
@@ -102,7 +107,7 @@
 
             <!-- Logo y descripción -->
             <div class="footer-columna">
-                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="60">
+                <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="60">
                 <p>Conectamos personas con destinos. Volamos hacia lo que importa.</p>
             </div>
 

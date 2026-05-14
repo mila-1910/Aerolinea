@@ -1,108 +1,370 @@
 /* ===========================
-   PARTE PRINCIPAL
+   ANIMACIONES DE ENTRADA
 =========================== */
-.detalle-contenedor {
-    display: flex;
-    gap: 40px;
-    max-width: 1100px;
-    margin: 70px auto;
+.animate-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.loaded .animate-element {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--delay, 0s);
+}
+
+/* ===========================
+   PARTE PRINCIPAL INMERSIVA (PRO MAX)
+=========================== */
+.vuelo-hero-container {
+    max-width: 1200px;
+    margin: 40px auto 60px auto;
     padding: 0 40px;
+    display: flex;
+    gap: 32px;
+    align-items: stretch;
+    min-height: 540px;
 }
 
-.detalle-imagen {
+.vuelo-hero-imagen {
     flex: 1;
-    border-radius: 12px;
+    position: relative;
+    border-radius: 24px;
     overflow: hidden;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
 }
 
-.detalle-imagen img {
+.vuelo-hero-imagen img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    object-position: center;
 }
 
-.detalle-info {
+.vuelo-hero-overlay {
+    display: none;
+}
+
+/* --- Carousel Styles --- */
+.carousel-slides {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    pointer-events: none;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 5;
+    opacity: 0; /* Ocultos por defecto, se muestran en hover del contenedor */
+}
+
+.carousel-container:hover .carousel-btn {
+    opacity: 1;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.3);
+}
+
+/* Si el carrusel está deshabilitado (solo 1 imagen), ocultamos los controles */
+.carousel-container.single-image .carousel-btn,
+.carousel-container.single-image .carousel-dots {
+    display: none !important;
+}
+
+/* Tarjeta Info */
+.vuelo-hero-info {
     flex: 1;
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(145deg, #ffffff, #fdfbfb);
+    border: 1px solid rgba(201, 167, 109, 0.15);
+    border-radius: 24px;
+    padding: 44px;
+    box-shadow: 0 16px 36px rgba(123, 28, 78, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: center;
+    gap: 24px;
+}
+
+/* Header de Info */
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .detalle-ciudad {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #333;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0;
 }
 
 .badge-descuento {
-    background-color: #fff3cd;
-    color: #856404;
-    padding: 4px 12px;
+    background: linear-gradient(135deg, #c9a76d, #b3915f);
+    color: #fff;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(201, 167, 109, 0.3);
+}
+
+/* Precio */
+.info-precio-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .detalle-precio {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: 800;
     color: var(--vino);
+    margin: 0;
+}
+
+.precio-detalles {
+    display: flex;
+    flex-direction: column;
 }
 
 .detalle-tipo {
-    font-size: 0.9rem;
-    color: var(--gris-texto);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin: 0;
 }
 
+.detalle-nota-precio {
+    font-size: 0.8rem;
+    color: #888;
+    margin: 0;
+}
+
+/* Grid de Datos */
+.detalle-datos-vuelo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.dato-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.dato-icono {
+    background-color: rgba(123, 28, 78, 0.1);
+    color: var(--vino);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.dato-texto {
+    display: flex;
+    flex-direction: column;
+}
+
+.dato-texto span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #666;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.dato-texto strong {
+    font-size: 1rem;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+/* Selects */
 .detalle-campos {
     display: flex;
     gap: 16px;
-    margin-top: 8px;
 }
 
 .campo-select {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     flex: 1;
 }
 
 .campo-select label {
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.campo-select select {
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.9rem;
+.campo-select label i {
+    color: var(--vino);
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.9);
     outline: none;
     cursor: pointer;
+    appearance: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
 
-.campo-select select:focus {
-    border-color: var(--vino);
+.select-wrapper select:focus,
+.select-wrapper select:hover {
+    border-color: rgba(123, 28, 78, 0.3);
+    background-color: #fff;
+    box-shadow: 0 6px 16px rgba(123, 28, 78, 0.1);
 }
 
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.select-wrapper select:focus + .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+    color: var(--vino);
+}
+
+/* Botón */
 .btn-reservar-vuelo {
-    background-color: var(--vino);
+    background: linear-gradient(135deg, var(--vino), #a32666);
     color: var(--blanco);
     text-decoration: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 18px;
+    border-radius: 14px;
+    font-size: 1.1rem;
     font-weight: 700;
     text-align: center;
-    transition: opacity 0.2s;
-    margin-top: 8px;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+    box-shadow: 0 10px 20px rgba(123, 28, 78, 0.25);
+    width: 100%;
 }
 
 .btn-reservar-vuelo:hover {
-    opacity: 0.85;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(123, 28, 78, 0.35);
+}
+
+.btn-reservar-vuelo:active {
+    transform: translateY(1px);
+    box-shadow: 0 6px 12px rgba(123, 28, 78, 0.2);
 }
 
 /* ===========================
@@ -332,43 +594,7 @@
     font-size: 1rem;
 }
 
-/* ===========================
-DATOS PRINCIPALES DEL VUELO
-============================== */
-.detalle-datos-vuelo {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin: 8px 0;
-}
-
-.detalle-datos-vuelo div {
-    background-color: var(--blanco);
-    border-radius: 10px;
-    box-shadow: var(--sombra);
-    padding: 12px;
-}
-
-.detalle-datos-vuelo span {
-    display: block;
-    font-size: 0.75rem;
-    color: var(--gris-texto);
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-}
-
-.detalle-datos-vuelo strong {
-    font-size: 0.9rem;
-    color: #333;
-}
-
-/* Nota del precio */
-.detalle-nota-precio {
-    font-size: 0.82rem;
-    color: var(--gris-texto);
-    margin-top: -6px;
-}
+/* Nota del precio removida de aqui porque la integramos arriba en el flex */
 
 /* Animación de descripción */
 .descripcion-texto {
@@ -436,4 +662,34 @@ DATOS PRINCIPALES DEL VUELO
     color: #f0c0d8;
     font-size: 0.82rem;
     font-weight: 500;
+}
+
+/* ===========================
+   LOADER VUELO
+=========================== */
+.loader-vuelo-pantalla {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blanco);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader-vuelo-pantalla .spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f0e6d2;
+    border-top: 6px solid var(--vino);
+    border-radius: 50%;
+    animation: spin-loader 1s linear infinite;
+}
+
+@keyframes spin-loader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

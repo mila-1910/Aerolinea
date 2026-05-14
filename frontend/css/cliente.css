@@ -27,6 +27,26 @@ body {
 }
 
 /* ===========================
+   ACCESIBILIDAD (A11Y)
+=========================== */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid #D4AF37;
+    outline-offset: 2px;
+}
+
+/* sr-only - Ocultar visualmente pero accesible para lectores de pantalla */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* ===========================
    NAVBAR
 =========================== */
 .navbar {
@@ -38,9 +58,14 @@ body {
     height: 80px;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    view-transition-name: navbar;
+}
+
+::view-transition-group(navbar) {
+    z-index: 1000;
 }
 
 .navbar-logo img {
@@ -138,7 +163,8 @@ body {
     background: transparent;
 }
 
-.navbar-perfil:hover .dropdown {
+.navbar-perfil:hover .dropdown,
+.navbar-perfil:focus-within .dropdown {
     visibility: visible;
     opacity: 1;
     transform: translateY(0) scale(1);
