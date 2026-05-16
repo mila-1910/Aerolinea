@@ -55,3 +55,93 @@ CREATE TABLE IF NOT EXISTS reservas (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_reservas_usuario_vuelo_activa
 ON reservas(id_usuario, id_vuelo)
 WHERE estado IN ('Pendiente', 'Confirmada');
+
+
+
+-- ===========================
+-- TABLAS DE REFERENCIA
+-- ===========================
+
+-- Tabla de países
+CREATE TABLE IF NOT EXISTS pais (
+    id_pais SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+
+-- Tabla de departamentos (referencia a pais)
+CREATE TABLE IF NOT EXISTS departamento (
+    id_departamento SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    id_pais INT NOT NULL,
+    CONSTRAINT fk_departamento_pais
+        FOREIGN KEY (id_pais) REFERENCES pais(id_pais)
+);
+
+-- Tabla de ciudades (referencia a departamento)
+CREATE TABLE IF NOT EXISTS ciudad (
+    id_ciudad SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    id_departamento INT NOT NULL,
+    CONSTRAINT fk_ciudad_departamento
+        FOREIGN KEY (id_departamento) REFERENCES departamento(id_departamento)
+);
+
+-- Tabla de roles del sistema
+CREATE TABLE IF NOT EXISTS roles (
+    id_rol SERIAL PRIMARY KEY,
+    nombre_rol VARCHAR(50) NOT NULL
+);
+
+-- Tabla de estados posibles de una reserva
+CREATE TABLE IF NOT EXISTS estado_reserva (
+    id_estado SERIAL PRIMARY KEY,
+    nombre_estado VARCHAR(50) NOT NULL
+);
+
+-- ===========================
+-- TABLAS OPERACIONALES
+-- ===========================
+
+-- Tabla de tiquetes asociados a reservas
+CREATE TABLE IF NOT EXISTS tiquetes (
+    id_tiquete SERIAL PRIMARY KEY,
+    numero_asiento VARCHAR(10) NOT NULL,
+    clase_tiquete VARCHAR(50) NOT NULL,
+    precio_final NUMERIC(10,2) NOT NULL,
+    id_reserva INT NOT NULL,
+    CONSTRAINT fk_tiquete_reserva
+        FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva)
+);
+
+-- Tabla de paquetes turísticos disponibles
+CREATE TABLE IF NOT EXISTS paquetes_turisticos (
+    id_paquete SERIAL PRIMARY KEY,
+    nombre_paquete VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    sector_destino VARCHAR(100),
+    estado VARCHAR(50),
+    precio NUMERIC(10,2)
+);
+
+-- Tabla intermedia: reserva puede incluir uno o más paquetes
+CREATE TABLE IF NOT EXISTS reserva_incluye_paquete (
+    id_reserva INT NOT NULL,
+    id_paquete INT NOT NULL,
+    PRIMARY KEY (id_reserva, id_paquete),
+    CONSTRAINT fk_rip_reserva
+        FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva),
+    CONSTRAINT fk_rip_paquete
+        FOREIGN KEY (id_paquete) REFERENCES paquetes_turisticos(id_paquete)
+);
+
+-- Historial de cambios de estado de una reserva
+CREATE TABLE IF NOT EXISTS historial_estado_reserva (
+    id_historial SERIAL PRIMARY KEY,
+    id_reserva INT NOT NULL,
+    id_estado INT NOT NULL,
+    fecha_hora_cambio TIMESTAMP NOT NULL,
+    CONSTRAINT fk_historial_reserva
+        FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva),
+    CONSTRAINT fk_historial_estado
+        FOREIGN KEY (id_estado) REFERENCES estado_reserva(id_estado)
+);

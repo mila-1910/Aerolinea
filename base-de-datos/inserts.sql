@@ -123,3 +123,18 @@ INSERT INTO reservas (
 ('RES-0024', 24, 24, 'Confirmada', 'Económica', 1, 0, 578000, 2312000),
 ('RES-0025', 25, 25, 'Pendiente', 'Primera clase', 1, 1300000, 1000000, 5300000)
 ON CONFLICT (numero_reserva) DO NOTHING;
+
+
+
+INSERT INTO roles (nombre_rol) VALUES
+('Super Administrador'),
+('Agente de Aerolinea'),
+('Cliente')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO estado_reserva (nombre_estado) VALUES
+('Reservada'),
+('Confirmada'),
+('Cancelada'),
+('Expirada')
+ON CONFLICT DO NOTHING;
