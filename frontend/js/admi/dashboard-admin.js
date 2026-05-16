@@ -1,23 +1,43 @@
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-    const respuesta = await fetch("http://localhost:3000/api/admin/dashboard");
-    const data = await respuesta.json();
+    try {
 
-    document.getElementById("totalVuelos").textContent = data.totalVuelos;
-    document.getElementById("totalReservas").textContent = data.totalReservas;
-    document.getElementById("totalDestinos").textContent = data.totalDestinos;
+        const respuesta = await fetch('http://localhost:3000/api/admin/dashboard');
 
-    let html = "";
+        const data = await respuesta.json();
 
-    data.ultimasReservas.forEach(r => {
-        html += `
-        <tr>
-            <td><span class="reserva-id">${r.numero_reserva}</span></td>
-            <td>${r.nombre_completo}</td>
-            <td><span class="badge-estado">${r.estado}</span></td>
-        </tr>
-        `;
-    });
+        // KPIs
+        document.getElementById('totalVuelos').textContent =
+            data.totalVuelos;
 
-    document.getElementById("tablaReservas").innerHTML = html;
+        document.getElementById('totalReservas').textContent =
+            data.totalReservas;
+
+        document.getElementById('totalDestinos').textContent =
+            data.totalDestinos;
+
+        // TABLA RESERVAS
+        const tbody = document.getElementById('tablaReservasBody');
+
+        tbody.innerHTML = '';
+
+        data.ultimasReservas.forEach(reserva => {
+
+            const fila = `
+                <tr>
+                    <td>${reserva.numero_reserva}</td>
+                    <td>${reserva.nombre_completo}</td>
+                    <td>${reserva.estado}</td>
+                </tr>
+            `;
+
+            tbody.innerHTML += fila;
+        });
+
+    } catch (error) {
+
+        console.error('Error cargando dashboard:', error);
+
+    }
+
 });

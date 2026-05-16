@@ -1,12 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\backend",
     "\\frontend",
-    "\\frontend\\js",
     "\\frontend\\js\\admi",
+    "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
     "\\frontend\\paginas\\cliente"
   ],
-  "SelectedNode": "\\frontend\\js\\admi\\admin-comun.js",
+  "SelectedNode": "\\frontend\\paginas\\admin\\dashboardadmin.html",
   "PreviewInSolutionExplorer": false
 }
