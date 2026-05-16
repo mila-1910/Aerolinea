@@ -2,7 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\frontend",
-    "\\frontend\\paginas"
+    "\\frontend\\js",
+    "\\frontend\\js\\admi",
+    "\\frontend\\paginas\\admin",
+    "\\frontend\\paginas\\cliente"
   ],
+  "SelectedNode": "\\frontend\\js\\admi\\admin-comun.js",
   "PreviewInSolutionExplorer": false
 }
