@@ -1,4 +1,4 @@
-
+--kamila marin,juan fernando muñoz,santigo rios,jhonatan varon= "Equipo de Desarrollo - Aerolínea ELARIS"--
 INSERT INTO pais (nombre) VALUES
 ('Colombia'),('Venezuela'),('Ecuador'),('Perú'),('Brasil'),
 ('Argentina'),('Chile'),('México'),('España'),('Estados Unidos'),

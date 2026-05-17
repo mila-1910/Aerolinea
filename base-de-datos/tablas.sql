@@ -1,4 +1,4 @@
-
+--kamila marin,juan fernando muñoz,santigo rios,jhonatan varon= "Equipo de Desarrollo - Aerolínea ELARIS"--
 
 -- Tabla de países
 CREATE TABLE IF NOT EXISTS pais (
