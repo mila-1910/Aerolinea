@@ -9,56 +9,48 @@ const app = express();
 
 // Middlewares
 app.use(cors());
-app.use(express.json()); // Permite recibir datos en formato JSON
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
 // Configuración de la conexión a la base de datos (Neon)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false // Obligatorio para Neon
-    }
+    ssl: { rejectUnauthorized: false }
 });
 
-// 🛡️ EL ESCUDO ANTI-CAÍDAS: 
-// Esto evita que el servidor se apague si Neon corta la conexión por inactividad
-pool.on('error', (err, client) => {
+// Escudo anti-caídas por inactividad de Neon
+pool.on('error', (err) => {
     console.error('Neon cortó una conexión inactiva (es normal):', err.message);
 });
 
-// 3. PRUEBA DE CONEXIÓN LIGERA
-// Esto solo pregunta la hora una vez y "cuelga" el teléfono de inmediato.
 pool.query('SELECT NOW()')
     .then(() => console.log('✅ Conexión inicial con Neon exitosa 🐘'))
     .catch(err => console.error('❌ Error al hablar con Neon:', err.message));
 
-// --- RUTAS ---
+// ============================================================
+// RUTAS DE VUELOS
+// ============================================================
 
-// Ruta para listar vuelos disponibles
+// Listar vuelos disponibles (Programados)
 app.get('/api/vuelos', async (req, res) => {
     try {
         const result = await pool.query(`
-            SELECT 
-                id_vuelo,
-                numero_vuelo,
-                origen,
-                destino,
-                ciudad_destino,
-                fecha_salida,
-                hora_salida,
-                hora_llegada,
-                duracion_minutos,
-                escala,
-                clase,
-                tipo_avion,
-                precio_base,
-                imagen_url,
-                descripcion
-            FROM vuelos
-            WHERE activo = true
-            ORDER BY fecha_salida ASC
+            SELECT
+                v.id_vuelo,
+                v.cod_vuelo,
+                co.nombre        AS ciudad_origen,
+                cd.nombre        AS ciudad_destino,
+                v.fecha_hora_salida,
+                v.fecha_hora_llegada,
+                v.capacidad_pasajeros,
+                v.precio_base,
+                v.estado_vuelo
+            FROM vuelo v
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            WHERE v.estado_vuelo = 'Programado'
+            ORDER BY v.fecha_hora_salida ASC
         `);
-
         res.json(result.rows);
     } catch (error) {
         console.error('Error al obtener vuelos:', error);
@@ -66,96 +58,119 @@ app.get('/api/vuelos', async (req, res) => {
     }
 });
 
-
-// Ruta para crear una reserva
-app.post('/api/reservas', async (req, res) => {
-    const {
-        numero_reserva,
-        id_usuario,
-        id_vuelo,
-        estado,
-        clase,
-        pasajeros,
-        tarifa_extra,
-        descuento,
-        total
-    } = req.body;
-
-    if (!numero_reserva || !id_usuario || !id_vuelo || !clase || !total) {
-        return res.status(400).json({ error: 'Faltan datos para crear la reserva' });
-    }
-
+// Detalle de un vuelo por id
+app.get('/api/vuelos/:id', async (req, res) => {
+    const { id } = req.params;
     try {
-        const result = await pool.query(
-            `INSERT INTO reservas (
-                numero_reserva,
-                id_usuario,
-                id_vuelo,
-                estado,
-                clase,
-                pasajeros,
-                tarifa_extra,
-                descuento,
-                total
-            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            RETURNING *`,
-            [
-                numero_reserva,
-                id_usuario,
-                id_vuelo,
-                estado || 'Pendiente',
-                clase,
-                pasajeros || 1,
-                tarifa_extra || 0,
-                descuento || 0,
-                total
-            ]
-        );
+        const result = await pool.query(`
+            SELECT
+                v.id_vuelo,
+                v.cod_vuelo,
+                co.nombre        AS ciudad_origen,
+                cd.nombre        AS ciudad_destino,
+                v.fecha_hora_salida,
+                v.fecha_hora_llegada,
+                v.capacidad_pasajeros,
+                v.precio_base,
+                v.estado_vuelo
+            FROM vuelo v
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            WHERE v.id_vuelo = $1
+        `, [id]);
 
-        res.status(201).json({
-            mensaje: 'Reserva creada correctamente',
-            reserva: result.rows[0]
-        });
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Vuelo no encontrado' });
+        }
+        res.json(result.rows[0]);
     } catch (error) {
-        console.error('Error al crear reserva:', error);
-        res.status(500).json({ error: 'Error al crear la reserva' });
+        console.error('Error al obtener vuelo:', error);
+        res.status(500).json({ error: 'Error al obtener el vuelo' });
     }
 });
 
-// Ruta para listar reservas de un usuario
-app.get('/api/reservas/usuario/:id_usuario', async (req, res) => {
-    const { id_usuario } = req.params;
+// ============================================================
+// RUTAS DE RESERVAS
+// ============================================================
 
+// Crear una reserva (estado inicial: "Reservada" = id_estado 1)
+app.post('/api/reservas', async (req, res) => {
+    const { id_cliente, id_vuelo, valor_total } = req.body;
+
+    if (!id_cliente || !id_vuelo || !valor_total) {
+        return res.status(400).json({ error: 'Faltan datos obligatorios: id_cliente, id_vuelo, valor_total' });
+    }
+
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+
+        // Obtener id del estado "Reservada"
+        const estadoRes = await client.query(
+            `SELECT id_estado FROM estado_reserva WHERE nombre_estado = 'Reservada' LIMIT 1`
+        );
+        if (estadoRes.rows.length === 0) {
+            throw new Error('Estado "Reservada" no encontrado en la base de datos');
+        }
+        const id_estado = estadoRes.rows[0].id_estado;
+
+        // Insertar la reserva
+        const result = await client.query(
+            `INSERT INTO reserva (id_cliente, id_vuelo, id_estado, valor_total)
+             VALUES ($1, $2, $3, $4)
+             RETURNING *`,
+            [id_cliente, id_vuelo, id_estado, valor_total]
+        );
+
+        const nuevaReserva = result.rows[0];
+
+        // Registrar en historial
+        await client.query(
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
+             VALUES ($1, $2, NOW())`,
+            [nuevaReserva.id_reserva, id_estado]
+        );
+
+        await client.query('COMMIT');
+
+        res.status(201).json({
+            mensaje: 'Reserva creada correctamente',
+            reserva: nuevaReserva
+        });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error al crear reserva:', error);
+        res.status(500).json({ error: 'Error al crear la reserva' });
+    } finally {
+        client.release();
+    }
+});
+
+// Listar reservas de un cliente
+app.get('/api/reservas/cliente/:id_cliente', async (req, res) => {
+    const { id_cliente } = req.params;
     try {
         const result = await pool.query(`
-            SELECT 
+            SELECT
                 r.id_reserva,
-                r.numero_reserva,
-                r.estado,
-                r.clase,
-                r.pasajeros,
-                r.tarifa_extra,
-                r.descuento,
-                r.total,
-                r.fecha_reserva,
+                r.fecha_hora_reserva,
+                r.valor_total,
+                er.nombre_estado          AS estado,
                 v.id_vuelo,
-                v.numero_vuelo,
-                v.origen,
-                v.destino,
-                v.ciudad_destino,
-                v.fecha_salida,
-                v.hora_salida,
-                v.hora_llegada,
-                v.duracion_minutos,
-                v.escala,
-                v.tipo_avion,
-                v.precio_base,
-                v.imagen_url
-            FROM reservas r
-            INNER JOIN vuelos v ON r.id_vuelo = v.id_vuelo
-            WHERE r.id_usuario = $1
-            ORDER BY r.fecha_reserva DESC
-        `, [id_usuario]);
+                v.cod_vuelo,
+                co.nombre                 AS ciudad_origen,
+                cd.nombre                 AS ciudad_destino,
+                v.fecha_hora_salida,
+                v.fecha_hora_llegada,
+                v.precio_base
+            FROM reserva r
+            JOIN estado_reserva er ON er.id_estado = r.id_estado
+            JOIN vuelo v           ON v.id_vuelo   = r.id_vuelo
+            JOIN ciudad co         ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd         ON cd.id_ciudad = v.id_ciudad_destino
+            WHERE r.id_cliente = $1
+            ORDER BY r.fecha_hora_reserva DESC
+        `, [id_cliente]);
 
         res.json(result.rows);
     } catch (error) {
@@ -164,149 +179,296 @@ app.get('/api/reservas/usuario/:id_usuario', async (req, res) => {
     }
 });
 
-// Ruta para cancelar una reserva
-app.put('/api/reservas/:id_reserva/cancelar', async (req, res) => {
+// Cambiar estado de una reserva (genérico)
+app.put('/api/reservas/:id_reserva/estado', async (req, res) => {
     const { id_reserva } = req.params;
+    const { nombre_estado } = req.body;
 
+    if (!nombre_estado) {
+        return res.status(400).json({ error: 'Se requiere nombre_estado' });
+    }
+
+    const client = await pool.connect();
     try {
-        const result = await pool.query(
-            `UPDATE reservas
-             SET estado = 'Cancelada'
-             WHERE id_reserva = $1
-             RETURNING *`,
-            [id_reserva]
+        await client.query('BEGIN');
+
+        const estadoRes = await client.query(
+            `SELECT id_estado FROM estado_reserva WHERE nombre_estado = $1 LIMIT 1`,
+            [nombre_estado]
+        );
+        if (estadoRes.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({ error: `Estado "${nombre_estado}" no válido` });
+        }
+        const id_estado = estadoRes.rows[0].id_estado;
+
+        const result = await client.query(
+            `UPDATE reserva SET id_estado = $1 WHERE id_reserva = $2 RETURNING *`,
+            [id_estado, id_reserva]
         );
 
         if (result.rows.length === 0) {
+            await client.query('ROLLBACK');
             return res.status(404).json({ error: 'Reserva no encontrada' });
         }
 
+        // Registrar cambio en historial
+        await client.query(
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
+             VALUES ($1, $2, NOW())`,
+            [id_reserva, id_estado]
+        );
+
+        await client.query('COMMIT');
+
         res.json({
-            mensaje: 'Reserva cancelada correctamente',
+            mensaje: `Reserva actualizada a "${nombre_estado}"`,
             reserva: result.rows[0]
         });
     } catch (error) {
-        console.error('Error al cancelar reserva:', error);
-        res.status(500).json({ error: 'Error al cancelar la reserva' });
+        await client.query('ROLLBACK');
+        console.error('Error al cambiar estado de reserva:', error);
+        res.status(500).json({ error: 'Error al actualizar la reserva' });
+    } finally {
+        client.release();
     }
 });
 
+// Cancelar reserva (acceso directo)
+app.put('/api/reservas/:id_reserva/cancelar', async (req, res) => {
+    req.body = { nombre_estado: 'Cancelada' };
+    // Reutilizar la ruta genérica internamente
+    const { id_reserva } = req.params;
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
 
-// Ruta para Registrarse (Crear cuenta)
+        const estadoRes = await client.query(
+            `SELECT id_estado FROM estado_reserva WHERE nombre_estado = 'Cancelada' LIMIT 1`
+        );
+        const id_estado = estadoRes.rows[0].id_estado;
+
+        const result = await client.query(
+            `UPDATE reserva SET id_estado = $1 WHERE id_reserva = $2 RETURNING *`,
+            [id_estado, id_reserva]
+        );
+
+        if (result.rows.length === 0) {
+            await client.query('ROLLBACK');
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+
+        await client.query(
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
+             VALUES ($1, $2, NOW())`,
+            [id_reserva, id_estado]
+        );
+
+        await client.query('COMMIT');
+        res.json({ mensaje: 'Reserva cancelada correctamente', reserva: result.rows[0] });
+    } catch (error) {
+        await client.query('ROLLBACK');
+        console.error('Error al cancelar reserva:', error);
+        res.status(500).json({ error: 'Error al cancelar la reserva' });
+    } finally {
+        client.release();
+    }
+});
+
+// ============================================================
+// AUTENTICACIÓN
+// ============================================================
+
+// Registro: crea usuario + cliente en una transacción
 app.post('/api/register', async (req, res) => {
-    const { tipo_identificacion, numero_identificacion, nombre, email, telefono, password, confirmar } = req.body;
+    const {
+        tipo_identificacion, numero_identificacion,
+        nombres, apellidos,
+        email, telefono_principal, telefono_alterno,
+        direccion, id_ciudad,
+        nombre_usuario, password, confirmar
+    } = req.body;
 
     // Validaciones básicas
-    if (!tipo_identificacion || !numero_identificacion || !nombre || !email || !telefono || !password || !confirmar) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    if (!tipo_identificacion || !numero_identificacion || !nombres || !apellidos ||
+        !email || !telefono_principal || !nombre_usuario || !password || !confirmar) {
+        return res.status(400).json({ error: 'Todos los campos obligatorios deben completarse' });
     }
 
     if (password !== confirmar) {
         return res.status(400).json({ error: 'Las contraseñas no coinciden' });
     }
 
+    const client = await pool.connect();
     try {
-        // Verificar si el usuario o el correo ya existen
-        const userExist = await pool.query('SELECT * FROM usuarios WHERE correo = $1 OR numero_identificacion = $2', [email, numero_identificacion]);
-        if (userExist.rows.length > 0) {
-            return res.status(400).json({ error: 'El correo o el número de identificación ya están registrados' });
+        await client.query('BEGIN');
+
+        // Verificar duplicados
+        const existeUsuario = await client.query(
+            `SELECT id_usuario FROM usuario WHERE nombre_usuario = $1`, [nombre_usuario]
+        );
+        if (existeUsuario.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
         }
 
-        // Encriptar la contraseña (hash)
+        const existeCliente = await client.query(
+            `SELECT id_cliente FROM cliente WHERE correo = $1 OR numero_identificacion = $2`,
+            [email, numero_identificacion]
+        );
+        if (existeCliente.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(400).json({ error: 'El correo o la identificación ya están registrados' });
+        }
+
+        // Obtener id del rol "Cliente"
+        const rolRes = await client.query(
+            `SELECT id_rol FROM rol WHERE nombre_rol = 'Cliente' LIMIT 1`
+        );
+        if (rolRes.rows.length === 0) {
+            throw new Error('Rol "Cliente" no encontrado en la base de datos');
+        }
+        const id_rol = rolRes.rows[0].id_rol;
+
+        // Hash de la contraseña
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // Insertar en la base de datos
-        const newUser = await pool.query(
-            `INSERT INTO usuarios (tipo_identificacion, numero_identificacion, nombre_completo, correo, telefono, contrasena) 
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id_usuario, nombre_completo, correo`,
-            [tipo_identificacion, numero_identificacion, nombre, email, telefono, passwordHash]
+        // Insertar usuario
+        const usuarioRes = await client.query(
+            `INSERT INTO usuario (nombre_usuario, contrasena, id_rol)
+             VALUES ($1, $2, $3)
+             RETURNING id_usuario, nombre_usuario`,
+            [nombre_usuario, passwordHash, id_rol]
         );
+        const nuevoUsuario = usuarioRes.rows[0];
+
+        // Insertar cliente
+        const clienteRes = await client.query(
+            `INSERT INTO cliente
+                (numero_identificacion, tipo_identificacion, nombres, apellidos,
+                 correo, direccion, id_ciudad, telefono_principal, telefono_alterno, id_usuario)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+             RETURNING id_cliente, nombres, apellidos, correo`,
+            [
+                numero_identificacion, tipo_identificacion,
+                nombres, apellidos,
+                email, direccion || null, id_ciudad || null,
+                telefono_principal, telefono_alterno || null,
+                nuevoUsuario.id_usuario
+            ]
+        );
+        const nuevoCliente = clienteRes.rows[0];
+
+        await client.query('COMMIT');
 
         res.status(201).json({
             mensaje: 'Cuenta creada exitosamente',
-            usuario: newUser.rows[0]
+            usuario: {
+                id_usuario: nuevoUsuario.id_usuario,
+                nombre_usuario: nuevoUsuario.nombre_usuario,
+                id_cliente: nuevoCliente.id_cliente,
+                nombre_completo: `${nuevoCliente.nombres} ${nuevoCliente.apellidos}`,
+                correo: nuevoCliente.correo,
+                rol: 'Cliente'
+            }
         });
-
     } catch (error) {
+        await client.query('ROLLBACK');
         console.error('Error en el registro:', error);
         res.status(500).json({ error: 'Error del servidor al registrar el usuario' });
+    } finally {
+        client.release();
     }
 });
 
-// Ruta para Iniciar Sesión (Login)
+// Login
 app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { nombre_usuario, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Por favor, ingresa correo y contraseña' });
+    if (!nombre_usuario || !password) {
+        return res.status(400).json({ error: 'Ingresa usuario y contraseña' });
     }
 
     try {
-        // Buscar al usuario por su correo
-        const result = await pool.query('SELECT * FROM usuarios WHERE correo = $1', [email]);
+        // Buscar usuario con join al rol
+        const result = await pool.query(`
+            SELECT
+                u.id_usuario,
+                u.nombre_usuario,
+                u.contrasena,
+                r.nombre_rol AS rol
+            FROM usuario u
+            JOIN rol r ON r.id_rol = u.id_rol
+            WHERE u.nombre_usuario = $1
+        `, [nombre_usuario]);
 
         if (result.rows.length === 0) {
-            return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
+            return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
         }
 
         const usuario = result.rows[0];
-
-        // Comparar la contraseña ingresada con el hash en la base de datos
         const validPassword = await bcrypt.compare(password, usuario.contrasena);
 
         if (!validPassword) {
-            return res.status(401).json({ error: 'Correo o contraseña incorrectos' });
+            return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
         }
 
-        // ¡Login exitoso! (Aquí después se podría implementar JWT para seguridad)
+        // Obtener datos del cliente si el rol es Cliente
+        let clienteData = null;
+        if (usuario.rol === 'Cliente') {
+            const clienteRes = await pool.query(
+                `SELECT id_cliente, nombres, apellidos, correo
+                 FROM cliente WHERE id_usuario = $1`,
+                [usuario.id_usuario]
+            );
+            if (clienteRes.rows.length > 0) {
+                clienteData = clienteRes.rows[0];
+            }
+        }
+
         res.json({
             mensaje: 'Inicio de sesión exitoso',
             usuario: {
                 id_usuario: usuario.id_usuario,
-                nombre_completo: usuario.nombre_completo,
-                correo: usuario.correo,
+                nombre_usuario: usuario.nombre_usuario,
+                nombre_completo: clienteData
+                    ? `${clienteData.nombres} ${clienteData.apellidos}`
+                    : usuario.nombre_usuario,
+                correo: clienteData ? clienteData.correo : null,
+                id_cliente: clienteData ? clienteData.id_cliente : null,
                 rol: usuario.rol
             }
         });
-
-   } catch (error) {
-    console.error('Error al crear reserva:', error);
-
-    if (error.code === '23505') {
-        return res.status(409).json({
-            error: 'Ya tienes una reserva activa para este vuelo'
-        });
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).json({ error: 'Error del servidor al iniciar sesión' });
     }
-
-    res.status(500).json({ error: 'Error al crear la reserva' });
-}
-
 });
-// Dashboard Admin
+
+// ============================================================
+// DASHBOARD ADMIN
+// ============================================================
+
 app.get('/api/admin/dashboard', async (req, res) => {
     try {
+        const vuelos = await pool.query(`SELECT COUNT(*) AS total FROM vuelo`);
 
-        const vuelos = await pool.query(`
-            SELECT COUNT(*) AS total FROM vuelos
-        `);
+        const reservas = await pool.query(`SELECT COUNT(*) AS total FROM reserva`);
 
-        const reservas = await pool.query(`
-            SELECT COUNT(*) AS total FROM reservas
-        `);
-
-        const destinos = await pool.query(`
-            SELECT COUNT(DISTINCT destino) AS total FROM vuelos
-        `);
+        const destinos = await pool.query(
+            `SELECT COUNT(DISTINCT id_ciudad_destino) AS total FROM vuelo`
+        );
 
         const ultimas = await pool.query(`
-            SELECT 
-                r.numero_reserva,
-                u.nombre_completo,
-                r.estado
-            FROM reservas r
-            JOIN usuarios u ON u.id_usuario = r.id_usuario
-            ORDER BY r.fecha_reserva DESC
+            SELECT
+                r.id_reserva,
+                c.nombres || ' ' || c.apellidos AS nombre_completo,
+                er.nombre_estado               AS estado
+            FROM reserva r
+            JOIN cliente       c  ON c.id_cliente  = r.id_cliente
+            JOIN estado_reserva er ON er.id_estado = r.id_estado
+            ORDER BY r.fecha_hora_reserva DESC
             LIMIT 5
         `);
 
@@ -316,14 +478,52 @@ app.get('/api/admin/dashboard', async (req, res) => {
             totalDestinos: destinos.rows[0].total,
             ultimasReservas: ultimas.rows
         });
-
     } catch (error) {
-        console.error(error);
+        console.error('Error dashboard admin:', error);
         res.status(500).json({ error: 'Error dashboard admin' });
     }
 });
 
-// Iniciar el servidor
+// ============================================================
+// UBICACIONES (países, departamentos, ciudades)
+// ============================================================
+
+app.get('/api/paises', async (req, res) => {
+    try {
+        const result = await pool.query(`SELECT id_pais, nombre FROM pais ORDER BY nombre`);
+        res.json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener países' });
+    }
+});
+
+app.get('/api/departamentos/:id_pais', async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT id_departamento, nombre FROM departamento WHERE id_pais = $1 ORDER BY nombre`,
+            [req.params.id_pais]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener departamentos' });
+    }
+});
+
+app.get('/api/ciudades/:id_departamento', async (req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT id_ciudad, nombre FROM ciudad WHERE id_departamento = $1 ORDER BY nombre`,
+            [req.params.id_departamento]
+        );
+        res.json(result.rows);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener ciudades' });
+    }
+});
+
+// ============================================================
+// SERVIDOR
+// ============================================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor backend corriendo en http://localhost:${PORT}`);

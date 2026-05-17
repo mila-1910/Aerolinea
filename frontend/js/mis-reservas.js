@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const buscador = document.getElementById("buscar-reserva-input");
     const mainContenedor = document.querySelector(".reservas-grid-contenedor");
 
-    const countTodas = document.getElementById("count-todas");
-    const countPendientes = document.getElementById("count-pendientes");
+    const countTodas     = document.getElementById("count-todas");
+    const countReservadas  = document.getElementById("count-reservadas");
     const countConfirmadas = document.getElementById("count-confirmadas");
-    const countCanceladas = document.getElementById("count-canceladas");
+    const countCanceladas  = document.getElementById("count-canceladas");
 
     let estadoActivo = "Todas";
     let reservas = [];
@@ -48,46 +48,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const adaptarReservaApi = (item) => {
         return {
-            idReserva: item.id_reserva,
-            numeroReserva: item.numero_reserva,
-            estado: item.estado,
-            clase: item.clase,
-            pasajeros: item.pasajeros,
-            totalNumero: item.total,
-            descuento: item.descuento,
-            tarifaExtra: item.tarifa_extra,
+            idReserva:   item.id_reserva,
+            estado:      item.estado,
+            totalNumero: item.valor_total,
             vuelo: {
-                idVuelo: item.id_vuelo,
-                numeroVuelo: item.numero_vuelo,
-                origen: item.origen,
-                destino: item.destino,
-                ciudad: item.ciudad_destino,
-                fecha: String(item.fecha_salida).split("T")[0],
-                fechaTexto: formatoFecha(item.fecha_salida),
-                horaSalida: item.hora_salida,
-                horaLlegada: item.hora_llegada,
-                duracion: formatoDuracion(item.duracion_minutos),
-                escala: item.escala,
-                avion: item.tipo_avion,
+                idVuelo:      item.id_vuelo,
+                codVuelo:     item.cod_vuelo,
+                origen:       item.ciudad_origen,
+                destino:      item.ciudad_destino,
+                fechaSalida:  item.fecha_hora_salida,
+                fechaTexto:   formatoFecha(item.fecha_hora_salida),
                 precioNumero: item.precio_base,
-                imagen: item.imagen_url,
-                ruta: `${item.origen} → ${item.destino}`
+                ruta: `${item.ciudad_origen} \u2192 ${item.ciudad_destino}`
             }
         };
     };
 
     const claseEstado = (estado) => {
-        if (estado === "Confirmada") return "confirmada";
-        if (estado === "Pendiente") return "pendiente";
-        if (estado === "Cancelada") return "cancelada";
+        if (estado === "Confirmada")  return "confirmada";
+        if (estado === "Reservada")   return "pendiente";   // reutiliza estilo visual amarillo
+        if (estado === "Cancelada")   return "cancelada";
+        if (estado === "Expirada")    return "cancelada";
         return "";
     };
 
     const actualizarContadores = () => {
-        countTodas.textContent = reservas.length;
-        countPendientes.textContent = reservas.filter(item => item.estado === "Pendiente").length;
-        countConfirmadas.textContent = reservas.filter(item => item.estado === "Confirmada").length;
-        countCanceladas.textContent = reservas.filter(item => item.estado === "Cancelada").length;
+        countTodas.textContent       = reservas.length;
+        countReservadas.textContent  = reservas.filter(r => r.estado === "Reservada").length;
+        countConfirmadas.textContent = reservas.filter(r => r.estado === "Confirmada").length;
+        countCanceladas.textContent  = reservas.filter(r => r.estado === "Cancelada").length;
     };
 
     const guardarReservaSeleccionada = (reserva) => {
@@ -133,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
         div.innerHTML = `
             <div class="card-header">
                 <div class="card-meta">
-                    <span class="reserva-id">Reserva #${reserva.numeroReserva}</span>
+                    <span class="reserva-id">Reserva #${reserva.idReserva}</span>
                     <span class="reserva-fecha">${reserva.vuelo.fechaTexto}</span>
                 </div>
                 <span class="estado-badge estado ${claseEstado(reserva.estado)}">${reserva.estado}</span>
@@ -152,15 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="card-info">
                 <div class="info-item">
                     <span class="info-label">Vuelo</span>
-                    <span class="info-value">${reserva.vuelo.numeroVuelo}</span>
+                    <span class="info-value">${reserva.vuelo.codVuelo}</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">Clase</span>
-                    <span class="info-value">${reserva.clase}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Pasajeros</span>
-                    <span class="info-value">${reserva.pasajeros}</span>
+                    <span class="info-label">Total</span>
+                    <span class="info-value">${new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',minimumFractionDigits:0}).format(reserva.totalNumero)}</span>
                 </div>
             </div>
 
@@ -227,13 +212,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const cargarReservasDesdeBaseDatos = async () => {
         const usuario = obtenerUsuario();
 
-        if (!usuario) {
+        if (!usuario || !usuario.id_cliente) {
             mainContenedor.classList.add("grid-empty");
             return;
         }
 
         try {
-            const response = await fetch(`${API_URL}/reservas/usuario/${usuario.id}`);
+            const response = await fetch(`${API_URL}/reservas/cliente/${usuario.id_cliente}`);
             const data = await response.json();
 
             if (!response.ok) {

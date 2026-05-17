@@ -75,14 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.querySelector('#register-box .auth-form');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita que la página se recargue
+            e.preventDefault();
 
             const formData = {
                 tipo_identificacion: document.getElementById('tipo-identificacion').value,
                 numero_identificacion: document.getElementById('numero-identificacion').value,
-                nombre: document.getElementById('nombre').value,
+                nombres: document.getElementById('nombres').value,
+                apellidos: document.getElementById('apellidos').value,
                 email: document.getElementById('email-reg').value,
-                telefono: document.getElementById('telefono').value,
+                telefono_principal: document.getElementById('telefono').value,
+                nombre_usuario: document.getElementById('nombre-usuario').value,
                 password: document.getElementById('password-reg').value,
                 confirmar: document.getElementById('confirmar').value,
                 terminos: document.getElementById('terminos').checked
@@ -98,22 +100,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-    showToast('¡Cuenta creada exitosamente! Bienvenido/a a ELARIS.', 'success');
+                    showToast('¡Cuenta creada exitosamente! Bienvenido/a a ELARIS.', 'success');
 
-    // Guardar sesión con el mismo formato del login
-    const usuario = {
-        id: data.usuario.id_usuario,
-        nombre_completo: data.usuario.nombre_completo,
-        correo: data.usuario.correo,
-        rol: 'cliente'
-    };
+                    const usuario = {
+                        id: data.usuario.id_usuario,
+                        id_cliente: data.usuario.id_cliente,
+                        nombre_completo: data.usuario.nombre_completo,
+                        correo: data.usuario.correo,
+                        rol: data.usuario.rol
+                    };
+                    localStorage.setItem('usuario', JSON.stringify(usuario));
 
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-
-    // Redirigir a buscar vuelos tras un pequeño delay para ver la animación
-    setTimeout(() => window.location.href = '../cliente/buscar-vuelos.html', 1800);
-}
- else {
+                    setTimeout(() => window.location.href = '../cliente/buscar-vuelos.html', 1800);
+                } else {
                     showToast('Error: ' + data.error, 'error');
                 }
             } catch (error) {
@@ -130,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             const formData = {
-                email: document.getElementById('email-login').value,
+                nombre_usuario: document.getElementById('nombre-usuario-login').value,
                 password: document.getElementById('password-login').value,
             };
 
@@ -146,21 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     showToast('¡Bienvenido, ' + data.usuario.nombre_completo + '!', 'success');
 
-                    // Guardar sesión con el rol que nos da el backend
                     const usuario = {
                         id: data.usuario.id_usuario,
+                        id_cliente: data.usuario.id_cliente,
                         nombre_completo: data.usuario.nombre_completo,
                         correo: data.usuario.correo,
-                        rol: data.usuario.rol       // ¡esto ahora se usa!
+                        rol: data.usuario.rol
                     };
                     localStorage.setItem('usuario', JSON.stringify(usuario));
 
-                    // Elegir destino según el rol
-                    let destino = '../cliente/buscar-vuelos.html'; // por defecto cliente
-                    if (data.usuario.rol === 'admin') {
-                        destino = '../admin/dashboardadmin.html'; // panel del admin
-                    } else if (data.usuario.rol === 'agente') {
-                        destino = '../agente/dashboardeagente.html'; // página del agente
+                    // Redirigir según el rol (nombres exactos de la tabla rol)
+                    let destino = '../cliente/buscar-vuelos.html';
+                    if (data.usuario.rol === 'Super Administrador') {
+                        destino = '../admin/dashboardadmin.html';
+                    } else if (data.usuario.rol === 'Agente de Aerolínea') {
+                        destino = '../agente/dashboardeagente.html';
                     }
                     setTimeout(() => window.location.href = destino, 1800);
                 } else {

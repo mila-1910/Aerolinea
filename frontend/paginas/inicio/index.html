@@ -206,43 +206,35 @@
             if (!contenedor) return;
 
             try {
-                // Hacer la petición a la API (al puerto 3000 donde corre el backend)
                 const respuesta = await fetch('http://localhost:3000/api/vuelos');
                 if (!respuesta.ok) throw new Error('Error al obtener los vuelos');
 
                 const vuelos = await respuesta.json();
-
-                // Limpiar el estado de carga
                 contenedor.innerHTML = '';
 
-                // Tomar máximo 5 vuelos
                 const vuelosMostrar = vuelos.slice(0, 5);
 
                 vuelosMostrar.forEach(vuelo => {
-                    // Formatear precio a pesos colombianos (COP)
                     const precioFormateado = new Intl.NumberFormat('es-CO', {
                         style: 'currency',
                         currency: 'COP',
                         minimumFractionDigits: 0
                     }).format(vuelo.precio_base);
 
-                    // Formatear la fecha ej. "15 abr 2026"
-                    // vuelo.fecha_salida puede venir como "2026-07-05T00:00:00.000Z", cortamos a YYYY-MM-DD
-                    const fechaObj = new Date(vuelo.fecha_salida.substring(0, 10) + 'T12:00:00'); // T12 para evitar problemas de zona horaria
+                    // fecha_hora_salida viene como "2026-07-05T10:30:00.000Z"
+                    const fechaObj = new Date(vuelo.fecha_hora_salida);
                     const opcionesFecha = { day: 'numeric', month: 'short', year: 'numeric' };
                     const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
 
-                    // Crear la tarjeta (card)
                     const tarjeta = document.createElement('div');
                     tarjeta.className = 'vuelo-card-index reveal';
 
                     tarjeta.innerHTML = `
-                        <img src="${vuelo.imagen_url}" alt="Vista representativa de ${vuelo.ciudad_destino}" class="vuelo-card-bg">
                         <div class="vuelo-card-overlay"></div>
                         <div class="vuelo-card-content">
                             <div class="vuelo-card-info-row">
                                 <div class="vuelo-card-info">
-                                    <h4>${vuelo.destino}</h4>
+                                    <h4>${vuelo.ciudad_origen} &rarr; ${vuelo.ciudad_destino}</h4>
                                     <p><i data-lucide="calendar" class="card-icon"></i> ${fechaFormateada}</p>
                                 </div>
                                 <div class="vuelo-card-price">
@@ -252,21 +244,16 @@
                             </div>
                         </div>
                         <div class="vuelo-card-hover-actions">
-                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-reservar">Reservar vuelo</a>
+                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.id_vuelo}" class="btn-reservar">Reservar vuelo</a>
                             <a href="../cliente/buscar-vuelos.html" class="btn-ver-detalle">Ver detalle</a>
                         </div>
                     `;
 
                     contenedor.appendChild(tarjeta);
-
-                    // Observar la nueva tarjeta para aplicar la animación
                     observer.observe(tarjeta);
                 });
 
-                // Re-inicializar iconos Lucide para las tarjetas dinámicas
-                if (window.lucide) {
-                    lucide.createIcons();
-                }
+                if (window.lucide) lucide.createIcons();
 
             } catch (error) {
                 console.error('Error cargando vuelos destacados:', error);

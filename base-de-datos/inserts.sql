@@ -1,140 +1,219 @@
--- ===========================
--- INSERTS DE USUARIOS
--- ===========================
-INSERT INTO usuarios (
-    tipo_identificacion,
-    numero_identificacion,
-    nombre_completo,
-    correo,
-    telefono,
-    contrasena,
-    rol
-) VALUES
-('CC', '100000001', 'Laura Gómez', 'laura.gomez@elaris.com', '3001110001', '$2a$10$hashdemo000000000000000000000000000000000000000000001', 'cliente'),
-('CC', '100000002', 'Carlos Ramírez', 'carlos.ramirez@elaris.com', '3001110002', '$2a$10$hashdemo000000000000000000000000000000000000000000002', 'cliente'),
-('CC', '100000003', 'María Torres', 'maria.torres@elaris.com', '3001110003', '$2a$10$hashdemo000000000000000000000000000000000000000000003', 'cliente'),
-('CC', '100000004', 'Andrés López', 'andres.lopez@elaris.com', '3001110004', '$2a$10$hashdemo000000000000000000000000000000000000000000004', 'cliente'),
-('CC', '100000005', 'Sofía Martínez', 'sofia.martinez@elaris.com', '3001110005', '$2a$10$hashdemo000000000000000000000000000000000000000000005', 'cliente'),
-('CC', '100000006', 'Daniel Herrera', 'daniel.herrera@elaris.com', '3001110006', '$2a$10$hashdemo000000000000000000000000000000000000000000006', 'cliente'),
-('CC', '100000007', 'Valentina Ríos', 'valentina.rios@elaris.com', '3001110007', '$2a$10$hashdemo000000000000000000000000000000000000000000007', 'cliente'),
-('CC', '100000008', 'Juan Pérez', 'juan.perez@elaris.com', '3001110008', '$2a$10$hashdemo000000000000000000000000000000000000000000008', 'cliente'),
-('CC', '100000009', 'Camila Ortega', 'camila.ortega@elaris.com', '3001110009', '$2a$10$hashdemo000000000000000000000000000000000000000000009', 'cliente'),
-('CC', '100000010', 'Miguel Castro', 'miguel.castro@elaris.com', '3001110010', '$2a$10$hashdemo000000000000000000000000000000000000000000010', 'cliente'),
-('CC', '100000011', 'Natalia Vargas', 'natalia.vargas@elaris.com', '3001110011', '$2a$10$hashdemo000000000000000000000000000000000000000000011', 'cliente'),
-('CC', '100000012', 'Sebastián Mora', 'sebastian.mora@elaris.com', '3001110012', '$2a$10$hashdemo000000000000000000000000000000000000000000012', 'cliente'),
-('CC', '100000013', 'Paula Sánchez', 'paula.sanchez@elaris.com', '3001110013', '$2a$10$hashdemo000000000000000000000000000000000000000000013', 'cliente'),
-('CC', '100000014', 'Felipe Gómez', 'felipe.gomez@elaris.com', '3001110014', '$2a$10$hashdemo000000000000000000000000000000000000000000014', 'cliente'),
-('CC', '100000015', 'Isabella Moreno', 'isabella.moreno@elaris.com', '3001110015', '$2a$10$hashdemo000000000000000000000000000000000000000000015', 'cliente'),
-('CC', '100000016', 'Mateo Arias', 'mateo.arias@elaris.com', '3001110016', '$2a$10$hashdemo000000000000000000000000000000000000000000016', 'cliente'),
-('CC', '100000017', 'Gabriela Ruiz', 'gabriela.ruiz@elaris.com', '3001110017', '$2a$10$hashdemo000000000000000000000000000000000000000000017', 'cliente'),
-('CC', '100000018', 'Samuel Peña', 'samuel.pena@elaris.com', '3001110018', '$2a$10$hashdemo000000000000000000000000000000000000000000018', 'cliente'),
-('CC', '100000019', 'Luciana Silva', 'luciana.silva@elaris.com', '3001110019', '$2a$10$hashdemo000000000000000000000000000000000000000000019', 'cliente'),
-('CC', '100000020', 'Tomás Molina', 'tomas.molina@elaris.com', '3001110020', '$2a$10$hashdemo000000000000000000000000000000000000000000020', 'cliente'),
-('CC', '100000021', 'Sara Cárdenas', 'sara.cardenas@elaris.com', '3001110021', '$2a$10$hashdemo000000000000000000000000000000000000000000021', 'cliente'),
-('CC', '100000022', 'Nicolás Vega', 'nicolas.vega@elaris.com', '3001110022', '$2a$10$hashdemo000000000000000000000000000000000000000000022', 'cliente'),
-('CC', '100000023', 'Daniela Pardo', 'daniela.pardo@elaris.com', '3001110023', '$2a$10$hashdemo000000000000000000000000000000000000000000023', 'cliente'),
-('CC', '100000024', 'Esteban León', 'esteban.leon@elaris.com', '3001110024', '$2a$10$hashdemo000000000000000000000000000000000000000000024', 'cliente'),
-('CC', '100000025', 'Manuela Castillo', 'manuela.castillo@elaris.com', '3001110025', '$2a$10$hashdemo000000000000000000000000000000000000000000025', 'admin')
-ON CONFLICT (correo) DO NOTHING;
+-- ============================================================
+-- DATOS DE PRUEBA — SISTEMA ELARIS
+-- Contraseña de todos los usuarios: Elaris2026*
+-- Hash bcrypt: $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO
+-- Ejecutar DESPUÉS de tablas.sql (que ya inserta rol y estado_reserva)
+-- ============================================================
 
 -- ===========================
--- INSERTS DE VUELOS
+-- 1. PAIS (25)
 -- ===========================
-INSERT INTO vuelos (
-    numero_vuelo,
-    origen,
-    destino,
-    ciudad_destino,
-    fecha_salida,
-    hora_salida,
-    hora_llegada,
-    duracion_minutos,
-    escala,
-    clase,
-    tipo_avion,
-    precio_base,
-    imagen_url,
-    descripcion
-) VALUES
-('EL-204', 'Bogotá', 'Nueva York', 'Nueva York', '2026-04-15', '10:30', '17:00', 390, 'Directo', 'Económica', 'Boeing', 3290000, '../../imagenes/nueva-york.jpg', 'Disfruta de un increíble viaje a Nueva York, una de las ciudades más icónicas del mundo.'),
-('EL-422', 'Bogotá', 'París', 'París', '2026-05-22', '09:15', '08:00 am (+1 día)', 765, 'Una escala', 'Económica', 'Airbus', 4480000, '../../imagenes/paris.jpg', 'Viaja a París y descubre una ciudad llena de historia, arte y elegancia.'),
-('EL-310', 'Medellín', 'Cancún', 'Cancún', '2026-06-10', '07:40', '11:55', 255, 'Directo', 'Ejecutiva', 'Boeing', 2170000, '../../imagenes/cancun.jpg', 'Escápate a Cancún y disfruta playas de arena blanca y aguas cristalinas.'),
-('EL-105', 'Cali', 'Madrid', 'Madrid', '2026-07-05', '18:20', '08:45 am (+1 día)', 860, 'Una escala', 'Primera clase', 'Airbus', 3890000, '../../imagenes/madrid.jpg', 'Conoce Madrid, una ciudad vibrante con gran riqueza cultural y gastronómica.'),
-('EL-518', 'Bogotá', 'Buenos Aires', 'Buenos Aires', '2026-08-18', '12:10', '18:20', 370, 'Directo', 'Económica', 'Boeing', 2760000, '../../imagenes/buenos-aires.jpg', 'Descubre Buenos Aires, una ciudad llena de cultura, música y arquitectura.'),
-('EL-267', 'Cartagena', 'Ciudad de México', 'Ciudad de México', '2026-09-02', '08:25', '14:20', 355, 'Una escala', 'Ejecutiva', 'Airbus', 2340000, '../../imagenes/ciudad-mexico.jpg', 'Explora Ciudad de México, un destino lleno de historia, sabores y lugares emblemáticos.'),
-('EL-601', 'Bogotá', 'Londres', 'Londres', '2026-09-18', '21:10', '14:30 (+1 día)', 800, 'Una escala', 'Económica', 'Boeing', 4620000, '../../imagenes/londres.jpg', 'Conoce Londres, una ciudad moderna llena de historia, cultura y lugares emblemáticos.'),
-('EL-602', 'Medellín', 'Miami', 'Miami', '2026-10-03', '06:45', '11:25', 280, 'Directo', 'Económica', 'Airbus', 1980000, '../../imagenes/miami.jpg', 'Viaja a Miami y disfruta sus playas, compras y ambiente internacional.'),
-('EL-603', 'Cali', 'Lima', 'Lima', '2026-10-12', '13:20', '16:10', 170, 'Directo', 'Económica', 'Regional', 1450000, '../../imagenes/lima.jpg', 'Descubre Lima, una ciudad con gran tradición gastronómica y cultural.'),
-('EL-604', 'Bogotá', 'Roma', 'Roma', '2026-10-25', '19:35', '13:15 (+1 día)', 820, 'Una escala', 'Ejecutiva', 'Airbus', 4750000, '../../imagenes/roma.jpg', 'Explora Roma y sus monumentos históricos en una experiencia inolvidable.'),
-('EL-605', 'Cartagena', 'Punta Cana', 'Punta Cana', '2026-11-04', '09:00', '12:30', 210, 'Directo', 'Económica', 'Boeing', 1890000, '../../imagenes/punta-cana.jpg', 'Disfruta Punta Cana con playas paradisíacas y descanso total.'),
-('EL-606', 'Bogotá', 'Toronto', 'Toronto', '2026-11-16', '08:15', '15:45', 450, 'Una escala', 'Económica', 'Airbus', 3520000, '../../imagenes/toronto.jpg', 'Visita Toronto, una ciudad diversa, moderna y llena de experiencias urbanas.'),
-('EL-607', 'Medellín', 'Santiago', 'Santiago', '2026-11-28', '11:40', '18:10', 390, 'Directo', 'Ejecutiva', 'Boeing', 2680000, '../../imagenes/santiago.jpg', 'Conoce Santiago de Chile y disfruta sus paisajes urbanos rodeados de montañas.'),
-('EL-608', 'Cali', 'San José', 'San José', '2026-12-05', '07:30', '10:20', 170, 'Directo', 'Económica', 'Regional', 1580000, '../../imagenes/san-jose.jpg', 'Viaja a San José y descubre la naturaleza y cultura de Costa Rica.'),
-('EL-609', 'Bogotá', 'Barcelona', 'Barcelona', '2026-12-18', '20:50', '15:10 (+1 día)', 860, 'Una escala', 'Primera clase', 'Airbus', 4980000, '../../imagenes/barcelona.jpg', 'Disfruta Barcelona, su arquitectura, playas y vida cultural.'),
-('EL-610', 'Medellín', 'Orlando', 'Orlando', '2027-01-08', '05:55', '10:40', 285, 'Directo', 'Económica', 'Boeing', 2050000, '../../imagenes/orlando.jpg', 'Viaja a Orlando y vive una experiencia llena de entretenimiento.'),
-('EL-611', 'Cartagena', 'Panamá', 'Ciudad de Panamá', '2027-01-19', '14:10', '15:35', 85, 'Directo', 'Económica', 'Regional', 980000, '../../imagenes/panama.jpg', 'Conecta con Ciudad de Panamá, un destino cercano y moderno.'),
-('EL-612', 'Bogotá', 'Ámsterdam', 'Ámsterdam', '2027-02-02', '22:20', '16:45 (+1 día)', 865, 'Una escala', 'Ejecutiva', 'Boeing', 4860000, '../../imagenes/amsterdam.jpg', 'Explora Ámsterdam, sus canales, museos y ambiente cultural.'),
-('EL-613', 'Cali', 'Quito', 'Quito', '2027-02-14', '10:05', '11:55', 110, 'Directo', 'Económica', 'Regional', 1120000, '../../imagenes/quito.jpg', 'Conoce Quito, una ciudad andina con gran riqueza histórica.'),
-('EL-614', 'Bogotá', 'Los Ángeles', 'Los Ángeles', '2027-03-01', '16:30', '23:20', 410, 'Una escala', 'Primera clase', 'Boeing', 4200000, '../../imagenes/los-angeles.jpg', 'Viaja a Los Ángeles y descubre entretenimiento, playas y cultura urbana.'),
-('EL-615', 'Medellín', 'Montevideo', 'Montevideo', '2027-03-12', '12:45', '19:15', 390, 'Una escala', 'Económica', 'Airbus', 2510000, '../../imagenes/montevideo.jpg', 'Descubre Montevideo, una ciudad tranquila con encanto costero.'),
-('EL-616', 'Bogotá', 'Lisboa', 'Lisboa', '2027-03-25', '18:40', '13:05 (+1 día)', 825, 'Una escala', 'Ejecutiva', 'Airbus', 4550000, '../../imagenes/lisboa.jpg', 'Conoce Lisboa, sus miradores, historia y ambiente atlántico.'),
-('EL-617', 'Cartagena', 'Santo Domingo', 'Santo Domingo', '2027-04-07', '08:50', '11:25', 155, 'Directo', 'Económica', 'Regional', 1320000, '../../imagenes/santo-domingo.jpg', 'Visita Santo Domingo y disfruta su historia caribeña.'),
-('EL-618', 'Cali', 'Buenos Aires', 'Buenos Aires', '2027-04-18', '15:15', '22:05', 410, 'Una escala', 'Económica', 'Boeing', 2890000, '../../imagenes/buenos-aires.jpg', 'Vive Buenos Aires desde Cali con una experiencia cultural completa.'),
-('EL-619', 'Bogotá', 'Tokio', 'Tokio', '2027-05-05', '23:55', '06:40 (+2 días)', 1225, 'Dos o más', 'Primera clase', 'Boeing', 5000000, '../../imagenes/tokio.jpg', 'Explora Tokio, una ciudad donde tradición y tecnología se encuentran.')
-ON CONFLICT (numero_vuelo) DO NOTHING;
+INSERT INTO pais (nombre) VALUES
+('Colombia'),('Venezuela'),('Ecuador'),('Perú'),('Brasil'),
+('Argentina'),('Chile'),('México'),('España'),('Estados Unidos'),
+('Francia'),('Alemania'),('Italia'),('Panamá'),('Costa Rica'),
+('Cuba'),('Rep. Dominicana'),('Bolivia'),('Uruguay'),('Paraguay'),
+('Guatemala'),('Honduras'),('El Salvador'),('Nicaragua'),('Canadá');
 
 -- ===========================
--- INSERTS DE RESERVAS
+-- 2. DEPARTAMENTO (25)
 -- ===========================
-INSERT INTO reservas (
-    numero_reserva,
-    id_usuario,
-    id_vuelo,
-    estado,
-    clase,
-    pasajeros,
-    tarifa_extra,
-    descuento,
-    total
-) VALUES
-('RES-0001', 1, 1, 'Confirmada', 'Económica', 1, 0, 658000, 2632000),
-('RES-0002', 2, 2, 'Pendiente', 'Económica', 2, 0, 896000, 3584000),
-('RES-0003', 3, 3, 'Cancelada', 'Ejecutiva', 1, 890000, 434000, 2626000),
-('RES-0004', 4, 4, 'Confirmada', 'Primera clase', 1, 1300000, 778000, 4412000),
-('RES-0005', 5, 5, 'Pendiente', 'Económica', 1, 0, 552000, 2208000),
-('RES-0006', 6, 6, 'Confirmada', 'Ejecutiva', 2, 890000, 468000, 2762000),
-('RES-0007', 7, 7, 'Confirmada', 'Económica', 1, 0, 924000, 3696000),
-('RES-0008', 8, 8, 'Pendiente', 'Económica', 1, 0, 396000, 1584000),
-('RES-0009', 9, 9, 'Cancelada', 'Económica', 1, 0, 290000, 1160000),
-('RES-0010', 10, 10, 'Confirmada', 'Ejecutiva', 1, 890000, 950000, 4690000),
-('RES-0011', 11, 11, 'Pendiente', 'Económica', 2, 0, 378000, 1512000),
-('RES-0012', 12, 12, 'Confirmada', 'Económica', 1, 0, 704000, 2816000),
-('RES-0013', 13, 13, 'Confirmada', 'Ejecutiva', 1, 890000, 536000, 3034000),
-('RES-0014', 14, 14, 'Pendiente', 'Económica', 1, 0, 316000, 1264000),
-('RES-0015', 15, 15, 'Cancelada', 'Primera clase', 1, 1300000, 996000, 5284000),
-('RES-0016', 16, 16, 'Confirmada', 'Económica', 3, 0, 410000, 1640000),
-('RES-0017', 17, 17, 'Pendiente', 'Económica', 1, 0, 196000, 784000),
-('RES-0018', 18, 18, 'Confirmada', 'Ejecutiva', 1, 890000, 972000, 4778000),
-('RES-0019', 19, 19, 'Pendiente', 'Económica', 1, 0, 224000, 896000),
-('RES-0020', 20, 20, 'Confirmada', 'Primera clase', 1, 1300000, 840000, 4660000),
-('RES-0021', 21, 21, 'Cancelada', 'Económica', 2, 0, 502000, 2008000),
-('RES-0022', 22, 22, 'Confirmada', 'Ejecutiva', 1, 890000, 910000, 4530000),
-('RES-0023', 23, 23, 'Pendiente', 'Económica', 1, 0, 264000, 1056000),
-('RES-0024', 24, 24, 'Confirmada', 'Económica', 1, 0, 578000, 2312000),
-('RES-0025', 25, 25, 'Pendiente', 'Primera clase', 1, 1300000, 1000000, 5300000)
-ON CONFLICT (numero_reserva) DO NOTHING;
+INSERT INTO departamento (nombre, id_pais) VALUES
+('Cundinamarca',1),('Antioquia',1),('Valle del Cauca',1),('Atlántico',1),('Bolívar',1),
+('Santander',1),('Norte de Santander',1),('Nariño',1),('Cauca',1),('Tolima',1),
+('Huila',1),('Risaralda',1),('Caldas',1),('Quindío',1),('Córdoba',1),
+('Meta',1),('Magdalena',1),('Cesar',1),('Sucre',1),('Boyacá',1),
+('Com. de Madrid',9),('Florida',10),('Prov. Buenos Aires',6),
+('Ciudad de México',8),('Quintana Roo',8);
 
+-- ===========================
+-- 3. CIUDAD (25)
+-- ===========================
+INSERT INTO ciudad (nombre, id_departamento) VALUES
+('Bogotá',1),('Medellín',2),('Cali',3),('Barranquilla',4),('Cartagena',5),
+('Bucaramanga',6),('Cúcuta',7),('Pasto',8),('Popayán',9),('Ibagué',10),
+('Neiva',11),('Pereira',12),('Manizales',13),('Armenia',14),('Montería',15),
+('Villavicencio',16),('Santa Marta',17),('Valledupar',18),('Sincelejo',19),('Tunja',20),
+('Madrid',21),('Miami',22),('Buenos Aires',23),('Ciudad de México',24),('Cancún',25);
 
+-- ===========================
+-- 4. USUARIO (25 — rol=3 Cliente)
+--    + 5 extra para admin y agente
+-- ===========================
+INSERT INTO usuario (nombre_usuario, contrasena, id_rol) VALUES
+('jgonzalez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('mrodriguez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('amarinez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('lhernandez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('clopez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('dgomez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('sdiaz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('jmoreno','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('rmunoz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('palvarez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('njimenez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('yruiz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('fflorez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('eguerra','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('bmedina','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('ocastillo','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('hvargas','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('isolano','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('kcardona','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('trojas','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('aospina','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('vpena','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('rcorrea','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('emendez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+('nsalazar','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
+-- Extra: sistema (admin y agente)
+('superadmin','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
+('admin_elaris','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
+('agente_sofia','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
+('agente_carlos','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
+('agente_luz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2);
 
-INSERT INTO roles (nombre_rol) VALUES
-('Super Administrador'),
-('Agente de Aerolinea'),
-('Cliente')
-ON CONFLICT DO NOTHING;
+-- ===========================
+-- 5. CLIENTE (25 — id_usuario 1 al 25)
+-- ===========================
+INSERT INTO cliente (numero_identificacion, tipo_identificacion, nombres, apellidos, correo, direccion, id_ciudad, telefono_principal, telefono_alterno, id_usuario) VALUES
+('1020304050','Cédula','Juan','González','jgonzalez@correo.com','Calle 10 # 5-20',1,'+57 310 111 0001',NULL,1),
+('1020304051','Cédula','María','Rodríguez','mrodriguez@correo.com','Cra 15 # 80-45',2,'+57 310 111 0002','+57 311 222 0002',2),
+('1020304052','Cédula','Ana','Mariñez','amarinez@correo.com','Av. 6N # 21-10',3,'+57 310 111 0003',NULL,3),
+('1020304053','Cédula','Luis','Hernández','lhernandez@correo.com','Calle 50 # 40-00',4,'+57 310 111 0004',NULL,4),
+('1020304054','Cédula','Camila','López','clopez@correo.com','Cra 45 # 26-85',5,'+57 310 111 0005',NULL,5),
+('1020304055','Cédula','Diego','Gómez','dgomez@correo.com','Calle 30 # 12-00',6,'+57 310 111 0006','+57 312 222 0006',6),
+('1020304056','Pasaporte','Sandra','Díaz','sdiaz@correo.com','Av. Norte # 15-30',7,'+57 310 111 0007',NULL,7),
+('1020304057','Cédula','Jorge','Moreno','jmoreno@correo.com','Calle 7 # 3-10',8,'+57 310 111 0008',NULL,8),
+('1020304058','Cédula','Rosa','Muñoz','rmunoz@correo.com','Cra 8 # 18-55',9,'+57 310 111 0009',NULL,9),
+('1020304059','Cédula','Pedro','Álvarez','palvarez@correo.com','Calle 25 # 60-11',10,'+57 310 111 0010','+57 313 333 0010',10),
+('1020304060','Cédula','Natalia','Jiménez','njimenez@correo.com','Cra 20 # 50-00',11,'+57 310 111 0011',NULL,11),
+('1020304061','Pasaporte','Yamile','Ruiz','yruiz@correo.com','Calle 100 # 15-20',12,'+57 310 111 0012',NULL,12),
+('1020304062','Cédula','Felipe','Flórez','fflorez@correo.com','Cra 50 # 10-40',13,'+57 310 111 0013',NULL,13),
+('1020304063','Cédula','Edgar','Guerra','eguerra@correo.com','Calle 4 # 8-00',14,'+57 310 111 0014','+57 314 444 0014',14),
+('1020304064','Cédula','Blanca','Medina','bmedina@correo.com','Av. El Palo # 1-20',15,'+57 310 111 0015',NULL,15),
+('1020304065','Cédula','Omar','Castillo','ocastillo@correo.com','Cra 18 # 22-80',16,'+57 310 111 0016',NULL,16),
+('1020304066','Pasaporte','Helena','Vargas','hvargas@correo.com','Calle 19 # 9-10',17,'+57 310 111 0017',NULL,17),
+('1020304067','Cédula','Iván','Solano','isolano@correo.com','Cra 35 # 42-15',18,'+57 310 111 0018','+57 315 555 0018',18),
+('1020304068','Cédula','Karen','Cardona','kcardona@correo.com','Calle 77 # 55-00',19,'+57 310 111 0019',NULL,19),
+('1020304069','Cédula','Tomás','Rojas','trojas@correo.com','Cra 1 # 15-30',20,'+57 310 111 0020',NULL,20),
+('1020304070','Cédula','Andrés','Ospina','aospina@correo.com','Calle 60 # 30-10',1,'+57 310 111 0021',NULL,21),
+('1020304071','Cédula','Valentina','Peña','vpena@correo.com','Cra 22 # 11-05',2,'+57 310 111 0022','+57 316 666 0022',22),
+('1020304072','Pasaporte','Ricardo','Correa','rcorrea@correo.com','Av. 30 # 50-20',3,'+57 310 111 0023',NULL,23),
+('1020304073','Cédula','Elena','Méndez','emendez@correo.com','Calle 90 # 17-45',4,'+57 310 111 0024',NULL,24),
+('1020304074','Cédula','Nicolás','Salazar','nsalazar@correo.com','Cra 40 # 28-00',5,'+57 310 111 0025',NULL,25);
 
-INSERT INTO estado_reserva (nombre_estado) VALUES
-('Reservada'),
-('Confirmada'),
-('Cancelada'),
-('Expirada')
-ON CONFLICT DO NOTHING;
+-- ===========================
+-- 6. VUELO (25)
+-- id_ciudad_origen / id_ciudad_destino: 1=Bogotá 2=Medellín 3=Cali 4=Barranquilla 5=Cartagena
+-- 6=Bucaramanga 11=Neiva 12=Pereira 17=Santa Marta 21=Madrid 22=Miami 23=Buenos Aires 24=CDMX 25=Cancún
+-- ===========================
+INSERT INTO vuelo (cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, capacidad_pasajeros, precio_base, estado_vuelo) VALUES
+('EL-001',1,2,'2026-07-01 06:00:00','2026-07-01 07:00:00',180,280000.00,'Programado'),
+('EL-002',1,3,'2026-07-01 08:00:00','2026-07-01 09:10:00',180,320000.00,'Programado'),
+('EL-003',1,5,'2026-07-02 07:00:00','2026-07-02 08:20:00',200,450000.00,'Programado'),
+('EL-004',2,1,'2026-07-02 09:00:00','2026-07-02 10:00:00',180,280000.00,'Programado'),
+('EL-005',3,1,'2026-07-03 06:30:00','2026-07-03 07:40:00',160,310000.00,'Programado'),
+('EL-006',1,21,'2026-07-05 22:00:00','2026-07-06 14:00:00',300,3200000.00,'Programado'),
+('EL-007',1,22,'2026-07-06 11:00:00','2026-07-06 19:00:00',250,2800000.00,'Programado'),
+('EL-008',2,25,'2026-07-07 10:00:00','2026-07-07 16:00:00',220,2500000.00,'Programado'),
+('EL-009',1,23,'2026-07-08 23:00:00','2026-07-09 07:00:00',280,3500000.00,'Programado'),
+('EL-010',1,24,'2026-07-09 08:00:00','2026-07-09 14:00:00',200,1900000.00,'Programado'),
+('EL-011',4,1,'2026-07-10 07:00:00','2026-07-10 08:30:00',160,350000.00,'Programado'),
+('EL-012',5,2,'2026-07-11 06:00:00','2026-07-11 07:30:00',160,380000.00,'Programado'),
+('EL-013',1,6,'2026-07-12 09:00:00','2026-07-12 10:00:00',150,260000.00,'Programado'),
+('EL-014',6,1,'2026-07-13 11:00:00','2026-07-13 12:00:00',150,260000.00,'Programado'),
+('EL-015',3,5,'2026-07-14 07:30:00','2026-07-14 08:40:00',140,340000.00,'Programado'),
+('EL-016',2,22,'2026-07-15 13:00:00','2026-07-15 19:30:00',240,2600000.00,'Programado'),
+('EL-017',1,12,'2026-07-16 06:00:00','2026-07-16 06:50:00',120,220000.00,'Programado'),
+('EL-018',1,17,'2026-07-17 08:00:00','2026-07-17 09:10:00',150,310000.00,'Programado'),
+('EL-019',12,1,'2026-07-18 10:00:00','2026-07-18 10:50:00',120,220000.00,'Programado'),
+('EL-020',17,1,'2026-07-19 12:00:00','2026-07-19 13:10:00',150,310000.00,'Programado'),
+('EL-021',1,11,'2026-07-20 07:00:00','2026-07-20 08:00:00',130,240000.00,'Programado'),
+('EL-022',3,23,'2026-07-21 20:00:00','2026-07-22 06:00:00',260,3400000.00,'Programado'),
+('EL-023',4,21,'2026-07-22 21:00:00','2026-07-23 13:00:00',290,3300000.00,'Programado'),
+('EL-024',2,24,'2026-07-23 07:00:00','2026-07-23 13:00:00',200,1800000.00,'Programado'),
+('EL-025',5,25,'2026-07-24 09:00:00','2026-07-24 14:30:00',180,2200000.00,'Programado');
+
+-- ===========================
+-- 7. RESERVA (25)
+-- id_estado: 1=Reservada 2=Confirmada 3=Cancelada 4=Expirada
+-- ===========================
+INSERT INTO reserva (id_cliente, id_vuelo, id_estado, valor_total) VALUES
+(1,1,2,280000.00),(2,2,2,320000.00),(3,3,1,450000.00),(4,4,2,280000.00),(5,5,1,310000.00),
+(6,6,2,3200000.00),(7,7,2,2800000.00),(8,8,1,2500000.00),(9,9,3,3500000.00),(10,10,2,1900000.00),
+(11,11,1,350000.00),(12,12,2,380000.00),(13,13,1,260000.00),(14,14,2,260000.00),(15,15,3,340000.00),
+(16,16,2,2600000.00),(17,17,1,220000.00),(18,18,2,310000.00),(19,19,4,220000.00),(20,20,2,310000.00),
+(21,21,1,240000.00),(22,22,2,3400000.00),(23,23,1,3300000.00),(24,24,2,1800000.00),(25,25,1,2200000.00);
+
+-- ===========================
+-- 8. TIQUETE (25)
+-- clase_tiquete: 'Económica', 'Ejecutiva', 'Primera clase'
+-- ===========================
+INSERT INTO tiquete (num_asiento, clase_tiquete, precio_final, id_reserva) VALUES
+('12A','Económica',280000.00,1),('5B','Ejecutiva',640000.00,2),('1A','Primera clase',1350000.00,3),
+('18C','Económica',280000.00,4),('22D','Económica',310000.00,5),('3B','Primera clase',9600000.00,6),
+('7A','Ejecutiva',5600000.00,7),('15C','Económica',2500000.00,8),('2A','Primera clase',10500000.00,9),
+('11B','Ejecutiva',3800000.00,10),('20A','Económica',350000.00,11),('9C','Económica',380000.00,12),
+('14D','Económica',260000.00,13),('16A','Económica',260000.00,14),('8B','Ejecutiva',680000.00,15),
+('4A','Primera clase',7800000.00,16),('25C','Económica',220000.00,17),('13B','Económica',310000.00,18),
+('19A','Económica',220000.00,19),('6D','Económica',310000.00,20),('21C','Económica',240000.00,21),
+('2B','Ejecutiva',6800000.00,22),('1C','Primera clase',9900000.00,23),('10A','Ejecutiva',3600000.00,24),
+('17B','Económica',2200000.00,25);
+
+-- ===========================
+-- 9. PAQUETE_TURISTICO (25)
+-- ===========================
+INSERT INTO paquete_turistico (nombre_paquete, descripcion, sector_destino, precio, estado) VALUES
+('Hotel 3N Madrid','3 noches hotel céntrico en Madrid','Madrid',1200000.00,'Disponible'),
+('Tour Ciudad de Madrid','City tour guiado Madrid 8h','Madrid',450000.00,'Disponible'),
+('Hotel 5N Miami Beach','5 noches frente al mar en Miami','Miami',2800000.00,'Disponible'),
+('Traslado Aeropuerto Miami','Transfer ida y vuelta aeropuerto','Miami',180000.00,'Disponible'),
+('Tour Everglades','Excursión de día completo Everglades','Miami',650000.00,'Disponible'),
+('Hotel 4N Buenos Aires','4 noches en Palermo BA','Buenos Aires',1500000.00,'Disponible'),
+('Tango Show BA','Cena show de tango en San Telmo','Buenos Aires',380000.00,'Disponible'),
+('Tour Colonia del Sacramento','Excursión Colonia ferry','Buenos Aires',520000.00,'Disponible'),
+('Hotel 3N CDMX','3 noches hotel Polanco','Ciudad de México',900000.00,'Disponible'),
+('Tour Teotihuacán','Excursión pirámides y museo','Ciudad de México',320000.00,'Disponible'),
+('Hotel 5N Cancún All-inclusive','5 noches todo incluido zona hotelera','Cancún',3500000.00,'Disponible'),
+('Snorkel Isla Mujeres','Día de snorkel en Isla Mujeres','Cancún',420000.00,'Disponible'),
+('Tour Chichén Itzá','Excursión día completo Chichén Itzá','Cancún',480000.00,'Disponible'),
+('Hotel 2N Cartagena','2 noches hotel histórico Cartagena','Cartagena',680000.00,'Disponible'),
+('City Tour Cartagena','Recorrido histórico amurallado','Cartagena',180000.00,'Disponible'),
+('Hotel 2N Santa Marta','2 noches cerca a Tayrona','Santa Marta',720000.00,'Disponible'),
+('Tour Parque Tayrona','Día en Parque Tayrona','Santa Marta',250000.00,'Disponible'),
+('Hotel 3N Medellín','3 noches hotel El Poblado','Medellín',750000.00,'Disponible'),
+('Tour Guatapé','Excursión Guatapé y Peñol','Medellín',220000.00,'Disponible'),
+('Hotel 2N Cali','2 noches hotel norte de Cali','Cali',480000.00,'Disponible'),
+('Tour Salsa Cali','Clase de salsa y noche caleña','Cali',160000.00,'Disponible'),
+('Seguro de Viaje Global','Cobertura médica internacional 15 días','Internacional',320000.00,'Disponible'),
+('Seguro de Equipaje','Cobertura pérdida de equipaje','Internacional',120000.00,'Disponible'),
+('Transporte Terrestre Bogotá','Traslado hotel-aeropuerto Bogotá','Bogotá',90000.00,'Disponible'),
+('Hotel 1N Bogotá Tránsito','1 noche para escala en Bogotá','Bogotá',350000.00,'No disponible');
+
+-- ===========================
+-- 10. RESERVA_PAQUETE (25)
+-- ===========================
+INSERT INTO reserva_paquete (id_reserva, id_paquete) VALUES
+(6,1),(6,2),(7,3),(7,4),(8,5),(9,6),(9,7),(10,9),(10,10),(16,3),
+(16,4),(22,6),(22,8),(23,1),(24,9),(24,10),(25,11),(25,12),(1,14),
+(1,15),(2,18),(3,22),(4,23),(5,24),(12,17);
+
+-- ===========================
+-- 11. HISTORIAL_ESTADO_RESERVA (25)
+-- ===========================
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio) VALUES
+(1,1,'2026-06-01 10:00:00'),(1,2,'2026-06-02 14:30:00'),
+(2,1,'2026-06-01 11:00:00'),(2,2,'2026-06-03 09:00:00'),
+(3,1,'2026-06-02 08:00:00'),
+(4,1,'2026-06-02 09:30:00'),(4,2,'2026-06-04 10:00:00'),
+(5,1,'2026-06-03 07:00:00'),
+(6,1,'2026-06-03 12:00:00'),(6,2,'2026-06-05 16:00:00'),
+(7,1,'2026-06-04 08:00:00'),(7,2,'2026-06-06 11:00:00'),
+(8,1,'2026-06-05 10:00:00'),
+(9,1,'2026-06-05 14:00:00'),(9,3,'2026-06-07 09:00:00'),
+(10,1,'2026-06-06 08:00:00'),(10,2,'2026-06-08 13:00:00'),
+(15,1,'2026-06-07 09:00:00'),(15,3,'2026-06-09 10:00:00'),
+(16,1,'2026-06-08 11:00:00'),(16,2,'2026-06-10 15:00:00'),
+(19,1,'2026-06-09 07:00:00'),(19,4,'2026-06-30 00:00:00'),
+(22,1,'2026-06-10 08:00:00'),(22,2,'2026-06-12 14:00:00');
