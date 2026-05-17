@@ -1,13 +1,4 @@
--- ============================================================
--- DATOS DE PRUEBA — SISTEMA ELARIS
--- Contraseña de todos los usuarios: Elaris2026*
--- Hash bcrypt: $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO
--- Ejecutar DESPUÉS de tablas.sql (que ya inserta rol y estado_reserva)
--- ============================================================
 
--- ===========================
--- 1. PAIS (25)
--- ===========================
 INSERT INTO pais (nombre) VALUES
 ('Colombia'),('Venezuela'),('Ecuador'),('Perú'),('Brasil'),
 ('Argentina'),('Chile'),('México'),('España'),('Estados Unidos'),
@@ -15,9 +6,6 @@ INSERT INTO pais (nombre) VALUES
 ('Cuba'),('Rep. Dominicana'),('Bolivia'),('Uruguay'),('Paraguay'),
 ('Guatemala'),('Honduras'),('El Salvador'),('Nicaragua'),('Canadá');
 
--- ===========================
--- 2. DEPARTAMENTO (25)
--- ===========================
 INSERT INTO departamento (nombre, id_pais) VALUES
 ('Cundinamarca',1),('Antioquia',1),('Valle del Cauca',1),('Atlántico',1),('Bolívar',1),
 ('Santander',1),('Norte de Santander',1),('Nariño',1),('Cauca',1),('Tolima',1),
@@ -26,9 +14,6 @@ INSERT INTO departamento (nombre, id_pais) VALUES
 ('Com. de Madrid',9),('Florida',10),('Prov. Buenos Aires',6),
 ('Ciudad de México',8),('Quintana Roo',8);
 
--- ===========================
--- 3. CIUDAD (25)
--- ===========================
 INSERT INTO ciudad (nombre, id_departamento) VALUES
 ('Bogotá',1),('Medellín',2),('Cali',3),('Barranquilla',4),('Cartagena',5),
 ('Bucaramanga',6),('Cúcuta',7),('Pasto',8),('Popayán',9),('Ibagué',10),
@@ -36,10 +21,6 @@ INSERT INTO ciudad (nombre, id_departamento) VALUES
 ('Villavicencio',16),('Santa Marta',17),('Valledupar',18),('Sincelejo',19),('Tunja',20),
 ('Madrid',21),('Miami',22),('Buenos Aires',23),('Ciudad de México',24),('Cancún',25);
 
--- ===========================
--- 4. USUARIO (25 — rol=3 Cliente)
---    + 5 extra para admin y agente
--- ===========================
 INSERT INTO usuario (nombre_usuario, contrasena, id_rol) VALUES
 ('jgonzalez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
 ('mrodriguez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
@@ -66,16 +47,13 @@ INSERT INTO usuario (nombre_usuario, contrasena, id_rol) VALUES
 ('rcorrea','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
 ('emendez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
 ('nsalazar','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
--- Extra: sistema (admin y agente)
+
 ('superadmin','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
 ('admin_elaris','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
 ('agente_sofia','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
 ('agente_carlos','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
 ('agente_luz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2);
 
--- ===========================
--- 5. CLIENTE (25 — id_usuario 1 al 25)
--- ===========================
 INSERT INTO cliente (numero_identificacion, tipo_identificacion, nombres, apellidos, correo, direccion, id_ciudad, telefono_principal, telefono_alterno, id_usuario) VALUES
 ('1020304050','Cédula','Juan','González','jgonzalez@correo.com','Calle 10 # 5-20',1,'+57 310 111 0001',NULL,1),
 ('1020304051','Cédula','María','Rodríguez','mrodriguez@correo.com','Cra 15 # 80-45',2,'+57 310 111 0002','+57 311 222 0002',2),
@@ -103,11 +81,6 @@ INSERT INTO cliente (numero_identificacion, tipo_identificacion, nombres, apelli
 ('1020304073','Cédula','Elena','Méndez','emendez@correo.com','Calle 90 # 17-45',4,'+57 310 111 0024',NULL,24),
 ('1020304074','Cédula','Nicolás','Salazar','nsalazar@correo.com','Cra 40 # 28-00',5,'+57 310 111 0025',NULL,25);
 
--- ===========================
--- 6. VUELO (25)
--- id_ciudad_origen / id_ciudad_destino: 1=Bogotá 2=Medellín 3=Cali 4=Barranquilla 5=Cartagena
--- 6=Bucaramanga 11=Neiva 12=Pereira 17=Santa Marta 21=Madrid 22=Miami 23=Buenos Aires 24=CDMX 25=Cancún
--- ===========================
 INSERT INTO vuelo (cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, capacidad_pasajeros, precio_base, estado_vuelo) VALUES
 ('EL-001',1,2,'2026-07-01 06:00:00','2026-07-01 07:00:00',180,280000.00,'Programado'),
 ('EL-002',1,3,'2026-07-01 08:00:00','2026-07-01 09:10:00',180,320000.00,'Programado'),
@@ -135,10 +108,6 @@ INSERT INTO vuelo (cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_sa
 ('EL-024',2,24,'2026-07-23 07:00:00','2026-07-23 13:00:00',200,1800000.00,'Programado'),
 ('EL-025',5,25,'2026-07-24 09:00:00','2026-07-24 14:30:00',180,2200000.00,'Programado');
 
--- ===========================
--- 7. RESERVA (25)
--- id_estado: 1=Reservada 2=Confirmada 3=Cancelada 4=Expirada
--- ===========================
 INSERT INTO reserva (id_cliente, id_vuelo, id_estado, valor_total) VALUES
 (1,1,2,280000.00),(2,2,2,320000.00),(3,3,1,450000.00),(4,4,2,280000.00),(5,5,1,310000.00),
 (6,6,2,3200000.00),(7,7,2,2800000.00),(8,8,1,2500000.00),(9,9,3,3500000.00),(10,10,2,1900000.00),
@@ -146,10 +115,6 @@ INSERT INTO reserva (id_cliente, id_vuelo, id_estado, valor_total) VALUES
 (16,16,2,2600000.00),(17,17,1,220000.00),(18,18,2,310000.00),(19,19,4,220000.00),(20,20,2,310000.00),
 (21,21,1,240000.00),(22,22,2,3400000.00),(23,23,1,3300000.00),(24,24,2,1800000.00),(25,25,1,2200000.00);
 
--- ===========================
--- 8. TIQUETE (25)
--- clase_tiquete: 'Económica', 'Ejecutiva', 'Primera clase'
--- ===========================
 INSERT INTO tiquete (num_asiento, clase_tiquete, precio_final, id_reserva) VALUES
 ('12A','Económica',280000.00,1),('5B','Ejecutiva',640000.00,2),('1A','Primera clase',1350000.00,3),
 ('18C','Económica',280000.00,4),('22D','Económica',310000.00,5),('3B','Primera clase',9600000.00,6),
@@ -161,9 +126,6 @@ INSERT INTO tiquete (num_asiento, clase_tiquete, precio_final, id_reserva) VALUE
 ('2B','Ejecutiva',6800000.00,22),('1C','Primera clase',9900000.00,23),('10A','Ejecutiva',3600000.00,24),
 ('17B','Económica',2200000.00,25);
 
--- ===========================
--- 9. PAQUETE_TURISTICO (25)
--- ===========================
 INSERT INTO paquete_turistico (nombre_paquete, descripcion, sector_destino, precio, estado) VALUES
 ('Hotel 3N Madrid','3 noches hotel céntrico en Madrid','Madrid',1200000.00,'Disponible'),
 ('Tour Ciudad de Madrid','City tour guiado Madrid 8h','Madrid',450000.00,'Disponible'),
@@ -191,17 +153,11 @@ INSERT INTO paquete_turistico (nombre_paquete, descripcion, sector_destino, prec
 ('Transporte Terrestre Bogotá','Traslado hotel-aeropuerto Bogotá','Bogotá',90000.00,'Disponible'),
 ('Hotel 1N Bogotá Tránsito','1 noche para escala en Bogotá','Bogotá',350000.00,'No disponible');
 
--- ===========================
--- 10. RESERVA_PAQUETE (25)
--- ===========================
 INSERT INTO reserva_paquete (id_reserva, id_paquete) VALUES
 (6,1),(6,2),(7,3),(7,4),(8,5),(9,6),(9,7),(10,9),(10,10),(16,3),
 (16,4),(22,6),(22,8),(23,1),(24,9),(24,10),(25,11),(25,12),(1,14),
 (1,15),(2,18),(3,22),(4,23),(5,24),(12,17);
 
--- ===========================
--- 11. HISTORIAL_ESTADO_RESERVA (25)
--- ===========================
 INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio) VALUES
 (1,1,'2026-06-01 10:00:00'),(1,2,'2026-06-02 14:30:00'),
 (2,1,'2026-06-01 11:00:00'),(2,2,'2026-06-03 09:00:00'),
