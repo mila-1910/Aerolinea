@@ -1,13 +1,4 @@
--- ============================================================
--- SISTEMA DE GESTIÓN DE AEROLÍNEA - ELARIS
--- Base de datos adaptada al enunciado académico
--- Diagrama ER aprobado + requisitos del proyecto
--- ============================================================
 
-
--- ===========================
--- TABLAS DE REFERENCIA GEOGRÁFICA
--- ===========================
 
 -- Tabla de países
 CREATE TABLE IF NOT EXISTS pais (
@@ -33,11 +24,6 @@ CREATE TABLE IF NOT EXISTS ciudad (
         FOREIGN KEY (id_departamento) REFERENCES departamento(id_departamento)
 );
 
-
--- ===========================
--- SEGURIDAD: ROLES Y USUARIOS DEL SISTEMA
--- ===========================
-
 -- Tabla de roles del sistema (Súper Administrador, Agente de Aerolínea, Cliente)
 CREATE TABLE IF NOT EXISTS rol (
     id_rol     SERIAL PRIMARY KEY,
@@ -58,10 +44,6 @@ CREATE TABLE IF NOT EXISTS usuario (
 CREATE INDEX IF NOT EXISTS idx_usuario_nombre ON usuario(nombre_usuario);
 
 
--- ===========================
--- CLIENTES
--- ===========================
-
 -- Tabla de clientes registrados en el sistema
 -- Un cliente está ligado a un usuario del sistema (1 a 1)
 CREATE TABLE IF NOT EXISTS cliente (
@@ -81,11 +63,6 @@ CREATE TABLE IF NOT EXISTS cliente (
     CONSTRAINT fk_cliente_usuario
         FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
-
-
--- ===========================
--- VUELOS
--- ===========================
 
 -- Tabla de vuelos disponibles
 CREATE TABLE IF NOT EXISTS vuelo (
@@ -109,22 +86,12 @@ CREATE TABLE IF NOT EXISTS vuelo (
 CREATE INDEX IF NOT EXISTS idx_vuelo_estado       ON vuelo(estado_vuelo);
 CREATE INDEX IF NOT EXISTS idx_vuelo_ciudad_dest  ON vuelo(id_ciudad_destino);
 
-
--- ===========================
--- ESTADOS DE RESERVA
--- ===========================
-
 -- Catálogo de estados posibles de una reserva
 CREATE TABLE IF NOT EXISTS estado_reserva (
     id_estado    SERIAL PRIMARY KEY,
     nombre_estado VARCHAR(50) NOT NULL UNIQUE
         CHECK (nombre_estado IN ('Reservada', 'Confirmada', 'Cancelada', 'Expirada'))
 );
-
-
--- ===========================
--- RESERVAS
--- ===========================
 
 -- Tabla de reservas: un cliente, un vuelo, uno o varios tiquetes
 CREATE TABLE IF NOT EXISTS reserva (
@@ -147,10 +114,6 @@ CREATE INDEX IF NOT EXISTS idx_reserva_cliente ON reserva(id_cliente);
 CREATE INDEX IF NOT EXISTS idx_reserva_vuelo   ON reserva(id_vuelo);
 
 
--- ===========================
--- TIQUETES
--- ===========================
-
 -- Cada tiquete pertenece a una reserva y tiene asiento y clase
 CREATE TABLE IF NOT EXISTS tiquete (
     id_tiquete    SERIAL PRIMARY KEY,
@@ -163,11 +126,6 @@ CREATE TABLE IF NOT EXISTS tiquete (
         FOREIGN KEY (id_reserva) REFERENCES reserva(id_reserva)
 );
 
-
--- ===========================
--- PAQUETES TURÍSTICOS
--- ===========================
-
 -- Paquetes opcionales que se pueden adquirir durante la compra del tiquete
 CREATE TABLE IF NOT EXISTS paquete_turistico (
     id_paquete      SERIAL PRIMARY KEY,
@@ -178,11 +136,6 @@ CREATE TABLE IF NOT EXISTS paquete_turistico (
     estado          VARCHAR(30)    NOT NULL DEFAULT 'Disponible'
         CHECK (estado IN ('Disponible', 'No disponible'))
 );
-
-
--- ===========================
--- RESERVA ↔ PAQUETE TURÍSTICO  (N:M)
--- ===========================
 
 -- Tabla intermedia: una reserva puede incluir cero, uno o varios paquetes
 CREATE TABLE IF NOT EXISTS reserva_paquete (
@@ -195,11 +148,6 @@ CREATE TABLE IF NOT EXISTS reserva_paquete (
         FOREIGN KEY (id_paquete) REFERENCES paquete_turistico(id_paquete)
 );
 
-
--- ===========================
--- HISTORIAL DE ESTADOS DE RESERVA
--- ===========================
-
 -- Registra cada cambio de estado de una reserva con fecha y hora
 CREATE TABLE IF NOT EXISTS historial_estado_reserva (
     id_historial      SERIAL PRIMARY KEY,
@@ -211,11 +159,6 @@ CREATE TABLE IF NOT EXISTS historial_estado_reserva (
     CONSTRAINT fk_historial_estado
         FOREIGN KEY (id_estado)  REFERENCES estado_reserva(id_estado)
 );
-
-
--- ===========================
--- DATOS INICIALES (seed)
--- ===========================
 
 -- Roles del sistema
 INSERT INTO rol (nombre_rol) VALUES
