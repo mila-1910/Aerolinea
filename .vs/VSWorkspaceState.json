@@ -3,11 +3,9 @@
     "",
     "\\backend",
     "\\frontend",
-    "\\frontend\\js\\admi",
     "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
     "\\frontend\\paginas\\cliente"
   ],
-  "SelectedNode": "\\frontend\\paginas\\admin\\dashboardadmin.html",
   "PreviewInSolutionExplorer": false
 }

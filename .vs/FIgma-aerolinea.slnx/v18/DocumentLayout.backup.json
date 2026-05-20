@@ -11,6 +11,10 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\js\\admi\\dashboard-admin.js||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:backend\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\js\\admi\\admin-comun.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:frontend\\js\\admi\\admin-comun.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
@@ -22,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "index.js",
+              "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend\\index.js",
+              "RelativeDocumentMoniker": "backend\\index.js",
+              "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend\\index.js",
+              "RelativeToolTip": "backend\\index.js",
+              "ViewState": "AgIAACcBAAAAAAAAAAAcwDcBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-05-16T04:57:04.326Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,7 +49,7 @@
               "RelativeDocumentMoniker": "frontend\\paginas\\admin\\dashboardadmin.html",
               "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\paginas\\admin\\dashboardadmin.html",
               "RelativeToolTip": "frontend\\paginas\\admin\\dashboardadmin.html",
-              "ViewState": "AgIAAOkAAAAAAAAAAAAswAMBAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAO4AAAAAAAAAAAAmwAABAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2026-05-04T01:38:38.248Z",
               "EditorCaption": ""
@@ -45,14 +62,14 @@
               "RelativeDocumentMoniker": "frontend\\js\\admi\\dashboard-admin.js",
               "ToolTip": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\js\\admi\\dashboard-admin.js",
               "RelativeToolTip": "frontend\\js\\admi\\dashboard-admin.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwB4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2026-05-13T23:52:28.948Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "admin-comun.js",
               "DocumentMoniker": "C:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\frontend\\js\\admi\\admin-comun.js",
               "RelativeDocumentMoniker": "frontend\\js\\admi\\admin-comun.js",
@@ -60,8 +77,7 @@
               "RelativeToolTip": "frontend\\js\\admi\\admin-comun.js",
               "ViewState": "AgIAACAAAAAAAAAAAAAuwCwAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-05-13T23:50:28.59Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-13T23:50:28.59Z"
             }
           ]
         }
