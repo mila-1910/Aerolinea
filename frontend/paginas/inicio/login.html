@@ -62,8 +62,8 @@
 
                     <form class="auth-form" action="../cliente/buscar-vuelos.html" method="get">
                         <div class="form-group">
-                            <label for="nombre-usuario-login">Usuario</label>
-                            <input type="text" id="nombre-usuario-login" name="nombre_usuario" placeholder="Tu nombre de usuario" aria-describedby="nombre-usuario-login-error" required>
+                            <label for="nombre-usuario-login">Usuario o Correo electrónico</label>
+                            <input type="text" id="nombre-usuario-login" name="nombre_usuario" placeholder="Ej: juan2026 o correo@ejemplo.com" aria-describedby="nombre-usuario-login-error" required>
                             <span id="nombre-usuario-login-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
                         </div>
 
@@ -151,6 +151,36 @@
                             <label for="telefono">Teléfono principal</label>
                             <input type="tel" id="telefono" name="telefono_principal" placeholder="Ej: +57 300 123 4567" aria-describedby="telefono-error" required>
                             <span id="telefono-error" class="error-msg" role="alert" style="display: none; color: #ff4d4f; font-size: 0.85rem; margin-top: 4px;">Este campo es obligatorio</span>
+                        </div>
+
+                        <!-- País y Departamento en fila -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pais-reg">País</label>
+                                <select id="pais-reg" name="pais" required>
+                                    <option value="" disabled selected>Selecciona país...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="departamento-reg">Departamento</label>
+                                <select id="departamento-reg" name="departamento" required disabled>
+                                    <option value="" disabled selected>Selecciona departamento...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Ciudad y Dirección en fila -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ciudad-reg">Ciudad</label>
+                                <select id="ciudad-reg" name="ciudad" required disabled>
+                                    <option value="" disabled selected>Selecciona ciudad...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="direccion-reg">Dirección</label>
+                                <input type="text" id="direccion-reg" name="direccion" placeholder="Ej: Calle 123 #45-67" required>
+                            </div>
                         </div>
 
                         <!-- Contraseña y confirmar en fila -->

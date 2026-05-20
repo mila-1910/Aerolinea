@@ -71,6 +71,84 @@ function showToast(message, type = 'success') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // ---- DINÁMICA DE PAÍSES, DEPARTAMENTOS Y CIUDADES ----
+    const paisSelect = document.getElementById('pais-reg');
+    const deptoSelect = document.getElementById('departamento-reg');
+    const ciudadSelect = document.getElementById('ciudad-reg');
+
+    if (paisSelect) {
+        const API_URL = 'http://localhost:3000/api';
+
+        // Cargar países
+        const cargarPaises = async () => {
+            try {
+                const response = await fetch(`${API_URL}/paises`);
+                if (response.ok) {
+                    const paises = await response.json();
+                    paisSelect.innerHTML = '<option value="" disabled selected>Selecciona país...</option>';
+                    paises.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.nombre;
+                        opt.textContent = p.nombre;
+                        paisSelect.appendChild(opt);
+                    });
+                }
+            } catch (err) {
+                console.error('Error al cargar países:', err);
+            }
+        };
+
+        paisSelect.addEventListener('change', async () => {
+            const paisSelected = paisSelect.value;
+            deptoSelect.innerHTML = '<option value="" disabled selected>Cargando...</option>';
+            deptoSelect.disabled = true;
+            ciudadSelect.innerHTML = '<option value="" disabled selected>Selecciona ciudad...</option>';
+            ciudadSelect.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/departamentos/${encodeURIComponent(paisSelected)}`);
+                if (response.ok) {
+                    const deptos = await response.json();
+                    deptoSelect.innerHTML = '<option value="" disabled selected>Selecciona departamento...</option>';
+                    deptos.forEach(d => {
+                        const opt = document.createElement('option');
+                        opt.value = d.nombre;
+                        opt.textContent = d.nombre;
+                        deptoSelect.appendChild(opt);
+                    });
+                    deptoSelect.disabled = false;
+                }
+            } catch (err) {
+                console.error('Error al cargar departamentos:', err);
+            }
+        });
+
+        deptoSelect.addEventListener('change', async () => {
+            const deptoSelected = deptoSelect.value;
+            ciudadSelect.innerHTML = '<option value="" disabled selected>Cargando...</option>';
+            ciudadSelect.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/ciudades/${encodeURIComponent(deptoSelected)}`);
+                if (response.ok) {
+                    const ciudades = await response.json();
+                    ciudadSelect.innerHTML = '<option value="" disabled selected>Selecciona ciudad...</option>';
+                    ciudades.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c.nombre;
+                        opt.textContent = c.nombre;
+                        ciudadSelect.appendChild(opt);
+                    });
+                    ciudadSelect.disabled = false;
+                }
+            } catch (err) {
+                console.error('Error al cargar ciudades:', err);
+            }
+        });
+
+        cargarPaises();
+    }
+
     // ---- MANEJO DE REGISTRO ----
     const registerForm = document.querySelector('#register-box .auth-form');
     if (registerForm) {
@@ -84,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 apellidos: document.getElementById('apellidos').value,
                 email: document.getElementById('email-reg').value,
                 telefono_principal: document.getElementById('telefono').value,
+                nombre_ciudad: document.getElementById('ciudad-reg').value,
+                direccion: document.getElementById('direccion-reg').value,
                 nombre_usuario: document.getElementById('nombre-usuario').value,
                 password: document.getElementById('password-reg').value,
                 confirmar: document.getElementById('confirmar').value,
@@ -156,9 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Redirigir según el rol (nombres exactos de la tabla rol)
                     let destino = '../cliente/buscar-vuelos.html';
-                    if (data.usuario.rol === 'Super Administrador') {
+                    if (data.usuario.rol === 'Super Administrador' || data.usuario.rol === 'Administrador') {
                         destino = '../admin/dashboardadmin.html';
-                    } else if (data.usuario.rol === 'Agente de Aerolínea') {
+                    } else if (data.usuario.rol === 'Agente de Aerolínea' || data.usuario.rol === 'Agente') {
                         destino = '../agente/dashboardeagente.html';
                     }
                     setTimeout(() => window.location.href = destino, 1800);
@@ -213,6 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 authMain.classList.add('is-registering');
+                const formSection = document.querySelector('.auth__form-section');
+                if (formSection) formSection.scrollTo({ top: 0, behavior: 'smooth' });
                 // Actualizar estilos del navbar
                 if (navBtnLogin && navBtnRegister) {
                     navBtnLogin.className = 'btn-nav btn-nav--ghost switch-to-login';
@@ -225,6 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 authMain.classList.remove('is-registering');
+                const formSection = document.querySelector('.auth__form-section');
+                if (formSection) formSection.scrollTo({ top: 0, behavior: 'auto' });
                 // Actualizar estilos del navbar
                 if (navBtnLogin && navBtnRegister) {
                     navBtnLogin.className = 'btn-nav btn-nav--solid switch-to-login';

@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({
                 numero_reserva: reserva.numeroReserva,
                 id_usuario: usuario.id,
+                id_cliente: usuario.id_cliente,
                 id_vuelo: reserva.idVuelo,
                 estado: estado,
                 clase: reserva.clase,
