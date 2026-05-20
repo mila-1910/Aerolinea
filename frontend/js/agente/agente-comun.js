@@ -12,7 +12,8 @@ function initPerfilDropdown() {
 // Verificar rol del usuario
 function verificarRolUsuario() {
     const u = JSON.parse(localStorage.getItem('usuario'));
-    if (!u || (u.rol !== 'agente' && u.rol !== 'admin')) {
+    const rol = u && u.rol ? u.rol.toLowerCase() : '';
+    if (!u || (rol !== 'agente' && rol !== 'administrador' && rol !== 'admin')) {
         window.location.href = '../inicio/login.html';
     }
 }

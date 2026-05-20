@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function verificarSesionAdmin() {
     const u = JSON.parse(localStorage.getItem('usuario'));
     // Si no hay usuario o no es admin, redirigir al login
-    if (!u || u.rol !== 'admin') {
+    const rol = u && u.rol ? u.rol.toLowerCase() : '';
+    if (!u || (rol !== 'administrador' && rol !== 'admin')) {
         // Ajustar la ruta según la profundidad de la página actual
         const loginUrl = '../../paginas/inicio/login.html';
         window.location.href = loginUrl;
