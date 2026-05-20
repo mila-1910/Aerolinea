@@ -1,219 +1,609 @@
--- ============================================================
--- DATOS DE PRUEBA — SISTEMA ELARIS
--- Contraseña de todos los usuarios: Elaris2026*
--- Hash bcrypt: $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO
--- Ejecutar DESPUÉS de tablas.sql (que ya inserta rol y estado_reserva)
--- ============================================================
+-- =========================================
+-- INSERTS TABLA ROL
+-- =========================================
 
--- ===========================
--- 1. PAIS (25)
--- ===========================
-INSERT INTO pais (nombre) VALUES
-('Colombia'),('Venezuela'),('Ecuador'),('Perú'),('Brasil'),
-('Argentina'),('Chile'),('México'),('España'),('Estados Unidos'),
-('Francia'),('Alemania'),('Italia'),('Panamá'),('Costa Rica'),
-('Cuba'),('Rep. Dominicana'),('Bolivia'),('Uruguay'),('Paraguay'),
-('Guatemala'),('Honduras'),('El Salvador'),('Nicaragua'),('Canadá');
+INSERT INTO rol VALUES ('Administrador');
+INSERT INTO rol VALUES ('Agente');
+INSERT INTO rol VALUES ('Cliente');
 
--- ===========================
--- 2. DEPARTAMENTO (25)
--- ===========================
-INSERT INTO departamento (nombre, id_pais) VALUES
-('Cundinamarca',1),('Antioquia',1),('Valle del Cauca',1),('Atlántico',1),('Bolívar',1),
-('Santander',1),('Norte de Santander',1),('Nariño',1),('Cauca',1),('Tolima',1),
-('Huila',1),('Risaralda',1),('Caldas',1),('Quindío',1),('Córdoba',1),
-('Meta',1),('Magdalena',1),('Cesar',1),('Sucre',1),('Boyacá',1),
-('Com. de Madrid',9),('Florida',10),('Prov. Buenos Aires',6),
-('Ciudad de México',8),('Quintana Roo',8);
 
--- ===========================
--- 3. CIUDAD (25)
--- ===========================
-INSERT INTO ciudad (nombre, id_departamento) VALUES
-('Bogotá',1),('Medellín',2),('Cali',3),('Barranquilla',4),('Cartagena',5),
-('Bucaramanga',6),('Cúcuta',7),('Pasto',8),('Popayán',9),('Ibagué',10),
-('Neiva',11),('Pereira',12),('Manizales',13),('Armenia',14),('Montería',15),
-('Villavicencio',16),('Santa Marta',17),('Valledupar',18),('Sincelejo',19),('Tunja',20),
-('Madrid',21),('Miami',22),('Buenos Aires',23),('Ciudad de México',24),('Cancún',25);
+-- =========================================
+-- INSERTS TABLA ESTADO_RESERVA
+-- =========================================
 
--- ===========================
--- 4. USUARIO (25 — rol=3 Cliente)
---    + 5 extra para admin y agente
--- ===========================
-INSERT INTO usuario (nombre_usuario, contrasena, id_rol) VALUES
-('jgonzalez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('mrodriguez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('amarinez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('lhernandez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('clopez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('dgomez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('sdiaz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('jmoreno','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('rmunoz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('palvarez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('njimenez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('yruiz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('fflorez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('eguerra','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('bmedina','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('ocastillo','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('hvargas','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('isolano','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('kcardona','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('trojas','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('aospina','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('vpena','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('rcorrea','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('emendez','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
-('nsalazar','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',3),
--- Extra: sistema (admin y agente)
-('superadmin','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
-('admin_elaris','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',1),
-('agente_sofia','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
-('agente_carlos','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2),
-('agente_luz','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhuO',2);
+INSERT INTO estado_reserva (nombre_estado) VALUES ('Reservada');
+INSERT INTO estado_reserva (nombre_estado) VALUES ('Confirmada');
+INSERT INTO estado_reserva (nombre_estado) VALUES ('Cancelada');
+INSERT INTO estado_reserva (nombre_estado) VALUES ('Expirada');
 
--- ===========================
--- 5. CLIENTE (25 — id_usuario 1 al 25)
--- ===========================
-INSERT INTO cliente (numero_identificacion, tipo_identificacion, nombres, apellidos, correo, direccion, id_ciudad, telefono_principal, telefono_alterno, id_usuario) VALUES
-('1020304050','Cédula','Juan','González','jgonzalez@correo.com','Calle 10 # 5-20',1,'+57 310 111 0001',NULL,1),
-('1020304051','Cédula','María','Rodríguez','mrodriguez@correo.com','Cra 15 # 80-45',2,'+57 310 111 0002','+57 311 222 0002',2),
-('1020304052','Cédula','Ana','Mariñez','amarinez@correo.com','Av. 6N # 21-10',3,'+57 310 111 0003',NULL,3),
-('1020304053','Cédula','Luis','Hernández','lhernandez@correo.com','Calle 50 # 40-00',4,'+57 310 111 0004',NULL,4),
-('1020304054','Cédula','Camila','López','clopez@correo.com','Cra 45 # 26-85',5,'+57 310 111 0005',NULL,5),
-('1020304055','Cédula','Diego','Gómez','dgomez@correo.com','Calle 30 # 12-00',6,'+57 310 111 0006','+57 312 222 0006',6),
-('1020304056','Pasaporte','Sandra','Díaz','sdiaz@correo.com','Av. Norte # 15-30',7,'+57 310 111 0007',NULL,7),
-('1020304057','Cédula','Jorge','Moreno','jmoreno@correo.com','Calle 7 # 3-10',8,'+57 310 111 0008',NULL,8),
-('1020304058','Cédula','Rosa','Muñoz','rmunoz@correo.com','Cra 8 # 18-55',9,'+57 310 111 0009',NULL,9),
-('1020304059','Cédula','Pedro','Álvarez','palvarez@correo.com','Calle 25 # 60-11',10,'+57 310 111 0010','+57 313 333 0010',10),
-('1020304060','Cédula','Natalia','Jiménez','njimenez@correo.com','Cra 20 # 50-00',11,'+57 310 111 0011',NULL,11),
-('1020304061','Pasaporte','Yamile','Ruiz','yruiz@correo.com','Calle 100 # 15-20',12,'+57 310 111 0012',NULL,12),
-('1020304062','Cédula','Felipe','Flórez','fflorez@correo.com','Cra 50 # 10-40',13,'+57 310 111 0013',NULL,13),
-('1020304063','Cédula','Edgar','Guerra','eguerra@correo.com','Calle 4 # 8-00',14,'+57 310 111 0014','+57 314 444 0014',14),
-('1020304064','Cédula','Blanca','Medina','bmedina@correo.com','Av. El Palo # 1-20',15,'+57 310 111 0015',NULL,15),
-('1020304065','Cédula','Omar','Castillo','ocastillo@correo.com','Cra 18 # 22-80',16,'+57 310 111 0016',NULL,16),
-('1020304066','Pasaporte','Helena','Vargas','hvargas@correo.com','Calle 19 # 9-10',17,'+57 310 111 0017',NULL,17),
-('1020304067','Cédula','Iván','Solano','isolano@correo.com','Cra 35 # 42-15',18,'+57 310 111 0018','+57 315 555 0018',18),
-('1020304068','Cédula','Karen','Cardona','kcardona@correo.com','Calle 77 # 55-00',19,'+57 310 111 0019',NULL,19),
-('1020304069','Cédula','Tomás','Rojas','trojas@correo.com','Cra 1 # 15-30',20,'+57 310 111 0020',NULL,20),
-('1020304070','Cédula','Andrés','Ospina','aospina@correo.com','Calle 60 # 30-10',1,'+57 310 111 0021',NULL,21),
-('1020304071','Cédula','Valentina','Peña','vpena@correo.com','Cra 22 # 11-05',2,'+57 310 111 0022','+57 316 666 0022',22),
-('1020304072','Pasaporte','Ricardo','Correa','rcorrea@correo.com','Av. 30 # 50-20',3,'+57 310 111 0023',NULL,23),
-('1020304073','Cédula','Elena','Méndez','emendez@correo.com','Calle 90 # 17-45',4,'+57 310 111 0024',NULL,24),
-('1020304074','Cédula','Nicolás','Salazar','nsalazar@correo.com','Cra 40 # 28-00',5,'+57 310 111 0025',NULL,25);
 
--- ===========================
--- 6. VUELO (25)
--- id_ciudad_origen / id_ciudad_destino: 1=Bogotá 2=Medellín 3=Cali 4=Barranquilla 5=Cartagena
--- 6=Bucaramanga 11=Neiva 12=Pereira 17=Santa Marta 21=Madrid 22=Miami 23=Buenos Aires 24=CDMX 25=Cancún
--- ===========================
-INSERT INTO vuelo (cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, capacidad_pasajeros, precio_base, estado_vuelo) VALUES
-('EL-001',1,2,'2026-07-01 06:00:00','2026-07-01 07:00:00',180,280000.00,'Programado'),
-('EL-002',1,3,'2026-07-01 08:00:00','2026-07-01 09:10:00',180,320000.00,'Programado'),
-('EL-003',1,5,'2026-07-02 07:00:00','2026-07-02 08:20:00',200,450000.00,'Programado'),
-('EL-004',2,1,'2026-07-02 09:00:00','2026-07-02 10:00:00',180,280000.00,'Programado'),
-('EL-005',3,1,'2026-07-03 06:30:00','2026-07-03 07:40:00',160,310000.00,'Programado'),
-('EL-006',1,21,'2026-07-05 22:00:00','2026-07-06 14:00:00',300,3200000.00,'Programado'),
-('EL-007',1,22,'2026-07-06 11:00:00','2026-07-06 19:00:00',250,2800000.00,'Programado'),
-('EL-008',2,25,'2026-07-07 10:00:00','2026-07-07 16:00:00',220,2500000.00,'Programado'),
-('EL-009',1,23,'2026-07-08 23:00:00','2026-07-09 07:00:00',280,3500000.00,'Programado'),
-('EL-010',1,24,'2026-07-09 08:00:00','2026-07-09 14:00:00',200,1900000.00,'Programado'),
-('EL-011',4,1,'2026-07-10 07:00:00','2026-07-10 08:30:00',160,350000.00,'Programado'),
-('EL-012',5,2,'2026-07-11 06:00:00','2026-07-11 07:30:00',160,380000.00,'Programado'),
-('EL-013',1,6,'2026-07-12 09:00:00','2026-07-12 10:00:00',150,260000.00,'Programado'),
-('EL-014',6,1,'2026-07-13 11:00:00','2026-07-13 12:00:00',150,260000.00,'Programado'),
-('EL-015',3,5,'2026-07-14 07:30:00','2026-07-14 08:40:00',140,340000.00,'Programado'),
-('EL-016',2,22,'2026-07-15 13:00:00','2026-07-15 19:30:00',240,2600000.00,'Programado'),
-('EL-017',1,12,'2026-07-16 06:00:00','2026-07-16 06:50:00',120,220000.00,'Programado'),
-('EL-018',1,17,'2026-07-17 08:00:00','2026-07-17 09:10:00',150,310000.00,'Programado'),
-('EL-019',12,1,'2026-07-18 10:00:00','2026-07-18 10:50:00',120,220000.00,'Programado'),
-('EL-020',17,1,'2026-07-19 12:00:00','2026-07-19 13:10:00',150,310000.00,'Programado'),
-('EL-021',1,11,'2026-07-20 07:00:00','2026-07-20 08:00:00',130,240000.00,'Programado'),
-('EL-022',3,23,'2026-07-21 20:00:00','2026-07-22 06:00:00',260,3400000.00,'Programado'),
-('EL-023',4,21,'2026-07-22 21:00:00','2026-07-23 13:00:00',290,3300000.00,'Programado'),
-('EL-024',2,24,'2026-07-23 07:00:00','2026-07-23 13:00:00',200,1800000.00,'Programado'),
-('EL-025',5,25,'2026-07-24 09:00:00','2026-07-24 14:30:00',180,2200000.00,'Programado');
+-- =========================================
+-- INSERTS TABLA PAIS
+-- =========================================
 
--- ===========================
--- 7. RESERVA (25)
--- id_estado: 1=Reservada 2=Confirmada 3=Cancelada 4=Expirada
--- ===========================
-INSERT INTO reserva (id_cliente, id_vuelo, id_estado, valor_total) VALUES
-(1,1,2,280000.00),(2,2,2,320000.00),(3,3,1,450000.00),(4,4,2,280000.00),(5,5,1,310000.00),
-(6,6,2,3200000.00),(7,7,2,2800000.00),(8,8,1,2500000.00),(9,9,3,3500000.00),(10,10,2,1900000.00),
-(11,11,1,350000.00),(12,12,2,380000.00),(13,13,1,260000.00),(14,14,2,260000.00),(15,15,3,340000.00),
-(16,16,2,2600000.00),(17,17,1,220000.00),(18,18,2,310000.00),(19,19,4,220000.00),(20,20,2,310000.00),
-(21,21,1,240000.00),(22,22,2,3400000.00),(23,23,1,3300000.00),(24,24,2,1800000.00),(25,25,1,2200000.00);
+INSERT INTO pais VALUES ('Colombia');
+INSERT INTO pais VALUES ('Mexico');
+INSERT INTO pais VALUES ('Argentina');
+INSERT INTO pais VALUES ('Peru');
+INSERT INTO pais VALUES ('Chile');
+INSERT INTO pais VALUES ('Ecuador');
+INSERT INTO pais VALUES ('Brasil');
+INSERT INTO pais VALUES ('Panama');
+INSERT INTO pais VALUES ('Costa Rica');
+INSERT INTO pais VALUES ('Venezuela');
+INSERT INTO pais VALUES ('Uruguay');
+INSERT INTO pais VALUES ('Paraguay');
+INSERT INTO pais VALUES ('Bolivia');
+INSERT INTO pais VALUES ('España');
+INSERT INTO pais VALUES ('Francia');
+INSERT INTO pais VALUES ('Italia');
+INSERT INTO pais VALUES ('Alemania');
+INSERT INTO pais VALUES ('Portugal');
+INSERT INTO pais VALUES ('Canada');
+INSERT INTO pais VALUES ('Estados Unidos');
+INSERT INTO pais VALUES ('Japon');
+INSERT INTO pais VALUES ('China');
+INSERT INTO pais VALUES ('Corea del Sur');
+INSERT INTO pais VALUES ('Australia');
+INSERT INTO pais VALUES ('India');
 
--- ===========================
--- 8. TIQUETE (25)
--- clase_tiquete: 'Económica', 'Ejecutiva', 'Primera clase'
--- ===========================
-INSERT INTO tiquete (num_asiento, clase_tiquete, precio_final, id_reserva) VALUES
-('12A','Económica',280000.00,1),('5B','Ejecutiva',640000.00,2),('1A','Primera clase',1350000.00,3),
-('18C','Económica',280000.00,4),('22D','Económica',310000.00,5),('3B','Primera clase',9600000.00,6),
-('7A','Ejecutiva',5600000.00,7),('15C','Económica',2500000.00,8),('2A','Primera clase',10500000.00,9),
-('11B','Ejecutiva',3800000.00,10),('20A','Económica',350000.00,11),('9C','Económica',380000.00,12),
-('14D','Económica',260000.00,13),('16A','Económica',260000.00,14),('8B','Ejecutiva',680000.00,15),
-('4A','Primera clase',7800000.00,16),('25C','Económica',220000.00,17),('13B','Económica',310000.00,18),
-('19A','Económica',220000.00,19),('6D','Económica',310000.00,20),('21C','Económica',240000.00,21),
-('2B','Ejecutiva',6800000.00,22),('1C','Primera clase',9900000.00,23),('10A','Ejecutiva',3600000.00,24),
-('17B','Económica',2200000.00,25);
 
--- ===========================
--- 9. PAQUETE_TURISTICO (25)
--- ===========================
-INSERT INTO paquete_turistico (nombre_paquete, descripcion, sector_destino, precio, estado) VALUES
-('Hotel 3N Madrid','3 noches hotel céntrico en Madrid','Madrid',1200000.00,'Disponible'),
-('Tour Ciudad de Madrid','City tour guiado Madrid 8h','Madrid',450000.00,'Disponible'),
-('Hotel 5N Miami Beach','5 noches frente al mar en Miami','Miami',2800000.00,'Disponible'),
-('Traslado Aeropuerto Miami','Transfer ida y vuelta aeropuerto','Miami',180000.00,'Disponible'),
-('Tour Everglades','Excursión de día completo Everglades','Miami',650000.00,'Disponible'),
-('Hotel 4N Buenos Aires','4 noches en Palermo BA','Buenos Aires',1500000.00,'Disponible'),
-('Tango Show BA','Cena show de tango en San Telmo','Buenos Aires',380000.00,'Disponible'),
-('Tour Colonia del Sacramento','Excursión Colonia ferry','Buenos Aires',520000.00,'Disponible'),
-('Hotel 3N CDMX','3 noches hotel Polanco','Ciudad de México',900000.00,'Disponible'),
-('Tour Teotihuacán','Excursión pirámides y museo','Ciudad de México',320000.00,'Disponible'),
-('Hotel 5N Cancún All-inclusive','5 noches todo incluido zona hotelera','Cancún',3500000.00,'Disponible'),
-('Snorkel Isla Mujeres','Día de snorkel en Isla Mujeres','Cancún',420000.00,'Disponible'),
-('Tour Chichén Itzá','Excursión día completo Chichén Itzá','Cancún',480000.00,'Disponible'),
-('Hotel 2N Cartagena','2 noches hotel histórico Cartagena','Cartagena',680000.00,'Disponible'),
-('City Tour Cartagena','Recorrido histórico amurallado','Cartagena',180000.00,'Disponible'),
-('Hotel 2N Santa Marta','2 noches cerca a Tayrona','Santa Marta',720000.00,'Disponible'),
-('Tour Parque Tayrona','Día en Parque Tayrona','Santa Marta',250000.00,'Disponible'),
-('Hotel 3N Medellín','3 noches hotel El Poblado','Medellín',750000.00,'Disponible'),
-('Tour Guatapé','Excursión Guatapé y Peñol','Medellín',220000.00,'Disponible'),
-('Hotel 2N Cali','2 noches hotel norte de Cali','Cali',480000.00,'Disponible'),
-('Tour Salsa Cali','Clase de salsa y noche caleña','Cali',160000.00,'Disponible'),
-('Seguro de Viaje Global','Cobertura médica internacional 15 días','Internacional',320000.00,'Disponible'),
-('Seguro de Equipaje','Cobertura pérdida de equipaje','Internacional',120000.00,'Disponible'),
-('Transporte Terrestre Bogotá','Traslado hotel-aeropuerto Bogotá','Bogotá',90000.00,'Disponible'),
-('Hotel 1N Bogotá Tránsito','1 noche para escala en Bogotá','Bogotá',350000.00,'No disponible');
+-- =========================================
+-- INSERTS TABLA DEPARTAMENTO
+-- =========================================
 
--- ===========================
--- 10. RESERVA_PAQUETE (25)
--- ===========================
-INSERT INTO reserva_paquete (id_reserva, id_paquete) VALUES
-(6,1),(6,2),(7,3),(7,4),(8,5),(9,6),(9,7),(10,9),(10,10),(16,3),
-(16,4),(22,6),(22,8),(23,1),(24,9),(24,10),(25,11),(25,12),(1,14),
-(1,15),(2,18),(3,22),(4,23),(5,24),(12,17);
+INSERT INTO departamento VALUES ('Valle del Cauca','Colombia');
+INSERT INTO departamento VALUES ('Cundinamarca','Colombia');
+INSERT INTO departamento VALUES ('Antioquia','Colombia');
+INSERT INTO departamento VALUES ('Atlantico','Colombia');
+INSERT INTO departamento VALUES ('Santander','Colombia');
+INSERT INTO departamento VALUES ('Jalisco','Mexico');
+INSERT INTO departamento VALUES ('CDMX','Mexico');
+INSERT INTO departamento VALUES ('Buenos Aires','Argentina');
+INSERT INTO departamento VALUES ('Lima','Peru');
+INSERT INTO departamento VALUES ('Santiago','Chile');
+INSERT INTO departamento VALUES ('Quito','Ecuador');
+INSERT INTO departamento VALUES ('Sao Paulo','Brasil');
+INSERT INTO departamento VALUES ('Panama Centro','Panama');
+INSERT INTO departamento VALUES ('San Jose','Costa Rica');
+INSERT INTO departamento VALUES ('Caracas','Venezuela');
+INSERT INTO departamento VALUES ('Montevideo','Uruguay');
+INSERT INTO departamento VALUES ('Asuncion','Paraguay');
+INSERT INTO departamento VALUES ('La Paz','Bolivia');
+INSERT INTO departamento VALUES ('Madrid','España');
+INSERT INTO departamento VALUES ('Paris','Francia');
+INSERT INTO departamento VALUES ('Roma','Italia');
+INSERT INTO departamento VALUES ('Berlin','Alemania');
+INSERT INTO departamento VALUES ('Lisboa','Portugal');
+INSERT INTO departamento VALUES ('Ontario','Canada');
+INSERT INTO departamento VALUES ('California','Estados Unidos');
 
--- ===========================
--- 11. HISTORIAL_ESTADO_RESERVA (25)
--- ===========================
-INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio) VALUES
-(1,1,'2026-06-01 10:00:00'),(1,2,'2026-06-02 14:30:00'),
-(2,1,'2026-06-01 11:00:00'),(2,2,'2026-06-03 09:00:00'),
-(3,1,'2026-06-02 08:00:00'),
-(4,1,'2026-06-02 09:30:00'),(4,2,'2026-06-04 10:00:00'),
-(5,1,'2026-06-03 07:00:00'),
-(6,1,'2026-06-03 12:00:00'),(6,2,'2026-06-05 16:00:00'),
-(7,1,'2026-06-04 08:00:00'),(7,2,'2026-06-06 11:00:00'),
-(8,1,'2026-06-05 10:00:00'),
-(9,1,'2026-06-05 14:00:00'),(9,3,'2026-06-07 09:00:00'),
-(10,1,'2026-06-06 08:00:00'),(10,2,'2026-06-08 13:00:00'),
-(15,1,'2026-06-07 09:00:00'),(15,3,'2026-06-09 10:00:00'),
-(16,1,'2026-06-08 11:00:00'),(16,2,'2026-06-10 15:00:00'),
-(19,1,'2026-06-09 07:00:00'),(19,4,'2026-06-30 00:00:00'),
-(22,1,'2026-06-10 08:00:00'),(22,2,'2026-06-12 14:00:00');
+
+-- =========================================
+-- INSERTS TABLA CIUDAD
+-- =========================================
+
+INSERT INTO ciudad VALUES ('Tulua','Valle del Cauca');
+INSERT INTO ciudad VALUES ('Cali','Valle del Cauca');
+INSERT INTO ciudad VALUES ('Bogota','Cundinamarca');
+INSERT INTO ciudad VALUES ('Medellin','Antioquia');
+INSERT INTO ciudad VALUES ('Barranquilla','Atlantico');
+INSERT INTO ciudad VALUES ('Bucaramanga','Santander');
+INSERT INTO ciudad VALUES ('Guadalajara','Jalisco');
+INSERT INTO ciudad VALUES ('Ciudad de Mexico','CDMX');
+INSERT INTO ciudad VALUES ('Buenos Aires','Buenos Aires');
+INSERT INTO ciudad VALUES ('Lima','Lima');
+INSERT INTO ciudad VALUES ('Santiago de Chile','Santiago');
+INSERT INTO ciudad VALUES ('Quito','Quito');
+INSERT INTO ciudad VALUES ('Sao Paulo','Sao Paulo');
+INSERT INTO ciudad VALUES ('Ciudad de Panama','Panama Centro');
+INSERT INTO ciudad VALUES ('San Jose','San Jose');
+INSERT INTO ciudad VALUES ('Caracas','Caracas');
+INSERT INTO ciudad VALUES ('Montevideo','Montevideo');
+INSERT INTO ciudad VALUES ('Asuncion','Asuncion');
+INSERT INTO ciudad VALUES ('La Paz','La Paz');
+INSERT INTO ciudad VALUES ('Madrid','Madrid');
+INSERT INTO ciudad VALUES ('Paris','Paris');
+INSERT INTO ciudad VALUES ('Roma','Roma');
+INSERT INTO ciudad VALUES ('Berlin','Berlin');
+INSERT INTO ciudad VALUES ('Lisboa','Lisboa');
+INSERT INTO ciudad VALUES ('Los Angeles','California');
+
+
+-- =========================================
+-- INSERTS TABLA CLIENTE
+-- =========================================
+
+INSERT INTO cliente VALUES ('1001','CC','Juan','Perez','Cra 1','juan@gmail.com','3001','3101','Tulua');
+INSERT INTO cliente VALUES ('1002','CC','Maria','Lopez','Cra 2','maria@gmail.com','3002','3102','Cali');
+INSERT INTO cliente VALUES ('1003','CC','Carlos','Diaz','Cra 3','carlos@gmail.com','3003','3103','Bogota');
+INSERT INTO cliente VALUES ('1004','CC','Ana','Gomez','Cra 4','ana@gmail.com','3004','3104','Medellin');
+INSERT INTO cliente VALUES ('1005','CC','Luis','Torres','Cra 5','luis@gmail.com','3005','3105','Barranquilla');
+INSERT INTO cliente VALUES ('1006','CC','Laura','Rios','Cra 6','laura@gmail.com','3006','3106','Bucaramanga');
+INSERT INTO cliente VALUES ('1007','CC','Andres','Ruiz','Cra 7','andres@gmail.com','3007','3107','Guadalajara');
+INSERT INTO cliente VALUES ('1008','CC','Sofia','Mora','Cra 8','sofia@gmail.com','3008','3108','Ciudad de Mexico');
+INSERT INTO cliente VALUES ('1009','CC','Mateo','Castro','Cra 9','mateo@gmail.com','3009','3109','Buenos Aires');
+INSERT INTO cliente VALUES ('1010','CC','Valentina','Garcia','Cra 10','valen@gmail.com','3010','3110','Lima');
+INSERT INTO cliente VALUES ('1011','CC','Daniel','Martinez','Cra 11','daniel@gmail.com','3011','3111','Santiago de Chile');
+INSERT INTO cliente VALUES ('1012','CC','Camila','Fernandez','Cra 12','camila@gmail.com','3012','3112','Quito');
+INSERT INTO cliente VALUES ('1013','CC','Sebastian','Ortiz','Cra 13','sebas@gmail.com','3013','3113','Sao Paulo');
+INSERT INTO cliente VALUES ('1014','CC','Juliana','Silva','Cra 14','juli@gmail.com','3014','3114','Ciudad de Panama');
+INSERT INTO cliente VALUES ('1015','CC','David','Hernandez','Cra 15','david@gmail.com','3015','3115','San Jose');
+INSERT INTO cliente VALUES ('1016','CC','Paula','Jimenez','Cra 16','paula@gmail.com','3016','3116','Caracas');
+INSERT INTO cliente VALUES ('1017','CC','Felipe','Ramirez','Cra 17','felipe@gmail.com','3017','3117','Montevideo');
+INSERT INTO cliente VALUES ('1018','CC','Natalia','Suarez','Cra 18','nata@gmail.com','3018','3118','Asuncion');
+INSERT INTO cliente VALUES ('1019','CC','Cristian','Vargas','Cra 19','cris@gmail.com','3019','3119','La Paz');
+INSERT INTO cliente VALUES ('1020','CC','Sara','Morales','Cra 20','sara@gmail.com','3020','3120','Madrid');
+INSERT INTO cliente VALUES ('1021','CC','Kevin','Navarro','Cra 21','kevin@gmail.com','3021','3121','Paris');
+INSERT INTO cliente VALUES ('1022','CC','Alejandra','Acosta','Cra 22','aleja@gmail.com','3022','3122','Roma');
+INSERT INTO cliente VALUES ('1023','CC','Miguel','Pineda','Cra 23','miguel@gmail.com','3023','3123','Berlin');
+INSERT INTO cliente VALUES ('1024','CC','Isabella','Reyes','Cra 24','isa@gmail.com','3024','3124','Lisboa');
+INSERT INTO cliente VALUES ('1025','CC','Tomas','Quintero','Cra 25','tomas@gmail.com','3025','3125','Los Angeles');
+
+-- =========================================
+-- INSERTS TABLA VUELO
+-- =========================================
+
+INSERT INTO vuelo VALUES ('AV001','2026-06-01 08:00','2026-06-01 10:00',180,350000,'Programado','Bogota','Cali');
+INSERT INTO vuelo VALUES ('AV002','2026-06-02 09:00','2026-06-02 11:00',150,400000,'Programado','Cali','Medellin');
+INSERT INTO vuelo VALUES ('AV003','2026-06-03 06:00','2026-06-03 08:30',200,500000,'Programado','Bogota','Barranquilla');
+INSERT INTO vuelo VALUES ('AV004','2026-06-04 07:00','2026-06-04 09:00',170,320000,'Programado','Tulua','Bogota');
+INSERT INTO vuelo VALUES ('AV005','2026-06-05 12:00','2026-06-05 14:00',190,600000,'Programado','Medellin','Barranquilla');
+INSERT INTO vuelo VALUES ('AV006','2026-06-06 13:00','2026-06-06 15:00',180,450000,'Programado','Cali','Bucaramanga');
+INSERT INTO vuelo VALUES ('AV007','2026-06-07 15:00','2026-06-07 18:00',160,700000,'Programado','Bogota','Ciudad de Mexico');
+INSERT INTO vuelo VALUES ('AV008','2026-06-08 16:00','2026-06-08 20:00',210,950000,'Programado','Bogota','Buenos Aires');
+INSERT INTO vuelo VALUES ('AV009','2026-06-09 18:00','2026-06-09 22:00',220,1200000,'Programado','Bogota','Madrid');
+INSERT INTO vuelo VALUES ('AV010','2026-06-10 05:00','2026-06-10 09:00',140,1100000,'Programado','Bogota','Paris');
+INSERT INTO vuelo VALUES ('AV011','2026-06-11 06:00','2026-06-11 12:00',180,1500000,'Programado','Bogota','Roma');
+INSERT INTO vuelo VALUES ('AV012','2026-06-12 07:00','2026-06-12 13:00',180,1700000,'Programado','Bogota','Berlin');
+INSERT INTO vuelo VALUES ('AV013','2026-06-13 08:00','2026-06-13 14:00',180,1650000,'Programado','Bogota','Lisboa');
+INSERT INTO vuelo VALUES ('AV014','2026-06-14 09:00','2026-06-14 15:00',180,1800000,'Programado','Bogota','Los Angeles');
+INSERT INTO vuelo VALUES ('AV015','2026-06-15 10:00','2026-06-15 16:00',180,1750000,'Programado','Bogota','Lima');
+INSERT INTO vuelo VALUES ('AV016','2026-06-16 11:00','2026-06-16 17:00',180,980000,'Programado','Bogota','Quito');
+INSERT INTO vuelo VALUES ('AV017','2026-06-17 12:00','2026-06-17 18:00',180,850000,'Programado','Bogota','Santiago de Chile');
+INSERT INTO vuelo VALUES ('AV018','2026-06-18 13:00','2026-06-18 19:00',180,890000,'Programado','Bogota','Caracas');
+INSERT INTO vuelo VALUES ('AV019','2026-06-19 14:00','2026-06-19 20:00',180,910000,'Programado','Bogota','Montevideo');
+INSERT INTO vuelo VALUES ('AV020','2026-06-20 15:00','2026-06-20 21:00',180,920000,'Programado','Bogota','Asuncion');
+INSERT INTO vuelo VALUES ('AV021','2026-06-21 16:00','2026-06-21 22:00',180,940000,'Programado','Bogota','La Paz');
+INSERT INTO vuelo VALUES ('AV022','2026-06-22 17:00','2026-06-22 23:00',180,870000,'Programado','Bogota','Ciudad de Panama');
+INSERT INTO vuelo VALUES ('AV023','2026-06-23 18:00','2026-06-24 00:00',180,760000,'Programado','Bogota','San Jose');
+INSERT INTO vuelo VALUES ('AV024','2026-06-24 19:00','2026-06-25 01:00',180,990000,'Programado','Bogota','Sao Paulo');
+INSERT INTO vuelo VALUES ('AV025','2026-06-25 20:00','2026-06-26 02:00',180,1350000,'Programado','Bogota','Guadalajara');
+
+
+-- =========================================
+-- INSERTS TABLA RESERVA
+-- =========================================
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-01 10:00',350000,'AV001','1001',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-02 11:00',400000,'AV002','1002',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-03 12:00',500000,'AV003','1003',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-04 13:00',320000,'AV004','1004',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-05 14:00',600000,'AV005','1005',3);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-06 15:00',450000,'AV006','1006',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-07 16:00',700000,'AV007','1007',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-08 17:00',950000,'AV008','1008',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-09 18:00',1200000,'AV009','1009',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-10 19:00',1100000,'AV010','1010',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-11 20:00',1500000,'AV011','1011',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-12 21:00',1700000,'AV012','1012',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-13 22:00',1650000,'AV013','1013',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-14 23:00',1800000,'AV014','1014',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-15 09:00',1750000,'AV015','1015',3);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-16 10:00',980000,'AV016','1016',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-17 11:00',850000,'AV017','1017',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-18 12:00',890000,'AV018','1018',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-19 13:00',910000,'AV019','1019',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-20 14:00',920000,'AV020','1020',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-21 15:00',940000,'AV021','1021',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-22 16:00',870000,'AV022','1022',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-23 17:00',760000,'AV023','1023',2);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-24 18:00',990000,'AV024','1024',1);
+
+INSERT INTO reserva (fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES ('2026-05-25 19:00',1350000,'AV025','1025',2);
+
+
+
+-- =========================================
+-- INSERTS TABLA HISTORIAL_ESTADO_RESERVA
+-- =========================================
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (1,1,'2026-05-01 10:05');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (2,2,'2026-05-02 11:10');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (3,1,'2026-05-03 12:15');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (4,2,'2026-05-04 13:20');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (5,3,'2026-05-05 14:25');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (6,1,'2026-05-06 15:30');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (7,2,'2026-05-07 16:35');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (8,1,'2026-05-08 17:40');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (9,2,'2026-05-09 18:45');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (10,1,'2026-05-10 19:50');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (11,2,'2026-05-11 20:55');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (12,1,'2026-05-12 21:00');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (13,2,'2026-05-13 22:05');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (14,1,'2026-05-14 23:10');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (15,3,'2026-05-15 09:15');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (16,1,'2026-05-16 10:20');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (17,2,'2026-05-17 11:25');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (18,1,'2026-05-18 12:30');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (19,2,'2026-05-19 13:35');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (20,1,'2026-05-20 14:40');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (21,2,'2026-05-21 15:45');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (22,1,'2026-05-22 16:50');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (23,2,'2026-05-23 17:55');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (24,1,'2026-05-24 18:00');
+
+INSERT INTO historial_estado_reserva (id_reserva,id_estado,fecha_hora_cambio)
+VALUES (25,2,'2026-05-25 19:05');
+
+-- =========================================
+-- INSERTS TABLA TIQUETE
+-- =========================================
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('1A','Ejecutiva',450000,1);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('2B','Economica',400000,2);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('3C','Primera Clase',650000,3);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('4D','Economica',320000,4);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('5E','Ejecutiva',700000,5);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('6F','Economica',450000,6);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('7A','Ejecutiva',850000,7);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('8B','Primera Clase',1200000,8);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('9C','Primera Clase',1400000,9);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('10D','Ejecutiva',1250000,10);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('11E','Primera Clase',1700000,11);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('12F','Primera Clase',1800000,12);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('13A','Ejecutiva',1650000,13);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('14B','Primera Clase',2000000,14);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('15C','Ejecutiva',1850000,15);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('16D','Economica',980000,16);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('17E','Economica',850000,17);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('18F','Ejecutiva',990000,18);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('19A','Ejecutiva',1010000,19);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('20B','Economica',920000,20);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('21C','Economica',940000,21);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('22D','Ejecutiva',980000,22);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('23E','Economica',760000,23);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('24F','Ejecutiva',1100000,24);
+
+INSERT INTO tiquete (numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES ('25A','Primera Clase',1500000,25);
+
+
+
+-- =========================================
+-- INSERTS TABLA PAQUETE_TURISTICO
+-- =========================================
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Tour Cartagena','Tour por playas y centro historico','Cartagena',500000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Hotel Cali','Hospedaje 3 noches','Cali',350000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Tour Bogota','Recorrido turistico','Bogota',300000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Paquete Medellin','Hotel y transporte','Medellin',600000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Tour Barranquilla','Carnaval y playas','Barranquilla',450000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Hotel Bucaramanga','Hospedaje premium','Bucaramanga',400000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Mexico VIP','Hotel y city tour','Ciudad de Mexico',1200000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Buenos Aires Full','Hotel + guia','Buenos Aires',1400000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Madrid Europa','Tour completo','Madrid',1800000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Paris Dreams','Paquete romantico','Paris',2200000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Roma Clasica','Tour historico','Roma',2100000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Berlin Experience','Hotel + transporte','Berlin',2000000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Lisboa Travel','Tour urbano','Lisboa',1700000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('LA Premium','Hollywood y playas','Los Angeles',2500000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Lima Gastronomica','Tour comida peruana','Lima',900000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Quito Andino','Tour cultural','Quito',850000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Chile Nieve','Tour montaña','Santiago de Chile',1300000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Caracas City','Recorrido urbano','Caracas',950000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Montevideo Relax','Hotel y playa','Montevideo',1100000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Asuncion Plus','Paquete turistico','Asuncion',1000000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('La Paz Adventure','Tour extremo','La Paz',1250000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Panama Canal','Tour canal','Ciudad de Panama',1350000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Costa Rica Nature','Tour naturaleza','San Jose',1450000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Brasil Carnaval','Experiencia carnaval','Sao Paulo',1900000,'Disponible');
+
+INSERT INTO paquete_turistico (nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES ('Guadalajara Cultura','Tour cultural','Guadalajara',1600000,'Disponible');
+
+-- =========================================
+-- INSERTS TABLA RESERVA_PAQUETE
+-- =========================================
+
+INSERT INTO reserva_paquete VALUES (1,1);
+INSERT INTO reserva_paquete VALUES (2,2);
+INSERT INTO reserva_paquete VALUES (3,3);
+INSERT INTO reserva_paquete VALUES (4,4);
+INSERT INTO reserva_paquete VALUES (5,5);
+INSERT INTO reserva_paquete VALUES (6,6);
+INSERT INTO reserva_paquete VALUES (7,7);
+INSERT INTO reserva_paquete VALUES (8,8);
+INSERT INTO reserva_paquete VALUES (9,9);
+INSERT INTO reserva_paquete VALUES (10,10);
+INSERT INTO reserva_paquete VALUES (11,11);
+INSERT INTO reserva_paquete VALUES (12,12);
+INSERT INTO reserva_paquete VALUES (13,13);
+INSERT INTO reserva_paquete VALUES (14,14);
+INSERT INTO reserva_paquete VALUES (15,15);
+INSERT INTO reserva_paquete VALUES (16,16);
+INSERT INTO reserva_paquete VALUES (17,17);
+INSERT INTO reserva_paquete VALUES (18,18);
+INSERT INTO reserva_paquete VALUES (19,19);
+INSERT INTO reserva_paquete VALUES (20,20);
+INSERT INTO reserva_paquete VALUES (21,21);
+INSERT INTO reserva_paquete VALUES (22,22);
+INSERT INTO reserva_paquete VALUES (23,23);
+INSERT INTO reserva_paquete VALUES (24,24);
+INSERT INTO reserva_paquete VALUES (25,25);
+
+
+
+-- =========================================
+-- INSERTS TABLA USUARIO
+-- =========================================
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('admin1','admin123','Administrador',NULL);
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('agente1','agente123','Agente',NULL);
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('juanp','123','Cliente','1001');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('marial','123','Cliente','1002');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('carlosd','123','Cliente','1003');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('anag','123','Cliente','1004');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('luist','123','Cliente','1005');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('laurar','123','Cliente','1006');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('andresr','123','Cliente','1007');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('sofiam','123','Cliente','1008');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('mateoc','123','Cliente','1009');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('valentinag','123','Cliente','1010');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('danielm','123','Cliente','1011');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('camilaf','123','Cliente','1012');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('sebastiano','123','Cliente','1013');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('julianas','123','Cliente','1014');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('davidh','123','Cliente','1015');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('paulaj','123','Cliente','1016');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('feliper','123','Cliente','1017');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('natalias','123','Cliente','1018');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('cristianv','123','Cliente','1019');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('saram','123','Cliente','1020');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('kevinn','123','Cliente','1021');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('alejandraa','123','Cliente','1022');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('miguelp','123','Cliente','1023');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('isabellar','123','Cliente','1024');
+
+INSERT INTO usuario (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
+VALUES ('tomasq','123','Cliente','1025');
