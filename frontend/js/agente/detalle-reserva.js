@@ -173,7 +173,7 @@ function cargarReserva(data) {
     if (btnAsignar) btnAsignar.href = `asignar-asiento.html?id=${urlParams.get('id')}`;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     let id = urlParams.get('id');
     if (!id) id = '1';

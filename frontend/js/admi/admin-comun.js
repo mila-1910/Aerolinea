@@ -3,19 +3,22 @@
    Funcionalidad compartida para todas las páginas de admin
    ============================================ */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     verificarSesionAdmin();
     actualizarPerfilAdmin();
     initCerrarSesionAdmin();
 });
 
-// 1. Verificar que hay un usuario logueado y que es administrador
 function verificarSesionAdmin() {
     const u = JSON.parse(localStorage.getItem('usuario'));
-    // Si no hay usuario o no es admin, redirigir al login
-    const rol = u && u.rol ? u.rol.toLowerCase() : '';
-    if (!u || (rol !== 'administrador' && rol !== 'admin')) {
-        // Ajustar la ruta según la profundidad de la página actual
+    console.log('Usuario en sesión (Admin):', u);
+    const rol = u && u.rol ? u.rol.toLowerCase().trim() : '';
+    console.log('Rol detectado (Admin):', rol);
+
+    const rolesAdmin = ['administrador', 'admin', 'super administrador'];
+
+    if (!u || !rolesAdmin.includes(rol)) {
+        console.warn('Acceso denegado a panel de administrador. Redirigiendo a login...');
         const loginUrl = '../../paginas/inicio/login.html';
         window.location.href = loginUrl;
     }
@@ -52,9 +55,9 @@ function actualizarPerfilAdmin() {
 // 3. Inicializar el botón de Cerrar Sesión
 function initCerrarSesionAdmin() {
     const logoutLinks = document.querySelectorAll('.cerrar-sesion');
-    
+
     logoutLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
             localStorage.removeItem('usuario');
             window.location.href = '../../paginas/inicio/login.html';

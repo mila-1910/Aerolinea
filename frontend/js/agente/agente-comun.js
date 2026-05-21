@@ -9,17 +9,29 @@ function initPerfilDropdown() {
     // Se mantiene la función por compatibilidad con la inicialización, pero sin listeners de clic.
 }
 
-// Verificar rol del usuario
 function verificarRolUsuario() {
     const u = JSON.parse(localStorage.getItem('usuario'));
-    const rol = u && u.rol ? u.rol.toLowerCase() : '';
-    if (!u || (rol !== 'agente' && rol !== 'administrador' && rol !== 'admin')) {
+    console.log('Usuario en sesión (Agente):', u);
+    const rol = u && u.rol ? u.rol.toLowerCase().trim() : '';
+    console.log('Rol detectado (Agente):', rol);
+
+    const rolesPermitidos = [
+        'agente', 
+        'agente de aerolínea', 
+        'agente de aerolinea', 
+        'administrador', 
+        'admin', 
+        'super administrador'
+    ];
+
+    if (!u || !rolesPermitidos.includes(rol)) {
+        console.warn('Acceso denegado. Redirigiendo a login...');
         window.location.href = '../inicio/login.html';
     }
 }
 
 // Ejecutar al cargar el DOM
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initPerfilDropdown();
     verificarRolUsuario();
     actualizarPerfilAgente();
@@ -58,7 +70,7 @@ function initCerrarSesion() {
     const loginUrl = '../inicio/login.html';
 
     logoutLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
+        link.addEventListener('click', function (event) {
             event.preventDefault();
             localStorage.removeItem('usuario');
             window.location.href = loginUrl;
