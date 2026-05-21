@@ -1,56 +1,61 @@
 -- =========================================
--- MODELO SQL FINAL
--- PK NATURALES + PK SERIAL
+-- MODELO SQL FINAL CORREGIDO
 -- =========================================
 
 
 -- =========================================
--- PAIS
+-- TABLA PAIS
 -- =========================================
 
 CREATE TABLE pais (
 
-    nombre_pais VARCHAR(100) PRIMARY KEY
+    id_pais SERIAL PRIMARY KEY,
+
+    nombre_pais VARCHAR(100) UNIQUE NOT NULL
 );
 
 
 
 -- =========================================
--- DEPARTAMENTO
+-- TABLA DEPARTAMENTO
 -- =========================================
 
 CREATE TABLE departamento (
 
-    nombre_departamento VARCHAR(100) PRIMARY KEY,
+    id_departamento SERIAL PRIMARY KEY,
 
-    nombre_pais VARCHAR(100) NOT NULL,
+    nombre_departamento VARCHAR(100) UNIQUE NOT NULL,
+
+    id_pais INT NOT NULL,
 
     CONSTRAINT fk_departamento_pais
-    FOREIGN KEY (nombre_pais)
-    REFERENCES pais(nombre_pais)
+    FOREIGN KEY (id_pais)
+    REFERENCES pais(id_pais)
 );
 
 
 
 -- =========================================
--- CIUDAD
+-- TABLA CIUDAD
 -- =========================================
 
 CREATE TABLE ciudad (
 
-    nombre_ciudad VARCHAR(100) PRIMARY KEY,
+    id_ciudad SERIAL PRIMARY KEY,
 
-    nombre_departamento VARCHAR(100) NOT NULL,
+    nombre_ciudad VARCHAR(100) UNIQUE NOT NULL,
+
+    id_departamento INT NOT NULL,
 
     CONSTRAINT fk_ciudad_departamento
-    FOREIGN KEY (nombre_departamento)
-    REFERENCES departamento(nombre_departamento)
+    FOREIGN KEY (id_departamento)
+    REFERENCES departamento(id_departamento)
 );
 
 
 
 -- =========================================
--- CLIENTE
+-- TABLA CLIENTE
 -- =========================================
 
 CREATE TABLE cliente (
@@ -71,17 +76,17 @@ CREATE TABLE cliente (
 
     tel_alterno VARCHAR(20),
 
-    nombre_ciudad VARCHAR(100) NOT NULL,
+    id_ciudad INT NOT NULL,
 
     CONSTRAINT fk_cliente_ciudad
-    FOREIGN KEY (nombre_ciudad)
-    REFERENCES ciudad(nombre_ciudad)
+    FOREIGN KEY (id_ciudad)
+    REFERENCES ciudad(id_ciudad)
 );
 
 
 
 -- =========================================
--- VUELO
+-- TABLA VUELO
 -- =========================================
 
 CREATE TABLE vuelo (
@@ -98,23 +103,23 @@ CREATE TABLE vuelo (
 
     estado_vuelo VARCHAR(30) NOT NULL,
 
-    ciudad_origen VARCHAR(100) NOT NULL,
+    id_ciudad_origen INT NOT NULL,
 
-    ciudad_destino VARCHAR(100) NOT NULL,
+    id_ciudad_destino INT NOT NULL,
 
     CONSTRAINT fk_vuelo_origen
-    FOREIGN KEY (ciudad_origen)
-    REFERENCES ciudad(nombre_ciudad),
+    FOREIGN KEY (id_ciudad_origen)
+    REFERENCES ciudad(id_ciudad),
 
     CONSTRAINT fk_vuelo_destino
-    FOREIGN KEY (ciudad_destino)
-    REFERENCES ciudad(nombre_ciudad)
+    FOREIGN KEY (id_ciudad_destino)
+    REFERENCES ciudad(id_ciudad)
 );
 
 
 
 -- =========================================
--- ESTADO_RESERVA
+-- TABLA ESTADO_RESERVA
 -- =========================================
 
 CREATE TABLE estado_reserva (
@@ -127,7 +132,7 @@ CREATE TABLE estado_reserva (
 
 
 -- =========================================
--- RESERVA
+-- TABLA RESERVA
 -- =========================================
 
 CREATE TABLE reserva (
@@ -160,18 +165,18 @@ CREATE TABLE reserva (
 
 
 -- =========================================
--- HISTORIAL_ESTADO_RESERVA
+-- TABLA HISTORIAL_ESTADO_RESERVA
 -- =========================================
 
 CREATE TABLE historial_estado_reserva (
-
-    id_historial SERIAL PRIMARY KEY,
 
     id_reserva INT NOT NULL,
 
     id_estado INT NOT NULL,
 
     fecha_hora_cambio TIMESTAMP NOT NULL,
+
+    PRIMARY KEY (id_reserva, id_estado),
 
     CONSTRAINT fk_historial_reserva
     FOREIGN KEY (id_reserva)
@@ -185,7 +190,7 @@ CREATE TABLE historial_estado_reserva (
 
 
 -- =========================================
--- TIQUETE
+-- TABLA TIQUETE
 -- =========================================
 
 CREATE TABLE tiquete (
@@ -208,7 +213,7 @@ CREATE TABLE tiquete (
 
 
 -- =========================================
--- PAQUETE_TURISTICO
+-- TABLA PAQUETE_TURISTICO
 -- =========================================
 
 CREATE TABLE paquete_turistico (
@@ -229,7 +234,7 @@ CREATE TABLE paquete_turistico (
 
 
 -- =========================================
--- RESERVA_PAQUETE
+-- TABLA RESERVA_PAQUETE
 -- =========================================
 
 CREATE TABLE reserva_paquete (
@@ -252,7 +257,7 @@ CREATE TABLE reserva_paquete (
 
 
 -- =========================================
--- ROL
+-- TABLA ROL
 -- =========================================
 
 CREATE TABLE rol (
@@ -263,7 +268,7 @@ CREATE TABLE rol (
 
 
 -- =========================================
--- USUARIO
+-- TABLA USUARIO
 -- =========================================
 
 CREATE TABLE usuario (

@@ -1,13 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\backend",
-    "\\frontend",
+    "\\base-de-datos",
     "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
     "\\frontend\\paginas\\cliente",
     "\\frontend\\paginas\\inicio"
   ],
-  "SelectedNode": "\\frontend\\paginas\\inicio\\login.html",
+  "SelectedNode": "\\base-de-datos\\inserts.sql",
   "PreviewInSolutionExplorer": false
 }
