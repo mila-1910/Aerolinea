@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 authMain.classList.remove('is-registering');
                 const formSection = document.querySelector('.auth__form-section');
-                if (formSection) formSection.scrollTo({ top: 0, behavior: 'auto' });
+                if (formSection) formSection.scrollTo({ top: 0, behavior: 'smooth' });
                 // Actualizar estilos del navbar
                 if (navBtnLogin && navBtnRegister) {
                     navBtnLogin.className = 'btn-nav btn-nav--solid switch-to-login';
