@@ -1,5 +1,5 @@
 -- =========================================
--- INSERTS TABLA PAIS
+-- INSERTS TABLA PAIS.
 -- =========================================
 
 INSERT INTO pais (nombre_pais) VALUES ('Colombia');
