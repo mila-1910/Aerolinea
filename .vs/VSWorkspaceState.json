@@ -5,7 +5,9 @@
     "\\frontend",
     "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
-    "\\frontend\\paginas\\cliente"
+    "\\frontend\\paginas\\cliente",
+    "\\frontend\\paginas\\inicio"
   ],
+  "SelectedNode": "\\frontend\\paginas\\inicio\\login.html",
   "PreviewInSolutionExplorer": false
 }
