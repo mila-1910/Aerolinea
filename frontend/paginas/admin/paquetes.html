@@ -8,13 +8,114 @@
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
 
     <link rel="stylesheet" href="../../css/admin.css">
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-cancelar {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-guardar {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-guardar:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <a class="navbar-logo" href="dashboardadmin.html">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
@@ -36,7 +137,6 @@
 
     <div class="app-container">
 
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardadmin.html" class="menu-item">
@@ -58,7 +158,6 @@
             </div>
         </aside>
 
-        <!-- CONTENIDO -->
         <main class="contenido-principal">
 
             <div class="saludo">
@@ -72,7 +171,7 @@
                         <div class="kpi-icon-wrapper"><i class="fas fa-box"></i></div>
                     </div>
                     <div class="kpi-content">
-                        <span class="kpi-value">45</span>
+                        <span class="kpi-value" id="totalPaquetes">0</span>
                         <span class="kpi-label">Paquetes Disponibles</span>
                     </div>
                 </div>
@@ -82,70 +181,82 @@
                         <div class="kpi-icon-wrapper"><i class="fas fa-gift"></i></div>
                     </div>
                     <div class="kpi-content">
-                        <span class="kpi-value">12</span>
+                        <span class="kpi-value" id="paquetesActivos">0</span>
                         <span class="kpi-label">Promociones Activas</span>
                     </div>
                 </div>
             </div>
 
             <div class="card-header-premium">
-                <h3>Catálogo de Paquetes</h3>
-                <button class="btn-premium">
+                <h3><i class="fas fa-box"></i> Catálogo de Paquetes</h3>
+                <button class="btn-premium" id="btnCrearPaquete">
                     <i class="fas fa-plus"></i> Crear Nuevo Paquete
                 </button>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;">
-                
-                <!-- Paquete 1 -->
-                <div class="glass-card package-card">
-                    <div class="package-icon"><i class="fas fa-umbrella-beach"></i></div>
-                    <div class="package-details">
-                        <h3>San Andrés Premium</h3>
-                        <p class="package-duration"><i class="far fa-clock"></i> 3 días / 2 noches</p>
-                        <p class="package-price">$1.200.000 COP</p>
-                        <div class="package-actions">
-                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;" id="contenedorPaquetes">
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                    <p style="margin-top: 10px;">Cargando paquetes...</p>
                 </div>
-
-                <!-- Paquete 2 -->
-                <div class="glass-card package-card">
-                    <div class="package-icon"><i class="fas fa-mountain"></i></div>
-                    <div class="package-details">
-                        <h3>Medellín Explora</h3>
-                        <p class="package-duration"><i class="far fa-clock"></i> 2 días / 1 noche</p>
-                        <p class="package-price">$600.000 COP</p>
-                        <div class="package-actions">
-                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Paquete 3 -->
-                <div class="glass-card package-card">
-                    <div class="package-icon"><i class="fas fa-sun"></i></div>
-                    <div class="package-details">
-                        <h3>Cartagena Histórica</h3>
-                        <p class="package-duration"><i class="far fa-clock"></i> 4 días / 3 noches</p>
-                        <p class="package-price">$1.500.000 COP</p>
-                        <div class="package-actions">
-                            <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </main>
     </div>
 
-    <!-- SCRIPTS -->
+    <div id="modalPaquete" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitulo">Crear Nuevo Paquete</h2>
+                <button class="modal-close" onclick="cerrarModal('modalPaquete')">&times;</button>
+            </div>
+
+            <form id="formPaquete">
+                <div class="form-group">
+                    <label for="nombrePaquete">Nombre del Paquete *</label>
+                    <input type="text" id="nombrePaquete" required placeholder="Ej: San Andrés Premium">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcionPaquete">Descripción *</label>
+                    <textarea id="descripcionPaquete" required placeholder="Describe el paquete..."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="precioPaquete">Precio *</label>
+                        <input type="number" id="precioPaquete" required placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="duracionPaquete">Duración (días) *</label>
+                        <input type="number" id="duracionPaquete" required placeholder="3">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="destinoPaquete">Destino *</label>
+                    <input type="text" id="destinoPaquete" required placeholder="Ej: San Andrés">
+                </div>
+
+                <div class="form-group">
+                    <label for="estadoPaquete">Estado *</label>
+                    <select id="estadoPaquete" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modalPaquete')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar Paquete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="../../js/admin-comun.js"></script>
+    <script src="../../js/admin/paquetes.js"></script>
 
 </body>
 

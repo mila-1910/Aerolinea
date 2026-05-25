@@ -6,19 +6,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vuelos | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-
-  
     <link rel="stylesheet" href="../../css/admin.css">
-    <!-- Font Awesome 6 — íconos profesionales -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn-cancelar {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-guardar {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-guardar:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ============================================
-         NAVBAR SUPERIOR
-         ============================================ -->
     <nav class="navbar">
         <a class="navbar-logo" href="dashboardadmin.html">
             <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
@@ -38,12 +134,8 @@
         </div>
     </nav>
 
-    <!-- ============================================
-         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
-         ============================================ -->
     <div class="app-container">
 
-        <!-- SIDEBAR IZQUIERDO -->
         <aside class="sidebar">
             <div class="sidebar-menu">
                 <a href="dashboardadmin.html" class="menu-item">
@@ -65,18 +157,14 @@
             </div>
         </aside>
 
-        <!-- CONTENIDO PRINCIPAL -->
         <main class="contenido-principal">
 
-            <!-- TÍTULO -->
             <div class="saludo">
                 <h2><i class="fas fa-plane"></i> Gestión de Vuelos</h2>
                 <p>Administra los vuelos del sistema</p>
             </div>
 
-            <!-- CONTENIDO DEL DASHBOARD -->
             <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
-                <!-- Vuelos KPI -->
                 <div class="glass-card kpi-card">
                     <div class="kpi-header">
                         <div class="kpi-icon-wrapper">
@@ -84,12 +172,11 @@
                         </div>
                     </div>
                     <div class="kpi-content">
-                        <span class="kpi-value">120</span>
+                        <span class="kpi-value" id="totalVuelosCont">120</span>
                         <span class="kpi-label">Vuelos Registrados</span>
                     </div>
                 </div>
 
-                <!-- Activos KPI -->
                 <div class="glass-card kpi-card">
                     <div class="kpi-header">
                         <div class="kpi-icon-wrapper">
@@ -97,54 +184,37 @@
                         </div>
                     </div>
                     <div class="kpi-content">
-                        <span class="kpi-value">95</span>
+                        <span class="kpi-value" id="vuelosActivos">95</span>
                         <span class="kpi-label">Vuelos en Operación</span>
                     </div>
                 </div>
             </div>
 
-            <!-- GESTIÓN DE VUELOS -->
             <div class="glass-card">
                 <div class="card-header-premium">
                     <h3><i class="fas fa-list"></i> Listado de Vuelos</h3>
-                    <button class="btn-premium">
+                    <button class="btn-premium" id="btnCrearVuelo">
                         <i class="fas fa-plus"></i> Crear Nuevo Vuelo
                     </button>
                 </div>
 
                 <div class="tabla-contenedor">
-                    <table class="tabla-premium">
+                    <table class="tabla-premium" id="tablaVuelos">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Código</th>
                                 <th>Origen</th>
                                 <th>Destino</th>
-                                <th>Fecha</th>
+                                <th>Fecha Salida</th>
+                                <th>Precio</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="bodyTablaVuelos">
                             <tr>
-                                <td><span class="reserva-id">#VL-001</span></td>
-                                <td>Bogotá (BOG)</td>
-                                <td>Medellín (MDE)</td>
-                                <td>20/04/2026</td>
-                                <td><span class="badge-estado confirmada">Activo</span></td>
-                                <td>
-                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="reserva-id">#VL-002</span></td>
-                                <td>Cali (CLO)</td>
-                                <td>Cartagena (CTG)</td>
-                                <td>22/04/2026</td>
-                                <td><span class="badge-estado pendiente">Retrasado</span></td>
-                                <td>
-                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
-                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                <td colspan="7" style="text-align: center;">
+                                    <i class="fas fa-spinner fa-spin"></i> Cargando vuelos...
                                 </td>
                             </tr>
                         </tbody>
@@ -155,8 +225,73 @@
         </main>
     </div>
 
-    <!-- SCRIPTS -->
+    <div id="modalVuelo" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitulo">Crear Nuevo Vuelo</h2>
+                <button class="modal-close" onclick="cerrarModal('modalVuelo')">&times;</button>
+            </div>
+
+            <form id="formVuelo">
+                <div class="form-group">
+                    <label for="codigoVuelo">Código Vuelo *</label>
+                    <input type="text" id="codigoVuelo" required placeholder="Ej: AA123">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="ciudadOrigen">Ciudad Origen *</label>
+                        <input type="text" id="ciudadOrigen" required placeholder="Ej: Bogotá">
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudadDestino">Ciudad Destino *</label>
+                        <input type="text" id="ciudadDestino" required placeholder="Ej: Medellín">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="fechaSalida">Fecha Salida *</label>
+                        <input type="datetime-local" id="fechaSalida" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaLlegada">Fecha Llegada *</label>
+                        <input type="datetime-local" id="fechaLlegada" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="precioBase">Precio Base *</label>
+                        <input type="number" id="precioBase" required placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="capacidadPasajeros">Capacidad Pasajeros *</label>
+                        <input type="number" id="capacidadPasajeros" required placeholder="100">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="estadoVuelo">Estado *</label>
+                    <select id="estadoVuelo" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Programado">Programado</option>
+                        <option value="En Vuelo">En Vuelo</option>
+                        <option value="Cancelado">Cancelado</option>
+                        <option value="Completado">Completado</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modalVuelo')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar Vuelo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="../../js/admin-comun.js"></script>
+    <script src="../../js/admin/vuelos.js"></script>
 
 </body>
 

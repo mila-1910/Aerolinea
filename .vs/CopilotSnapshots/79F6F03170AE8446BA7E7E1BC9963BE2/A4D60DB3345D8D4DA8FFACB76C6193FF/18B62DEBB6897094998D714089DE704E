@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicaciones | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <link rel="stylesheet" href="../../css/admin.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="dashboardadmin.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
+
+        <div class="navbar-right">
+            <div class="navbar-perfil" id="perfilDropdown">
+                <div class="perfil-trigger">
+                    <div class="avatar">--</div>
+                    <span>Cargando...</span>
+                </div>
+                <ul class="dropdown" id="perfilMenu">
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardadmin.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-texto">Dashboard</span>
+                </a>
+                <a href="vuelos.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-plane"></i></span>
+                    <span class="menu-texto">Vuelos</span>
+                </a>
+                <a href="paquetes.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-box"></i></span>
+                    <span class="menu-texto">Paquetes</span>
+                </a>
+                <a href="ubicaciones.html" class="menu-item active">
+                    <span class="menu-icono"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="menu-texto">Ubicaciones</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <main class="contenido-principal">
+
+            <div class="saludo">
+                <h2><i class="fas fa-map-marker-alt"></i> Gestión de Ubicaciones</h2>
+                <p>Configura los destinos y aeropuertos del sistema</p>
+            </div>
+
+            <!-- BUSQUEDA Y ACCIONES -->
+            <div class="glass-card search-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar por ciudad, país o aeropuerto...">
+                    <button class="btn-premium">
+                        <i class="fas fa-plus"></i> Agregar Ubicación
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABLA DE UBICACIONES -->
+            <div class="glass-card">
+                <div class="card-header-premium">
+                    <h3><i class="fas fa-globe-americas"></i> Destinos Configurados</h3>
+                </div>
+                
+                <div class="tabla-contenedor">
+                    <table class="tabla-premium">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Ciudad</th>
+                                <th>País</th>
+                                <th>Aeropuerto</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="reserva-id">#UB-001</span></td>
+                                <td>Bogotá</td>
+                                <td>Colombia</td>
+                                <td>El Dorado (BOG)</td>
+                                <td>
+                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="reserva-id">#UB-002</span></td>
+                                <td>Medellín</td>
+                                <td>Colombia</td>
+                                <td>José María Córdova (MDE)</td>
+                                <td>
+                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="reserva-id">#UB-003</span></td>
+                                <td>Miami</td>
+                                <td>Estados Unidos</td>
+                                <td>Miami Intl (MIA)</td>
+                                <td>
+                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../../js/admin-comun.js"></script>
+
+</body>
+
+</html>

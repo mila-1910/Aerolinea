@@ -1,12 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubicaciones | ELARIS</title>
+    <title>Vuelos | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-
     <link rel="stylesheet" href="../../css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -76,6 +75,11 @@
             font-size: 14px;
         }
 
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
         .modal-actions {
             display: flex;
             gap: 10px;
@@ -138,7 +142,7 @@
                     <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
                     <span class="menu-texto">Dashboard</span>
                 </a>
-                <a href="vuelos.html" class="menu-item">
+                <a href="vuelos.html" class="menu-item active">
                     <span class="menu-icono"><i class="fas fa-plane"></i></span>
                     <span class="menu-texto">Vuelos</span>
                 </a>
@@ -146,7 +150,7 @@
                     <span class="menu-icono"><i class="fas fa-box"></i></span>
                     <span class="menu-texto">Paquetes</span>
                 </a>
-                <a href="ubicaciones.html" class="menu-item active">
+                <a href="ubicaciones.html" class="menu-item">
                     <span class="menu-icono"><i class="fas fa-map-marker-alt"></i></span>
                     <span class="menu-texto">Ubicaciones</span>
                 </a>
@@ -156,40 +160,61 @@
         <main class="contenido-principal">
 
             <div class="saludo">
-                <h2><i class="fas fa-map-marker-alt"></i> Gestión de Ubicaciones</h2>
-                <p>Configura los destinos y aeropuertos del sistema</p>
+                <h2><i class="fas fa-plane"></i> Gestión de Vuelos</h2>
+                <p>Administra los vuelos del sistema</p>
             </div>
 
-            <div class="glass-card search-container">
-                <div class="search-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchUbicaciones" placeholder="Buscar por ciudad, país o aeropuerto...">
-                    <button class="btn-premium" id="btnAgregarUbicacion">
-                        <i class="fas fa-plus"></i> Agregar Ubicación
-                    </button>
+            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-value" id="totalVuelosCont">120</span>
+                        <span class="kpi-label">Vuelos Registrados</span>
+                    </div>
+                </div>
+
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-value" id="vuelosActivos">95</span>
+                        <span class="kpi-label">Vuelos en Operación</span>
+                    </div>
                 </div>
             </div>
 
             <div class="glass-card">
                 <div class="card-header-premium">
-                    <h3><i class="fas fa-globe-americas"></i> Destinos Configurados</h3>
+                    <h3><i class="fas fa-list"></i> Listado de Vuelos</h3>
+                    <button class="btn-premium" id="btnCrearVuelo">
+                        <i class="fas fa-plus"></i> Crear Nuevo Vuelo
+                    </button>
                 </div>
 
                 <div class="tabla-contenedor">
-                    <table class="tabla-premium" id="tablaUbicaciones">
+                    <table class="tabla-premium" id="tablaVuelos">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Ciudad</th>
-                                <th>País</th>
-                                <th>Aeropuerto</th>
+                                <th>Código</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha Salida</th>
+                                <th>Precio</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="bodyTablaUbicaciones">
+                        <tbody id="bodyTablaVuelos">
                             <tr>
-                                <td colspan="5" style="text-align: center;">
-                                    <i class="fas fa-spinner fa-spin"></i> Cargando ubicaciones...
+                                <td colspan="7" style="text-align: center;">
+                                    <i class="fas fa-spinner fa-spin"></i> Cargando vuelos...
                                 </td>
                             </tr>
                         </tbody>
@@ -200,44 +225,73 @@
         </main>
     </div>
 
-    <div id="modalUbicacion" class="modal">
+    <div id="modalVuelo" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitulo">Agregar Ubicación</h2>
-                <button class="modal-close" onclick="cerrarModal('modalUbicacion')">&times;</button>
+                <h2 id="modalTitulo">Crear Nuevo Vuelo</h2>
+                <button class="modal-close" onclick="cerrarModal('modalVuelo')">&times;</button>
             </div>
 
-            <form id="formUbicacion">
+            <form id="formVuelo">
                 <div class="form-group">
-                    <label for="ciudad">Ciudad *</label>
-                    <input type="text" id="ciudad" required placeholder="Ej: Bogotá">
+                    <label for="codigoVuelo">Código Vuelo *</label>
+                    <input type="text" id="codigoVuelo" required placeholder="Ej: AA123">
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="ciudadOrigen">Ciudad Origen *</label>
+                        <input type="text" id="ciudadOrigen" required placeholder="Ej: Bogotá">
+                    </div>
+                    <div class="form-group">
+                        <label for="ciudadDestino">Ciudad Destino *</label>
+                        <input type="text" id="ciudadDestino" required placeholder="Ej: Medellín">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="fechaSalida">Fecha Salida *</label>
+                        <input type="datetime-local" id="fechaSalida" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaLlegada">Fecha Llegada *</label>
+                        <input type="datetime-local" id="fechaLlegada" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label for="precioBase">Precio Base *</label>
+                        <input type="number" id="precioBase" required placeholder="0.00" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="capacidadPasajeros">Capacidad Pasajeros *</label>
+                        <input type="number" id="capacidadPasajeros" required placeholder="100">
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="pais">País *</label>
-                    <input type="text" id="pais" required placeholder="Ej: Colombia">
-                </div>
-
-                <div class="form-group">
-                    <label for="aeropuerto">Aeropuerto *</label>
-                    <input type="text" id="aeropuerto" required placeholder="Ej: El Dorado (BOG)">
-                </div>
-
-                <div class="form-group">
-                    <label for="codigoAeropuerto">Código Aeropuerto *</label>
-                    <input type="text" id="codigoAeropuerto" required placeholder="Ej: BOG">
+                    <label for="estadoVuelo">Estado *</label>
+                    <select id="estadoVuelo" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="Programado">Programado</option>
+                        <option value="En Vuelo">En Vuelo</option>
+                        <option value="Cancelado">Cancelado</option>
+                        <option value="Completado">Completado</option>
+                    </select>
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modalUbicacion')">Cancelar</button>
-                    <button type="submit" class="btn-guardar">Guardar Ubicación</button>
+                    <button type="button" class="btn-cancelar" onclick="cerrarModal('modalVuelo')">Cancelar</button>
+                    <button type="submit" class="btn-guardar">Guardar Vuelo</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script src="../../js/admin-comun.js"></script>
-    <script src="../../js/admin/ubicaciones.js"></script>
+    <script src="../../js/admin/vuelos.js"></script>
 
 </body>
 

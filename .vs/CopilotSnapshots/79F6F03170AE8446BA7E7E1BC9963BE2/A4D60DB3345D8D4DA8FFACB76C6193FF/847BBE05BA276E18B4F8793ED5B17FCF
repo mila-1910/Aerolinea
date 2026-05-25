@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelos | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+  
+    <link rel="stylesheet" href="../../css/admin.css">
+    <!-- Font Awesome 6 — íconos profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- ============================================
+         NAVBAR SUPERIOR
+         ============================================ -->
+    <nav class="navbar">
+        <a class="navbar-logo" href="dashboardadmin.html">
+            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="80">
+        </a>
+
+        <div class="navbar-right">
+            <div class="navbar-perfil" id="perfilDropdown">
+                <div class="perfil-trigger">
+                    <div class="avatar">--</div>
+                    <span>Cargando...</span>
+                </div>
+                <ul class="dropdown" id="perfilMenu">
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         CONTENEDOR PRINCIPAL (SIDEBAR + CONTENIDO)
+         ============================================ -->
+    <div class="app-container">
+
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardadmin.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-chart-line"></i></span>
+                    <span class="menu-texto">Dashboard</span>
+                </a>
+                <a href="vuelos.html" class="menu-item active">
+                    <span class="menu-icono"><i class="fas fa-plane"></i></span>
+                    <span class="menu-texto">Vuelos</span>
+                </a>
+                <a href="paquetes.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-box"></i></span>
+                    <span class="menu-texto">Paquetes</span>
+                </a>
+                <a href="ubicaciones.html" class="menu-item">
+                    <span class="menu-icono"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="menu-texto">Ubicaciones</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+
+            <!-- TÍTULO -->
+            <div class="saludo">
+                <h2><i class="fas fa-plane"></i> Gestión de Vuelos</h2>
+                <p>Administra los vuelos del sistema</p>
+            </div>
+
+            <!-- CONTENIDO DEL DASHBOARD -->
+            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <!-- Vuelos KPI -->
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-value">120</span>
+                        <span class="kpi-label">Vuelos Registrados</span>
+                    </div>
+                </div>
+
+                <!-- Activos KPI -->
+                <div class="glass-card kpi-card">
+                    <div class="kpi-header">
+                        <div class="kpi-icon-wrapper">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="kpi-content">
+                        <span class="kpi-value">95</span>
+                        <span class="kpi-label">Vuelos en Operación</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GESTIÓN DE VUELOS -->
+            <div class="glass-card">
+                <div class="card-header-premium">
+                    <h3><i class="fas fa-list"></i> Listado de Vuelos</h3>
+                    <button class="btn-premium">
+                        <i class="fas fa-plus"></i> Crear Nuevo Vuelo
+                    </button>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-premium">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Origen</th>
+                                <th>Destino</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="reserva-id">#VL-001</span></td>
+                                <td>Bogotá (BOG)</td>
+                                <td>Medellín (MDE)</td>
+                                <td>20/04/2026</td>
+                                <td><span class="badge-estado confirmada">Activo</span></td>
+                                <td>
+                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="reserva-id">#VL-002</span></td>
+                                <td>Cali (CLO)</td>
+                                <td>Cartagena (CTG)</td>
+                                <td>22/04/2026</td>
+                                <td><span class="badge-estado pendiente">Retrasado</span></td>
+                                <td>
+                                    <button class="btn-tabla-accion" title="Editar"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-tabla-accion" title="Eliminar" style="color: var(--rojo-error);"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="../../js/admin-comun.js"></script>
+
+</body>
+
+</html>

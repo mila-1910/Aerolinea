@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
@@ -321,86 +321,6 @@ app.delete('/api/paquetes/:id_paquete', async (req, res) => {
     } catch (error) {
         console.error('Error al eliminar paquete:', error);
         res.status(500).json({ error: 'Error al eliminar el paquete' });
-    }
-});
-
-// ============================================================
-// RUTAS DE UBICACIONES (ADMIN)
-// ============================================================
-
-// 🔹 LISTAR UBICACIONES
-app.get('/api/ubicaciones', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM ubicacion ORDER BY ciudad ASC');
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error al obtener ubicaciones:', error);
-        res.status(500).json({ error: 'Error al obtener las ubicaciones' });
-    }
-});
-
-// 🔹 CREAR UBICACIÓN
-app.post('/api/ubicaciones', async (req, res) => {
-    const { ciudad, pais, nombre_aeropuerto, codigo_aeropuerto } = req.body;
-
-    if (!ciudad || !pais || !nombre_aeropuerto || !codigo_aeropuerto) {
-        return res.status(400).json({ error: 'Faltan datos obligatorios' });
-    }
-
-    try {
-        const result = await pool.query(
-            `INSERT INTO ubicacion (ciudad, pais, nombre_aeropuerto, codigo_aeropuerto)
-             VALUES ($1, $2, $3, $4)
-             RETURNING *`,
-            [ciudad, pais, nombre_aeropuerto, codigo_aeropuerto]
-        );
-
-        res.status(201).json({ mensaje: 'Ubicación creada correctamente', ubicacion: result.rows[0] });
-    } catch (error) {
-        console.error('Error al crear ubicación:', error);
-        res.status(500).json({ error: 'Error al crear la ubicación' });
-    }
-});
-
-// 🔹 ACTUALIZAR UBICACIÓN
-app.put('/api/ubicaciones/:id_ubicacion', async (req, res) => {
-    const { id_ubicacion } = req.params;
-    const { ciudad, pais, nombre_aeropuerto, codigo_aeropuerto } = req.body;
-
-    try {
-        const result = await pool.query(
-            `UPDATE ubicacion SET ciudad=$1, pais=$2, nombre_aeropuerto=$3, codigo_aeropuerto=$4
-             WHERE id_ubicacion=$5
-             RETURNING *`,
-            [ciudad, pais, nombre_aeropuerto, codigo_aeropuerto, id_ubicacion]
-        );
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Ubicación no encontrada' });
-        }
-
-        res.json({ mensaje: 'Ubicación actualizada correctamente', ubicacion: result.rows[0] });
-    } catch (error) {
-        console.error('Error al actualizar ubicación:', error);
-        res.status(500).json({ error: 'Error al actualizar la ubicación' });
-    }
-});
-
-// 🔹 ELIMINAR UBICACIÓN
-app.delete('/api/ubicaciones/:id_ubicacion', async (req, res) => {
-    const { id_ubicacion } = req.params;
-
-    try {
-        const result = await pool.query('DELETE FROM ubicacion WHERE id_ubicacion=$1 RETURNING *', [id_ubicacion]);
-
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Ubicación no encontrada' });
-        }
-
-        res.json({ mensaje: 'Ubicación eliminada correctamente' });
-    } catch (error) {
-        console.error('Error al eliminar ubicación:', error);
-        res.status(500).json({ error: 'Error al eliminar la ubicación' });
     }
 });
 
