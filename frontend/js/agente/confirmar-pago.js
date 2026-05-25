@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const result = await response.json();
                 if (response.ok) {
                     alert('¡Pago validado exitosamente! La reserva ahora está Confirmada.');
-                    window.location.href = 'reservas.html';
+                    window.location.href = `asignar-asiento.html?id=${id}`;
                 } else {
                     alert(`Error al validar: ${result.error}`);
                 }
