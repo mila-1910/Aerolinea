@@ -129,31 +129,31 @@
                 <div class="buscar-reserva">
                         <div class="info-linea">
                             <span class="label">Código:</span>
-                            <span class="valor">#RES-003</span>
+                            <span class="valor" id="detCodigo">#RES-XXX</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Pasajero:</span>
-                            <span class="valor">Ana Martínez</span>
+                            <span class="valor" id="detNombre">Seleccione una reserva</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Documento:</span>
-                            <span class="valor">11223344</span>
+                            <span class="valor" id="detDocumento">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Vuelo:</span>
-                            <span class="valor">AV-9012 | Cali → Bogotá</span>
+                            <span class="valor" id="detVuelo">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Fecha:</span>
-                            <span class="valor">17/04/2025</span>
+                            <span class="valor" id="detFecha">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Clase:</span>
-                            <span class="valor">Económica</span>
+                            <span class="valor" id="detClase">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Asiento actual:</span>
-                            <span class="valor" id="asientoActual">No asignado</span>
+                            <span class="valor" id="detAsientoActual" style="color: var(--vino); font-weight: 700;">No asignado</span>
                         </div>
                     </div>
 
@@ -162,15 +162,15 @@
                         <h4>📞 Contacto del pasajero</h4>
                         <div class="info-linea">
                             <span class="label">Email:</span>
-                            <span class="valor">ana.martinez@email.com</span>
+                            <span class="valor" id="detEmail">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Teléfono:</span>
-                            <span class="valor">+57 310 987 6543</span>
+                            <span class="valor" id="detTelefono">-</span>
                         </div>
                         <div class="info-linea">
                             <span class="label">Dirección:</span>
-                            <span class="valor">Calle 123, Bogotá</span>
+                            <span class="valor" id="detDireccion">-</span>
                         </div>
                         <div class="datos-adicionales-brand">
                             <img src="../../imagenes/logo-dorado.png" alt="ELARIS Logo">
@@ -226,6 +226,7 @@
                                     <span class="asiento ocupado">A</span>
                                     <span class="asiento ocupado">B</span>
                                     <span class="asiento libre">C</span>
+                                    <span class="pasillo"></span>
                                     <span class="asiento libre">D</span>
                                     <span class="asiento ocupado">E</span>
                                     <span class="asiento libre">F</span>
@@ -235,6 +236,7 @@
                                     <span class="asiento libre">A</span>
                                     <span class="asiento ocupado">B</span>
                                     <span class="asiento libre">C</span>
+                                    <span class="pasillo"></span>
                                     <span class="asiento libre">D</span>
                                     <span class="asiento libre">E</span>
                                     <span class="asiento ocupado">F</span>
@@ -244,6 +246,7 @@
                                     <span class="asiento ocupado">A</span>
                                     <span class="asiento libre">B</span>
                                     <span class="asiento ocupado">C</span>
+                                    <span class="pasillo"></span>
                                     <span class="asiento libre">D</span>
                                     <span class="asiento libre">E</span>
                                     <span class="asiento libre">F</span>
@@ -253,6 +256,7 @@
                                     <span class="asiento libre">A</span>
                                     <span class="asiento libre">B</span>
                                     <span class="asiento ocupado">C</span>
+                                    <span class="pasillo"></span>
                                     <span class="asiento libre">D</span>
                                     <span class="asiento ocupado">E</span>
                                     <span class="asiento libre">F</span>
@@ -292,40 +296,9 @@
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="colaAsignacionBody">
                             <tr>
-                                <td><span class="pnr-code">ABC123</span></td>
-                                <td>
-                                    <div class="pasajero-info">
-                                        <span class="nombre">María González</span>
-                                    </div>
-                                </td>
-                                <td>AV-1234 | Bogotá → Medellín</td>
-                                <td>15/04/2026</td>
-                                <td><span class="estado pendiente">Pendiente</span></td>
-                                <td><span class="asiento-badge alerta">Sin asignar</span></td>
-                                <td>
-                                    <button class="btn-tabla-accion primary">
-                                        <i class="fas fa-chair"></i> Asignar
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="pnr-code">XYZ789</span></td>
-                                <td>
-                                    <div class="pasajero-info">
-                                        <span class="nombre">Ana Martínez</span>
-                                    </div>
-                                </td>
-                                <td>AV-9012 | Cali → Bogotá</td>
-                                <td>17/04/2026</td>
-                                <td><span class="estado pendiente">Pendiente</span></td>
-                                <td><span class="asiento-badge alerta">Sin asignar</span></td>
-                                <td>
-                                    <button class="btn-tabla-accion primary">
-                                        <i class="fas fa-chair"></i> Asignar
-                                    </button>
-                                </td>
+                                <td colspan="7" style="text-align: center;">Cargando reservas pendientes de asignación...</td>
                             </tr>
                         </tbody>
                     </table>

@@ -12,6 +12,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..')));
 
+// Ruta de verificación rápida para comprobar que el servidor está arriba
+app.get('/api/ping', (req, res) => {
+    res.json({ ok: true, time: new Date().toISOString(), pid: process.pid });
+});
+
 // Configuración de la conexión a la base de datos (Neon)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -599,6 +604,237 @@ app.get('/api/admin/dashboard', async (req, res) => {
     } catch (error) {
         console.error('Error dashboard admin:', error);
         res.status(500).json({ error: 'Error dashboard admin' });
+    }
+});
+
+// ============================================================
+// DASHBOARD Y VISTAS DE AGENTE
+// ============================================================
+
+app.get('/api/agente/dashboard', async (req, res) => {
+    try {
+        const totalReservas = await pool.query(`SELECT COUNT(*) AS total FROM reserva`);
+        const pendientes = await pool.query(`
+            SELECT COUNT(*) AS total FROM reserva r 
+            JOIN estado_reserva er ON r.id_estado = er.id_estado 
+            WHERE er.nombre_estado IN ('Reservada', 'Pendiente')
+        `);
+        const confirmadas = await pool.query(`
+            SELECT COUNT(*) AS total FROM reserva r 
+            JOIN estado_reserva er ON r.id_estado = er.id_estado 
+            WHERE er.nombre_estado = 'Confirmada'
+        `);
+        const canceladas = await pool.query(`
+            SELECT COUNT(*) AS total FROM reserva r 
+            JOIN estado_reserva er ON r.id_estado = er.id_estado 
+            WHERE er.nombre_estado = 'Cancelada'
+        `);
+        const recientes = await pool.query(`
+            SELECT 
+                r.id_reserva,
+                c.nombres || ' ' || c.apellidos AS nombre_completo,
+                c.numero_identificacion,
+                v.cod_vuelo,
+                co.nombre_ciudad AS origen,
+                cd.nombre_ciudad AS destino,
+                v.fecha_hora_salida,
+                er.nombre_estado AS estado,
+                r.valor_total
+            FROM reserva r
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN estado_reserva er ON er.id_estado = r.id_estado
+            ORDER BY r.fecha_hora_reserva DESC
+            LIMIT 5
+        `);
+
+        res.json({
+            total: totalReservas.rows[0].total,
+            pendientes: pendientes.rows[0].total,
+            confirmadas: confirmadas.rows[0].total,
+            canceladas: canceladas.rows[0].total,
+            recientes: recientes.rows
+        });
+    } catch (error) {
+        console.error('Error dashboard agente:', error);
+        res.status(500).json({ error: 'Error dashboard agente' });
+    }
+});
+
+app.get('/api/agente/reservas', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                r.id_reserva,
+                r.fecha_hora_reserva,
+                r.valor_total,
+                c.nombres || ' ' || c.apellidos AS nombre_completo,
+                c.numero_identificacion,
+                v.cod_vuelo,
+                co.nombre_ciudad AS origen,
+                cd.nombre_ciudad AS destino,
+                v.fecha_hora_salida,
+                er.nombre_estado AS estado,
+                t.numero_asiento,
+                t.clase_tiquete
+            FROM reserva r
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN estado_reserva er ON er.id_estado = r.id_estado
+            LEFT JOIN tiquete t ON t.id_reserva = r.id_reserva
+            ORDER BY r.fecha_hora_reserva DESC
+        `);
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error al obtener todas las reservas (agente):', error);
+        res.status(500).json({ error: 'Error al obtener las reservas' });
+    }
+});
+
+app.get('/api/agente/reservas/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        // Datos principales de la reserva
+        const reservaRes = await pool.query(`
+            SELECT 
+                r.id_reserva,
+                r.fecha_hora_reserva,
+                r.valor_total,
+                c.nombres,
+                c.apellidos,
+                c.numero_identificacion,
+                c.tipo_identificacion,
+                c.correo,
+                c.tel_principal,
+                c.direccion,
+                v.cod_vuelo,
+                co.nombre_ciudad AS origen,
+                cd.nombre_ciudad AS destino,
+                v.fecha_hora_salida,
+                v.fecha_hora_llegada,
+                v.precio_base,
+                er.nombre_estado AS estado
+            FROM reserva r
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN estado_reserva er ON er.id_estado = r.id_estado
+            WHERE r.id_reserva = $1
+        `, [id]);
+
+        if (reservaRes.rows.length === 0) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+        const reserva = reservaRes.rows[0];
+
+        // Tiquete asociado
+        const tiqueteRes = await pool.query(
+            `SELECT numero_asiento, clase_tiquete, precio_final FROM tiquete WHERE id_reserva = $1`,
+            [id]
+        );
+        const tiquete = tiqueteRes.rows.length > 0 ? tiqueteRes.rows[0] : null;
+
+        // Paquetes turísticos asociados
+        const paquetesRes = await pool.query(`
+            SELECT pt.nombre_paquete, pt.descripcion, pt.precio
+            FROM reserva_paquete rp
+            JOIN paquete_turistico pt ON pt.id_paquete = rp.id_paquete
+            WHERE rp.id_reserva = $1
+        `, [id]);
+
+        // Historial de estados
+        const historialRes = await pool.query(`
+            SELECT 
+                her.fecha_hora_cambio,
+                er.nombre_estado
+            FROM historial_estado_reserva her
+            JOIN estado_reserva er ON er.id_estado = her.id_estado
+            WHERE her.id_reserva = $1
+            ORDER BY her.fecha_hora_cambio ASC
+        `, [id]);
+
+        res.json({
+            id_reserva: reserva.id_reserva,
+            fecha_hora_reserva: reserva.fecha_hora_reserva,
+            valor_total: reserva.valor_total,
+            estado: reserva.estado,
+            pasajero: {
+                nombre: `${reserva.nombres} ${reserva.apellidos}`,
+                documento: reserva.numero_identificacion,
+                tipo_identificacion: reserva.tipo_identificacion,
+                email: reserva.correo,
+                telefono: reserva.tel_principal,
+                direccion: reserva.direccion
+            },
+            vuelo: {
+                codigo: reserva.cod_vuelo,
+                origen: reserva.origen,
+                destino: reserva.destino,
+                fecha_salida: reserva.fecha_hora_salida,
+                fecha_llegada: reserva.fecha_hora_llegada,
+                precio_base: reserva.precio_base
+            },
+            tiquete: tiquete,
+            paquetes: paquetesRes.rows,
+            historial: historialRes.rows
+        });
+    } catch (error) {
+        console.error('Error al obtener detalle de reserva:', error);
+        res.status(500).json({ error: 'Error al obtener detalle de reserva' });
+    }
+});
+
+app.put('/api/agente/reservas/:id/asiento', async (req, res) => {
+    const { id } = req.params;
+    const { numero_asiento, clase_tiquete } = req.body;
+
+    if (!numero_asiento || !clase_tiquete) {
+        return res.status(400).json({ error: 'Se requiere numero_asiento y clase_tiquete' });
+    }
+
+    try {
+        // 1. Verificamos si existe la reserva
+        const reservaRes = await pool.query('SELECT cod_vuelo, valor_total FROM reserva WHERE id_reserva = $1', [id]);
+        if (reservaRes.rows.length === 0) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+        const { valor_total } = reservaRes.rows[0];
+
+        // 2. Verificamos si ya existe un tiquete para esta reserva
+        const tiqueteRes = await pool.query('SELECT id_tiquete FROM tiquete WHERE id_reserva = $1', [id]);
+        
+        let result;
+        if (tiqueteRes.rows.length > 0) {
+            // Actualizar tiquete existente
+            result = await pool.query(
+                `UPDATE tiquete 
+                 SET numero_asiento = $1, clase_tiquete = $2 
+                 WHERE id_reserva = $3 
+                 RETURNING *`,
+                [numero_asiento, clase_tiquete, id]
+            );
+        } else {
+            // Insertar tiquete nuevo
+            result = await pool.query(
+                `INSERT INTO tiquete (numero_asiento, clase_tiquete, precio_final, id_reserva)
+                 VALUES ($1, $2, $3, $4)
+                 RETURNING *`,
+                [numero_asiento, clase_tiquete, valor_total, id]
+            );
+        }
+
+        res.json({
+            mensaje: 'Asiento asignado correctamente',
+            tiquete: result.rows[0]
+        });
+    } catch (error) {
+        console.error('Error al asignar asiento:', error);
+        res.status(500).json({ error: 'Error del servidor al asignar asiento' });
     }
 });
 

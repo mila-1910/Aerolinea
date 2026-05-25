@@ -5,7 +5,7 @@
 INSERT INTO pais (nombre_pais) VALUES ('Colombia');
 INSERT INTO pais (nombre_pais) VALUES ('Mexico');
 INSERT INTO pais (nombre_pais) VALUES ('Argentina');
-INSERT INTO pais (nombre_pais) VALUES ('EspaÃ±a');
+INSERT INTO pais (nombre_pais) VALUES ('España');
 INSERT INTO pais (nombre_pais) VALUES ('Francia');
 INSERT INTO pais (nombre_pais) VALUES ('Italia');
 INSERT INTO pais (nombre_pais) VALUES ('Alemania');

@@ -1,200 +1,256 @@
 /* ============================================
    JAVASCRIPT ESPECÍFICO - DETALLE RESERVA
    Scripts únicos para detalle-reserva.html
+   Ahora consume datos reales de la base de datos
    ============================================ */
 
-// Base de datos simulada (para pruebas)
-const reservasSimuladas = {
-    1: {
-        codigo: "#RES-001",
-        pasajero: {
-            nombre: "María González",
-            documento: "1002433789",
-            nacionalidad: "Colombiana",
-            fechaNac: "15/08/1990",
-            email: "maria.gonzalez@email.com",
-            telefono: "+57 310 123 4567"
-        },
-        vuelo: {
-            codigo: "AV-1234",
-            origen: "Bogotá (BOG)",
-            destino: "Medellín (MDE)",
-            fechaSalida: "15/04/2026",
-            horaSalida: "10:30 AM",
-            horaLlegada: "11:45 AM",
-            clase: "Económica",
-            asiento: "12A"
-        },
-        pago: {
-            estado: "Pendiente",
-            metodo: "Tarjeta de crédito",
-            montoTotal: "$250 USD",
-            precioBase: "$200 USD",
-            paquetes: "$50 USD"
-        },
-        estadoReserva: {
-            actual: "Pendiente",
-            fechaReserva: "10/04/2026 - 14:23:15",
-            ultimaModificacion: "11/04/2026 - 09:30:00"
-        },
-        historial: [
-            { fecha: "10/04/2026", hora: "14:23:15", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-            { fecha: "10/04/2026", hora: "14:23:15", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
-            { fecha: "11/04/2026", hora: "09:30:00", anterior: "Pendiente de pago", nuevo: "Pendiente", agente: "Agente (Juan Fernando)" },
-            { fecha: "12/04/2026", hora: "15:20:00", anterior: "Pendiente", nuevo: "En proceso", agente: "Sistema" }
-        ]
-    },
-    2: {
-        codigo: "#RES-002",
-        pasajero: {
-            nombre: "Carlos Rodríguez",
-            documento: "87654321",
-            nacionalidad: "Colombiana",
-            fechaNac: "22/03/1985",
-            email: "carlos.rodriguez@email.com",
-            telefono: "+57 311 987 6543"
-        },
-        vuelo: {
-            codigo: "AV-5678",
-            origen: "Medellín (MDE)",
-            destino: "Cartagena (CTG)",
-            fechaSalida: "16/04/2026",
-            horaSalida: "08:00 AM",
-            horaLlegada: "09:15 AM",
-            clase: "Ejecutiva",
-            asiento: "4B"
-        },
-        pago: {
-            estado: "Confirmado",
-            metodo: "Tarjeta débito",
-            montoTotal: "$320 USD",
-            precioBase: "$280 USD",
-            paquetes: "$40 USD"
-        },
-        estadoReserva: {
-            actual: "Confirmada",
-            fechaReserva: "05/04/2026 - 10:30:00",
-            ultimaModificacion: "06/04/2026 - 14:20:00"
-        },
-        historial: [
-            { fecha: "05/04/2026", hora: "10:30:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-            { fecha: "05/04/2026", hora: "10:35:00", anterior: "Reservada", nuevo: "Pendiente de pago", agente: "Cliente" },
-            { fecha: "06/04/2026", hora: "14:20:00", anterior: "Pendiente de pago", nuevo: "Confirmada", agente: "Agente" }
-        ]
-    },
-    3: {
-        codigo: "#RES-003",
-        pasajero: {
-            nombre: "Ana Martínez",
-            documento: "11223344",
-            nacionalidad: "Colombiana",
-            fechaNac: "10/12/1992",
-            email: "ana.martinez@email.com",
-            telefono: "+57 312 456 7890"
-        },
-        vuelo: {
-            codigo: "AV-9012",
-            origen: "Cali (CLO)",
-            destino: "Bogotá (BOG)",
-            fechaSalida: "17/04/2026",
-            horaSalida: "18:30 PM",
-            horaLlegada: "19:45 PM",
-            clase: "Económica",
-            asiento: "22C"
-        },
-        pago: {
-            estado: "Pendiente",
-            metodo: "Efectivo (punto de venta)",
-            montoTotal: "$180 USD",
-            precioBase: "$150 USD",
-            paquetes: "$30 USD"
-        },
-        estadoReserva: {
-            actual: "Pendiente",
-            fechaReserva: "12/04/2026 - 09:15:00",
-            ultimaModificacion: "12/04/2026 - 09:20:00"
-        },
-        historial: [
-            { fecha: "12/04/2026", hora: "09:15:00", anterior: "-", nuevo: "Reservada", agente: "Cliente" },
-            { fecha: "12/04/2026", hora: "09:20:00", anterior: "Reservada", nuevo: "Pendiente", agente: "Cliente" }
-        ]
+// Formatear moneda COP
+function formatCOP(valor) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(valor);
+}
+
+// Formatear fecha completa
+function formatFechaCompleta(fechaISO) {
+    const fecha = new Date(fechaISO);
+    const opciones = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const fechaStr = fecha.toLocaleDateString('es-ES', opciones);
+    const horaStr = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    return `${fechaStr} - ${horaStr}`;
+}
+
+// Formatear solo fecha
+function formatFecha(fechaISO) {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+// Formatear solo hora
+function formatHora(fechaISO) {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+}
+
+let estadoReservaActual = null;
+
+// Cargar datos de la reserva desde la API
+async function cargarReservaDesdeAPI(id) {
+    try {
+        const response = await fetch(`${window.API_BASE || ''}/api/agente/reservas/${id}`);
+        if (!response.ok) {
+            throw new Error('Reserva no encontrada');
+        }
+        const data = await response.json();
+        renderizarReserva(data, id);
+    } catch (error) {
+        console.error('Error al cargar reserva:', error);
+        alert(`No se pudo cargar la reserva #${id}. Redirigiendo a la lista de reservas.`);
+        window.location.href = 'reservas.html';
     }
-};
+}
 
-// Cargar datos de la reserva
-function cargarReserva(data) {
-    document.getElementById('codigoReserva').innerText = data.codigo;
+// Renderizar los datos de la reserva en la página
+function renderizarReserva(data, id) {
+    // --- Datos del pasajero ---
+    document.getElementById('codigoReserva').innerText = `#RES-${data.id_reserva.toString().padStart(3, '0')}`;
     document.getElementById('nombrePasajero').innerText = data.pasajero.nombre;
-    document.getElementById('documentoPasajero').innerText = data.pasajero.documento;
-    document.getElementById('nacionalidad').innerText = data.pasajero.nacionalidad;
-    document.getElementById('fechaNac').innerText = data.pasajero.fechaNac;
-    document.getElementById('email').innerText = data.pasajero.email;
-    document.getElementById('telefono').innerText = data.pasajero.telefono;
+    document.getElementById('documentoPasajero').innerText = `${data.pasajero.tipo_identificacion}: ${data.pasajero.documento}`;
+    
+    // Nacionalidad y fecha de nacimiento no están en la BD actual
+    const nacionalidadEl = document.getElementById('nacionalidad');
+    if (nacionalidadEl) nacionalidadEl.innerText = 'No registrada';
+    const fechaNacEl = document.getElementById('fechaNac');
+    if (fechaNacEl) fechaNacEl.innerText = 'No registrada';
+    
+    document.getElementById('email').innerText = data.pasajero.email || 'No registrado';
+    document.getElementById('telefono').innerText = data.pasajero.telefono || 'No registrado';
 
+    // --- Datos del vuelo ---
     document.getElementById('codigoVuelo').innerText = data.vuelo.codigo;
     document.getElementById('origen').innerText = data.vuelo.origen;
     document.getElementById('destino').innerText = data.vuelo.destino;
-    document.getElementById('fechaSalida').innerText = data.vuelo.fechaSalida;
-    document.getElementById('horaSalida').innerText = data.vuelo.horaSalida;
-    document.getElementById('horaLlegada').innerText = data.vuelo.horaLlegada;
-    document.getElementById('clase').innerText = data.vuelo.clase;
-    document.getElementById('asiento').innerText = data.vuelo.asiento;
+    document.getElementById('fechaSalida').innerText = formatFecha(data.vuelo.fecha_salida);
+    document.getElementById('horaSalida').innerText = formatHora(data.vuelo.fecha_salida);
+    document.getElementById('horaLlegada').innerText = formatHora(data.vuelo.fecha_llegada);
+    
+    // Clase y asiento del tiquete
+    const claseEl = document.getElementById('clase');
+    const asientoEl = document.getElementById('asiento');
+    if (data.tiquete) {
+        claseEl.innerText = data.tiquete.clase_tiquete;
+        asientoEl.innerText = data.tiquete.numero_asiento;
+    } else {
+        claseEl.innerText = 'Sin tiquete asignado';
+        asientoEl.innerText = 'Sin asignar';
+    }
 
+    // --- Información financiera ---
+    const estadoPago = data.estado === 'Confirmada' ? 'Confirmado' : 'Pendiente';
     const estadoPagoSpan = document.getElementById('estadoPagoBadge');
-    estadoPagoSpan.innerText = data.pago.estado;
-    estadoPagoSpan.className = `estado-pago-badge ${data.pago.estado === 'Pendiente' ? 'pendiente' : 'confirmado'}`;
-    document.getElementById('metodoPago').innerText = data.pago.metodo;
-    document.getElementById('montoTotal').innerText = data.pago.montoTotal;
-    document.getElementById('precioBase').innerText = data.pago.precioBase;
-    document.getElementById('paquetes').innerText = data.pago.paquetes;
+    estadoPagoSpan.innerText = estadoPago;
+    estadoPagoSpan.className = `estado-pago-badge ${estadoPago === 'Pendiente' ? 'pendiente' : 'confirmado'}`;
+    
+    const metodoPagoEl = document.getElementById('metodoPago');
+    if (metodoPagoEl) metodoPagoEl.innerText = 'No especificado';
+    
+    document.getElementById('montoTotal').innerText = formatCOP(data.valor_total);
+    document.getElementById('precioBase').innerText = formatCOP(data.vuelo.precio_base);
+    
+    // Paquetes turísticos
+    const paquetesEl = document.getElementById('paquetes');
+    if (data.paquetes && data.paquetes.length > 0) {
+        const totalPaquetes = data.paquetes.reduce((sum, p) => sum + parseFloat(p.precio), 0);
+        const nombresPaquetes = data.paquetes.map(p => p.nombre_paquete).join(', ');
+        paquetesEl.innerText = `${formatCOP(totalPaquetes)} (${nombresPaquetes})`;
+    } else {
+        paquetesEl.innerText = 'Sin paquetes adicionales';
+    }
 
+    // --- Estado operativo ---
+    estadoReservaActual = data.estado;
     const estadoReservaSpan = document.getElementById('estadoReservaBadge');
-    estadoReservaSpan.innerText = data.estadoReserva.actual;
-    estadoReservaSpan.className = `estado ${data.estadoReserva.actual === 'Pendiente' ? 'pendiente' : (data.estadoReserva.actual === 'Confirmada' ? 'confirmada' : 'cancelada')}`;
-    document.getElementById('fechaReserva').innerText = data.estadoReserva.fechaReserva;
-    document.getElementById('ultimaModificacion').innerText = data.estadoReserva.ultimaModificacion;
+    estadoReservaSpan.innerText = data.estado;
+    let estadoClase = 'pendiente';
+    if (data.estado === 'Confirmada') estadoClase = 'confirmada';
+    else if (data.estado === 'Cancelada' || data.estado === 'Expirada') estadoClase = 'cancelada';
+    estadoReservaSpan.className = `estado ${estadoClase}`;
 
+    const confirmarBtn = document.getElementById('btnConfirmarPago');
+    if (confirmarBtn) {
+        if (data.estado === 'Confirmada') {
+            confirmarBtn.disabled = true;
+            confirmarBtn.classList.add('disabled');
+            confirmarBtn.title = 'Esta reserva ya está confirmada';
+        } else {
+            confirmarBtn.disabled = false;
+            confirmarBtn.classList.remove('disabled');
+            confirmarBtn.removeAttribute('title');
+        }
+    }
+    
+    document.getElementById('fechaReserva').innerText = formatFechaCompleta(data.fecha_hora_reserva);
+    
+    // Última modificación = último registro del historial
+    const ultimaModEl = document.getElementById('ultimaModificacion');
+    if (data.historial && data.historial.length > 0) {
+        const ultimo = data.historial[data.historial.length - 1];
+        ultimaModEl.innerText = formatFechaCompleta(ultimo.fecha_hora_cambio);
+    } else {
+        ultimaModEl.innerText = formatFechaCompleta(data.fecha_hora_reserva);
+    }
+
+    // --- Historial de estados ---
     const tbody = document.getElementById('historialBody');
     tbody.innerHTML = '';
-    data.historial.forEach(item => {
-        const row = `<tr>
-            <td>${item.fecha}</td>
-            <td>${item.hora}</td>
-            <td>${item.anterior}</td>
-            <td>${item.nuevo}</td>
-            <td>${item.agente}</td>
-        </tr>`;
-        tbody.innerHTML += row;
-    });
+    if (data.historial && data.historial.length > 0) {
+        data.historial.forEach((item, index) => {
+            const fecha = new Date(item.fecha_hora_cambio);
+            const fechaStr = fecha.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const horaStr = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            
+            // El estado anterior es el estado del registro anterior, o "-" si es el primero
+            const anterior = index > 0 ? data.historial[index - 1].nombre_estado : '-';
+            
+            const row = `<tr>
+                <td>${fechaStr}</td>
+                <td>${horaStr}</td>
+                <td>${anterior}</td>
+                <td>${item.nombre_estado}</td>
+                <td>Sistema</td>
+            </tr>`;
+            tbody.innerHTML += row;
+        });
+    } else {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Sin historial registrado</td></tr>`;
+    }
 
+    // --- Actualizar enlaces de botones ---
     const btnConfirmar = document.getElementById('btnConfirmarPago');
     const btnAsignar = document.getElementById('btnAsignarAsiento');
-    if (btnConfirmar) btnConfirmar.href = `confirmar-pago.html?id=${urlParams.get('id')}`;
-    if (btnAsignar) btnAsignar.href = `asignar-asiento.html?id=${urlParams.get('id')}`;
+    if (btnConfirmar) btnConfirmar.href = `confirmar-pago.html?id=${id}`;
+    if (btnAsignar) btnAsignar.href = `asignar-asiento.html?id=${id}`;
 }
 
+// Inicialización
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     let id = urlParams.get('id');
-    if (!id) id = '1';
-
-    const reserva = reservasSimuladas[id];
-    if (!reserva) {
-        alert(`No se encontró la reserva con ID ${id}. Se mostrarán datos de ejemplo.`);
-        cargarReserva(reservasSimuladas[1]);
-    } else {
-        cargarReserva(reserva);
+    if (!id) {
+        alert('No se especificó un ID de reserva.');
+        window.location.href = 'reservas.html';
+        return;
     }
 
-    document.getElementById('btnRechazarPago')?.addEventListener('click', () => {
-        if (confirm('¿Rechazar el pago de esta reserva?')) {
-            alert('Pago rechazado (simulado). Actualice la página para ver cambios.');
+    cargarReservaDesdeAPI(id);
+
+    // Botón cancelar reserva (ahora conectado al backend)
+    document.getElementById('btnCancelarReserva')?.addEventListener('click', async () => {
+        if (confirm('¿Cancelar esta reserva? Esta acción no se puede deshacer.')) {
+            try {
+                const response = await fetch(`${window.API_BASE || ''}/api/reservas/${id}/cancelar`, { method: 'PUT' });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Reserva cancelada correctamente.');
+                    location.reload();
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Error al cancelar:', error);
+                alert('Error de conexión al cancelar la reserva.');
+            }
         }
     });
 
-    document.getElementById('btnCancelarReserva')?.addEventListener('click', () => {
-        if (confirm('¿Cancelar esta reserva? Esta acción no se puede deshacer.')) {
-            alert(`Reserva ${document.getElementById('codigoReserva').innerText} cancelada (simulado).`);
+    // Botón confirmar pago (cambiar estado a Confirmada)
+    document.getElementById('btnConfirmarPago')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (estadoReservaActual === 'Confirmada') {
+            alert('El pago de esta reserva ya fue confirmado anteriormente. Serás redirigido a la gestión de reservas.');
+            window.location.href = 'reservas.html';
+            return;
+        }
+
+        if (confirm('¿Confirmar el pago de esta reserva?')) {
+            try {
+                const response = await fetch(`${window.API_BASE || ''}/api/reservas/${id}/estado`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre_estado: 'Confirmada' })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Pago confirmado. La reserva ahora está Confirmada.');
+                    window.location.href = 'reservas.html';
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Error al confirmar pago:', error);
+                alert('Error de conexión al confirmar el pago.');
+            }
+        }
+    });
+
+    // Botón rechazar pago
+    document.getElementById('btnRechazarPago')?.addEventListener('click', async () => {
+        if (confirm('¿Rechazar el pago de esta reserva?')) {
+            try {
+                const response = await fetch(`${window.API_BASE || ''}/api/reservas/${id}/estado`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre_estado: 'Cancelada' })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Pago rechazado. La reserva ha sido cancelada.');
+                    location.reload();
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Error al rechazar:', error);
+                alert('Error de conexión al rechazar el pago.');
+            }
         }
     });
 });

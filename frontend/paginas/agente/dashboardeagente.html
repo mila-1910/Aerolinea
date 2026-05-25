@@ -83,10 +83,10 @@
                 <div class="glass-card kpi-card area-kpi-1">
                     <div class="kpi-header">
                         <div class="kpi-icon"><i aria-hidden="true" class="fas fa-clock"></i></div>
-                        <span class="kpi-trend trend-up">+12%</span>
+                        <span class="kpi-trend trend-up" style="visibility: hidden;">+12%</span>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-value">05</div>
+                        <div class="kpi-value" id="kpi-pendientes">--</div>
                         <div class="kpi-label">Reservas Pendientes</div>
                         <div class="kpi-desc">Requieren atención inmediata</div>
                     </div>
@@ -95,26 +95,26 @@
                 <!-- KPI 2: Pagos -->
                 <div class="glass-card kpi-card area-kpi-2">
                     <div class="kpi-header">
-                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-credit-card"></i></div>
-                        <span class="kpi-trend trend-down">-5%</span>
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-check-circle"></i></div>
+                        <span class="kpi-trend trend-down" style="visibility: hidden;">-5%</span>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-value">03</div>
-                        <div class="kpi-label">Pagos por Confirmar</div>
-                        <div class="kpi-desc">Verificación de transacciones</div>
+                        <div class="kpi-value" id="kpi-confirmadas">--</div>
+                        <div class="kpi-label">Reservas Confirmadas</div>
+                        <div class="kpi-desc">Aprobadas y listas</div>
                     </div>
                 </div>
 
                 <!-- KPI 3: Cambios -->
                 <div class="glass-card kpi-card area-kpi-3">
                     <div class="kpi-header">
-                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-exchange-alt"></i></div>
-                        <span class="kpi-trend trend-up">+2</span>
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-times-circle"></i></div>
+                        <span class="kpi-trend trend-up" style="visibility: hidden;">+2</span>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-value">08</div>
-                        <div class="kpi-label">Cambios de Vuelo</div>
-                        <div class="kpi-desc">Solicitudes procesadas hoy</div>
+                        <div class="kpi-value" id="kpi-canceladas">--</div>
+                        <div class="kpi-label">Reservas Canceladas</div>
+                        <div class="kpi-desc">Canceladas o rechazadas</div>
                     </div>
                 </div>
 
@@ -165,55 +165,8 @@
                                     <th>Acción</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="pnr-code">#RES-001</span></td>
-                                    <td>
-                                        <div class="pasajero-info">
-                                            <span class="nombre">María González</span>
-                                        </div>
-                                    </td>
-                                    <td>AV-1234 | BOG → MDE</td>
-                                    <td>15 Abr 2025</td>
-                                    <td><span class="estado pendiente" role="status">Pendiente</span></td>
-                                    <td><a href="detalle-reserva.html?id=1" class="btn-tabla-accion primary">Gestionar</a></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="pnr-code">#RES-002</span></td>
-                                    <td>
-                                        <div class="pasajero-info">
-                                            <span class="nombre">Carlos Rodríguez</span>
-                                        </div>
-                                    </td>
-                                    <td>AV-5678 | MDE → CTG</td>
-                                    <td>16 Abr 2025</td>
-                                    <td><span class="estado confirmada" role="status">Confirmada</span></td>
-                                    <td><a href="detalle-reserva.html?id=2" class="btn-tabla-accion primary">Gestionar</a></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="pnr-code">#RES-003</span></td>
-                                    <td>
-                                        <div class="pasajero-info">
-                                            <span class="nombre">Ana Martínez</span>
-                                        </div>
-                                    </td>
-                                    <td>AV-9012 | CLO → BOG</td>
-                                    <td>17 Abr 2025</td>
-                                    <td><span class="estado pendiente" role="status">Pendiente</span></td>
-                                    <td><a href="detalle-reserva.html?id=3" class="btn-tabla-accion primary">Gestionar</a></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="pnr-code">#RES-004</span></td>
-                                    <td>
-                                        <div class="pasajero-info">
-                                            <span class="nombre">Luis Fernández</span>
-                                        </div>
-                                    </td>
-                                    <td>AV-3456 | BOG → MIA</td>
-                                    <td>18 Abr 2025</td>
-                                    <td><span class="estado cancelada" role="status">Cancelada</span></td>
-                                    <td><a href="detalle-reserva.html?id=4" class="btn-tabla-accion primary">Gestionar</a></td>
-                                </tr>
+                            <tbody id="tbody-reservas-recientes">
+                                <!-- Rellenado por JS -->
                             </tbody>
                         </table>
                     </div>

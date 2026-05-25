@@ -80,23 +80,23 @@
                     <h3><i class="fas fa-ticket-alt"></i> Registro de Pasajero</h3>
                     <div class="dato-linea">
                         <span class="label">Localizador PNR</span>
-                        <span class="valor">#RES-011</span>
+                        <span class="valor" id="pnrCode">Cargando...</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Titular de Cuenta</span>
-                        <span class="valor">Juan Pérez</span>
+                        <span class="valor" id="nombreCliente">Cargando...</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Vuelo Asignado</span>
-                        <span class="valor">EL345 | BOG → ROME</span>
+                        <span class="valor" id="vueloAsignado">Cargando...</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Cabina / Clase</span>
-                        <span class="valor">Ejecutiva (4A)</span>
+                        <span class="valor" id="claseCabina">Cargando...</span>
                     </div>
                     <div class="dato-linea">
                         <span class="label">Fecha de Viaje</span>
-                        <span class="valor">12 Abril 2025</span>
+                        <span class="valor" id="fechaViaje">Cargando...</span>
                     </div>
                 </div>
 
@@ -107,44 +107,44 @@
                         <div class="dato-linea">
                             <span class="label">Estado Actual</span>
                             <span class="valor">
-                                <span class="estado-pago-badge pendiente">Validación Pendiente</span>
+                                <span id="estadoActual" class="estado-pago-badge pendiente">Cargando...</span>
                             </span>
                         </div>
                         <div class="dato-linea">
                             <span class="label">Método de Captura</span>
-                            <span class="valor">Tarjeta de Crédito</span>
+                            <span class="valor" id="metodoPago">No especificado</span>
                         </div>
                         <div class="dato-linea">
                             <span class="label">Importe Total</span>
-                            <span class="valor" style="color: var(--vino); font-weight: 700; font-size: 1.2rem;">$1,422 USD</span>
+                            <span class="valor" id="importeTotal" style="color: var(--vino); font-weight: 700; font-size: 1.2rem;">Cargando...</span>
                         </div>
                     </div>
 
                     <div class="desglose-premium">
                         <div class="desglose-item">
                             <span>Tarifa Base</span>
-                            <span>$1,200</span>
+                            <span id="tarifaBase">Cargando...</span>
                         </div>
                         <div class="desglose-item">
-                            <span>Impuestos y Tasas</span>
-                            <span>$200</span>
+                            <span>Impuestos (19% IVA)</span>
+                            <span id="impuestos">Cargando...</span>
                         </div>
                         <div class="desglose-item">
-                            <span>Seguro Complementario</span>
-                            <span>$22</span>
+                            <span>Servicios Adicionales (Paquetes)</span>
+                            <span id="seguro">Cargando...</span>
                         </div>
                     </div>
 
                     <div class="observacion-pago">
                         <label><i class="fas fa-comment-dots"></i> Notas de Conciliación:</label>
-                        <textarea rows="2" placeholder="Ingrese detalles de la validación bancaria..."></textarea>
+                        <textarea id="notasConciliacion" rows="2" placeholder="Ingrese detalles de la validación bancaria..."></textarea>
                     </div>
 
                     <div class="grupo-botones-pago">
-                        <button class="btn-pago-rechazar">
+                        <button id="btnDenegarPago" class="btn-pago-rechazar">
                             <i class="fas fa-times"></i> Denegar Pago
                         </button>
-                        <button class="btn-pago-confirmar">
+                        <button id="btnValidarPago" class="btn-pago-confirmar">
                             <i class="fas fa-check"></i> Validar Transacción
                         </button>
                     </div>
@@ -169,20 +169,9 @@
                                 <th>Acción</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="historialClienteBody">
                             <tr>
-                                <td><span class="pnr-code">#RES-012</span></td>
-                                <td>Bogotá → Medellín</td>
-                                <td>15/03/2026</td>
-                                <td><span class="estado confirmada">Confirmada</span></td>
-                                <td><a href="detalle-reserva.html?id=12" class="btn-tabla-accion secondary">Auditar</a></td>
-                            </tr>
-                            <tr>
-                                <td><span class="pnr-code">#RES-009</span></td>
-                                <td>Medellín → Cartagena</td>
-                                <td>20/02/2026</td>
-                                <td><span class="estado confirmada">Confirmada</span></td>
-                                <td><a href="detalle-reserva.html?id=9" class="btn-tabla-accion secondary">Auditar</a></td>
+                                <td colspan="5" style="text-align: center;">Cargando registros relacionados...</td>
                             </tr>
                         </tbody>
                     </table>
