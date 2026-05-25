@@ -115,6 +115,8 @@ function renderizarReserva(data, id) {
     estadoReservaSpan.className = `estado ${estadoClase}`;
 
     const confirmarBtn = document.getElementById('btnConfirmarPago');
+    const asignarBtn = document.getElementById('btnAsignarAsiento');
+
     if (confirmarBtn) {
         if (data.estado === 'Confirmada') {
             confirmarBtn.disabled = true;
@@ -124,6 +126,23 @@ function renderizarReserva(data, id) {
             confirmarBtn.disabled = false;
             confirmarBtn.classList.remove('disabled');
             confirmarBtn.removeAttribute('title');
+        }
+    }
+
+    if (asignarBtn) {
+        if (data.estado === 'Confirmada') {
+            asignarBtn.href = `asignar-asiento.html?id=${id}`;
+            asignarBtn.classList.remove('disabled');
+            asignarBtn.removeAttribute('title');
+            asignarBtn.onclick = null;
+        } else {
+            asignarBtn.href = '#';
+            asignarBtn.classList.add('disabled');
+            asignarBtn.title = 'Debe confirmar el pago antes de asignar el asiento';
+            asignarBtn.onclick = function (e) {
+                e.preventDefault();
+                alert('Debe confirmar el pago antes de asignar el asiento.');
+            };
         }
     }
     
@@ -165,9 +184,7 @@ function renderizarReserva(data, id) {
 
     // --- Actualizar enlaces de botones ---
     const btnConfirmar = document.getElementById('btnConfirmarPago');
-    const btnAsignar = document.getElementById('btnAsignarAsiento');
     if (btnConfirmar) btnConfirmar.href = `confirmar-pago.html?id=${id}`;
-    if (btnAsignar) btnAsignar.href = `asignar-asiento.html?id=${id}`;
 }
 
 // Inicialización
@@ -220,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const result = await response.json();
                 if (response.ok) {
                     alert('Pago confirmado. La reserva ahora está Confirmada.');
-                    window.location.href = 'reservas.html';
+                    window.location.href = `asignar-asiento.html?id=${id}`;
                 } else {
                     alert(`Error: ${result.error}`);
                 }

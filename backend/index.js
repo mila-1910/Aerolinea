@@ -384,6 +384,14 @@ app.put('/api/reservas/:id_reserva/cancelar', async (req, res) => {
             [id_reserva, id_estado]
         );
 
+        // Liberar asiento asociado si existía un tiquete para esta reserva
+        await client.query(
+            `UPDATE tiquete 
+             SET numero_asiento = 'Sin asignar', clase_tiquete = 'Sin asignar'
+             WHERE id_reserva = $1`,
+            [id_reserva]
+        );
+
         await client.query('COMMIT');
         res.json({ mensaje: 'Reserva cancelada correctamente', reserva: result.rows[0] });
     } catch (error) {
@@ -803,9 +811,23 @@ app.put('/api/agente/reservas/:id/asiento', async (req, res) => {
         if (reservaRes.rows.length === 0) {
             return res.status(404).json({ error: 'Reserva no encontrada' });
         }
-        const { valor_total } = reservaRes.rows[0];
+        const { cod_vuelo, valor_total } = reservaRes.rows[0];
 
-        // 2. Verificamos si ya existe un tiquete para esta reserva
+        // 2. Verificamos si el asiento ya está ocupado en el mismo vuelo
+        const asientoOcupadoRes = await pool.query(
+            `SELECT t.id_tiquete
+             FROM tiquete t
+             JOIN reserva r ON r.id_reserva = t.id_reserva
+             WHERE r.cod_vuelo = $1
+               AND t.numero_asiento = $2
+               AND t.id_reserva != $3`,
+            [cod_vuelo, numero_asiento, id]
+        );
+        if (asientoOcupadoRes.rows.length > 0) {
+            return res.status(409).json({ error: 'El asiento ya está ocupado en este vuelo. Elija otro asiento.' });
+        }
+
+        // 3. Verificamos si ya existe un tiquete para esta reserva
         const tiqueteRes = await pool.query('SELECT id_tiquete FROM tiquete WHERE id_reserva = $1', [id]);
         
         let result;
