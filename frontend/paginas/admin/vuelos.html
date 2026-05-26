@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vuelos | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
     <link rel="stylesheet" href="../../css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -32,7 +33,7 @@
             padding: 30px;
             border-radius: 15px;
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -75,9 +76,10 @@
             font-size: 14px;
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
 
         .modal-actions {
@@ -161,41 +163,22 @@
 
             <div class="saludo">
                 <h2><i class="fas fa-plane"></i> Gestión de Vuelos</h2>
-                <p>Administra los vuelos del sistema</p>
+                <p>Administra los vuelos disponibles en el sistema</p>
             </div>
 
-            <div class="dashboard-grid" style="grid-template-columns: repeat(2, 1fr);">
-                <div class="glass-card kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon-wrapper">
-                            <i class="fas fa-plane"></i>
-                        </div>
-                    </div>
-                    <div class="kpi-content">
-                        <span class="kpi-value" id="totalVuelosCont">120</span>
-                        <span class="kpi-label">Vuelos Registrados</span>
-                    </div>
-                </div>
-
-                <div class="glass-card kpi-card">
-                    <div class="kpi-header">
-                        <div class="kpi-icon-wrapper">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                    </div>
-                    <div class="kpi-content">
-                        <span class="kpi-value" id="vuelosActivos">95</span>
-                        <span class="kpi-label">Vuelos en Operación</span>
-                    </div>
+            <div class="glass-card search-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchVuelos" placeholder="Buscar por código, origen o destino...">
+                    <button class="btn-premium" id="btnCrearVuelo">
+                        <i class="fas fa-plus"></i> Crear Nuevo Vuelo
+                    </button>
                 </div>
             </div>
 
             <div class="glass-card">
                 <div class="card-header-premium">
-                    <h3><i class="fas fa-list"></i> Listado de Vuelos</h3>
-                    <button class="btn-premium" id="btnCrearVuelo">
-                        <i class="fas fa-plus"></i> Crear Nuevo Vuelo
-                    </button>
+                    <h3><i class="fas fa-plane-departure"></i> Vuelos Registrados</h3>
                 </div>
 
                 <div class="tabla-contenedor">
@@ -206,7 +189,7 @@
                                 <th>Origen</th>
                                 <th>Destino</th>
                                 <th>Fecha Salida</th>
-                                <th>Precio</th>
+                                <th>Precio Base</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -225,6 +208,7 @@
         </main>
     </div>
 
+    <!-- Modal para Crear/Editar Vuelo -->
     <div id="modalVuelo" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,40 +218,40 @@
 
             <form id="formVuelo">
                 <div class="form-group">
-                    <label for="codigoVuelo">Código Vuelo *</label>
-                    <input type="text" id="codigoVuelo" required placeholder="Ej: AA123">
+                    <label for="codigoVuelo">Código de Vuelo *</label>
+                    <input type="text" id="codigoVuelo" required placeholder="Ej: EL-001">
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-row">
                     <div class="form-group">
                         <label for="ciudadOrigen">Ciudad Origen *</label>
                         <input type="text" id="ciudadOrigen" required placeholder="Ej: Bogotá">
                     </div>
                     <div class="form-group">
                         <label for="ciudadDestino">Ciudad Destino *</label>
-                        <input type="text" id="ciudadDestino" required placeholder="Ej: Medellín">
+                        <input type="text" id="ciudadDestino" required placeholder="Ej: Madrid">
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="fechaSalida">Fecha Salida *</label>
+                        <label for="fechaSalida">Fecha y Hora Salida *</label>
                         <input type="datetime-local" id="fechaSalida" required>
                     </div>
                     <div class="form-group">
-                        <label for="fechaLlegada">Fecha Llegada *</label>
+                        <label for="fechaLlegada">Fecha y Hora Llegada *</label>
                         <input type="datetime-local" id="fechaLlegada" required>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="precioBase">Precio Base *</label>
-                        <input type="number" id="precioBase" required placeholder="0.00" step="0.01">
+                        <label for="precioBase">Precio Base ($) *</label>
+                        <input type="number" id="precioBase" required placeholder="0.00" step="0.01" min="0">
                     </div>
                     <div class="form-group">
                         <label for="capacidadPasajeros">Capacidad Pasajeros *</label>
-                        <input type="number" id="capacidadPasajeros" required placeholder="100">
+                        <input type="number" id="capacidadPasajeros" required placeholder="100" min="1">
                     </div>
                 </div>
 
@@ -276,9 +260,10 @@
                     <select id="estadoVuelo" required>
                         <option value="">Seleccionar...</option>
                         <option value="Programado">Programado</option>
-                        <option value="En Vuelo">En Vuelo</option>
+                        <option value="En vuelo">En vuelo</option>
+                        <option value="Aterrizado">Aterrizado</option>
                         <option value="Cancelado">Cancelado</option>
-                        <option value="Completado">Completado</option>
+                        <option value="Retrasado">Retrasado</option>
                     </select>
                 </div>
 
@@ -290,8 +275,22 @@
         </div>
     </div>
 
-    <script src="../../js/admin-comun.js"></script>
+    <script src="../../js/admi/admin-comun.js"></script>
     <script src="../../js/admin/vuelos.js"></script>
+
+    <script>
+        // Búsqueda de vuelos en la tabla
+        document.getElementById('searchVuelos').addEventListener('keyup', function () {
+            const termino = this.value.toLowerCase();
+            const tabla = document.getElementById('tablaVuelos');
+            const filas = tabla.querySelectorAll('tbody tr');
+
+            filas.forEach(fila => {
+                const texto = fila.textContent.toLowerCase();
+                fila.style.display = texto.includes(termino) ? '' : 'none';
+            });
+        });
+    </script>
 
 </body>
 
