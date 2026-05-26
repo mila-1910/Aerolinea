@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
             } catch (error) {
                 console.error(error);
-                mostrarError("Error guardando en la Base de Datos. Asegúrate de que el backend esté encendido.");
+                mostrarError("Error del servidor: " + error.message);
             }
         } else if (rawCardNumber === TARJETA_RECHAZADA) {
             mostrarError("Transacción rechazada por el banco. Usa otra tarjeta.");

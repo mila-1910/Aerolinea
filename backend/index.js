@@ -649,7 +649,7 @@ app.post('/api/reservas', async (req, res) => {
     } catch (error) {
         await client.query('ROLLBACK');
         console.error('Error al crear reserva:', error);
-        res.status(500).json({ error: 'Error al crear la reserva' });
+        res.status(500).json({ error: 'Error al crear la reserva: ' + error.message });
     } finally {
         client.release();
     }

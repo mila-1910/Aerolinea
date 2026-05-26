@@ -147,13 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="form-group">
                         <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Nombres y Apellidos Completos</label>
                         <input type="text" class="pasajero-input-nombre" data-pasajero="${i}" placeholder="Ej: Juan Pérez" value="${preNombre}" required 
-                               style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem;">
+                               style="width: 100%; padding: 10px; border-radius: 8px; background: #ffffff; border: 1px solid #cccccc; color: #000000; font-weight: bold; outline: none; font-size: 0.95rem;">
                     </div>
                     <div style="display: flex; gap: 12px;">
                         <div class="form-group" style="flex: 1;">
                             <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Tipo de Documento</label>
                             <select class="pasajero-input-tipo" data-pasajero="${i}" 
-                                    style="width: 100%; padding: 10px; border-radius: 8px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem; height: 41px;">
+                                    style="width: 100%; padding: 10px; border-radius: 8px; background: #ffffff; border: 1px solid #cccccc; color: #000000; font-weight: bold; outline: none; font-size: 0.95rem; height: 41px;">
                                 <option value="CC" selected>Cédula de Ciudadanía (CC)</option>
                                 <option value="Pasaporte">Pasaporte</option>
                                 <option value="CE">Cédula de Extranjería (CE)</option>
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="form-group" style="flex: 2;">
                             <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Número de Documento</label>
                             <input type="text" class="pasajero-input-doc" data-pasajero="${i}" placeholder="Ej: 10204928" value="${preDoc}" required 
-                                   style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem;">
+                                   style="width: 100%; padding: 10px; border-radius: 8px; background: #ffffff; border: 1px solid #cccccc; color: #000000; font-weight: bold; outline: none; font-size: 0.95rem;">
                         </div>
                     </div>
                 </div>
