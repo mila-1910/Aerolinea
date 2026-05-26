@@ -332,7 +332,9 @@ INSERT INTO paquete_turistico
 VALUES
 ('Lima Gastronomica','Tour comida peruana','Lima',900000,'Disponible');
 
-
+(nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES
+('Tour lago calima','paseo por centro recreativo Comfandi ','Lago calima',100000,'Disponible');
 
 -- =========================================
 -- INSERTS TABLA RESERVA_PAQUETE

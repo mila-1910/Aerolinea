@@ -185,18 +185,16 @@
 
     <!-- GRÁFICOS CON CHART.JS -->
     <script>
-        // Configuración de gráficos
         const ctxBarras = document.getElementById('graficoBarras').getContext('2d');
         const ctxTorta = document.getElementById('graficoTorta').getContext('2d');
 
-        // GRÁFICO DE BARRAS
-        new Chart(ctxBarras, {
+        const graficoBarras = new Chart(ctxBarras, {
             type: 'bar',
             data: {
                 labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
                 datasets: [{
                     label: 'Cantidad',
-                    data: [120, 45, 30, 80],
+                    data: [0, 0, 0, 0],
                     backgroundColor: [
                         '#d4af37',
                         '#a8326e',
@@ -217,20 +215,18 @@
                 },
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        max: 150
+                        beginAtZero: true
                     }
                 }
             }
         });
 
-        // GRÁFICO DE PASTEL
-        new Chart(ctxTorta, {
+        const graficoTorta = new Chart(ctxTorta, {
             type: 'doughnut',
             data: {
                 labels: ['Vuelos', 'Paquetes', 'Ubicaciones', 'Reservas'],
                 datasets: [{
-                    data: [120, 45, 30, 80],
+                    data: [0, 0, 0, 0],
                     backgroundColor: [
                         '#d4af37',
                         '#a8326e',
@@ -256,6 +252,11 @@
                 }
             }
         });
+
+        window.dashboardCharts = {
+            barras: graficoBarras,
+            torta: graficoTorta
+        };
     </script>
 
 
