@@ -792,3 +792,93 @@ fieldset.filtro-grupo {
     background-color: var(--vino);
     color: var(--blanco);
 }
+
+.info-cliente-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    padding: 24px 40px 0;
+}
+
+.info-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(35, 8, 23, 0.08);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 18px 40px rgba(35, 8, 23, 0.08);
+    text-align: left;
+}
+
+.info-panel-kicker {
+    margin: 0 0 8px;
+    color: var(--vino);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.info-panel h3 {
+    color: #1f1f1f;
+    font-size: 1.15rem;
+    margin: 0 0 16px;
+}
+
+.destinos-disponibles-grid,
+.paquetes-destacados-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.destino-chip,
+.paquete-mini {
+    border-radius: 18px;
+    border: 1px solid rgba(35, 8, 23, 0.08);
+    background: linear-gradient(180deg, #fff, #fff8f1);
+}
+
+.destino-chip {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.destino-chip strong,
+.paquete-mini strong {
+    color: #1f1f1f;
+    font-size: 1rem;
+}
+
+.destino-chip span,
+.destino-chip small,
+.paquete-mini p {
+    color: var(--gris-texto);
+    margin: 0;
+}
+
+.paquete-mini {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.paquete-mini span {
+    color: var(--vino);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.info-vacia {
+    color: var(--gris-texto);
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+    .info-cliente-grid {
+        grid-template-columns: 1fr;
+    }
+}

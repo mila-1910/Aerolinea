@@ -151,6 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <div class="card-actions">
                 <a href="resumen-reserva.html" class="btn-card secondary-btn btn-ver">Ver Detalle</a>
+                <button class="btn-card warning-btn btn-soporte" style="background: linear-gradient(135deg, #d4af37, #aa7c11); color: white; border: none; padding: 10px 15px; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;">
+                    <i class="fa-solid fa-headset"></i> Soporte
+                </button>
                 ${puedeCancelar ? '<button class="btn-card danger-btn btn-cancelar">Cancelar</button>' : ''}
             </div>
         `;
@@ -158,6 +161,46 @@ document.addEventListener("DOMContentLoaded", () => {
         div.querySelector(".btn-ver").addEventListener("click", () => {
             guardarReservaSeleccionada(reserva);
         });
+
+        const btnSoporte = div.querySelector(".btn-soporte");
+        if (btnSoporte) {
+            btnSoporte.addEventListener("click", async () => {
+                const tipo = prompt("Ingresa el tipo de tu solicitud (ej: Cancelación, Cambio de asiento, Reclamación de pago, Otro):", "Cambio de asiento");
+                if (!tipo) return;
+                const descripcion = prompt("Ingresa una breve descripción de tu solicitud:");
+                if (!descripcion) return;
+
+                const usuario = obtenerUsuario();
+                if (!usuario || !usuario.id_cliente) {
+                    alert("Debes iniciar sesión para realizar solicitudes.");
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/solicitudes`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            numero_identificacion_cliente: usuario.id_cliente,
+                            id_reserva: reserva.idReserva,
+                            tipo_solicitud: tipo,
+                            descripcion: descripcion,
+                            prioridad: "Normal"
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errData = await response.json();
+                        throw new Error(errData.error || "No se pudo registrar la solicitud");
+                    }
+
+                    alert("✅ ¡Tu solicitud de soporte ha sido creada con éxito! Un agente de soporte la revisará pronto.");
+                } catch (err) {
+                    console.error("Error al crear solicitud:", err);
+                    alert("Error: " + err.message);
+                }
+            });
+        }
 
         const btnCancelar = div.querySelector(".btn-cancelar");
         if (btnCancelar) {

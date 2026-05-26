@@ -1,0 +1,45 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Verify delete routes",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"Set-Location 'c:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend'; $resp = Invoke-RestMethod -Method Delete -Uri 'http://localhost:3000/api/paquetes/1'; Write-Output ($resp | ConvertTo-Json -Depth 5)\"",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Check backend process",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.Name -eq 'node.exe' } | Select-Object ProcessId,ExecutablePath,CommandLine | Format-Table -AutoSize\"",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Restart backend",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Set-Location 'c:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend'; node index.js\"",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend server",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"Set-Location 'c:\\Users\\Windows 11\\Documents\\GitHub\\FIgma-aerolinea\\backend'; node index.js\"",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend server",
+			"type": "shell",
+			"command": "powershell -NoProfile -Command \"$backend='C:\\\\Users\\\\Windows 11\\\\Documents\\\\GitHub\\\\FIgma-aerolinea\\\\backend'; Set-Location $backend; node index.js\"",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

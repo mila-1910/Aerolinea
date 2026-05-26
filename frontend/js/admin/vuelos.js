@@ -142,14 +142,25 @@ async function guardarVuelo(e) {
             });
         }
 
-        if (!response.ok) throw new Error(`Error: ${response.status}`);
+        const textoRespuesta = await response.text();
+        let payload;
+
+        try {
+            payload = textoRespuesta ? JSON.parse(textoRespuesta) : null;
+        } catch (error) {
+            payload = null;
+        }
+
+        if (!response.ok) {
+            throw new Error(payload?.error || `Error ${response.status}: ${textoRespuesta || 'No se pudo guardar el vuelo'}`);
+        }
 
         alert(modoEdicion ? '✅ Vuelo actualizado correctamente' : '✅ Vuelo creado correctamente');
         cerrarModal('modalVuelo');
         cargarVuelos();
     } catch (error) {
         console.error('❌ Error:', error);
-        alert('Error al guardar el vuelo');
+        alert(error.message || 'Error al guardar el vuelo');
     }
 }
 

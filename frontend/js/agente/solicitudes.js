@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchSolicitudes() {
         try {
-            const res = await fetch('/api/agente/solicitudes');
+            const res = await fetch(`${window.API_BASE || ''}/api/agente/solicitudes`);
             if (!res.ok) throw new Error('Error al obtener solicitudes');
             const data = await res.json();
             renderTabla(data);
@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(err);
             cuerpo.innerHTML = '<tr><td colspan="8">Error al cargar solicitudes</td></tr>';
             totalRegistros.textContent = '0';
+            if (typeof window.mostrarBannerError === 'function') {
+                window.mostrarBannerError(err);
+            }
         }
     }
 
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exponer funciones globales para botones inline
     window.verDetalle = async function(id) {
         try {
-            const res = await fetch('/api/agente/solicitudes/' + id);
+            const res = await fetch(`${window.API_BASE || ''}/api/agente/solicitudes/` + id);
             if (!res.ok) throw new Error('No se pudo obtener detalle');
             const s = await res.json();
             const detalle = `ID: ${s.id_solicitud}\nCliente: ${s.cliente}\nTipo: ${s.tipo_solicitud}\nEstado: ${s.estado}\nPrioridad: ${s.prioridad}\nDescripcion: ${s.descripcion || '-'}\nRespuesta: ${s.respuesta_agente || '-'}\nFecha creación: ${new Date(s.fecha_creacion).toLocaleString()}`;
@@ -60,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const body = { respuesta, id_agente: null };
             if (nuevoEstado) body.estado = nuevoEstado;
-            const res = await fetch('/api/agente/solicitudes/' + id + '/responder', {
+            const res = await fetch(`${window.API_BASE || ''}/api/agente/solicitudes/` + id + '/responder', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
@@ -86,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function crearSolicitud(numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion) {
         try {
-            const res = await fetch('/api/solicitudes', {
+            const res = await fetch(`${window.API_BASE || ''}/api/solicitudes`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion })

@@ -49,6 +49,41 @@ function getDescripcion(destino) {
     return `Disfruta de un increíble viaje a ${destino || 'tu destino preferido'}, un lugar lleno de experiencias inolvidables, cultura y hermosos paisajes.`;
 }
 
+function normalizarTexto(texto) {
+    return String(texto || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9 ]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+function normalizarCiudadParaBusqueda(nombreCiudad) {
+    const base = normalizarTexto(nombreCiudad);
+    const sinPrefijo = base
+        .replace(/^ciudad de /, '')
+        .replace(/^la ciudad de /, '');
+
+    return [base, sinPrefijo];
+}
+
+async function buscarCiudadId(nombreCiudad) {
+    const resultado = await pool.query('SELECT id_ciudad, nombre_ciudad FROM ciudad');
+    const candidatos = normalizarCiudadParaBusqueda(nombreCiudad);
+
+    const ciudad = resultado.rows.find(row => {
+        const nombreNormalizado = normalizarTexto(row.nombre_ciudad);
+        const nombreSinPrefijo = nombreNormalizado
+            .replace(/^ciudad de /, '')
+            .replace(/^la ciudad de /, '');
+
+        return candidatos.includes(nombreNormalizado) || candidatos.includes(nombreSinPrefijo);
+    });
+
+    return ciudad ? ciudad.id_ciudad : null;
+}
+
 function mapFlightRow(row) {
     const duracion_minutos = row.duracion_minutos ? Math.round(row.duracion_minutos) : 120;
     const horas = Math.floor(duracion_minutos / 60);
@@ -181,6 +216,34 @@ app.get('/api/vuelos/:id', async (req, res) => {
     }
 });
 
+function validarCodigoVuelo(cod_vuelo) {
+    const codigo = String(cod_vuelo || '').trim();
+
+    if (!codigo) {
+        return 'El código del vuelo es obligatorio.';
+    }
+
+    if (codigo.length > 20) {
+        return 'El código del vuelo no puede superar 20 caracteres.';
+    }
+
+    return null;
+}
+
+function gestionarErrorVuelo(error, res, accion = 'crear') {
+    if (error.code === '23505') {
+        return res.status(409).json({ error: 'El código del vuelo ya existe. Usa otro código.' });
+    }
+
+    if (error.code === '22001') {
+        return res.status(400).json({ error: 'El código del vuelo no puede superar 20 caracteres.' });
+    }
+
+    console.error('Error al gestionar vuelo:', error);
+    const mensaje = accion === 'actualizar' ? 'Error al actualizar el vuelo' : 'Error al crear el vuelo';
+    return res.status(500).json({ error: mensaje });
+}
+
 // 🔹 CREAR NUEVO VUELO
 app.post('/api/vuelos', async (req, res) => {
     const { cod_vuelo, ciudad_origen, ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros, estado_vuelo } = req.body;
@@ -189,21 +252,23 @@ app.post('/api/vuelos', async (req, res) => {
         return res.status(400).json({ error: 'Faltan datos obligatorios' });
     }
 
-    try {
-        const origenRes = await pool.query('SELECT id_ciudad FROM ciudad WHERE LOWER(nombre_ciudad) = LOWER($1) LIMIT 1', [ciudad_origen]);
-        const destinoRes = await pool.query('SELECT id_ciudad FROM ciudad WHERE LOWER(nombre_ciudad) = LOWER($1) LIMIT 1', [ciudad_destino]);
+    const errorCodigo = validarCodigoVuelo(cod_vuelo);
+    if (errorCodigo) {
+        return res.status(400).json({ error: errorCodigo });
+    }
 
-        if (origenRes.rows.length === 0 || destinoRes.rows.length === 0) {
+    try {
+        const id_ciudad_origen = await buscarCiudadId(ciudad_origen);
+        const id_ciudad_destino = await buscarCiudadId(ciudad_destino);
+
+        if (!id_ciudad_origen || !id_ciudad_destino) {
             return res.status(400).json({ error: 'La ciudad de origen o destino no está registrada en el sistema.' });
         }
-
-        const id_ciudad_origen = origenRes.rows[0].id_ciudad;
-        const id_ciudad_destino = destinoRes.rows[0].id_ciudad;
 
         await pool.query(
             `INSERT INTO vuelo (cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros, estado_vuelo)
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-            [cod_vuelo, id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros || 100, estado_vuelo || 'Programado']
+            [String(cod_vuelo).trim(), id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros || 100, estado_vuelo || 'Programado']
         );
 
         const newFlightRes = await pool.query(`
@@ -221,12 +286,11 @@ app.post('/api/vuelos', async (req, res) => {
             JOIN ciudad co ON v.id_ciudad_origen = co.id_ciudad
             JOIN ciudad cd ON v.id_ciudad_destino = cd.id_ciudad
             WHERE v.cod_vuelo = $1
-        `, [cod_vuelo]);
+        `, [String(cod_vuelo).trim()]);
 
         res.status(201).json({ mensaje: 'Vuelo creado correctamente', vuelo: mapFlightRow(newFlightRes.rows[0]) });
     } catch (error) {
-        console.error('Error al crear vuelo:', error);
-        res.status(500).json({ error: 'Error al crear el vuelo' });
+        gestionarErrorVuelo(error, res);
     }
 });
 
@@ -235,22 +299,24 @@ app.put('/api/vuelos/:cod_vuelo', async (req, res) => {
     const { cod_vuelo } = req.params;
     const { ciudad_origen, ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros, estado_vuelo } = req.body;
 
-    try {
-        const origenRes = await pool.query('SELECT id_ciudad FROM ciudad WHERE LOWER(nombre_ciudad) = LOWER($1) LIMIT 1', [ciudad_origen]);
-        const destinoRes = await pool.query('SELECT id_ciudad FROM ciudad WHERE LOWER(nombre_ciudad) = LOWER($1) LIMIT 1', [ciudad_destino]);
+    const errorCodigo = validarCodigoVuelo(cod_vuelo);
+    if (errorCodigo) {
+        return res.status(400).json({ error: errorCodigo });
+    }
 
-        if (origenRes.rows.length === 0 || destinoRes.rows.length === 0) {
+    try {
+        const id_ciudad_origen = await buscarCiudadId(ciudad_origen);
+        const id_ciudad_destino = await buscarCiudadId(ciudad_destino);
+
+        if (!id_ciudad_origen || !id_ciudad_destino) {
             return res.status(400).json({ error: 'La ciudad de origen o destino no está registrada en el sistema.' });
         }
-
-        const id_ciudad_origen = origenRes.rows[0].id_ciudad;
-        const id_ciudad_destino = destinoRes.rows[0].id_ciudad;
 
         const result = await pool.query(
             `UPDATE vuelo SET id_ciudad_origen=$1, id_ciudad_destino=$2, fecha_hora_salida=$3, fecha_hora_llegada=$4, precio_base=$5, capacidad_pasajeros=$6, estado_vuelo=$7
              WHERE cod_vuelo=$8
              RETURNING *`,
-            [id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros, estado_vuelo, cod_vuelo]
+            [id_ciudad_origen, id_ciudad_destino, fecha_hora_salida, fecha_hora_llegada, precio_base, capacidad_pasajeros, estado_vuelo, String(cod_vuelo).trim()]
         );
 
         if (result.rows.length === 0) {
@@ -272,12 +338,11 @@ app.put('/api/vuelos/:cod_vuelo', async (req, res) => {
             JOIN ciudad co ON v.id_ciudad_origen = co.id_ciudad
             JOIN ciudad cd ON v.id_ciudad_destino = cd.id_ciudad
             WHERE v.cod_vuelo = $1
-        `, [cod_vuelo]);
+        `, [String(cod_vuelo).trim()]);
 
         res.json({ mensaje: 'Vuelo actualizado correctamente', vuelo: mapFlightRow(updatedFlightRes.rows[0]) });
     } catch (error) {
-        console.error('Error al actualizar vuelo:', error);
-        res.status(500).json({ error: 'Error al actualizar el vuelo' });
+        gestionarErrorVuelo(error, res, 'actualizar');
     }
 });
 
@@ -317,6 +382,7 @@ app.get('/api/paquetes', async (req, res) => {
                 estado,
                 fecha_creacion
             FROM paquete_turistico
+            WHERE estado <> 'Eliminado'
             ORDER BY fecha_creacion DESC
         `);
         res.json(result.rows);
@@ -378,13 +444,28 @@ app.delete('/api/paquetes/:id_paquete', async (req, res) => {
     const { id_paquete } = req.params;
 
     try {
-        const result = await pool.query('DELETE FROM paquete_turistico WHERE id_paquete=$1 RETURNING *', [id_paquete]);
+        // Verificar si está referenciado en reserva_paquete
+        const refCheck = await pool.query('SELECT COUNT(*) FROM reserva_paquete WHERE id_paquete = $1', [id_paquete]);
+        const hasReservations = parseInt(refCheck.rows[0].count) > 0;
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Paquete no encontrado' });
+        if (hasReservations) {
+            // Borrado lógico si tiene reservas
+            const result = await pool.query(
+                `UPDATE paquete_turistico SET estado = 'Eliminado' WHERE id_paquete = $1 RETURNING *`,
+                [id_paquete]
+            );
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: 'Paquete no encontrado' });
+            }
+            res.json({ mensaje: 'Paquete eliminado (desactivado) correctamente por tener reservas asociadas' });
+        } else {
+            // Borrado físico si no tiene reservas
+            const result = await pool.query('DELETE FROM paquete_turistico WHERE id_paquete=$1 RETURNING *', [id_paquete]);
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: 'Paquete no encontrado' });
+            }
+            res.json({ mensaje: 'Paquete eliminado correctamente' });
         }
-
-        res.json({ mensaje: 'Paquete eliminado correctamente' });
     } catch (error) {
         console.error('Error al eliminar paquete:', error);
         res.status(500).json({ error: 'Error al eliminar el paquete' });
@@ -1020,9 +1101,9 @@ app.get('/api/agente/solicitudes', async (req, res) => {
                 s.fecha_creacion,
                 s.id_reserva,
                 s.numero_identificacion_cliente,
-                c.nombres || ' ' || c.apellidos AS cliente
+                COALESCE(c.nombres || ' ' || c.apellidos, s.numero_identificacion_cliente) AS cliente
             FROM solicitud_cliente s
-            JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
+            LEFT JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
             ORDER BY s.fecha_creacion DESC
         `);
         res.json(result.rows);
@@ -1038,10 +1119,10 @@ app.get('/api/agente/solicitudes/:id', async (req, res) => {
     try {
         const result = await pool.query(`
             SELECT s.*, 
-                   c.nombres || ' ' || c.apellidos AS cliente,
+                   COALESCE(c.nombres || ' ' || c.apellidos, s.numero_identificacion_cliente) AS cliente,
                    u.nombre_usuario AS agente
             FROM solicitud_cliente s
-            JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
+            LEFT JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
             LEFT JOIN usuario u ON u.id_usuario = s.id_agente
             WHERE s.id_solicitud = $1
         `, [id]);
