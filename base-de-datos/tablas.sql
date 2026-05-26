@@ -228,7 +228,11 @@ CREATE TABLE paquete_turistico (
 
     precio NUMERIC(10,2) NOT NULL,
 
-    estado VARCHAR(30) NOT NULL
+    estado VARCHAR(30) NOT NULL,
+
+    duracion INT DEFAULT 3,
+
+    fecha_creacion TIMESTAMP DEFAULT NOW()
 );
 
 
