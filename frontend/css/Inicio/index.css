@@ -46,17 +46,21 @@ body {
 }
 
 .header__nav a {
-    color: #222;
-    /* Ajuste oscuro para visibilidad */
+    color: var(--blanco);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.05rem;
-    transition: opacity 0.2s;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    transition: all 300ms var(--ease-out);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 8px;
 }
 
 .header__nav a:hover {
-    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform: translateY(-1px);
 }
 
 .navbar__actions {
@@ -72,7 +76,7 @@ body {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), filter 200ms ease;
+    transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out), color 160ms var(--ease-out), border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out), filter 200ms ease;
     text-shadow: none;
     display: inline-block;
 }
@@ -83,27 +87,34 @@ body {
 }
 
 .btn-nav--ghost {
-    color: var(--vino);
-    background-color: transparent;
-    border: 1px solid var(--vino);
+    color: var(--blanco);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .btn-nav--ghost:hover {
-    background-color: rgba(123, 28, 78, 0.05);
-    transform: translateY(-1px);
+    background-color: var(--blanco);
+    color: var(--vino-oscuro);
+    border-color: var(--blanco);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-nav--solid {
     background: var(--vino);
     color: var(--blanco);
     border: 1px solid var(--vino);
+    box-shadow: 0 4px 15px rgba(123, 28, 78, 0.3);
 }
 
 .btn-nav--solid:hover {
     background: var(--vino-oscuro);
     border-color: var(--vino-oscuro);
-    box-shadow: 0 4px 10px rgba(123, 28, 78, 0.2);
-    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(123, 28, 78, 0.4);
+    transform: translateY(-2px);
 }
 
 /* ==================================
@@ -537,12 +548,15 @@ body {
 
 .vuelos-grid-index {
     display: grid;
-    /* Grid asimétrico tipo Qatar Airways */
+    /* Grid asimétrico tipo Qatar Airways / Bento Grid */
     grid-template-columns: repeat(4, 1fr);
     gap: 24px;
 }
 
 /* 1era, 4ta y 5ta tarjeta ocupan 2 columnas */
+.vuelos-grid-index .vuelo-card:nth-child(1),
+.vuelos-grid-index .vuelo-card:nth-child(4),
+.vuelos-grid-index .vuelo-card:nth-child(5),
 .vuelo-card-index:nth-child(1),
 .vuelo-card-index:nth-child(4),
 .vuelo-card-index:nth-child(5) {

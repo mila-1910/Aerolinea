@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio | ELARIS</title>
     <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
-    <!-- Lucide Icons (Premium UI) -->
+    <!-- Iconos y Estilos Premium -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../css/Inicio/index.css">
+    <link rel="stylesheet" href="../../css/buscar-vuelos.css">
 </head>
 
 <body>
@@ -35,69 +37,67 @@
     </header>
 
     <main>
-        <!-- Hero Principal-->
-        <section class="hero">
-            <div class="hero_overlay"></div>
-
-            <div class="hero_content reveal">
-                <h1>Vuela hacia lo que importa</h1>
+        <div class="buscador-header">
+            <div class="hero-carousel-container" id="hero-carousel">
+                <div class="hero-slide active" style="background-image: url('../../imagenes/Inicio/Avion_Index.png'); transition: none; transform: none; animation: none;"></div>
             </div>
-        </section>
 
-        <!-- Tarjeta de reserva -->
-        <section class="booking">
-            <div class="booking-card reveal">
-                <div class="booking-card__tabs">
-                    <button type="button" class="active">Reservar un vuelo</button>
-                    <button type="button">Paquetes</button>
-                    <button type="button">Gestionar / Facturar</button>
-                    <button type="button">Estado de vuelo</button>
-                </div>
+            <h2>Vuela hacia lo que importa</h2>
+            <p>Encuentra el vuelo perfecto para tu próximo viaje.</p>
 
-                <div class="booking-card__trip-type">
-                    <label><input type="radio" name="trip" checked> Regreso</label>
-                    <label><input type="radio" name="trip"> Solo ida</label>
-                    <label><input type="radio" name="trip"> Múltiples trayectos</label>
-                </div>
+            <!-- Tipo de viaje -->
+            <fieldset class="tipo-viaje" aria-label="Tipo de viaje">
+                <legend class="sr-only">Selecciona el tipo de viaje</legend>
+                <input type="radio" name="tipo" id="ida-vuelta" value="ida-vuelta" checked>
+                <label for="ida-vuelta"><i class="fa-solid fa-right-left" aria-hidden="true"></i> Ida y vuelta</label>
 
-                <form class="booking-card__form">
-                    <div class="booking-card__fields">
-                        <div class="field">
-                            <label for="from"><i data-lucide="map-pin" class="field-icon"></i> Origen</label>
-                            <input type="text" id="from" placeholder="Ciudad de origen">
-                        </div>
+                <input type="radio" name="tipo" id="solo-ida" value="solo-ida">
+                <label for="solo-ida"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Solo ida</label>
+            </fieldset>
 
-                        <div class="field">
-                            <label for="to"><i data-lucide="map" class="field-icon"></i> Destino</label>
-                            <input type="text" id="to" placeholder="Ciudad de destino">
-                        </div>
+            <!-- Campos del buscador -->
+            <form id="form-buscador-index" role="search" aria-label="Buscador de vuelos" onsubmit="event.preventDefault();">
+                <div class="buscador-campos">
 
-                        <div class="field">
-                            <label for="departure"><i data-lucide="calendar" class="field-icon"></i> Fecha de
-                                ida</label>
-                            <input type="date" id="departure">
-                        </div>
-
-                        <div class="field">
-                            <label for="return"><i data-lucide="calendar-check" class="field-icon"></i> Fecha de
-                                regreso</label>
-                            <input type="date" id="return">
-                        </div>
-
-                        <div class="field">
-                            <label for="passengers"><i data-lucide="users" class="field-icon"></i> Pasajeros</label>
-                            <input type="number" id="passengers" min="1" max="10" value="1">
+                    <div class="campo-grupo">
+                        <label for="origen"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i> Origen</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="origen" name="origen" placeholder="¿De dónde sales?">
                         </div>
                     </div>
 
-                    <div class="booking-card__actions">
-                        <button type="submit"><i data-lucide="search" class="btn-icon"></i> Mostrar Vuelos</button>
+                    <div class="campo-grupo">
+                        <label for="destino"><i class="fa-solid fa-plane-arrival" aria-hidden="true"></i> Destino</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="destino" name="destino" placeholder="¿A dónde vas?">
+                        </div>
                     </div>
-                </form>
 
+                    <div class="campo-grupo fecha">
+                        <label for="fecha-ida"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Ida</label>
+                        <div class="input-wrapper">
+                            <input type="date" id="fecha-ida" name="ida">
+                        </div>
+                    </div>
 
-            </div>
-        </section>
+                    <div class="campo-grupo fecha" id="grupo-fecha-regreso">
+                        <label for="fecha-regreso"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Regreso</label>
+                        <div class="input-wrapper">
+                            <input type="date" id="fecha-regreso" name="regreso">
+                        </div>
+                    </div>
+
+                    <div class="campo-grupo pasajeros">
+                        <label for="pasajeros"><i class="fa-solid fa-user-group" aria-hidden="true"></i> Viajeros</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="pasajeros" name="pasajeros" min="1" max="10" value="1">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="boton-buscar" style="margin-left: 10px;">Buscar Vuelos</button>
+                </div>
+            </form>
+        </div>
 
 
         <!-- Vuelos destacados -->
@@ -199,6 +199,51 @@
 
             // Cargar los vuelos destacados dinámicamente
             cargarVuelosDestacados();
+
+            // === Lógica del buscador premium en el Index ===
+            const formBuscador = document.getElementById('form-buscador-index');
+            if (formBuscador) {
+                formBuscador.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const origen = document.getElementById('origen').value;
+                    const destino = document.getElementById('destino').value;
+                    const fechaIda = document.getElementById('fecha-ida').value;
+                    const fechaRegreso = document.getElementById('fecha-regreso').value;
+                    const pasajeros = document.getElementById('pasajeros').value;
+                    const tipoViaje = document.querySelector('input[name="tipo"]:checked').value;
+
+                    const params = new URLSearchParams();
+                    if (origen) params.append('origen', origen);
+                    if (destino) params.append('destino', destino);
+                    if (fechaIda) params.append('ida', fechaIda);
+                    if (fechaRegreso && tipoViaje !== 'solo-ida') params.append('regreso', fechaRegreso);
+                    if (pasajeros) params.append('pasajeros', pasajeros);
+                    params.append('tipo', tipoViaje);
+
+                    // Redirigir a cliente/buscar-vuelos.html
+                    window.location.href = `../cliente/buscar-vuelos.html?${params.toString()}`;
+                });
+            }
+
+            // Ocultar fecha de regreso si es "Solo ida"
+            const soloIda = document.getElementById("solo-ida");
+            const idaVuelta = document.getElementById("ida-vuelta");
+            const fechaRegresoGrupo = document.getElementById("grupo-fecha-regreso");
+            
+            const actualizarTipoViaje = () => {
+                if (soloIda && soloIda.checked) {
+                    fechaRegresoGrupo.classList.add("oculto");
+                } else if (fechaRegresoGrupo) {
+                    fechaRegresoGrupo.classList.remove("oculto");
+                }
+            };
+            
+            if (soloIda && idaVuelta) {
+                soloIda.addEventListener("change", actualizarTipoViaje);
+                idaVuelta.addEventListener("change", actualizarTipoViaje);
+            }
+
         });
 
         async function cargarVuelosDestacados() {
@@ -211,49 +256,50 @@
 
                 const vuelos = await respuesta.json();
                 contenedor.innerHTML = '';
+                
+                // Usar Bento Grid asimétrico
+                contenedor.className = 'vuelos-grid-index';
 
-                const vuelosMostrar = vuelos.slice(0, 5);
+                const vuelosMostrar = vuelos.slice(0, 5); // Mostrar 5 para el bento grid (1,2 pequeñas, 2 anchas abajo)
 
-                vuelosMostrar.forEach(vuelo => {
+                vuelosMostrar.forEach((vuelo, index) => {
                     const precioFormateado = new Intl.NumberFormat('es-CO', {
                         style: 'currency',
                         currency: 'COP',
                         minimumFractionDigits: 0
                     }).format(vuelo.precio_base);
 
-                    // fecha_hora_salida viene como "2026-07-05T10:30:00.000Z"
-                    const fechaObj = new Date(vuelo.fecha_hora_salida);
+                    const fechaObj = new Date(vuelo.fecha_salida);
                     const opcionesFecha = { day: 'numeric', month: 'short', year: 'numeric' };
                     const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
 
                     const tarjeta = document.createElement('div');
-                    tarjeta.className = 'vuelo-card-index reveal';
+                    tarjeta.className = 'vuelo-card animar-entrada';
+                    tarjeta.style.animationDelay = `${index * 100}ms`;
 
                     tarjeta.innerHTML = `
+                        <img src="${vuelo.imagen_url}" alt="Vista representativa" class="vuelo-card-bg">
                         <div class="vuelo-card-overlay"></div>
                         <div class="vuelo-card-content">
                             <div class="vuelo-card-info-row">
                                 <div class="vuelo-card-info">
-                                    <h4>${vuelo.ciudad_origen} &rarr; ${vuelo.ciudad_destino}</h4>
-                                    <p><i data-lucide="calendar" class="card-icon"></i> ${fechaFormateada}</p>
+                                    <h4>${vuelo.origen} &rarr; ${vuelo.destino}</h4>
+                                    <p><i class="fa-solid fa-plane card-icon"></i> ${vuelo.escala} · ${Math.floor(vuelo.duracion_minutos / 60)}h ${vuelo.duracion_minutos % 60}m</p>
+                                    <p><i class="fa-solid fa-calendar-days card-icon"></i> ${fechaFormateada}</p>
                                 </div>
                                 <div class="vuelo-card-price">
                                     <span>Desde</span>
-                                    <strong>${precioFormateado} COP</strong>
+                                    <strong>${precioFormateado}</strong>
                                 </div>
                             </div>
                         </div>
                         <div class="vuelo-card-hover-actions">
-                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.id_vuelo}" class="btn-reservar">Reservar vuelo</a>
-                            <a href="../cliente/buscar-vuelos.html" class="btn-ver-detalle">Ver detalle</a>
+                            <a href="../cliente/detalle-vuelo.html?id=${vuelo.numero_vuelo}" class="btn-reservar">Reservar vuelo</a>
                         </div>
                     `;
 
                     contenedor.appendChild(tarjeta);
-                    observer.observe(tarjeta);
                 });
-
-                if (window.lucide) lucide.createIcons();
 
             } catch (error) {
                 console.error('Error cargando vuelos destacados:', error);

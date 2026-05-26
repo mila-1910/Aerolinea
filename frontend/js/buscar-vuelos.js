@@ -289,6 +289,34 @@ document.addEventListener("DOMContentLoaded", () => {
         btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
     }
 
+    const leerParametrosURL = () => {
+        const params = new URLSearchParams(window.location.search);
+        
+        if (params.has('origen')) origenInput.value = params.get('origen');
+        if (params.has('destino')) destinoInput.value = params.get('destino');
+        if (params.has('ida')) fechaIdaInput.value = params.get('ida');
+        
+        const fechaRegresoInput = fechaRegresoGrupo.querySelector("input[type='date']");
+        if (params.has('regreso') && fechaRegresoInput) {
+            fechaRegresoInput.value = params.get('regreso');
+        }
+        
+        const pasajerosInput = document.getElementById("pasajeros");
+        if (params.has('pasajeros') && pasajerosInput) {
+            pasajerosInput.value = params.get('pasajeros');
+        }
+
+        if (params.has('tipo')) {
+            if (params.get('tipo') === 'solo-ida') {
+                soloIda.checked = true;
+                idaVuelta.checked = false;
+            } else {
+                soloIda.checked = false;
+                idaVuelta.checked = true;
+            }
+        }
+    };
+
     const iniciarCarruselHero = () => {
         const slides = document.querySelectorAll('.hero-slide');
         if (slides.length === 0) return;
@@ -302,6 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 5000); // Cambia cada 5 segundos
     };
 
+    leerParametrosURL();
     actualizarTipoViaje();
     cargarVuelosDesdeBaseDatos();
     iniciarCarruselHero();
