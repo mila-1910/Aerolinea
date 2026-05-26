@@ -377,11 +377,47 @@ document.addEventListener("DOMContentLoaded", () => {
         setVal("resumen-hora-salida", "10:30");
         setVal("resumen-llegada", "8:45 am");
 
-        // Cálculo del pago
-        const base = reserva.totalNumero || 0;
-        const tarifa = esReservaNueva ? (precioTarifa() * pasajerosCount) : 0; // Si ya está pagada, la tarifa extra ya está en el total
-        const descuento = esReservaNueva ? Math.round(base * 0.2) : 0;
-        const total = esReservaNueva ? (base + tarifa - descuento) : base;
+        // Cálculo del pago — Reconstruir desglose correcto
+        let base, tarifa, descuento, total;
+
+        if (esReservaNueva) {
+            // Reserva nueva: totalNumero es el precio base × pasajeros (sin descuento)
+            base = reserva.totalNumero || 0;
+            tarifa = precioTarifa() * pasajerosCount;
+            descuento = Math.round(base * 0.2);
+            total = base + tarifa - descuento;
+        } else {
+            // Reserva histórica: totalNumero viene de la BD (valor_total ya con descuento aplicado)
+            // Necesitamos reconstruir el desglose
+            const totalPagado = Number(reserva.totalNumero) || 0;
+            
+            // Intentar obtener el precio base del vuelo original
+            const precioBaseVuelo = Number(reserva.vuelo?.precioNumero) || 0;
+            const numPasajeros = reserva.pasajeros || 1;
+            
+            if (precioBaseVuelo > 0) {
+                // Si tenemos el precio base original, recalcular todo desde ahí
+                base = precioBaseVuelo * numPasajeros;
+                tarifa = precioTarifa() * numPasajeros;
+                descuento = Math.round(base * 0.2);
+                total = base + tarifa - descuento;
+                
+                // Si el total recalculado no coincide con lo que se pagó, 
+                // ajustar el descuento para que cuadre
+                if (Math.abs(total - totalPagado) > 100 && totalPagado > 0) {
+                    total = totalPagado;
+                    descuento = base + tarifa - totalPagado;
+                    if (descuento < 0) descuento = 0;
+                }
+            } else {
+                // Fallback: reconstruir desde el total pagado
+                // totalPagado = base - 20% = base * 0.8, entonces base = totalPagado / 0.8
+                base = Math.round(totalPagado / 0.8);
+                tarifa = 0;
+                descuento = base - totalPagado;
+                total = totalPagado;
+            }
+        }
 
         setVal("resumen-clase", reserva.clase.toUpperCase());
         setVal("resumen-tarifa-precio", tarifa === 0 ? "Incluido" : formatoCOP(tarifa));
