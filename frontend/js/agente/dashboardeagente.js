@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', async function() {
     await cargarDatosDashboard();
+    agregarEventosBotones();
 });
 
 window.addEventListener('pageshow', function (event) {
@@ -12,6 +13,99 @@ window.addEventListener('pageshow', function (event) {
         cargarDatosDashboard();
     }
 });
+
+// Agregar eventos a los botones de quick-links
+function agregarEventosBotones() {
+    const links = document.querySelectorAll('.quick-link-btn');
+    links.forEach(link => {
+        link.addEventListener('click', async (e) => {
+            const href = link.getAttribute('href');
+            
+            if (href === 'confirmar-pago.html') {
+                e.preventDefault();
+                await irAlPrimerPagoReservado();
+            } else if (href === 'asignar-asiento.html') {
+                e.preventDefault();
+                await irAlPrimerAsientoConfirmado();
+            }
+        });
+    });
+}
+
+// Redirigir al primer vuelo con estado "Reservado" para confirmar pago
+async function irAlPrimerPagoReservado() {
+    try {
+        const response = await fetch(`${window.API_BASE || ''}/api/agente/reservas`);
+        if (!response.ok) throw new Error('Error al obtener reservas');
+        const reservas = await response.json();
+        
+        const primerReservado = reservas.find(r => 
+            r.estado && r.estado.toLowerCase().includes('reservada')
+        );
+        
+        if (primerReservado) {
+            window.location.href = `detalle-reserva.html?id=${primerReservado.id_reserva}`;
+        } else {
+            mostrarMensajeAlerta('No hay ningún vuelo reservado esperando confirmación de pago.');
+        }
+    } catch (error) {
+        console.error('Error al buscar pagos:', error);
+        mostrarMensajeAlerta('Error al buscar reservas pendientes de pago.');
+    }
+}
+
+// Redirigir al primer vuelo confirmado que necesite asiento
+async function irAlPrimerAsientoConfirmado() {
+    try {
+        const response = await fetch(`${window.API_BASE || ''}/api/agente/reservas`);
+        if (!response.ok) throw new Error('Error al obtener reservas');
+        const reservas = await response.json();
+        
+        const primerConfirmado = reservas.find(r => 
+            r.estado && r.estado.toLowerCase().includes('confirmada') &&
+            (!r.numero_asiento || r.numero_asiento === 'Sin asignar')
+        );
+        
+        if (primerConfirmado) {
+            window.location.href = `asignar-asiento.html?id=${primerConfirmado.id_reserva}`;
+        } else {
+            mostrarMensajeAlerta('No hay vuelos confirmados pendientes de asignación de asiento.');
+        }
+    } catch (error) {
+        console.error('Error al buscar asientos:', error);
+        mostrarMensajeAlerta('Error al buscar reservas pendientes de asignación de asiento.');
+    }
+}
+
+// Mostrar mensaje de alerta en el dashboard
+function mostrarMensajeAlerta(mensaje) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alerta-dashboard';
+    alertDiv.style.cssText = `
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        color: #856404;
+        font-weight: 500;
+        animation: slideIn 0.3s ease-out;
+    `;
+    alertDiv.innerHTML = `<i class="fas fa-info-circle"></i> ${mensaje}`;
+    
+    const contenidoPrincipal = document.querySelector('.contenido-principal');
+    if (contenidoPrincipal) {
+        const primerElemento = contenidoPrincipal.firstChild;
+        contenidoPrincipal.insertBefore(alertDiv, primerElemento.nextSibling);
+        
+        // Desaparecer después de 5 segundos
+        setTimeout(() => {
+            alertDiv.style.opacity = '0';
+            alertDiv.style.transition = 'opacity 0.3s ease-out';
+            setTimeout(() => alertDiv.remove(), 300);
+        }, 5000);
+    }
+}
 
 async function cargarDatosDashboard() {
     try {

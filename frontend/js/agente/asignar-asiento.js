@@ -257,8 +257,8 @@ async function guardarAsignacionAsiento() {
         const result = await response.json();
         if (response.ok) {
             alert('¡Asiento y cabina asignados correctamente!');
-            // Redirigir al detalle de la reserva para ver los cambios
-            window.location.href = `detalle-reserva.html?id=${reservaActualId}`;
+            await cargarReservaParaAsiento(reservaActualId);
+            cargarColaProcesamiento();
         } else {
             alert(`Error al asignar asiento: ${result.error}`);
         }
