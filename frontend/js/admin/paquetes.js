@@ -20,6 +20,17 @@ async function cargarPaquetes() {
 
         paquetesGlobal = await response.json();
         mostrarPaquetes(paquetesGlobal);
+
+        // Actualizar métricas
+        const elTotalPaquetes = document.getElementById('totalPaquetes');
+        if (elTotalPaquetes) {
+            elTotalPaquetes.textContent = paquetesGlobal.length;
+        }
+
+        const elPaquetesActivos = document.getElementById('paquetesActivos');
+        if (elPaquetesActivos) {
+            elPaquetesActivos.textContent = paquetesGlobal.filter(p => p.estado === 'Activo').length;
+        }
     } catch (error) {
         console.error('❌ Error al cargar paquetes:', error);
         document.getElementById('contenedorPaquetes').innerHTML = `

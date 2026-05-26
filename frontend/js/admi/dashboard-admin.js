@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('totalDestinos').textContent =
             data.totalDestinos;
 
+        const elTotalPaquetes = document.getElementById('totalPaquetes');
+        if (elTotalPaquetes) {
+            elTotalPaquetes.textContent = data.totalPaquetes || 0;
+        }
+
         // TABLA RESERVAS
         const tbody = document.getElementById('tablaReservasBody');
 

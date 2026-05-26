@@ -880,7 +880,11 @@ app.get('/api/admin/dashboard', async (req, res) => {
         const reservas = await pool.query(`SELECT COUNT(*) AS total FROM reserva`);
 
         const destinos = await pool.query(
-            `SELECT COUNT(DISTINCT ciudad_destino) AS total FROM vuelo`
+            `SELECT COUNT(DISTINCT id_ciudad_destino) AS total FROM vuelo`
+        );
+
+        const paquetes = await pool.query(
+            `SELECT COUNT(*) AS total FROM paquete_turistico WHERE estado = 'Activo'`
         );
 
         const ultimas = await pool.query(`
@@ -899,6 +903,7 @@ app.get('/api/admin/dashboard', async (req, res) => {
             totalVuelos: vuelos.rows[0].total,
             totalReservas: reservas.rows[0].total,
             totalDestinos: destinos.rows[0].total,
+            totalPaquetes: paquetes.rows[0].total,
             ultimasReservas: ultimas.rows
         });
     } catch (error) {
