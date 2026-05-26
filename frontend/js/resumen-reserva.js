@@ -243,7 +243,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("btn-confirmar-reserva").addEventListener("click", (event) => {
         event.preventDefault();
-        finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
+        if (esReservaNueva || reserva.estado === "Pendiente") {
+            window.location.href = "pago.html";
+        } else {
+            // Si por alguna razón está confirmada y aparece el botón (no debería)
+            finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
+        }
     });
 
     document.getElementById("btn-guardar-reserva").addEventListener("click", (event) => {

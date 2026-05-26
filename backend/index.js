@@ -546,8 +546,8 @@ app.get('/api/reservas/cliente/:id_cliente', async (req, res) => {
                 r.valor_total,
                 er.nombre_estado          AS estado,
                 v.cod_vuelo,
-                v.ciudad_origen,
-                v.ciudad_destino,
+                co.nombre_ciudad          AS ciudad_origen,
+                cd.nombre_ciudad          AS ciudad_destino,
                 v.fecha_hora_salida,
                 v.fecha_hora_llegada,
                 v.precio_base,
@@ -555,6 +555,8 @@ app.get('/api/reservas/cliente/:id_cliente', async (req, res) => {
             FROM reserva r
             JOIN estado_reserva er ON er.id_estado = r.id_estado
             JOIN vuelo v           ON v.cod_vuelo   = r.cod_vuelo
+            JOIN ciudad co         ON v.id_ciudad_origen = co.id_ciudad
+            JOIN ciudad cd         ON v.id_ciudad_destino = cd.id_ciudad
             WHERE r.numero_identificacion_cliente = $1
             ORDER BY r.fecha_hora_reserva DESC
         `, [id_cliente]);

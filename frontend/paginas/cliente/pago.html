@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Seguro | ELARIS</title>
+    <link rel="stylesheet" href="../../css/cliente.css">
+    <link rel="stylesheet" href="../../css/pago.css">
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="checkout-container">
+        <!-- Left Side: Summary / Branding -->
+        <div class="checkout-left">
+            <div class="checkout-brand">
+                <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="40">
+                <span class="test-mode-badge"><i class="fa-solid fa-flask"></i> Modo de pruebas</span>
+            </div>
+            
+            <div class="checkout-summary">
+                <div class="summary-card">
+                    <p class="summary-label">Resumen de tu reserva</p>
+                    <h2 id="pago-plan-nombre">Vuelo</h2>
+                    
+                    <ul class="summary-details">
+                        <li><i class="fa-regular fa-calendar"></i> <span id="pago-fecha">-</span></li>
+                        <li><i class="fa-solid fa-plane-departure"></i> <span id="pago-ruta">-</span></li>
+                        <li><i class="fa-solid fa-couch"></i> <span id="pago-clase">-</span></li>
+                        <li><i class="fa-regular fa-user"></i> <span id="pago-pasajeros">-</span> Pasajero(s)</li>
+                    </ul>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-price-box">
+                        <span class="price-label">Total a pagar</span>
+                        <div class="summary-price">
+                            <span class="price-amount" id="pago-total-monto">$0 COP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="checkout-footer-left">
+                <a href="resumen-reserva.html" class="btn-volver"><i class="fa-solid fa-arrow-left"></i> Volver al resumen</a>
+            </div>
+        </div>
+
+        <!-- Right Side: Payment Form -->
+        <div class="checkout-right">
+            <div class="checkout-form-container">
+                <h3 class="form-title">¿Cómo quieres pagar?</h3>
+                
+                <div class="payment-method active">
+                    <div class="method-header">
+                        <i class="fa-regular fa-credit-card"></i> Pago con tarjeta
+                    </div>
+                    
+                    <form id="payment-form" class="payment-form">
+                        <div class="form-group stagger-item">
+                            <label for="card-number">Número de tarjeta</label>
+                            <div class="input-with-icon">
+                                <i class="fa-regular fa-credit-card input-icon"></i>
+                                <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                                <span class="card-brand-icon" id="card-brand-icon"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row stagger-item">
+                            <div class="form-group half">
+                                <label for="card-exp">Fecha de vencimiento</label>
+                                <input type="text" id="card-exp" placeholder="MM/AA" maxlength="5" required>
+                            </div>
+                            <div class="form-group half">
+                                <label for="card-cvv">Código de seguridad (CVV)</label>
+                                <div class="input-with-icon">
+                                    <input type="text" id="card-cvv" placeholder="123" maxlength="4" required>
+                                    <i class="fa-regular fa-circle-question input-icon-right" title="3 dígitos al reverso"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group stagger-item">
+                            <label for="card-name">Nombre del titular</label>
+                            <input type="text" id="card-name" placeholder="Como aparece en la tarjeta" required>
+                        </div>
+                        
+                        <!-- Error Message Container -->
+                        <div id="payment-error" class="payment-error stagger-item" style="display: none;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span id="payment-error-text">La transacción fue rechazada.</span>
+                        </div>
+
+                        <button type="submit" id="btn-procesar-pago" class="btn-pay stagger-item">
+                            <span id="btn-pay-text">Pagar <span id="btn-pay-amount"></span></span>
+                            <span id="btn-pay-loader" class="loader" style="display: none;"></span>
+                        </button>
+                    </form>
+                    
+                    <div class="secure-payment-info stagger-item">
+                        <i class="fa-solid fa-lock"></i> Pagos seguros y encriptados.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button for Test Cards -->
+    <button class="fab-test-cards" id="fab-test-cards" title="Ver tarjetas de prueba">
+        <i class="fa-solid fa-laptop-code"></i>
+    </button>
+
+    <!-- Test Cards Modal -->
+    <div class="modal-overlay" id="test-cards-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tarjetas de Prueba</h3>
+                <button class="btn-close-modal" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Usa estas tarjetas para probar diferentes escenarios (CVV y fecha pueden ser cualquiera):</p>
+                
+                <div class="test-card-item success">
+                    <div class="tc-info">
+                        <strong><i class="fa-brands fa-cc-visa"></i> VISA Aprobada</strong>
+                        <code>4111 1111 1111 1111</code>
+                    </div>
+                    <button class="btn-copy" data-card="4111111111111111"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                
+                <div class="test-card-item success">
+                    <div class="tc-info">
+                        <strong><i class="fa-brands fa-cc-mastercard"></i> MasterCard Aprobada</strong>
+                        <code>5100 0100 0000 0015</code>
+                    </div>
+                    <button class="btn-copy" data-card="5100010000000015"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                
+                <div class="test-card-item error">
+                    <div class="tc-info">
+                        <strong><i class="fa-solid fa-ban"></i> Transacción Rechazada</strong>
+                        <code>4970 1100 0000 0062</code>
+                    </div>
+                    <button class="btn-copy" data-card="4970110000000062"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                
+                <div class="test-card-item error">
+                    <div class="tc-info">
+                        <strong><i class="fa-solid fa-triangle-exclamation"></i> Transacción Fallida</strong>
+                        <code>5204 7300 0000 8404</code>
+                    </div>
+                    <button class="btn-copy" data-card="5204730000008404"><i class="fa-regular fa-copy"></i></button>
+                </div>
+                
+                <div class="toast-copied" id="toast-copied">¡Copiado!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Fullscreen Overlay -->
+    <div class="success-overlay" id="success-overlay" style="display: none;">
+        <div class="success-content">
+            <div class="check-circle">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>¡Pago Exitoso!</h2>
+            <p>Tu reserva ha sido confirmada. Redirigiendo...</p>
+        </div>
+    </div>
+
+    <script src="../../js/session.js"></script>
+    <script src="../../js/pago.js"></script>
+</body>
+</html>
