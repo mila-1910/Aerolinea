@@ -515,9 +515,9 @@ app.post('/api/reservas', async (req, res) => {
 
         // Registrar en historial
         await client.query(
-            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
-             VALUES ($1, $2, NOW())`,
-            [nuevaReserva.id_reserva, id_estado]
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+             VALUES ($1, $2, NOW(), $3, $4)`,
+            [nuevaReserva.id_reserva, id_estado, null, null]
         );
 
         await client.query('COMMIT');
@@ -627,10 +627,12 @@ app.put('/api/reservas/:id_reserva/estado', async (req, res) => {
         }
 
         // Registrar cambio en historial
+        const causa = req.body.causa || null;
+        const responsableCancela = req.body.responsable || null;
         await client.query(
-            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
-             VALUES ($1, $2, NOW())`,
-            [id_reserva, id_estado]
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+             VALUES ($1, $2, NOW(), $3, $4)`,
+            [id_reserva, id_estado, responsableCancela, causa]
         );
 
         await client.query('COMMIT');
@@ -673,9 +675,9 @@ app.put('/api/reservas/:id_reserva/cancelar', async (req, res) => {
         }
 
         await client.query(
-            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio)
-             VALUES ($1, $2, NOW())`,
-            [id_reserva, id_estado]
+            `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+             VALUES ($1, $2, NOW(), $3, $4)`,
+            [id_reserva, id_estado, null, null]
         );
 
         // Liberar asiento asociado si existía un tiquete para esta reserva
@@ -1002,6 +1004,125 @@ app.get('/api/agente/reservas', async (req, res) => {
     }
 });
 
+// ============================================================
+// RUTAS PARA SOLICITUDES DE CLIENTES (AGENTE + CLIENTE)
+// ============================================================
+
+// Listar solicitudes (vista agente)
+app.get('/api/agente/solicitudes', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT
+                s.id_solicitud,
+                s.tipo_solicitud,
+                s.estado,
+                s.prioridad,
+                s.fecha_creacion,
+                s.id_reserva,
+                s.numero_identificacion_cliente,
+                c.nombres || ' ' || c.apellidos AS cliente
+            FROM solicitud_cliente s
+            JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
+            ORDER BY s.fecha_creacion DESC
+        `);
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error al listar solicitudes (agente):', error);
+        res.status(500).json({ error: 'Error al listar solicitudes' });
+    }
+});
+
+// Detalle de una solicitud
+app.get('/api/agente/solicitudes/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query(`
+            SELECT s.*, 
+                   c.nombres || ' ' || c.apellidos AS cliente,
+                   u.nombre_usuario AS agente
+            FROM solicitud_cliente s
+            JOIN cliente c ON c.numero_identificacion = s.numero_identificacion_cliente
+            LEFT JOIN usuario u ON u.id_usuario = s.id_agente
+            WHERE s.id_solicitud = $1
+        `, [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Solicitud no encontrada' });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error al obtener detalle de solicitud:', error);
+        res.status(500).json({ error: 'Error al obtener detalle de solicitud' });
+    }
+});
+
+// Cambiar estado de una solicitud
+app.put('/api/agente/solicitudes/:id/estado', async (req, res) => {
+    const { id } = req.params;
+    const { estado } = req.body;
+    if (!estado) return res.status(400).json({ error: 'Se requiere el nuevo estado' });
+    try {
+        const result = await pool.query(`
+            UPDATE solicitud_cliente
+            SET estado = $1,
+                fecha_respuesta = CASE WHEN $1 IN ('Resuelta','Rechazada') THEN NOW() ELSE fecha_respuesta END
+            WHERE id_solicitud = $2
+            RETURNING *
+        `, [estado, id]);
+
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Solicitud no encontrada' });
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error al cambiar estado de solicitud:', error);
+        res.status(500).json({ error: 'Error al actualizar estado' });
+    }
+});
+
+// Responder una solicitud (guardar respuesta, asignar agente y opcionalmente cambiar estado)
+app.put('/api/agente/solicitudes/:id/responder', async (req, res) => {
+    const { id } = req.params;
+    const { respuesta, id_agente, estado } = req.body;
+    if (!respuesta) return res.status(400).json({ error: 'Se requiere la respuesta del agente' });
+    try {
+        const result = await pool.query(`
+            UPDATE solicitud_cliente
+            SET respuesta_agente = $1,
+                id_agente = $2,
+                estado = COALESCE($3, estado),
+                fecha_respuesta = NOW()
+            WHERE id_solicitud = $4
+            RETURNING *
+        `, [respuesta, id_agente || null, estado || null, id]);
+
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Solicitud no encontrada' });
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error al responder solicitud:', error);
+        res.status(500).json({ error: 'Error al guardar la respuesta' });
+    }
+});
+
+// Crear solicitud (desde cliente)
+app.post('/api/solicitudes', async (req, res) => {
+    const { numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion, prioridad } = req.body;
+    if (!numero_identificacion_cliente || !tipo_solicitud) {
+        return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+    try {
+        const result = await pool.query(`
+            INSERT INTO solicitud_cliente
+                (numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion, prioridad)
+            VALUES ($1,$2,$3,$4,$5)
+            RETURNING *
+        `, [numero_identificacion_cliente, id_reserva || null, tipo_solicitud, descripcion || null, prioridad || 'Normal']);
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Error al crear solicitud:', error);
+        res.status(500).json({ error: 'Error al crear solicitud' });
+    }
+});
+
 app.get('/api/agente/reservas/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -1054,11 +1175,13 @@ app.get('/api/agente/reservas/:id', async (req, res) => {
             WHERE rp.id_reserva = $1
         `, [id]);
 
-        // Historial de estados
+        // Historial de estados (incluye responsable y observación si existen)
         const historialRes = await pool.query(`
             SELECT 
                 her.fecha_hora_cambio,
-                er.nombre_estado
+                er.nombre_estado,
+                her.responsable,
+                her.observacion
             FROM historial_estado_reserva her
             JOIN estado_reserva er ON er.id_estado = her.id_estado
             WHERE her.id_reserva = $1
