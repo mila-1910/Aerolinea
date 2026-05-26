@@ -13,19 +13,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ---- CONTROL DE ACCESO (RBAC) ----
         const currentPath = window.location.pathname;
+        const rol = usuario.rol;
+
+        const redirigirSegunRol = (rolUsuario) => {
+            if (rolUsuario === 'Super Administrador' || rolUsuario === 'Administrador') {
+                window.location.href = '../admin/dashboardadmin.html';
+            } else if (rolUsuario === 'Agente' || rolUsuario === 'Agente de Aerolínea') {
+                window.location.href = '../agente/dashboardeagente.html';
+            } else {
+                window.location.href = '../inicio/index.html';
+            }
+        };
+
+        // 1. Validar acceso a la zona de Clientes
         if (currentPath.includes('/paginas/cliente/')) {
-            // Si intenta acceder a cliente pero no es cliente
-            if (usuario.rol !== 'Cliente' && usuario.rol !== 'cliente') {
+            if (rol !== 'Cliente' && rol !== 'cliente') {
                 alert('Acceso restringido: Las funciones de reserva y compra son exclusivas para Clientes. Serás redirigido a tu panel correspondiente.');
-                
-                if (usuario.rol === 'Super Administrador' || usuario.rol === 'Administrador') {
-                    window.location.href = '../admin/dashboardadmin.html';
-                } else if (usuario.rol === 'Agente' || usuario.rol === 'Agente de Aerolínea') {
-                    window.location.href = '../agente/dashboardeagente.html';
-                } else {
-                    window.location.href = '../inicio/index.html';
-                }
-                return; // Evitar que el resto de la página intente cargar
+                redirigirSegunRol(rol);
+                return;
+            }
+        }
+        // 2. Validar acceso a la zona de Administradores
+        else if (currentPath.includes('/paginas/admin/')) {
+            if (rol !== 'Super Administrador' && rol !== 'Administrador') {
+                alert('Acceso restringido: Esta zona es exclusiva para personal Administrador.');
+                redirigirSegunRol(rol);
+                return;
+            }
+        }
+        // 3. Validar acceso a la zona de Agentes
+        else if (currentPath.includes('/paginas/agente/')) {
+            if (rol !== 'Agente' && rol !== 'Agente de Aerolínea') {
+                alert('Acceso restringido: Esta zona es exclusiva para Agentes de la aerolínea.');
+                redirigirSegunRol(rol);
+                return;
             }
         }
         // ----------------------------------

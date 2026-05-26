@@ -11,16 +11,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function verificarSesionAdmin() {
     const u = JSON.parse(localStorage.getItem('usuario'));
-    console.log('Usuario en sesión (Admin):', u);
     const rol = u && u.rol ? u.rol.toLowerCase().trim() : '';
-    console.log('Rol detectado (Admin):', rol);
 
     const rolesAdmin = ['administrador', 'admin', 'super administrador'];
 
-    if (!u || !rolesAdmin.includes(rol)) {
-        console.warn('Acceso denegado a panel de administrador. Redirigiendo a login...');
-        const loginUrl = '../../paginas/inicio/login.html';
-        window.location.href = loginUrl;
+    if (!u) {
+        window.location.href = '../../paginas/inicio/login.html';
+        return;
+    }
+
+    if (!rolesAdmin.includes(rol)) {
+        alert('Acceso restringido: Esta zona es exclusiva para Administradores.');
+        if (rol === 'agente' || rol === 'agente de aerolínea' || rol === 'agente de aerolinea') {
+            window.location.href = '../../paginas/agente/dashboardeagente.html';
+        } else if (rol === 'cliente') {
+            window.location.href = '../../paginas/cliente/buscar-vuelos.html';
+        } else {
+            window.location.href = '../../paginas/inicio/index.html';
+        }
     }
 }
 

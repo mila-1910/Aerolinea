@@ -14,22 +14,28 @@ function initPerfilDropdown() {
 
 function verificarRolUsuario() {
     const u = JSON.parse(localStorage.getItem('usuario'));
-    console.log('Usuario en sesión (Agente):', u);
     const rol = u && u.rol ? u.rol.toLowerCase().trim() : '';
-    console.log('Rol detectado (Agente):', rol);
 
     const rolesPermitidos = [
         'agente', 
         'agente de aerolínea', 
-        'agente de aerolinea', 
-        'administrador', 
-        'admin', 
-        'super administrador'
+        'agente de aerolinea'
     ];
 
-    if (!u || !rolesPermitidos.includes(rol)) {
-        console.warn('Acceso denegado. Redirigiendo a login...');
+    if (!u) {
         window.location.href = '../inicio/login.html';
+        return;
+    }
+
+    if (!rolesPermitidos.includes(rol)) {
+        alert('Acceso restringido: Esta zona es exclusiva para Agentes de la aerolínea.');
+        if (rol === 'super administrador' || rol === 'administrador' || rol === 'admin') {
+            window.location.href = '../admin/dashboardadmin.html';
+        } else if (rol === 'cliente') {
+            window.location.href = '../cliente/buscar-vuelos.html';
+        } else {
+            window.location.href = '../inicio/index.html';
+        }
     }
 }
 
