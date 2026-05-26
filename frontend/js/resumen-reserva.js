@@ -25,8 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return 0;
     };
 
+    const pasajerosCount = reserva.pasajeros || 1;
+
     const mostrarAviso = (mensaje) => {
-        // Aviso de confirmación
         const aviso = document.createElement("div");
         aviso.className = "aviso-resumen";
         aviso.textContent = mensaje;
@@ -39,22 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const obtenerUsuario = () => {
-        // Usuario actual del navegador
         const usuarioRaw = localStorage.getItem("usuario");
-
         if (!usuarioRaw) return null;
-
         return JSON.parse(usuarioRaw);
     };
 
     const obtenerDatosPasajero = () => {
-        // Datos temporales del pasajero
         const usuario = obtenerUsuario();
-
         if (usuario) {
             return {
                 nombre: usuario.nombre_completo,
-                documento: "Pendiente",
+                documento: usuario.id_cliente || "Pendiente",
                 nacionalidad: "Colombiana",
                 nacimiento: "Pendiente"
             };
@@ -68,8 +64,140 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     };
 
+    // Renderizar formularios dinámicos para los pasajeros
+    const renderizarCamposPasajeros = () => {
+        const container = document.getElementById("pasajeros-dinamicos-contenedor");
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        const esNueva = !reserva.idReserva;
+
+        if (!esNueva) {
+            // Modo lectura: Si ya existe en la base de datos
+            const lista = reserva.tiquetes || (reserva.pasajero ? [reserva.pasajero] : []);
+            
+            lista.forEach((p, idx) => {
+                const pDiv = document.createElement("div");
+                pDiv.className = "pasajero-list";
+                pDiv.style.padding = "10px 0";
+                if (idx > 0) {
+                    pDiv.style.borderTop = "1px solid rgba(255,255,255,0.1)";
+                    pDiv.style.marginTop = "15px";
+                    pDiv.style.paddingTop = "15px";
+                }
+                
+                const nombrePas = p.nombre_pasajero || p.nombre || "Pasajero Principal";
+                const docPas = p.documento_pasajero || p.documento || "CC: Pendiente";
+                const clasePas = p.clase_tiquete || reserva.clase || 'Económica';
+                const asientoPas = p.numero_asiento || 'Sin asignar';
+                
+                pDiv.innerHTML = `
+                    <h4 style="color: var(--oro-premium); margin-bottom: 8px; font-weight: 700;">
+                        <i class="fa-solid fa-ticket"></i> Pasajero ${idx + 1} (${clasePas.toUpperCase()})
+                    </h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div class="pasajero-item">
+                            <span class="p-label" style="font-size: 0.75rem; color: var(--gris-subtle); display: block;">Nombre Completo</span>
+                            <span class="p-value" style="font-weight: 600;">${nombrePas}</span>
+                        </div>
+                        <div class="pasajero-item">
+                            <span class="p-label" style="font-size: 0.75rem; color: var(--gris-subtle); display: block;">Documento de Identidad</span>
+                            <span class="p-value" style="font-weight: 600;">${docPas}</span>
+                        </div>
+                        <div class="pasajero-item" style="grid-column: span 2; margin-top: 5px;">
+                            <span class="p-label" style="font-size: 0.75rem; color: var(--gris-subtle); display: block;">Asiento Asignado</span>
+                            <span class="p-value" style="font-weight: bold; color: ${asientoPas !== 'Sin asignar' ? '#2ec4b6' : 'var(--gris-subtle)'};">
+                                <i class="fa-solid fa-chair"></i> ${asientoPas}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(pDiv);
+            });
+            return;
+        }
+
+        // Modo edición: Si es una nueva reserva que se va a pagar o guardar
+        const usuario = obtenerUsuario();
+
+        for (let i = 1; i <= pasajerosCount; i++) {
+            const formDiv = document.createElement("div");
+            formDiv.className = "pasajero-form-card";
+            formDiv.style.padding = "10px 0";
+            if (i > 1) {
+                formDiv.style.borderTop = "1px dashed rgba(255,255,255,0.2)";
+                formDiv.style.marginTop = "20px";
+                formDiv.style.paddingTop = "20px";
+            }
+
+            let preNombre = "";
+            let preDoc = "";
+
+            if (i === 1 && usuario) {
+                preNombre = usuario.nombre_completo || "";
+                preDoc = usuario.id_cliente || "";
+            }
+
+            formDiv.innerHTML = `
+                <h4 style="color: var(--oro-premium); margin-bottom: 12px; font-weight: 700;">
+                    <i class="fa-solid fa-user"></i> Datos del Pasajero ${i} ${i === 1 ? '(Titular de la cuenta)' : ''}
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div class="form-group">
+                        <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Nombres y Apellidos Completos</label>
+                        <input type="text" class="pasajero-input-nombre" data-pasajero="${i}" placeholder="Ej: Juan Pérez" value="${preNombre}" required 
+                               style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem;">
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Tipo de Documento</label>
+                            <select class="pasajero-input-tipo" data-pasajero="${i}" 
+                                    style="width: 100%; padding: 10px; border-radius: 8px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem; height: 41px;">
+                                <option value="CC" selected>Cédula de Ciudadanía (CC)</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                                <option value="CE">Cédula de Extranjería (CE)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 2;">
+                            <label style="display:block; font-size: 0.8rem; color: var(--gris-subtle); margin-bottom: 4px; font-weight: 500;">Número de Documento</label>
+                            <input type="text" class="pasajero-input-doc" data-pasajero="${i}" placeholder="Ej: 10204928" value="${preDoc}" required 
+                                   style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; outline: none; font-size: 0.9rem;">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(formDiv);
+        }
+    };
+
+    // Validar y recolectar datos de los pasajeros
+    const guardarPasajerosDesdeForm = () => {
+        const list = [];
+        
+        for (let i = 1; i <= pasajerosCount; i++) {
+            const nombreVal = document.querySelector(`.pasajero-input-nombre[data-pasajero="${i}"]`).value.trim();
+            const tipoVal = document.querySelector(`.pasajero-input-tipo[data-pasajero="${i}"]`).value;
+            const docVal = document.querySelector(`.pasajero-input-doc[data-pasajero="${i}"]`).value.trim();
+            
+            if (!nombreVal || !docVal) {
+                alert(`Por favor completa el nombre y documento del Pasajero ${i}`);
+                return false;
+            }
+            
+            list.push({
+                nombre_pasajero: nombreVal,
+                documento_pasajero: docVal,
+                tipo_documento: tipoVal
+            });
+        }
+        
+        reserva.pasajerosLista = list;
+        localStorage.setItem("reservaEnProceso", JSON.stringify(reserva));
+        return true;
+    };
+
     const guardarReservaLocal = (estado, total, tarifa, descuento) => {
-        // Respaldo local para seguir usando Mis reservas si la API falla
         const reservas = JSON.parse(localStorage.getItem("reservasCliente")) || [];
 
         const reservaLocal = {
@@ -79,7 +207,10 @@ document.addEventListener("DOMContentLoaded", () => {
             totalTexto: formatoCOP(total),
             tarifaExtra: tarifa,
             descuento: descuento,
-            pasajero: obtenerDatosPasajero()
+            pasajero: reserva.pasajerosLista && reserva.pasajerosLista.length > 0 
+                ? { nombre: reserva.pasajerosLista[0].nombre_pasajero, documento: `${reserva.pasajerosLista[0].tipo_documento}: ${reserva.pasajerosLista[0].documento_pasajero}` } 
+                : obtenerDatosPasajero(),
+            tiquetes: reserva.pasajerosLista
         };
 
         const existe = reservas.some(item => item.numeroReserva === reservaLocal.numeroReserva);
@@ -99,7 +230,6 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error("No hay usuario activo");
         }
 
-        // Envia la reserva a Neon por medio del backend
         const response = await fetch(`${API_URL}/reservas`, {
             method: "POST",
             headers: {
@@ -110,9 +240,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 id_usuario: usuario.id,
                 id_cliente: usuario.id_cliente,
                 id_vuelo: reserva.idVuelo,
-                estado: estado,
+                estado: estado, // Estado inicial: "Reservada" (ID 1)
                 clase: reserva.clase,
-                pasajeros: reserva.pasajeros || 1,
+                pasajeros: reserva.pasajerosLista || [],
                 tarifa_extra: tarifa,
                 descuento: descuento,
                 total: total
@@ -136,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnGuardar.classList.add("deshabilitado");
 
         const base = reserva.totalNumero;
-        const tarifa = precioTarifa();
+        const tarifa = precioTarifa() * pasajerosCount; // Upgrade extra cobrado por pasajero
         const descuento = Math.round(base * 0.2);
         const total = base + tarifa - descuento;
 
@@ -163,16 +293,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Número de reserva
     document.getElementById("reserva-numero-badge").textContent = "Reserva #" + reserva.numeroReserva;
 
-    // Datos del pasajero
-    const pasajero = obtenerDatosPasajero();
-
-    document.getElementById("pasajero-nombre").textContent = pasajero.nombre;
-    document.getElementById("pasajero-documento").textContent = pasajero.documento;
-    document.getElementById("pasajero-nacionalidad").textContent = pasajero.nacionalidad;
-    document.getElementById("pasajero-nacimiento").textContent = pasajero.nacimiento;
+    // Renderizar los datos dinámicos de los pasajeros
+    renderizarCamposPasajeros();
 
     // Datos del vuelo
-    // Funciones para código de ciudad (3 letras MAYUSCULA)
     const getCityCode = (ciudad) => ciudad ? ciudad.substring(0, 3).toUpperCase() : "XXX";
 
     document.getElementById("resumen-origen-codigo").textContent = getCityCode(vuelo.origen);
@@ -191,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cálculo del pago
     const base = reserva.totalNumero;
-    const tarifa = precioTarifa();
+    const tarifa = precioTarifa() * pasajerosCount; // Upgrade extra cobrado por pasajero
     const descuento = Math.round(base * 0.2);
     const total = base + tarifa - descuento;
 
@@ -217,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <li><i class="fa-solid fa-utensils"></i> Menú a la carta</li>
         `;
     } else {
-        // Económica
         beneficiosHTML = `
             <li><i class="fa-solid fa-suitcase"></i> 1 maleta de mano (10kg)</li>
             <li><i class="fa-solid fa-bag-shopping"></i> Artículo personal</li>
@@ -228,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
     beneficiosList.innerHTML = beneficiosHTML;
 
     document.getElementById("pago-vuelo").textContent = formatoCOP(base);
-    document.getElementById("pago-tarifa-label").textContent = "Tarifa " + reserva.clase.toLowerCase();
+    document.getElementById("pago-tarifa-label").textContent = `Tarifa ${reserva.clase.toLowerCase()} (x${pasajerosCount})`;
     document.getElementById("pago-tarifa").textContent = tarifa === 0 ? "Incluido" : formatoCOP(tarifa);
     
     if (descuento > 0) {
@@ -239,14 +362,17 @@ document.addEventListener("DOMContentLoaded", () => {
     
     document.getElementById("pago-total").textContent = formatoCOP(total);
 
-    const esReservaNueva = !reserva.idReserva; // Si no tiene ID de DB, es nueva
+    const esReservaNueva = !reserva.idReserva;
 
     document.getElementById("btn-confirmar-reserva").addEventListener("click", (event) => {
         event.preventDefault();
-        if (esReservaNueva || reserva.estado === "Pendiente") {
+        if (esReservaNueva) {
+            // Validar formularios dinámicos
+            if (!guardarPasajerosDesdeForm()) return;
+            window.location.href = "pago.html";
+        } else if (reserva.estado === "Pendiente") {
             window.location.href = "pago.html";
         } else {
-            // Si por alguna razón está confirmada y aparece el botón (no debería)
             finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
         }
     });
@@ -254,10 +380,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btn-guardar-reserva").addEventListener("click", (event) => {
         event.preventDefault();
         if (esReservaNueva) {
-            // Es una reserva nueva que el usuario quiere dejar "Pendiente"
+            // Validar formularios dinámicos
+            if (!guardarPasajerosDesdeForm()) return;
             finalizarReserva("Pendiente", "Reserva guardada para después...");
         } else {
-            // Ya existe y está guardada, simplemente volvemos
             window.location.href = "mis-reservas.html";
         }
     });
@@ -269,13 +395,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonesContainer = document.getElementById("resumen-botones-container");
 
     if (!esReservaNueva) {
-        // Es una reserva EXISTENTE (viene de Mis Reservas)
         badge.style.display = "inline-block";
         badge.textContent = reserva.estado.toUpperCase();
         
         let color, bg;
         if (reserva.estado === "Confirmada") { color = "#0f5132"; bg = "#d1e7dd"; }
-        else if (reserva.estado === "Pendiente") { color = "#664d03"; bg = "#fff3cd"; }
+        else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") { color = "#664d03"; bg = "#fff3cd"; }
         else if (reserva.estado === "Cancelada") { color = "#842029"; bg = "#f8d7da"; }
         
         badge.style.color = color;
@@ -302,15 +427,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <i class="fa-solid fa-arrow-left"></i> Volver a mis reservas
                 </a>
             `;
-        } else if (reserva.estado === "Pendiente") {
+        } else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") {
             document.getElementById("btn-confirmar-reserva").innerHTML = `Pagar Ahora <i class="fa-solid fa-credit-card"></i>`;
             document.getElementById("btn-guardar-reserva").innerHTML = `<i class="fa-solid fa-arrow-left"></i> Volver a mis reservas`;
         }
     } else {
-        // Es una reserva NUEVA
         titulo.textContent = "Resumen de tu reserva";
         subtitulo.textContent = "Revisa los detalles de tu vuelo de élite antes de confirmar.";
         badge.style.display = "none";
-        // Los botones ya están por defecto ("Confirmar y Pagar", "Guardar para después")
     }
 });

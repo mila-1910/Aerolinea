@@ -5,11 +5,55 @@
    ============================================ */
 
 let reservaActualId = null;
+let tiquetesActuales = [];
 
 // Formatear fecha
 function formatFecha(fechaISO) {
     const fecha = new Date(fechaISO);
     return fecha.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+// Actualizar UI para el tiquete seleccionado
+function actualizarDetalleTiqueteUI(tiquete, data) {
+    const claseActual = tiquete ? tiquete.clase_tiquete : 'Sin asignar';
+    document.getElementById('detClase').innerText = claseActual;
+    
+    const asientoActual = tiquete ? tiquete.numero_asiento : 'Sin asignar';
+    const asientoEl = document.getElementById('detAsientoActual');
+    asientoEl.innerText = asientoActual;
+    asientoEl.style.color = tiquete && tiquete.numero_asiento !== 'Sin asignar' ? 'green' : 'var(--vino)';
+
+    // Llenar campos de formulario de la derecha
+    const claseSelect = document.getElementById('claseAsiento');
+    if (claseSelect) {
+        if (claseActual.toLowerCase().includes('ejecut')) {
+            claseSelect.value = 'ejecutiva';
+        } else if (claseActual.toLowerCase().includes('primer')) {
+            claseSelect.value = 'primera';
+        } else {
+            claseSelect.value = 'economica';
+        }
+    }
+
+    const asientoInput = document.getElementById('numeroAsiento');
+    if (asientoInput) {
+        asientoInput.value = tiquete && tiquete.numero_asiento !== 'Sin asignar' ? tiquete.numero_asiento : '';
+    }
+
+    // Mostrar en el banner de arriba
+    const badgeAsiento = document.getElementById('resAsientoActual');
+    if (badgeAsiento) {
+        badgeAsiento.innerText = asientoActual;
+        badgeAsiento.className = `asiento-badge ${tiquete && tiquete.numero_asiento !== 'Sin asignar' ? '' : 'alerta'}`;
+    }
+    
+    const resClase = document.getElementById('resClase');
+    if (resClase) {
+        resClase.innerText = claseActual;
+    }
+
+    // Actualizar mapa visualmente
+    marcarAsientoSeleccionadoEnMapa(tiquete && tiquete.numero_asiento !== 'Sin asignar' ? tiquete.numero_asiento : '');
 }
 
 // Cargar datos de una reserva para asignación
@@ -22,6 +66,7 @@ async function cargarReservaParaAsiento(id) {
         const data = await response.json();
         
         reservaActualId = data.id_reserva;
+        tiquetesActuales = data.tiquetes || (data.tiquete ? [data.tiquete] : []);
 
         // Mostrar contenedor de asignación
         const container = document.querySelector('.asignar-asiento-container');
@@ -33,36 +78,11 @@ async function cargarReservaParaAsiento(id) {
         document.getElementById('detDocumento').innerText = `${data.pasajero.tipo_identificacion}: ${data.pasajero.documento}`;
         document.getElementById('detVuelo').innerText = `${data.vuelo.codigo} | ${data.vuelo.origen} → ${data.vuelo.destino}`;
         document.getElementById('detFecha').innerText = formatFecha(data.vuelo.fecha_salida);
-        
-        const claseActual = data.tiquete ? data.tiquete.clase_tiquete : 'Sin asignar';
-        document.getElementById('detClase').innerText = claseActual;
-        
-        const asientoActual = data.tiquete ? data.tiquete.numero_asiento : 'Sin asignar';
-        const asientoEl = document.getElementById('detAsientoActual');
-        asientoEl.innerText = asientoActual;
-        asientoEl.style.color = data.tiquete ? 'green' : 'var(--vino)';
 
         // Datos de contacto
         document.getElementById('detEmail').innerText = data.pasajero.email || 'No registrado';
         document.getElementById('detTelefono').innerText = data.pasajero.telefono || 'No registrado';
         document.getElementById('detDireccion').innerText = data.pasajero.direccion || 'No registrada';
-
-        // Llenar campos de formulario de la derecha
-        const claseSelect = document.getElementById('claseAsiento');
-        if (claseSelect) {
-            if (claseActual.toLowerCase().includes('ejecut')) {
-                claseSelect.value = 'ejecutiva';
-            } else if (claseActual.toLowerCase().includes('primer')) {
-                claseSelect.value = 'primera';
-            } else {
-                claseSelect.value = 'economica';
-            }
-        }
-
-        const asientoInput = document.getElementById('numeroAsiento');
-        if (asientoInput) {
-            asientoInput.value = data.tiquete ? data.tiquete.numero_asiento : '';
-        }
 
         // Mostrar el banner de "Registro Localizado" arriba
         const resultadoBusqueda = document.getElementById('resultadoBusqueda');
@@ -72,19 +92,41 @@ async function cargarReservaParaAsiento(id) {
             document.getElementById('resDocumento').innerText = data.pasajero.documento;
             document.getElementById('resVuelo').innerText = data.vuelo.codigo;
             document.getElementById('resRuta').innerText = `${data.vuelo.origen} → ${data.vuelo.destino}`;
-            document.getElementById('resClase').innerText = claseActual;
-            
-            const badgeAsiento = document.getElementById('resAsientoActual');
-            badgeAsiento.innerText = asientoActual;
-            badgeAsiento.className = `asiento-badge ${data.tiquete ? '' : 'alerta'}`;
 
             const badgeRes = document.getElementById('badgeReserva');
             badgeRes.innerText = data.estado;
             badgeRes.className = `estado-badge ${data.estado === 'Confirmada' ? 'confirmada' : 'pendiente'}`;
         }
 
-        // Actualizar mapa visualmente
-        marcarAsientoSeleccionadoEnMapa(data.tiquete ? data.tiquete.numero_asiento : '');
+        // Llenar el selector de pasajeros
+        const pasajeroSelect = document.getElementById('pasajeroAsignacionSelect');
+        if (pasajeroSelect) {
+            pasajeroSelect.innerHTML = '';
+            tiquetesActuales.forEach((t, idx) => {
+                const nombrePas = t.nombre_pasajero || data.pasajero.nombre || `Pasajero ${idx + 1}`;
+                const option = document.createElement('option');
+                option.value = t.id_tiquete;
+                option.text = `${idx + 1}. ${nombrePas} (Doc: ${t.documento_pasajero || data.pasajero.documento || '-'})`;
+                pasajeroSelect.appendChild(option);
+            });
+            
+            // Asignar listener
+            pasajeroSelect.onchange = function() {
+                const selectedTiqueteId = parseInt(this.value);
+                const selectedTiquete = tiquetesActuales.find(t => t.id_tiquete === selectedTiqueteId);
+                if (selectedTiquete) {
+                    actualizarDetalleTiqueteUI(selectedTiquete, data);
+                }
+            };
+        }
+
+        // Mostrar el primer tiquete por defecto
+        if (tiquetesActuales.length > 0) {
+            if (pasajeroSelect) {
+                pasajeroSelect.value = tiquetesActuales[0].id_tiquete;
+            }
+            actualizarDetalleTiqueteUI(tiquetesActuales[0], data);
+        }
 
     } catch (error) {
         console.error('Error al cargar la reserva:', error);
@@ -244,20 +286,35 @@ async function guardarAsignacionAsiento() {
         return;
     }
 
+    // Obtener el tiquete seleccionado
+    const pasajeroSelect = document.getElementById('pasajeroAsignacionSelect');
+    const selectedTiqueteId = pasajeroSelect ? parseInt(pasajeroSelect.value) : null;
+
     try {
         const response = await fetch(`${window.API_BASE || ''}/api/agente/reservas/${reservaActualId}/asiento`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 numero_asiento: numAsiento.toUpperCase(),
-                clase_tiquete: claseTiquete
+                clase_tiquete: claseTiquete,
+                id_tiquete: selectedTiqueteId
             })
         });
 
         const result = await response.json();
         if (response.ok) {
-            alert('¡Asiento y cabina asignados correctamente!');
+            alert('¡Asiento y cabina asignados correctamente para este pasajero!');
             await cargarReservaParaAsiento(reservaActualId);
+            
+            // Mantener seleccionado el tiquete que acabamos de modificar
+            if (pasajeroSelect && selectedTiqueteId) {
+                pasajeroSelect.value = selectedTiqueteId;
+                const updatedTiquete = tiquetesActuales.find(t => t.id_tiquete === selectedTiqueteId);
+                if (updatedTiquete) {
+                    actualizarDetalleTiqueteUI(updatedTiquete, { pasajero: {} });
+                }
+            }
+            
             cargarColaProcesamiento();
         } else {
             alert(`Error al asignar asiento: ${result.error}`);

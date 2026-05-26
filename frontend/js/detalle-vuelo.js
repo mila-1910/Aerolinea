@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const escala = document.getElementById("detalle-escala");
     const origenSelect = document.getElementById("detalle-origen-select");
     const fechaSelect = document.getElementById("detalle-fecha-select");
+    const pasajerosSelect = document.getElementById("detalle-pasajeros-select");
     const btnReservar = document.getElementById("btn-reservar-vuelo");
 
     const descripcionToggle = document.getElementById("descripcion-toggle");
@@ -103,6 +104,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         duracion.textContent = vuelo.duracion;
         escala.textContent = vuelo.escala;
         descripcionTexto.textContent = vuelo.descripcion;
+        
+        // Actualizar UI del precio con la cantidad de pasajeros inicial (1)
+        const actualizarPrecioUI = () => {
+            const cantPasajeros = pasajerosSelect ? parseInt(pasajerosSelect.value) : 1;
+            const totalBase = vuelo.precioNumero * cantPasajeros;
+            const formato = new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', minimumFractionDigits: 0}).format(totalBase) + " COP";
+            precio.textContent = formato;
+            
+            const notaPrecio = document.getElementById("detalle-nota-precio");
+            if (notaPrecio) {
+                notaPrecio.textContent = cantPasajeros === 1 
+                    ? "Precio por pasajero. Incluye impuestos." 
+                    : `Total para ${cantPasajeros} pasajeros (Cobro proporcional).`;
+            }
+        };
+
+        if (pasajerosSelect) {
+            pasajerosSelect.addEventListener("change", actualizarPrecioUI);
+            actualizarPrecioUI(); // ejecutar inicialmente
+        }
         
         // --- Lógica del Carrusel ---
         let imagenes = [];
@@ -454,10 +475,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
 
+        const cantPasajeros = pasajerosSelect ? parseInt(pasajerosSelect.value) : 1;
+        const totalBase = vuelo.precioNumero * cantPasajeros;
+        const totalTextoFormato = new Intl.NumberFormat('es-CO', {style: 'currency', currency: 'COP', minimumFractionDigits: 0}).format(totalBase) + " COP";
+
         vuelo.origen = origenSelect.value;
         vuelo.fechaTexto = fechaSelect.value;
         vuelo.ruta = `${vuelo.origen} → ${vuelo.destino}`;
-
+ 
         // Reserva lista para enviar luego a la base de datos
         const reservaEnProceso = {
             numeroReserva: "RES-" + Date.now().toString().slice(-4),
@@ -465,10 +490,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             idVuelo: vuelo.idVuelo,
             estado: "Pendiente",
             fechaReserva: new Date().toLocaleDateString("es-CO"),
-            pasajeros: 1,
+            pasajeros: cantPasajeros,
             clase: vuelo.clase,
-            totalTexto: vuelo.precio,
-            totalNumero: vuelo.precioNumero,
+            totalTexto: totalTextoFormato,
+            totalNumero: totalBase,
             vuelo: vuelo
         };
 

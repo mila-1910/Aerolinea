@@ -83,6 +83,48 @@ function renderizarReserva(data, id) {
         asientoEl.innerText = 'Sin asignar';
     }
 
+    // Renderizar lista completa de tiquetes y pasajeros
+    const listaTiquetesContenedor = document.getElementById('lista-tiquetes-agente');
+    if (listaTiquetesContenedor) {
+        listaTiquetesContenedor.innerHTML = '';
+        
+        const tiquetes = data.tiquetes || (data.tiquete ? [data.tiquete] : []);
+        
+        if (tiquetes.length === 0) {
+            listaTiquetesContenedor.innerHTML = '<span style="color:var(--gris-subtle);">Sin tiquetes registrados</span>';
+        } else {
+            tiquetes.forEach((t, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.style.background = 'rgba(255, 255, 255, 0.02)';
+                itemDiv.style.border = '1px solid var(--borde)';
+                itemDiv.style.borderRadius = '8px';
+                itemDiv.style.padding = '10px 12px';
+                itemDiv.style.fontSize = '0.9rem';
+                itemDiv.style.display = 'flex';
+                itemDiv.style.flexDirection = 'column';
+                itemDiv.style.gap = '4px';
+                
+                const nombrePasajero = t.nombre_pasajero || data.pasajero.nombre || `Pasajero ${idx + 1}`;
+                const documentoPasajero = t.documento_pasajero || data.pasajero.documento || 'No registrado';
+                const asientoLabel = t.numero_asiento === 'Sin asignar' 
+                    ? '<span class="asiento-badge alerta" style="background:#f8d7da; color:#842029; padding:2px 6px; border-radius:4px; font-size:0.75rem; font-weight:bold; display:inline-block;">Sin Asiento</span>' 
+                    : `<span class="asiento-badge" style="background:#d1e7dd; color:#0f5132; padding:2px 6px; border-radius:4px; font-size:0.75rem; font-weight:bold; display:inline-block;">Asiento ${t.numero_asiento}</span>`;
+                
+                itemDiv.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:700; color:var(--oro-premium);">${idx + 1}. ${nombrePasajero}</span>
+                        ${asientoLabel}
+                    </div>
+                    <div style="font-size:0.8rem; color:var(--gris-subtle); display:flex; justify-content:space-between; margin-top:2px;">
+                        <span>Doc: ${documentoPasajero}</span>
+                        <span>Clase: <strong>${t.clase_tiquete}</strong></span>
+                    </div>
+                `;
+                listaTiquetesContenedor.appendChild(itemDiv);
+            });
+        }
+    }
+
     // --- Información financiera ---
     const estadoPago = data.estado === 'Confirmada' ? 'Confirmado' : 'Pendiente';
     const estadoPagoSpan = document.getElementById('estadoPagoBadge');
