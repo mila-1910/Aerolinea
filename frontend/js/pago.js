@@ -171,8 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rawCardNumber === TARJETA_VISA || rawCardNumber === TARJETA_MASTER) {
             // APROBADA
             try {
-                await guardarReservaEnBaseDatos("Reservada", total, tarifa, descuento);
-                guardarReservaLocal("Reservada", total, tarifa, descuento);
+                await guardarReservaEnBaseDatos("Confirmada", total, tarifa, descuento);
+                guardarReservaLocal("Confirmada", total, tarifa, descuento);
                 localStorage.removeItem("reservaEnProceso");
                 
                 // Mostrar overlay de éxito

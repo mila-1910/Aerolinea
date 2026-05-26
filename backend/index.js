@@ -608,6 +608,8 @@ app.post('/api/reservas', async (req, res) => {
 
         // Determinar lista de pasajeros
         let listaPasajeros = pasajeros;
+        console.log('[RESERVA] Pasajeros recibidos del frontend:', JSON.stringify(pasajeros));
+        
         if (!listaPasajeros || !Array.isArray(listaPasajeros) || listaPasajeros.length === 0) {
             // Obtener nombre del cliente principal
             const cliRes = await client.query(
@@ -619,18 +621,22 @@ app.post('/api/reservas', async (req, res) => {
                 nombre_pasajero: nombreCompleto,
                 documento_pasajero: clienteId
             }];
+            console.log('[RESERVA] Lista vacía, usando titular:', nombreCompleto);
         }
 
         // Insertar los tiquetes asociados
         const claseTiquete = clase || 'Económica';
         const precioPorTiquete = (valor / listaPasajeros.length).toFixed(2);
 
+        console.log(`[RESERVA] Insertando ${listaPasajeros.length} tiquete(s) para reserva ${nuevaReserva.id_reserva}`);
         for (const p of listaPasajeros) {
-            await client.query(
+            const tiqRes = await client.query(
                 `INSERT INTO tiquete (numero_asiento, clase_tiquete, precio_final, id_reserva, nombre_pasajero, documento_pasajero)
-                 VALUES ('Sin asignar', $1, $2, $3, $4, $5)`,
-                [claseTiquete, precioPorTiquete, nuevaReserva.id_reserva, p.nombre_pasajero, p.documento_pasajero]
+                 VALUES ('Sin asignar', $1, $2, $3, $4, $5)
+                 RETURNING id_tiquete`,
+                [claseTiquete, precioPorTiquete, nuevaReserva.id_reserva, p.nombre_pasajero || 'Pasajero', p.documento_pasajero || 'Pendiente']
             );
+            console.log(`[RESERVA] Tiquete creado: #${tiqRes.rows[0].id_tiquete} para "${p.nombre_pasajero}"`);
         }
 
         // Registrar en historial

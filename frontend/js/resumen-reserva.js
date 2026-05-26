@@ -290,150 +290,267 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Número de reserva
-    document.getElementById("reserva-numero-badge").textContent = "Reserva #" + reserva.numeroReserva;
+    const initPage = async () => {
+        const esReservaNueva = !reserva.idReserva;
 
-    // Renderizar los datos dinámicos de los pasajeros
-    renderizarCamposPasajeros();
+        // Si es una reserva antigua, consultamos a la base de datos para obtener TODOS los detalles reales
+        if (!esReservaNueva) {
+            try {
+                const response = await fetch(`${API_URL}/agente/reservas/${reserva.idReserva}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Llenar datos faltantes con la base de datos
+                    reserva.clase = data.tiquete ? data.tiquete.clase_tiquete : 'Económica';
+                    reserva.pasajero = data.pasajero;
+                    reserva.estado = data.estado || reserva.estado;
 
-    // Datos del vuelo
-    const getCityCode = (ciudad) => ciudad ? ciudad.substring(0, 3).toUpperCase() : "XXX";
+                    // Construir lista de tiquetes: preferir data.tiquetes (array), sino usar data.tiquete (singular)
+                    let listaTiquetes = [];
+                    if (data.tiquetes && Array.isArray(data.tiquetes) && data.tiquetes.length > 0) {
+                        listaTiquetes = data.tiquetes;
+                    } else if (data.tiquete) {
+                        listaTiquetes = [data.tiquete];
+                    }
 
-    document.getElementById("resumen-origen-codigo").textContent = getCityCode(vuelo.origen);
-    document.getElementById("resumen-origen").textContent = vuelo.origen;
-    document.getElementById("resumen-destino-codigo").textContent = getCityCode(vuelo.destino);
-    document.getElementById("resumen-destino").textContent = vuelo.destino;
-    
-    document.getElementById("resumen-duracion").textContent = vuelo.duracion;
-    document.getElementById("resumen-vuelo").textContent = vuelo.numeroVuelo;
-    document.getElementById("resumen-fecha").textContent = vuelo.fechaTexto;
-    document.getElementById("resumen-escala").textContent = vuelo.escala;
-    document.getElementById("resumen-clase-bp").textContent = reserva.clase.toUpperCase();
+                    // Enriquecer cada tiquete: si nombre_pasajero es null, usar el nombre del titular (pasajero/cliente)
+                    const nombreTitular = data.pasajero ? data.pasajero.nombre : null;
+                    const docTitular = data.pasajero ? data.pasajero.documento : null;
 
-    document.getElementById("resumen-hora-salida").textContent = "10:30";
-    document.getElementById("resumen-llegada").textContent = "8:45 am";
+                    reserva.tiquetes = listaTiquetes.map((t, idx) => ({
+                        ...t,
+                        nombre_pasajero: t.nombre_pasajero || (idx === 0 ? nombreTitular : `Pasajero ${idx + 1}`),
+                        documento_pasajero: t.documento_pasajero || (idx === 0 ? docTitular : 'Pendiente'),
+                    }));
 
-    // Cálculo del pago
-    const base = reserva.totalNumero;
-    const tarifa = precioTarifa() * pasajerosCount; // Upgrade extra cobrado por pasajero
-    const descuento = Math.round(base * 0.2);
-    const total = base + tarifa - descuento;
-
-    document.getElementById("resumen-clase").textContent = reserva.clase.toUpperCase();
-    document.getElementById("resumen-tarifa-precio").textContent = tarifa === 0 ? "Incluido" : formatoCOP(tarifa);
-    
-    // Beneficios dinámicos
-    const beneficiosList = document.getElementById("resumen-beneficios-list");
-    let beneficiosHTML = "";
-    
-    if (reserva.clase === "Primera clase") {
-        beneficiosHTML = `
-            <li><i class="fa-solid fa-suitcase-rolling"></i> 3 maletas (32kg c/u)</li>
-            <li><i class="fa-solid fa-martini-glass-citrus"></i> Acceso a sala VIP Elite</li>
-            <li><i class="fa-solid fa-bed"></i> Asiento cama 180°</li>
-            <li><i class="fa-solid fa-utensils"></i> Menú de Chef privado</li>
-        `;
-    } else if (reserva.clase === "Ejecutiva") {
-        beneficiosHTML = `
-            <li><i class="fa-solid fa-suitcase-rolling"></i> 2 maletas (23kg c/u)</li>
-            <li><i class="fa-solid fa-martini-glass-citrus"></i> Acceso a sala VIP</li>
-            <li><i class="fa-solid fa-couch"></i> Asiento preferencial amplio</li>
-            <li><i class="fa-solid fa-utensils"></i> Menú a la carta</li>
-        `;
-    } else {
-        beneficiosHTML = `
-            <li><i class="fa-solid fa-suitcase"></i> 1 maleta de mano (10kg)</li>
-            <li><i class="fa-solid fa-bag-shopping"></i> Artículo personal</li>
-            <li><i class="fa-solid fa-chair"></i> Asiento estándar</li>
-            <li><i class="fa-solid fa-mug-hot"></i> Bebida de cortesía</li>
-        `;
-    }
-    beneficiosList.innerHTML = beneficiosHTML;
-
-    document.getElementById("pago-vuelo").textContent = formatoCOP(base);
-    document.getElementById("pago-tarifa-label").textContent = `Tarifa ${reserva.clase.toLowerCase()} (x${pasajerosCount})`;
-    document.getElementById("pago-tarifa").textContent = tarifa === 0 ? "Incluido" : formatoCOP(tarifa);
-    
-    if (descuento > 0) {
-        document.getElementById("pago-descuento").textContent = "-" + formatoCOP(descuento);
-    } else {
-        document.getElementById("pago-descuento").textContent = "$0 COP";
-    }
-    
-    document.getElementById("pago-total").textContent = formatoCOP(total);
-
-    const esReservaNueva = !reserva.idReserva;
-
-    document.getElementById("btn-confirmar-reserva").addEventListener("click", (event) => {
-        event.preventDefault();
-        if (esReservaNueva) {
-            // Validar formularios dinámicos
-            if (!guardarPasajerosDesdeForm()) return;
-            window.location.href = "pago.html";
-        } else if (reserva.estado === "Pendiente") {
-            window.location.href = "pago.html";
-        } else {
-            finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
+                    // Si no hay tiquetes en absoluto, crear uno virtual con los datos del titular
+                    if (reserva.tiquetes.length === 0 && data.pasajero) {
+                        reserva.tiquetes = [{
+                            nombre_pasajero: nombreTitular || 'Pasajero Principal',
+                            documento_pasajero: docTitular || 'Pendiente',
+                            clase_tiquete: reserva.clase || 'Económica',
+                            numero_asiento: 'Sin asignar'
+                        }];
+                    }
+                    
+                    if (data.vuelo) {
+                        vuelo.duracion = vuelo.duracion || (data.vuelo.duracion_minutos ? Math.floor(data.vuelo.duracion_minutos / 60) + 'h' : '1h 0min');
+                        vuelo.numeroVuelo = vuelo.numeroVuelo || data.vuelo.codigo || data.vuelo.cod_vuelo;
+                        vuelo.escala = vuelo.escala || 'Directo';
+                    }
+                }
+            } catch (err) {
+                console.error("Error cargando detalle completo de la reserva:", err);
+            }
         }
-    });
 
-    document.getElementById("btn-guardar-reserva").addEventListener("click", (event) => {
-        event.preventDefault();
-        if (esReservaNueva) {
-            // Validar formularios dinámicos
-            if (!guardarPasajerosDesdeForm()) return;
-            finalizarReserva("Pendiente", "Reserva guardada para después...");
-        } else {
-            window.location.href = "mis-reservas.html";
-        }
-    });
+        // Asignar defaults para evitar crash
+        reserva.clase = reserva.clase || 'Económica';
+        vuelo.duracion = vuelo.duracion || '1h 0min';
+        vuelo.numeroVuelo = vuelo.numeroVuelo || vuelo.codVuelo || 'N/A';
+        vuelo.escala = vuelo.escala || 'Directo';
 
-    // Gestión de estado visual
-    const badge = document.getElementById("reserva-estado-badge");
-    const titulo = document.getElementById("resumen-hero-title");
-    const subtitulo = document.getElementById("resumen-hero-subtitle");
-    const botonesContainer = document.getElementById("resumen-botones-container");
+        // Número de reserva
+        const numeroVisual = reserva.numeroReserva || reserva.idReserva || "Pendiente";
+        const badgeNumero = document.getElementById("reserva-numero-badge");
+        if(badgeNumero) badgeNumero.textContent = "Reserva #" + numeroVisual;
 
-    if (!esReservaNueva) {
-        badge.style.display = "inline-block";
-        badge.textContent = reserva.estado.toUpperCase();
+        // Renderizar los datos dinámicos de los pasajeros
+        renderizarCamposPasajeros();
+
+        // Datos del vuelo
+        const getCityCode = (ciudad) => ciudad ? ciudad.substring(0, 3).toUpperCase() : "XXX";
+
+        const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
         
-        let color, bg;
-        if (reserva.estado === "Confirmada") { color = "#0f5132"; bg = "#d1e7dd"; }
-        else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") { color = "#664d03"; bg = "#fff3cd"; }
-        else if (reserva.estado === "Cancelada") { color = "#842029"; bg = "#f8d7da"; }
+        setVal("resumen-origen-codigo", getCityCode(vuelo.origen));
+        setVal("resumen-origen", vuelo.origen);
+        setVal("resumen-destino-codigo", getCityCode(vuelo.destino));
+        setVal("resumen-destino", vuelo.destino);
         
-        badge.style.color = color;
-        badge.style.backgroundColor = bg;
+        setVal("resumen-duracion", vuelo.duracion);
+        setVal("resumen-vuelo", vuelo.numeroVuelo);
+        setVal("resumen-fecha", vuelo.fechaTexto);
+        setVal("resumen-escala", vuelo.escala);
+        setVal("resumen-clase-bp", reserva.clase.toUpperCase());
 
-        titulo.textContent = "Detalle de tu reserva";
-        subtitulo.textContent = "Aquí tienes la información completa de tu vuelo y facturación.";
+        setVal("resumen-hora-salida", "10:30");
+        setVal("resumen-llegada", "8:45 am");
 
-        if (reserva.estado === "Confirmada") {
-            botonesContainer.innerHTML = `
-                <a href="#" class="btn-premium-confirm" onclick="window.print(); return false;">
-                    <i class="fa-solid fa-download"></i> Descargar Boarding Pass
-                </a>
-                <a href="mis-reservas.html" class="btn-premium-outline">
-                    <i class="fa-solid fa-arrow-left"></i> Volver a mis reservas
-                </a>
-            `;
-        } else if (reserva.estado === "Cancelada") {
-            botonesContainer.innerHTML = `
-                <a href="buscar-vuelos.html" class="btn-premium-confirm">
-                    <i class="fa-solid fa-plane"></i> Buscar Nuevo Vuelo
-                </a>
-                <a href="mis-reservas.html" class="btn-premium-outline">
-                    <i class="fa-solid fa-arrow-left"></i> Volver a mis reservas
-                </a>
-            `;
-        } else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") {
-            document.getElementById("btn-confirmar-reserva").innerHTML = `Pagar Ahora <i class="fa-solid fa-credit-card"></i>`;
-            document.getElementById("btn-guardar-reserva").innerHTML = `<i class="fa-solid fa-arrow-left"></i> Volver a mis reservas`;
+        // Cálculo del pago
+        const base = reserva.totalNumero || 0;
+        const tarifa = esReservaNueva ? (precioTarifa() * pasajerosCount) : 0; // Si ya está pagada, la tarifa extra ya está en el total
+        const descuento = esReservaNueva ? Math.round(base * 0.2) : 0;
+        const total = esReservaNueva ? (base + tarifa - descuento) : base;
+
+        setVal("resumen-clase", reserva.clase.toUpperCase());
+        setVal("resumen-tarifa-precio", tarifa === 0 ? "Incluido" : formatoCOP(tarifa));
+        
+        // Beneficios dinámicos
+        const beneficiosList = document.getElementById("resumen-beneficios-list");
+        if (beneficiosList) {
+            let beneficiosHTML = "";
+            const claseLower = reserva.clase.toLowerCase();
+            
+            if (claseLower.includes("primera")) {
+                beneficiosHTML = `
+                    <li><i class="fa-solid fa-suitcase-rolling"></i> 3 maletas (32kg c/u)</li>
+                    <li><i class="fa-solid fa-martini-glass-citrus"></i> Acceso a sala VIP Elite</li>
+                    <li><i class="fa-solid fa-bed"></i> Asiento cama 180°</li>
+                    <li><i class="fa-solid fa-utensils"></i> Menú de Chef privado</li>
+                `;
+            } else if (claseLower.includes("ejecutiva")) {
+                beneficiosHTML = `
+                    <li><i class="fa-solid fa-suitcase-rolling"></i> 2 maletas (23kg c/u)</li>
+                    <li><i class="fa-solid fa-martini-glass-citrus"></i> Acceso a sala VIP</li>
+                    <li><i class="fa-solid fa-couch"></i> Asiento preferencial amplio</li>
+                    <li><i class="fa-solid fa-utensils"></i> Menú a la carta</li>
+                `;
+            } else {
+                beneficiosHTML = `
+                    <li><i class="fa-solid fa-suitcase"></i> 1 maleta de mano (10kg)</li>
+                    <li><i class="fa-solid fa-bag-shopping"></i> Artículo personal</li>
+                    <li><i class="fa-solid fa-chair"></i> Asiento estándar</li>
+                    <li><i class="fa-solid fa-mug-hot"></i> Bebida de cortesía</li>
+                `;
+            }
+            beneficiosList.innerHTML = beneficiosHTML;
         }
-    } else {
-        titulo.textContent = "Resumen de tu reserva";
-        subtitulo.textContent = "Revisa los detalles de tu vuelo de élite antes de confirmar.";
-        badge.style.display = "none";
-    }
+
+        setVal("pago-vuelo", formatoCOP(base));
+        setVal("pago-tarifa-label", `Tarifa ${reserva.clase.toLowerCase()} (x${pasajerosCount})`);
+        setVal("pago-tarifa", tarifa === 0 ? "Incluido" : formatoCOP(tarifa));
+        
+        const descEl = document.getElementById("pago-descuento");
+        if (descEl) {
+            if (descuento > 0) {
+                descEl.textContent = "-" + formatoCOP(descuento);
+            } else {
+                descEl.textContent = "$0 COP";
+            }
+        }
+        
+        setVal("pago-total", formatoCOP(total));
+
+        const btnConfirmar = document.getElementById("btn-confirmar-reserva");
+        const btnGuardar = document.getElementById("btn-guardar-reserva");
+
+        if (btnConfirmar) {
+            btnConfirmar.addEventListener("click", (event) => {
+                event.preventDefault();
+                if (esReservaNueva) {
+                    // Validar formularios dinámicos
+                    if (!guardarPasajerosDesdeForm()) return;
+                    window.location.href = "pago.html";
+                } else if (reserva.estado === "Pendiente") {
+                    window.location.href = "pago.html";
+                } else {
+                    finalizarReserva("Confirmada", "Reserva confirmada. Te llevamos a Mis reservas...");
+                }
+            });
+        }
+
+        if (btnGuardar) {
+            btnGuardar.addEventListener("click", (event) => {
+                event.preventDefault();
+                if (esReservaNueva) {
+                    // Validar formularios dinámicos
+                    if (!guardarPasajerosDesdeForm()) return;
+                    finalizarReserva("Pendiente", "Reserva guardada para después...");
+                } else {
+                    window.location.href = "mis-reservas.html";
+                }
+            });
+        }
+
+        // Gestión de estado visual
+        const badge = document.getElementById("reserva-estado-badge");
+        const titulo = document.getElementById("resumen-hero-title");
+        const subtitulo = document.getElementById("resumen-hero-subtitle");
+        const botonesContainer = document.getElementById("resumen-botones-container");
+
+        if (!esReservaNueva && badge && titulo && subtitulo && botonesContainer) {
+            badge.style.display = "inline-block";
+            badge.textContent = (reserva.estado || 'Reservada').toUpperCase();
+            
+            let color, bg;
+            if (reserva.estado === "Confirmada") { color = "#0f5132"; bg = "#d1e7dd"; }
+            else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") { color = "#664d03"; bg = "#fff3cd"; }
+            else if (reserva.estado === "Cancelada") { color = "#842029"; bg = "#f8d7da"; }
+            else { color = "#0f5132"; bg = "#d1e7dd"; } // Default to Confirmada
+            
+            badge.style.color = color;
+            badge.style.backgroundColor = bg;
+
+            titulo.textContent = "Detalle de tu reserva";
+            subtitulo.textContent = "Aquí tienes la información completa de tu vuelo y facturación.";
+
+            if (reserva.estado === "Confirmada") {
+                // Inyectar encabezado solo visible al imprimir
+                const printHeader = document.createElement('div');
+                printHeader.id = 'print-header';
+                printHeader.style.cssText = 'display:none;';
+                printHeader.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 3px solid #1a1a2e; margin-bottom: 16px;">
+                        <div>
+                            <img src="../../imagenes/logo-dorado.png" alt="ELARIS" height="45" style="margin-bottom: 4px;">
+                            <div style="font-size: 8pt; color: #888; letter-spacing: 1px;">BOARDING PASS & RECEIPT</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 14pt; font-weight: 800; color: #1a1a2e;">Reserva #${reserva.numeroReserva || reserva.idReserva}</div>
+                            <div style="display: inline-block; background: #d1e7dd; color: #0f5132; padding: 3px 10px; border-radius: 12px; font-size: 8pt; font-weight: 700; letter-spacing: 1px;">CONFIRMADA</div>
+                            <div style="font-size: 8pt; color: #888; margin-top: 4px;">${new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 9pt; color: #555; margin-bottom: 12px;">
+                        <strong>Titular:</strong> ${reserva.pasajero ? reserva.pasajero.nombre : 'N/A'} &nbsp;|&nbsp; 
+                        <strong>Documento:</strong> ${reserva.pasajero ? reserva.pasajero.documento : 'N/A'} &nbsp;|&nbsp;
+                        <strong>Email:</strong> ${reserva.pasajero ? reserva.pasajero.email : 'N/A'}
+                    </div>
+                `;
+                const contenedor = document.getElementById('resumen-contenedor');
+                if (contenedor) contenedor.prepend(printHeader);
+
+                botonesContainer.innerHTML = `
+                    <a href="#" class="btn-premium-confirm" id="btn-descargar-bp">
+                        <i class="fa-solid fa-download"></i> Descargar Boarding Pass
+                    </a>
+                    <a href="mis-reservas.html" class="btn-premium-outline">
+                        <i class="fa-solid fa-arrow-left"></i> Volver a mis reservas
+                    </a>
+                `;
+
+                document.getElementById('btn-descargar-bp').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Mostrar header de impresión y cambiar título
+                    const ph = document.getElementById('print-header');
+                    if (ph) ph.style.display = 'block';
+                    const oldTitle = document.title;
+                    document.title = `ELARIS_BoardingPass_${reserva.numeroReserva || reserva.idReserva}`;
+                    window.print();
+                    document.title = oldTitle;
+                    if (ph) ph.style.display = 'none';
+                });
+            } else if (reserva.estado === "Cancelada") {
+                botonesContainer.innerHTML = `
+                    <a href="buscar-vuelos.html" class="btn-premium-confirm">
+                        <i class="fa-solid fa-plane"></i> Buscar Nuevo Vuelo
+                    </a>
+                    <a href="mis-reservas.html" class="btn-premium-outline">
+                        <i class="fa-solid fa-arrow-left"></i> Volver a mis reservas
+                    </a>
+                `;
+            } else if (reserva.estado === "Pendiente" || reserva.estado === "Reservada") {
+                document.getElementById("btn-confirmar-reserva").innerHTML = `Pagar Ahora <i class="fa-solid fa-credit-card"></i>`;
+                document.getElementById("btn-guardar-reserva").innerHTML = `<i class="fa-solid fa-arrow-left"></i> Volver a mis reservas`;
+            }
+        } else if (esReservaNueva && badge && titulo && subtitulo) {
+            titulo.textContent = "Resumen de tu reserva";
+            subtitulo.textContent = "Revisa los detalles de tu vuelo de élite antes de confirmar.";
+            badge.style.display = "none";
+        }
+    };
+
+    // Ejecutar la inicialización
+    initPage();
 });
