@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return 0;
     };
     
+    const pasajerosCount = reserva.pasajeros || 1;
     const base = reserva.totalNumero;
-    const tarifa = precioTarifa();
+    const tarifa = precioTarifa() * pasajerosCount;
     const descuento = Math.round(base * 0.2);
     const total = base + tarifa - descuento;
     
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const obtenerDatosPasajero = () => {
         const usuario = obtenerUsuario();
         if (usuario) {
-            return { nombre: usuario.nombre_completo, documento: "Pendiente", nacionalidad: "Colombiana", nacimiento: "Pendiente" };
+            return { nombre: usuario.nombre_completo, documento: usuario.id_cliente || "Pendiente", nacionalidad: "Colombiana", nacimiento: "Pendiente" };
         }
         return { nombre: "María González", documento: "123456789", nacionalidad: "Colombiana", nacimiento: "15/05/1990" };
     };
@@ -105,7 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
             totalTexto: formatoCOP(totalGuardar),
             tarifaExtra: tarifaGuardar,
             descuento: descuentoGuardar,
-            pasajero: obtenerDatosPasajero()
+            pasajero: reserva.pasajerosLista && reserva.pasajerosLista.length > 0 
+                ? { nombre: reserva.pasajerosLista[0].nombre_pasajero, documento: `${reserva.pasajerosLista[0].tipo_documento}: ${reserva.pasajerosLista[0].documento_pasajero}` } 
+                : obtenerDatosPasajero(),
+            tiquetes: reserva.pasajerosLista
         };
         const existe = reservas.some(item => item.numeroReserva === reservaLocal.numeroReserva);
         if (!existe) {
@@ -128,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id_vuelo: reserva.idVuelo,
                 estado: estado,
                 clase: reserva.clase,
-                pasajeros: reserva.pasajeros || 1,
+                pasajeros: reserva.pasajerosLista || [],
                 tarifa_extra: tarifaGuardar,
                 descuento: descuentoGuardar,
                 total: totalGuardar
@@ -167,8 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rawCardNumber === TARJETA_VISA || rawCardNumber === TARJETA_MASTER) {
             // APROBADA
             try {
-                await guardarReservaEnBaseDatos("Confirmada", total, tarifa, descuento);
-                guardarReservaLocal("Confirmada", total, tarifa, descuento);
+                await guardarReservaEnBaseDatos("Reservada", total, tarifa, descuento);
+                guardarReservaLocal("Reservada", total, tarifa, descuento);
                 localStorage.removeItem("reservaEnProceso");
                 
                 // Mostrar overlay de éxito
@@ -183,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
             } catch (error) {
                 console.error(error);
-                mostrarError("Error guardando en la Base de Datos. Asegúrate de que el backend esté encendido.");
+                mostrarError("Error del servidor: " + error.message);
             }
         } else if (rawCardNumber === TARJETA_RECHAZADA) {
             mostrarError("Transacción rechazada por el banco. Usa otra tarjeta.");

@@ -29,7 +29,19 @@ pool.on('error', (err) => {
 });
 
 pool.query('SELECT NOW()')
-    .then(() => console.log('✅ Conexión inicial con Neon exitosa 🐘'))
+    .then(async () => {
+        console.log('✅ Conexión inicial con Neon exitosa 🐘');
+        try {
+            await pool.query(`
+                ALTER TABLE tiquete 
+                ADD COLUMN IF NOT EXISTS nombre_pasajero VARCHAR(150),
+                ADD COLUMN IF NOT EXISTS documento_pasajero VARCHAR(50);
+            `);
+            console.log('✅ Estructura de tabla tiquete verificada/actualizada con columnas de pasajeros');
+        } catch (alterErr) {
+            console.error('⚠️ Error al verificar/actualizar la tabla tiquete:', alterErr.message);
+        }
+    })
     .catch(err => console.error('❌ Error al hablar con Neon:', err.message));
 
 // Helpers para simular datos enriquecidos de vuelos
@@ -558,7 +570,7 @@ app.delete('/api/ubicaciones/:id_ubicacion', async (req, res) => {
 
 // Crear una reserva (estado inicial: "Reservada" = id_estado 1)
 app.post('/api/reservas', async (req, res) => {
-    const { id_cliente, numero_identificacion_cliente, id_vuelo, cod_vuelo, valor_total, total, estado } = req.body;
+    const { id_cliente, numero_identificacion_cliente, id_vuelo, cod_vuelo, valor_total, total, estado, pasajeros, clase } = req.body;
 
     const clienteId = id_cliente || numero_identificacion_cliente;
     const vueloCod = id_vuelo || cod_vuelo;
@@ -594,6 +606,33 @@ app.post('/api/reservas', async (req, res) => {
 
         const nuevaReserva = result.rows[0];
 
+        // Determinar lista de pasajeros
+        let listaPasajeros = pasajeros;
+        if (!listaPasajeros || !Array.isArray(listaPasajeros) || listaPasajeros.length === 0) {
+            // Obtener nombre del cliente principal
+            const cliRes = await client.query(
+                `SELECT nombres, apellidos FROM cliente WHERE numero_identificacion = $1 LIMIT 1`,
+                [clienteId]
+            );
+            const nombreCompleto = cliRes.rows.length > 0 ? `${cliRes.rows[0].nombres} ${cliRes.rows[0].apellidos}` : 'Pasajero Principal';
+            listaPasajeros = [{
+                nombre_pasajero: nombreCompleto,
+                documento_pasajero: clienteId
+            }];
+        }
+
+        // Insertar los tiquetes asociados
+        const claseTiquete = clase || 'Económica';
+        const precioPorTiquete = (valor / listaPasajeros.length).toFixed(2);
+
+        for (const p of listaPasajeros) {
+            await client.query(
+                `INSERT INTO tiquete (numero_asiento, clase_tiquete, precio_final, id_reserva, nombre_pasajero, documento_pasajero)
+                 VALUES ('Sin asignar', $1, $2, $3, $4, $5)`,
+                [claseTiquete, precioPorTiquete, nuevaReserva.id_reserva, p.nombre_pasajero, p.documento_pasajero]
+            );
+        }
+
         // Registrar en historial
         await client.query(
             `INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
@@ -610,7 +649,7 @@ app.post('/api/reservas', async (req, res) => {
     } catch (error) {
         await client.query('ROLLBACK');
         console.error('Error al crear reserva:', error);
-        res.status(500).json({ error: 'Error al crear la reserva' });
+        res.status(500).json({ error: 'Error al crear la reserva: ' + error.message });
     } finally {
         client.release();
     }
@@ -1241,12 +1280,13 @@ app.get('/api/agente/reservas/:id', async (req, res) => {
         }
         const reserva = reservaRes.rows[0];
 
-        // Tiquete asociado
-        const tiqueteRes = await pool.query(
-            `SELECT numero_asiento, clase_tiquete, precio_final FROM tiquete WHERE id_reserva = $1`,
+        // Tiquetes asociados
+        const tiquetesRes = await pool.query(
+            `SELECT id_tiquete, numero_asiento, clase_tiquete, precio_final, nombre_pasajero, documento_pasajero FROM tiquete WHERE id_reserva = $1 ORDER BY id_tiquete ASC`,
             [id]
         );
-        const tiquete = tiqueteRes.rows.length > 0 ? tiqueteRes.rows[0] : null;
+        const tiquetes = tiquetesRes.rows;
+        const tiquete = tiquetes.length > 0 ? tiquetes[0] : null;
 
         // Paquetes turísticos asociados
         const paquetesRes = await pool.query(`
@@ -1291,6 +1331,7 @@ app.get('/api/agente/reservas/:id', async (req, res) => {
                 precio_base: reserva.precio_base
             },
             tiquete: tiquete,
+            tiquetes: tiquetes,
             paquetes: paquetesRes.rows,
             historial: historialRes.rows
         });
@@ -1302,7 +1343,7 @@ app.get('/api/agente/reservas/:id', async (req, res) => {
 
 app.put('/api/agente/reservas/:id/asiento', async (req, res) => {
     const { id } = req.params;
-    const { numero_asiento, clase_tiquete } = req.body;
+    const { numero_asiento, clase_tiquete, id_tiquete } = req.body;
 
     if (!numero_asiento || !clase_tiquete) {
         return res.status(400).json({ error: 'Se requiere numero_asiento y clase_tiquete' });
@@ -1316,32 +1357,42 @@ app.put('/api/agente/reservas/:id/asiento', async (req, res) => {
         }
         const { cod_vuelo, valor_total } = reservaRes.rows[0];
 
-        // 2. Verificamos si el asiento ya está ocupado en el mismo vuelo
+        // 2. Determinar qué tiquete vamos a modificar
+        let targetTiqueteId = id_tiquete;
+        if (!targetTiqueteId) {
+            // Obtener el primer tiquete de la reserva como fallback
+            const firstTiqueteRes = await pool.query(
+                'SELECT id_tiquete FROM tiquete WHERE id_reserva = $1 ORDER BY id_tiquete ASC LIMIT 1',
+                [id]
+            );
+            if (firstTiqueteRes.rows.length > 0) {
+                targetTiqueteId = firstTiqueteRes.rows[0].id_tiquete;
+            }
+        }
+
+        // 3. Verificamos si el asiento ya está ocupado en el mismo vuelo
         const asientoOcupadoRes = await pool.query(
             `SELECT t.id_tiquete
              FROM tiquete t
              JOIN reserva r ON r.id_reserva = t.id_reserva
              WHERE r.cod_vuelo = $1
                AND t.numero_asiento = $2
-               AND t.id_reserva != $3`,
-            [cod_vuelo, numero_asiento, id]
+               AND t.id_tiquete != $3`,
+            [cod_vuelo, numero_asiento, targetTiqueteId || 0]
         );
         if (asientoOcupadoRes.rows.length > 0) {
             return res.status(409).json({ error: 'El asiento ya está ocupado en este vuelo. Elija otro asiento.' });
         }
 
-        // 3. Verificamos si ya existe un tiquete para esta reserva
-        const tiqueteRes = await pool.query('SELECT id_tiquete FROM tiquete WHERE id_reserva = $1', [id]);
-        
         let result;
-        if (tiqueteRes.rows.length > 0) {
+        if (targetTiqueteId) {
             // Actualizar tiquete existente
             result = await pool.query(
                 `UPDATE tiquete 
                  SET numero_asiento = $1, clase_tiquete = $2 
-                 WHERE id_reserva = $3 
+                 WHERE id_tiquete = $3 
                  RETURNING *`,
-                [numero_asiento, clase_tiquete, id]
+                [numero_asiento, clase_tiquete, targetTiqueteId]
             );
         } else {
             // Insertar tiquete nuevo

@@ -144,30 +144,11 @@
                 <div class="card-header-premium">
                     <div class="header-title-group">
                         <i class="fa-solid fa-user-tie header-icon" aria-hidden="true"></i>
-                        <h3>Información del Pasajero</h3>
+                        <h3 id="pasajero-card-title">Información de Pasajeros</h3>
                     </div>
                 </div>
-                <div class="card-body-premium">
-                    <div class="pasajero-list">
-                        <div class="pasajero-item">
-                            <span class="p-label">Nombre Completo</span>
-                            <span class="p-value" id="pasajero-nombre">María González</span>
-                        </div>
-                        <div class="pasajero-item">
-                            <span class="p-label">Documento de Identidad</span>
-                            <span class="p-value" id="pasajero-documento">123456789</span>
-                        </div>
-                        <div class="pasajero-item-group">
-                            <div class="pasajero-item">
-                                <span class="p-label">Nacionalidad</span>
-                                <span class="p-value" id="pasajero-nacionalidad">Colombiana</span>
-                            </div>
-                            <div class="pasajero-item">
-                                <span class="p-label">Nacimiento</span>
-                                <span class="p-value" id="pasajero-nacimiento">15/05/1990</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-body-premium" id="pasajeros-dinamicos-contenedor">
+                    <!-- Se poblará dinámicamente con JS -->
                 </div>
             </div>
 
