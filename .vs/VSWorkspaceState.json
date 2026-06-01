@@ -4,8 +4,9 @@
     "\\frontend",
     "\\frontend\\js",
     "\\frontend\\paginas",
-    "\\frontend\\paginas\\admin"
+    "\\frontend\\paginas\\admin",
+    "\\frontend\\paginas\\inicio"
   ],
-  "SelectedNode": "\\frontend\\js\\admi",
+  "SelectedNode": "\\frontend\\paginas\\inicio\\login.html",
   "PreviewInSolutionExplorer": false
 }
