@@ -1,4 +1,9 @@
 -- =========================================
+-- LIMPIEZA DE DATOS Y REINICIO DE SECUENCIAS
+-- =========================================
+TRUNCATE TABLE rol, pais, estado_reserva, paquete_turistico RESTART IDENTITY CASCADE;
+
+-- =========================================
 -- INSERTS TABLA PAIS.
 -- =========================================
 
@@ -446,6 +451,11 @@ INSERT INTO reserva
 VALUES
 ('2026-05-23 09:30',780000,'AV021','1013',1);
 
+INSERT INTO reserva
+(fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES
+('2026-05-24 10:00',3320000,'AV025','1013',1);
+
 -- =========================================
 -- INSERTS TABLA HISTORIAL_ESTADO_RESERVA
 -- =========================================
@@ -524,6 +534,33 @@ VALUES (19,1,'2026-05-18 13:25','Sistema','Reserva inicial');
 
 INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
 VALUES (19,2,'2026-05-18 14:45','Agente1','Pago confirmado');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (20,1,'2026-05-19 14:05','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (20,2,'2026-05-19 15:20','Agente1','Pago confirmado');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (21,1,'2026-05-20 15:20','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (21,2,'2026-05-20 16:00','Agente1','Reserva confirmada');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (22,1,'2026-05-21 16:35','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (23,1,'2026-05-22 08:05','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (23,2,'2026-05-22 09:30','Agente1','Pago confirmado');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (24,1,'2026-05-23 09:35','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (25,1,'2026-05-24 10:05','Sistema','Reserva inicial');
 
 -- =========================================
 -- INSERTS TABLA TIQUETE
@@ -778,6 +815,11 @@ INSERT INTO paquete_turistico
 VALUES
 ('Tokyo Adventure','Modernidad y tradición','Tokio',2500000,'No Disponible');
 
+INSERT INTO paquete_turistico
+(nombre_paquete,descripcion,sector_destino,precio,estado)
+VALUES
+('La Habana Escape','Descubre la magia y el son de Cuba','La Habana',2500000,'Disponible');
+
 -- =========================================
 -- INSERTS TABLA RESERVA_PAQUETE
 -- =========================================
@@ -951,12 +993,12 @@ VALUES
 INSERT INTO usuario
 (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
 VALUES
-('ricardог','123','Cliente','1021');
+('ricardog','123','Cliente','1021');
 
 INSERT INTO usuario
 (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
 VALUES
-('catalinан','123','Cliente','1022');
+('catalinan','123','Cliente','1022');
 
 
 -- =========================================
