@@ -1006,16 +1006,13 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/admin/dashboard', async (req, res) => {
     try {
         const vuelos = await pool.query(`SELECT COUNT(*) AS total FROM vuelo`);
-
         const reservas = await pool.query(`SELECT COUNT(*) AS total FROM reserva`);
-
-        const destinos = await pool.query(
-            `SELECT COUNT(DISTINCT id_ciudad_destino) AS total FROM vuelo`
-        );
-
-        const paquetes = await pool.query(
-            `SELECT COUNT(*) AS total FROM paquete_turistico WHERE estado = 'Activo'`
-        );
+        const destinos = await pool.query(`
+            SELECT COUNT(DISTINCT id_ciudad_destino) AS total FROM vuelo
+        `);
+        const paquetes = await pool.query(`
+            SELECT COUNT(*) AS total FROM paquete_turistico WHERE estado = 'Activo'
+        `);
 
         const ultimas = await pool.query(`
             SELECT
@@ -1029,12 +1026,112 @@ app.get('/api/admin/dashboard', async (req, res) => {
             LIMIT 5
         `);
 
+        const ingresosPorDestino = await pool.query(`
+            SELECT
+                cd.nombre_ciudad AS destino,
+                TO_CHAR(r.fecha_hora_reserva, 'YYYY-MM') AS mes,
+                SUM(r.valor_total)::NUMERIC(12,2) AS ingresos
+            FROM reserva r
+            JOIN vuelo v ON r.cod_vuelo = v.cod_vuelo
+            JOIN ciudad cd ON v.id_ciudad_destino = cd.id_ciudad
+            GROUP BY cd.nombre_ciudad, mes
+            ORDER BY mes DESC, ingresos DESC
+        `);
+
+        const reservasPorVuelo = await pool.query(`
+            SELECT
+                v.cod_vuelo,
+                TO_CHAR(r.fecha_hora_reserva, 'YYYY-MM') AS mes,
+                COUNT(*)::INT AS total_reservas
+            FROM reserva r
+            JOIN vuelo v ON r.cod_vuelo = v.cod_vuelo
+            GROUP BY v.cod_vuelo, mes
+            ORDER BY mes DESC, total_reservas DESC
+        `);
+
+        const clientesFrecuentes = await pool.query(`
+            SELECT
+                c.numero_identificacion,
+                c.nombres || ' ' || c.apellidos AS cliente,
+                COUNT(*)::INT AS total_reservas
+            FROM reserva r
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            GROUP BY c.numero_identificacion, cliente
+            ORDER BY total_reservas DESC
+            LIMIT 5
+        `);
+
+        const destinosMasVendidos = await pool.query(`
+            SELECT
+                p.nombre_pais AS pais,
+                COUNT(*)::INT AS total_reservas
+            FROM reserva r
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN departamento d ON d.id_departamento = cd.id_departamento
+            JOIN pais p ON p.id_pais = d.id_pais
+            GROUP BY p.nombre_pais
+            ORDER BY total_reservas DESC
+        `);
+
+        const tiempoConfirmacion = await pool.query(`
+            SELECT AVG(EXTRACT(EPOCH FROM (confirmada.fecha_hora_cambio - inicial.fecha_hora_cambio)) / 60)::NUMERIC(10,2) AS promedio_minutos
+            FROM historial_estado_reserva inicial
+            JOIN historial_estado_reserva confirmada
+                ON inicial.id_reserva = confirmada.id_reserva
+            WHERE inicial.id_estado = 1
+              AND confirmada.id_estado = 2
+              AND confirmada.fecha_hora_cambio > inicial.fecha_hora_cambio
+        `);
+
+        const canceladas = await pool.query(`
+            SELECT
+                r.id_reserva,
+                c.nombres || ' ' || c.apellidos AS cliente,
+                v.cod_vuelo,
+                cd.nombre_ciudad AS destino,
+                her.fecha_hora_cambio AS fecha_cancelacion,
+                her.observacion AS causa
+            FROM historial_estado_reserva her
+            JOIN reserva r ON r.id_reserva = her.id_reserva
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN estado_reserva er ON er.id_estado = her.id_estado
+            WHERE er.nombre_estado = 'Cancelada'
+            ORDER BY her.fecha_hora_cambio DESC
+            LIMIT 5
+        `);
+
+        const vuelosPorOrigenDestinoClase = await pool.query(`
+            SELECT
+                v.cod_vuelo,
+                co.nombre_ciudad AS origen,
+                cd.nombre_ciudad AS destino,
+                ARRAY_REMOVE(ARRAY_AGG(DISTINCT t.clase_tiquete), NULL) AS clases,
+                COUNT(DISTINCT r.id_reserva)::INT AS total_reservas
+            FROM vuelo v
+            LEFT JOIN reserva r ON r.cod_vuelo = v.cod_vuelo
+            LEFT JOIN tiquete t ON t.id_reserva = r.id_reserva
+            JOIN ciudad co ON co.id_ciudad = v.id_ciudad_origen
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            GROUP BY v.cod_vuelo, origen, destino
+            ORDER BY total_reservas DESC
+        `);
+
         res.json({
             totalVuelos: vuelos.rows[0].total,
             totalReservas: reservas.rows[0].total,
             totalDestinos: destinos.rows[0].total,
             totalPaquetes: paquetes.rows[0].total,
-            ultimasReservas: ultimas.rows
+            ultimasReservas: ultimas.rows,
+            ingresosMensualesPorDestino: ingresosPorDestino.rows,
+            reservasPorVueloPorMes: reservasPorVuelo.rows,
+            clientesFrecuentes: clientesFrecuentes.rows,
+            destinosMasVendidosPorPais: destinosMasVendidos.rows,
+            tiempoPromedioConfirmacionMinutos: Number(tiempoConfirmacion.rows[0].promedio_minutos) || 0,
+            reservasCanceladas: canceladas.rows,
+            vuelosPorOrigenDestinoClase: vuelosPorOrigenDestinoClase.rows
         });
     } catch (error) {
         console.error('Error dashboard admin:', error);
@@ -1064,6 +1161,7 @@ app.get('/api/agente/dashboard', async (req, res) => {
             JOIN estado_reserva er ON r.id_estado = er.id_estado 
             WHERE er.nombre_estado = 'Cancelada'
         `);
+
         const recientes = await pool.query(`
             SELECT 
                 r.id_reserva,
@@ -1085,12 +1183,43 @@ app.get('/api/agente/dashboard', async (req, res) => {
             LIMIT 5
         `);
 
+        const tiempoConfirmacion = await pool.query(`
+            SELECT AVG(EXTRACT(EPOCH FROM (confirmada.fecha_hora_cambio - inicial.fecha_hora_cambio)) / 60)::NUMERIC(10,2) AS promedio_minutos
+            FROM historial_estado_reserva inicial
+            JOIN historial_estado_reserva confirmada
+                ON inicial.id_reserva = confirmada.id_reserva
+            WHERE inicial.id_estado = 1
+              AND confirmada.id_estado = 2
+              AND confirmada.fecha_hora_cambio > inicial.fecha_hora_cambio
+        `);
+
+        const canceladasRecientes = await pool.query(`
+            SELECT
+                r.id_reserva,
+                c.nombres || ' ' || c.apellidos AS cliente,
+                v.cod_vuelo,
+                cd.nombre_ciudad AS destino,
+                her.fecha_hora_cambio AS fecha_cancelacion,
+                her.observacion AS causa
+            FROM historial_estado_reserva her
+            JOIN reserva r ON r.id_reserva = her.id_reserva
+            JOIN cliente c ON c.numero_identificacion = r.numero_identificacion_cliente
+            JOIN vuelo v ON v.cod_vuelo = r.cod_vuelo
+            JOIN ciudad cd ON cd.id_ciudad = v.id_ciudad_destino
+            JOIN estado_reserva er ON er.id_estado = her.id_estado
+            WHERE er.nombre_estado = 'Cancelada'
+            ORDER BY her.fecha_hora_cambio DESC
+            LIMIT 5
+        `);
+
         res.json({
             total: totalReservas.rows[0].total,
             pendientes: pendientes.rows[0].total,
             confirmadas: confirmadas.rows[0].total,
             canceladas: canceladas.rows[0].total,
-            recientes: recientes.rows
+            recientes: recientes.rows,
+            tiempoPromedioConfirmacionMinutos: Number(tiempoConfirmacion.rows[0].promedio_minutos) || 0,
+            canceladasRecientes: canceladasRecientes.rows
         });
     } catch (error) {
         console.error('Error dashboard agente:', error);

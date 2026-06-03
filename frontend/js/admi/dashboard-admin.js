@@ -50,6 +50,53 @@ function renderizarUltimasReservas(reservas = []) {
     });
 }
 
+function renderClientesFrecuentes(clientes = []) {
+    const tbody = document.getElementById('tablaClientesFrecuentes');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    if (!clientes.length) {
+        tbody.innerHTML = `
+            <tr><td colspan="2">No hay datos de clientes frecuentes.</td></tr>
+        `;
+        return;
+    }
+
+    clientes.forEach(cliente => {
+        const fila = `
+            <tr>
+                <td>${cliente.cliente}</td>
+                <td>${cliente.total_reservas}</td>
+            </tr>
+        `;
+        tbody.innerHTML += fila;
+    });
+}
+
+function renderReservasCanceladas(canceladas = []) {
+    const tbody = document.getElementById('tablaReservasCanceladas');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    if (!canceladas.length) {
+        tbody.innerHTML = `
+            <tr><td colspan="3">No hay reservas canceladas recientes.</td></tr>
+        `;
+        return;
+    }
+
+    canceladas.forEach(item => {
+        const fila = `
+            <tr>
+                <td>#RES-${item.id_reserva.toString().padStart(3, '0')}</td>
+                <td>${item.destino}</td>
+                <td>${item.causa || 'Sin causa registrada'}</td>
+            </tr>
+        `;
+        tbody.innerHTML += fila;
+    });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const respuesta = await fetch('http://localhost:3000/api/admin/dashboard');
@@ -69,8 +116,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             elTotalPaquetes.textContent = data.totalPaquetes ?? 0;
         }
 
+        document.getElementById('avgConfirmacion').textContent =
+            data.tiempoPromedioConfirmacionMinutos > 0
+                ? `${data.tiempoPromedioConfirmacionMinutos} min`
+                : 'N/A';
+
         actualizarGraficosResumen(data);
         renderizarUltimasReservas(data.ultimasReservas || []);
+        renderClientesFrecuentes(data.clientesFrecuentes || []);
+        renderReservasCanceladas(data.reservasCanceladas || []);
     } catch (error) {
         console.error('Error cargando dashboard:', error);
     }

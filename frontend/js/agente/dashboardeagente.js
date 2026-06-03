@@ -119,12 +119,16 @@ async function cargarDatosDashboard() {
         const pendientes = Number(data.pendientes || 0);
         const confirmadas = Number(data.confirmadas || 0);
         const canceladas = Number(data.canceladas || 0);
+        const confirmacionPromedio = Number(data.tiempoPromedioConfirmacionMinutos || 0);
         const recientes = Array.isArray(data.recientes) ? data.recientes : [];
+        const canceladasRecientes = Array.isArray(data.canceladasRecientes) ? data.canceladasRecientes : [];
 
         // Actualizar KPIs
         document.getElementById('kpi-pendientes').textContent = pendientes < 10 ? `0${pendientes}` : pendientes;
         document.getElementById('kpi-confirmadas').textContent = confirmadas < 10 ? `0${confirmadas}` : confirmadas;
         document.getElementById('kpi-canceladas').textContent = canceladas < 10 ? `0${canceladas}` : canceladas;
+        document.getElementById('kpi-confirmacion').textContent =
+            confirmacionPromedio > 0 ? `${confirmacionPromedio} min` : '--';
 
         // Llenar tabla de reservas recientes
         const tbody = document.getElementById('tbody-reservas-recientes');
@@ -163,10 +167,34 @@ async function cargarDatosDashboard() {
             tbody.appendChild(tr);
         });
 
+        renderCanceladasRecientes(canceladasRecientes);
+
     } catch (error) {
         console.error('Error cargando el dashboard del agente:', error);
         if (typeof window.mostrarBannerError === 'function') {
             window.mostrarBannerError(error);
         }
     }
+}
+
+function renderCanceladasRecientes(canceladas = []) {
+    const tbody = document.getElementById('tbody-canceladas-recientes');
+    if (!tbody) return;
+
+    tbody.innerHTML = '';
+    if (!canceladas.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center;">No hay reservas canceladas recientes</td></tr>`;
+        return;
+    }
+
+    canceladas.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>#RES-${item.id_reserva.toString().padStart(3, '0')}</td>
+            <td>${item.cliente}</td>
+            <td>${item.destino}</td>
+            <td>${item.causa || 'Sin causa registrada'}</td>
+        `;
+        tbody.appendChild(tr);
+    });
 }

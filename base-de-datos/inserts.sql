@@ -196,6 +196,20 @@ INSERT INTO reserva
 VALUES
 ('2026-05-10 19:00',3600000,'AV010','1010',1);
 
+INSERT INTO reserva
+(fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES
+('2026-05-11 09:30',700000,'AV001','1001',2);
+
+INSERT INTO reserva
+(fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES
+('2026-05-12 10:45',820000,'AV002','1001',1);
+
+INSERT INTO reserva
+(fecha_hora_reserva,valor_total,cod_vuelo,numero_identificacion_cliente,id_estado)
+VALUES
+('2026-05-12 14:00',420000,'AV002','1002',2);
 
 
 -- =========================================
@@ -215,9 +229,6 @@ INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, 
 VALUES (4,2,'2026-05-04 13:05','Agente1','Cambio de asiento aprobado');
 
 INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
-VALUES (5,3,'2026-05-05 14:05','Sistema','Reserva cancelada automáticamente');
-
-INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
 VALUES (6,1,'2026-05-06 15:05','Sistema','Reserva inicial');
 
 INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
@@ -231,6 +242,27 @@ VALUES (9,2,'2026-05-09 18:05','Agente1','Confirmación de vuelo');
 
 INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
 VALUES (10,1,'2026-05-10 19:05','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (11,1,'2026-05-11 09:30','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (11,2,'2026-05-11 11:00','Agente1','Pago recibido y reserva confirmada');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (12,1,'2026-05-12 10:45','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (13,1,'2026-05-12 14:00','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (13,2,'2026-05-12 15:20','Agente1','Reserva confirmada con asiento disponible');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (5,1,'2026-05-05 13:30','Sistema','Reserva inicial');
+
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (5,3,'2026-05-05 14:05','Agente1','Cliente canceló por emergencia familiar');
 
 -- =========================================
 -- INSERTS TABLA TIQUETE
@@ -286,6 +318,20 @@ INSERT INTO tiquete
 VALUES
 ('10D','Ejecutiva',1800000,10);
 
+INSERT INTO tiquete
+(numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES
+('11A','Economica',700000,11);
+
+INSERT INTO tiquete
+(numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES
+('12B','Ejecutiva',820000,12);
+
+INSERT INTO tiquete
+(numero_asiento,clase_tiquete,precio_final,id_reserva)
+VALUES
+('13C','Ejecutiva',420000,13);
 
 
 -- =========================================

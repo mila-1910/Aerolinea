@@ -122,6 +122,19 @@
                     </div>
                 </div>
 
+                <!-- KPI 4: Tiempo confirmacion -->
+                <div class="glass-card kpi-card area-kpi-4">
+                    <div class="kpi-header">
+                        <div class="kpi-icon"><i aria-hidden="true" class="fas fa-stopwatch"></i></div>
+                        <span class="kpi-trend trend-up" style="visibility: hidden;">+3</span>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-value" id="kpi-confirmacion">--</div>
+                        <div class="kpi-label">Minutos para confirmar</div>
+                        <div class="kpi-desc">Tiempo promedio de reserva a confirmación</div>
+                    </div>
+                </div>
+
                 <!-- BENTO SEARCH & QUICK ACTIONS -->
                 <div class="glass-card search-panel area-search">
                     <h3><i aria-hidden="true" class="fas fa-bolt"></i> Acciones Rápidas</h3>
@@ -171,6 +184,26 @@
                             </thead>
                             <tbody id="tbody-reservas-recientes">
                                 <!-- Rellenado por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-card area-canceladas">
+                    <div class="card-header-premium">
+                        <h3><i aria-hidden="true" class="fas fa-ban"></i> Reservas canceladas recientes</h3>
+                    </div>
+                    <div class="tabla-responsive">
+                        <table class="tabla-reservas-agente">
+                            <thead>
+                                <tr>
+                                    <th>Reserva</th>
+                                    <th>Cliente</th>
+                                    <th>Destino</th>
+                                    <th>Causa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-canceladas-recientes">
                             </tbody>
                         </table>
                     </div>
