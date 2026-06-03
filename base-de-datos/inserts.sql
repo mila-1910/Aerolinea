@@ -202,25 +202,35 @@ VALUES
 -- INSERTS TABLA HISTORIAL_ESTADO_RESERVA
 -- =========================================
 
-INSERT INTO historial_estado_reserva VALUES (1,1,'2026-05-01 10:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (1,1,'2026-05-01 10:05','Sistema','Reserva inicial');
 
-INSERT INTO historial_estado_reserva VALUES (2,2,'2026-05-02 11:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (2,2,'2026-05-02 11:05','Agente1','Pago confirmado');
 
-INSERT INTO historial_estado_reserva VALUES (3,1,'2026-05-03 12:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (3,1,'2026-05-03 12:05','Sistema','Reserva inicial');
 
-INSERT INTO historial_estado_reserva VALUES (4,2,'2026-05-04 13:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (4,2,'2026-05-04 13:05','Agente1','Cambio de asiento aprobado');
 
-INSERT INTO historial_estado_reserva VALUES (5,3,'2026-05-05 14:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (5,3,'2026-05-05 14:05','Sistema','Reserva cancelada automáticamente');
 
-INSERT INTO historial_estado_reserva VALUES (6,1,'2026-05-06 15:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (6,1,'2026-05-06 15:05','Sistema','Reserva inicial');
 
-INSERT INTO historial_estado_reserva VALUES (7,2,'2026-05-07 16:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (7,2,'2026-05-07 16:05','Agente1','Reserva confirmada');
 
-INSERT INTO historial_estado_reserva VALUES (8,1,'2026-05-08 17:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (8,1,'2026-05-08 17:05','Sistema','Reserva inicial');
 
-INSERT INTO historial_estado_reserva VALUES (9,2,'2026-05-09 18:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (9,2,'2026-05-09 18:05','Agente1','Confirmación de vuelo');
 
-INSERT INTO historial_estado_reserva VALUES (10,1,'2026-05-10 19:05');
+INSERT INTO historial_estado_reserva (id_reserva, id_estado, fecha_hora_cambio, responsable, observacion)
+VALUES (10,1,'2026-05-10 19:05','Sistema','Reserva inicial');
 
 -- =========================================
 -- INSERTS TABLA TIQUETE
@@ -332,9 +342,10 @@ INSERT INTO paquete_turistico
 VALUES
 ('Lima Gastronomica','Tour comida peruana','Lima',900000,'Disponible');
 
+INSERT INTO paquete_turistico
 (nombre_paquete,descripcion,sector_destino,precio,estado)
 VALUES
-('Tour lago calima','paseo por centro recreativo Comfandi ','Lago calima',100000,'Disponible');
+('Tour lago calima','paseo por centro recreativo Comfandi','Lago calima',100000,'Disponible');
 
 -- =========================================
 -- INSERTS TABLA RESERVA_PAQUETE
@@ -425,3 +436,20 @@ INSERT INTO usuario
 (nombre_usuario,contrasena,nombre_rol,numero_identificacion_cliente)
 VALUES
 ('valentinag','123','Cliente','1010');
+
+
+-- =========================================
+-- INSERTS TABLA SOLICITUD_CLIENTE
+-- =========================================
+
+INSERT INTO solicitud_cliente (numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion, estado, prioridad, respuesta_agente, id_agente, fecha_creacion, fecha_respuesta)
+VALUES
+('1001', 1, 'Cambio de fecha', 'Solicita cambiar la fecha del vuelo al 2 de junio', 'Abierta', 'Alta', NULL, NULL, '2026-05-01 10:10', NULL);
+
+INSERT INTO solicitud_cliente (numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion, estado, prioridad, respuesta_agente, id_agente, fecha_creacion, fecha_respuesta)
+VALUES
+('1002', 2, 'Cancelación', 'Solicita cancelar la reserva por imprevisto', 'Resuelta', 'Alta', 'Cancelación aprobada por agente', 2, '2026-05-02 11:20', '2026-05-02 11:45');
+
+INSERT INTO solicitud_cliente (numero_identificacion_cliente, id_reserva, tipo_solicitud, descripcion, estado, prioridad, respuesta_agente, id_agente, fecha_creacion, fecha_respuesta)
+VALUES
+('1003', 3, 'Cambio de asiento', 'Solicita asiento con más espacio para las piernas', 'Abierta', 'Normal', NULL, NULL, '2026-05-03 12:10', NULL);
