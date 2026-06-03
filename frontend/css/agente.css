@@ -2129,3 +2129,355 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     outline-offset: 2px;
 }
 
+/* ============================================
+   ESTILOS ESPECÍFICOS DE REPORTES
+   ============================================ */
+.reportes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.reportes-card {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: var(--sombra-premium);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.reportes-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.reportes-card:hover {
+    box-shadow: var(--sombra-hover);
+    transform: translateY(-2px);
+}
+
+.reportes-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+.reportes-card-header h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--vino);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.reportes-card-header h3 i {
+    color: var(--dorado);
+    font-size: 1.25rem;
+}
+
+/* Gráficos de barras inline (HTML CSS-only bars) */
+.bar-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.bar-label-name {
+    color: #444;
+}
+
+.bar-label-value {
+    color: var(--vino);
+    font-weight: 800;
+}
+
+.bar-track {
+    width: 100%;
+    height: 8px;
+    background: var(--gris-claro);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--vino), var(--dorado));
+    border-radius: 10px;
+    width: 0%; /* Se llena con JS */
+    transition: width 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+/* Ranking de clientes (Top 3 Medallas) */
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.ranking-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: scale(1.01);
+}
+
+.ranking-medal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-right: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.medal-1 { background: linear-gradient(135deg, #FFD700, #FDB931); color: #fff; }
+.medal-2 { background: linear-gradient(135deg, #E0E0E0, #9E9E9E); color: #fff; }
+.medal-3 { background: linear-gradient(135deg, #CD7F32, #A0522D); color: #fff; }
+.medal-other { background: var(--gris-claro); color: var(--gris-texto); }
+
+.ranking-info {
+    flex: 1;
+}
+
+.ranking-name {
+    font-weight: 700;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.ranking-doc {
+    font-size: 0.75rem;
+    color: var(--gris-subtle);
+}
+
+.ranking-score {
+    font-weight: 800;
+    color: var(--vino);
+    font-size: 1.1rem;
+    background: rgba(123, 28, 78, 0.05);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+/* Timeline Historial Cliente */
+.historial-search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.historial-search input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.historial-search input:focus {
+    outline: none;
+    border-color: var(--dorado);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.historial-search button {
+    background: var(--vino);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.historial-search button:hover {
+    background: var(--vino-oscuro);
+}
+
+.timeline {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gris-claro);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--vino);
+    z-index: 2;
+}
+
+.timeline-dot.cancelado { border-color: var(--error); }
+.timeline-dot.confirmado { border-color: var(--exito); }
+
+.timeline-content {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.timeline-date {
+    font-size: 0.75rem;
+    color: var(--gris-subtle);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.timeline-title {
+    font-weight: 700;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.timeline-desc {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Badges específicos para tablas de reportes */
+.badge-vuelo {
+    background: rgba(30, 64, 175, 0.05);
+    color: #1e40af;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid rgba(30, 64, 175, 0.1);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.5s var(--ease-out) forwards;
+    opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    .reportes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* Fix para scroll del timeline */
+.timeline {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+.timeline::-webkit-scrollbar {
+    width: 6px;
+}
+.timeline::-webkit-scrollbar-track {
+    background: transparent;
+}
+.timeline::-webkit-scrollbar-thumb {
+    background: rgba(123, 28, 78, 0.2);
+    border-radius: 10px;
+}
+.timeline::-webkit-scrollbar-thumb:hover {
+    background: rgba(123, 28, 78, 0.4);
+}
+/* Fix visual timeline con wrapper - Override previous CSS */
+.timeline {
+    max-height: none !important;
+    overflow-y: visible !important;
+    padding-right: 0 !important;
+}
+
+.timeline-container::-webkit-scrollbar {
+    width: 6px;
+}
+.timeline-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+.timeline-container::-webkit-scrollbar-thumb {
+    background: rgba(123, 28, 78, 0.2);
+    border-radius: 10px;
+}
+.timeline-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(123, 28, 78, 0.4);
+}
+
+/* Custom scrollbars for the new tables */
+.tabla-responsive::-webkit-scrollbar {
+    width: 6px;
+}
+.tabla-responsive::-webkit-scrollbar-track {
+    background: transparent;
+}
+.tabla-responsive::-webkit-scrollbar-thumb {
+    background: rgba(123, 28, 78, 0.2);
+    border-radius: 10px;
+}
+.tabla-responsive::-webkit-scrollbar-thumb:hover {
+    background: rgba(123, 28, 78, 0.4);
+}

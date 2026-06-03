@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Reportes | ELARIS</title>
+    <link rel="icon" type="image/png" href="../../imagenes/logo-dorado.png">
+
+    <!-- CSS ESPECÍFICO DEL AGENTE -->
+    <link rel="stylesheet" href="../../css/agente.css">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR SUPERIOR -->
+    <nav class="navbar" aria-label="Navegación principal">
+        <a class="navbar-logo" href="dashboardeagente.html">
+            <img src="../../imagenes/logo-dorado.png" alt="Logotipo dorado de ELARIS Airlines" height="80">
+        </a>
+        <div class="navbar-right">
+            <div class="navbar-perfil" id="perfilDropdown">
+                <div class="perfil-trigger">
+                    <div class="avatar">AG</div>
+                    <span>Agente</span>
+                </div>
+                <ul class="dropdown" id="perfilMenu">
+                    <li><a href="#">Mi Perfil</a></li>
+                    <li><a href="#" class="cerrar-sesion">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="app-container">
+
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar">
+            <div class="sidebar-menu">
+                <a href="dashboardeagente.html" class="menu-item">
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-chart-line"></i></span>
+                    <span class="menu-texto">Panel de Agente</span>
+                </a>
+                <a href="reservas.html" class="menu-item">
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-clipboard-list"></i></span>
+                    <span class="menu-texto">Gestionar Reservas</span>
+                </a>
+                <a href="solicitudes.html" class="menu-item">
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-headset"></i></span>
+                    <span class="menu-texto">Solicitudes</span>
+                </a>
+                <a href="reportes.html" class="menu-item active">
+                    <span class="menu-icono"><i aria-hidden="true" class="fas fa-chart-bar"></i></span>
+                    <span class="menu-texto">Reportes</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido-principal">
+            
+            <div class="saludo">
+                <div class="saludo-texto">
+                    <h2>Centro de Reportes</h2>
+                    <p>Análisis de inteligencia de negocios e historial operativo</p>
+                </div>
+                <div class="fecha-dashboard">
+                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>
+                    <span id="fechaActual">Cargando fecha...</span>
+                </div>
+            </div>
+
+            <!-- GRID DE REPORTES -->
+            <div class="reportes-grid">
+
+                <!-- REPORTE 1: Ingresos por destino -->
+                <div class="reportes-card animate-fade-in delay-1">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-money-bill-wave"></i> Ingresos por Destino (Mes Actual)</h3>
+                    </div>
+                    <div class="bar-chart-container" id="chart-ingresos-destino">
+                        <div style="text-align:center; padding: 20px; color: #94A3B8;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+                    </div>
+                </div>
+
+                <!-- REPORTE 3: Clientes Frecuentes -->
+                <div class="reportes-card animate-fade-in delay-1">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-crown"></i> Top Clientes Frecuentes</h3>
+                    </div>
+                    <div class="ranking-list" id="list-clientes-frecuentes">
+                        <div style="text-align:center; padding: 20px; color: #94A3B8;"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+                    </div>
+                </div>
+
+                <!-- REPORTE 5: Destinos más vendidos (Sector) -->
+                <div class="reportes-card animate-fade-in delay-2 full-width">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-map-marker-alt"></i> Destinos Más Vendidos por Geografía</h3>
+                    </div>
+                    <div class="tabla-responsive">
+                        <table class="tabla-premium">
+                            <thead>
+                                <tr>
+                                    <th>País</th>
+                                    <th>Departamento</th>
+                                    <th>Ciudad Destino</th>
+                                    <th>Total Reservas</th>
+                                    <th>Ingresos Generados</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-destinos-vendidos">
+                                <tr><td colspan="5" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- REPORTE 2: Reservas por Vuelo -->
+                <div class="reportes-card animate-fade-in delay-3 full-width">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-plane"></i> Volumen de Reservas por Vuelo (Mensual)</h3>
+                    </div>
+                    <div class="tabla-responsive" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                        <table class="tabla-premium">
+                            <thead style="position: sticky; top: 0; z-index: 10;">
+                                <tr>
+                                    <th>Código de Vuelo</th>
+                                    <th>Mes (Año-Mes)</th>
+                                    <th>Total Reservas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-reservas-vuelo">
+                                <tr><td colspan="3" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- REPORTE 7: Historial por Cliente -->
+                <div class="reportes-card animate-fade-in delay-4">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-user-clock"></i> Historial de Estados por Cliente</h3>
+                    </div>
+                    <div class="historial-search">
+                        <input type="text" id="input-buscar-historial" placeholder="Buscar por documento de cliente...">
+                        <button id="btn-buscar-historial"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="timeline-container" style="max-height: 400px; overflow-y: auto; padding-right: 15px;">
+                        <div class="timeline" id="timeline-historial">
+                            <div style="padding: 20px; color: #94A3B8; text-align:center;">
+                                Ingrese un documento para ver el historial. Ej: 1001
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REPORTE 8: Canceladas y causas -->
+                <div class="reportes-card animate-fade-in delay-4">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-ban"></i> Análisis de Cancelaciones</h3>
+                    </div>
+                    <div class="tabla-responsive" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                        <table class="tabla-premium">
+                            <thead style="position: sticky; top: 0; z-index: 10;">
+                                <tr>
+                                    <th>Reserva</th>
+                                    <th>Vuelo</th>
+                                    <th>Causa Registrada</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-canceladas-causas">
+                                <tr><td colspan="3" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- REPORTE 4: Geografía completa de Vuelos -->
+                <div class="reportes-card animate-fade-in delay-4 full-width">
+                    <div class="reportes-card-header">
+                        <h3><i class="fas fa-globe-americas"></i> Catálogo Geográfico de Vuelos</h3>
+                    </div>
+                    <div class="tabla-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="tabla-premium">
+                            <thead style="position: sticky; top: 0; z-index: 10;">
+                                <tr>
+                                    <th>Vuelo</th>
+                                    <th>Origen (País - Depto - Ciudad)</th>
+                                    <th>Destino (País - Depto - Ciudad)</th>
+                                    <th>Precio Base</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-geografia">
+                                <tr><td colspan="4" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Cargando...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS DEL AGENTE -->
+    <script src="../../js/agente/agente-comun.js"></script>
+    <script src="../../js/agente/reportes.js"></script>
+    <script>
+        document.getElementById('fechaActual').textContent = new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    </script>
+</body>
+
+</html>
