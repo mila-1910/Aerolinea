@@ -2,11 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\frontend",
+    "\\frontend\\imagenes",
     "\\frontend\\js",
     "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
     "\\frontend\\paginas\\inicio"
   ],
-  "SelectedNode": "\\frontend\\paginas\\inicio\\login.html",
   "PreviewInSolutionExplorer": false
 }
