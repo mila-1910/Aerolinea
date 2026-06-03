@@ -1,12 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\base-de-datos",
     "\\frontend",
-    "\\frontend\\imagenes",
     "\\frontend\\js",
+    "\\frontend\\js\\admi",
+    "\\frontend\\js\\admin",
     "\\frontend\\paginas",
     "\\frontend\\paginas\\admin",
     "\\frontend\\paginas\\inicio"
   ],
+  "SelectedNode": "\\base-de-datos\\tablas.sql",
   "PreviewInSolutionExplorer": false
 }
